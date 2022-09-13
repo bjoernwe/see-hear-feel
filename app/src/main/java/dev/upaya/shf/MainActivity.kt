@@ -21,8 +21,6 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        Timber.i("Timber working?")
-
         setContent {
             SHFTheme {
                 // A surface container using the 'background' color from the theme
@@ -35,6 +33,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
         return super.onKeyUp(keyCode, event)
     }
 }
