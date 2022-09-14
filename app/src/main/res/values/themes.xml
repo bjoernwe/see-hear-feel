@@ -2,8 +2,8 @@
 <resources>
 
     <style name="Theme.SHF" parent="android:Theme.Material.NoActionBar">
-        <item name="android:navigationBarColor">@android:color/background_dark</item>
-        <item name="android:statusBarColor">@android:color/background_dark</item>
+        <item name="android:navigationBarColor">@color/background_dark</item>
+        <item name="android:statusBarColor">@color/background_dark</item>
     </style>
 
 </resources>
