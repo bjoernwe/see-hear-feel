@@ -16,7 +16,7 @@ fun MainContent() {
 
     val viewModel: SHFViewModel = viewModel()
 
-    SHFTheme {
+    SHFTheme(darkTheme = true) {
 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             Greeting(viewModel.keyEvent)
