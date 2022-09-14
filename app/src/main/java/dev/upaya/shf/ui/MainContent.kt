@@ -23,18 +23,14 @@ fun MainContent() {
 
     val viewModel: SHFViewModel = viewModel()
 
-    SHFTheme(darkTheme = true) {
+    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
 
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-
-            Column(
-                Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Text(text = viewModel.keyEvent, textAlign = TextAlign.Center)
-            }
-
+        Column(
+            Modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(text = viewModel.keyEvent, textAlign = TextAlign.Center)
         }
 
     }
@@ -45,5 +41,5 @@ fun MainContent() {
 @Preview
 @Composable
 fun MainContentPreview() {
-    MainContent()
+    SHFTheme(darkTheme = true) { MainContent() }
 }

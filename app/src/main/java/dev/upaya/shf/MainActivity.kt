@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 
 import dev.upaya.shf.ui.MainContent
+import dev.upaya.shf.ui.theme.SHFTheme
 
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { MainContent() }
+        setContent { SHFTheme(darkTheme = true, content = { MainContent() }) }
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
