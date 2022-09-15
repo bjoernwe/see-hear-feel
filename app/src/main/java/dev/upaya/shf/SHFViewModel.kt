@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel
 
 class SHFViewModel : ViewModel() {
 
-    var keyEvent by mutableStateOf("N/A")
+    var shfEvent: String? by mutableStateOf(null)
 
-    fun setKey(key: String) {
-        keyEvent = key
+    fun setSHFEvent(shfEvent: String?) {
+        this.shfEvent = shfEvent
     }
 
 }

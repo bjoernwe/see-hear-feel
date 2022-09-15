@@ -30,7 +30,7 @@ fun MainContent() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text = viewModel.keyEvent, textAlign = TextAlign.Center)
+            Text(text = viewModel.shfEvent ?: "", textAlign = TextAlign.Center)
         }
 
     }
