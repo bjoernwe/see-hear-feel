@@ -25,7 +25,7 @@ fun MainContent() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            FadingText(text = viewModel.shfEvent ?: "")
+            FadingText(text = viewModel.lastSHFLabel ?: "")
         }
 
     }

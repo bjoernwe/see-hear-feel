@@ -8,10 +8,10 @@ import androidx.lifecycle.ViewModel
 
 class SHFViewModel : ViewModel() {
 
-    var shfEvent: String? by mutableStateOf(null)
+    var lastSHFLabel: String? by mutableStateOf(null)
 
     fun setSHFEvent(shfEvent: String?) {
-        this.shfEvent = shfEvent
+        this.lastSHFLabel = shfEvent
     }
 
 }
