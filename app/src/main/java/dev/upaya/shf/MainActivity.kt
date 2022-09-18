@@ -18,17 +18,14 @@ class MainActivity : ComponentActivity() {
         setContent { SHFTheme(darkTheme = true, content = { MainContent() }) }
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
 
-        val keyEvent = KeyToSHFMap.getSHF(keyCode)
-        ViewModelProvider(this)[SHFViewModel::class.java].setSHFEvent(keyEvent)
+        val shfEvent = KeyToSHFMap.getSHF(keyCode)
+        ViewModelProvider(this)[SHFViewModel::class.java].setSHFEvent(shfEvent)
 
-        // This is intended to intercept handled events so that they are not passed on to the
-        // system. For instance, we don't want to change the phone's volume every time a key is
-        // pressed. Interception doesn't work, though!
-        return if (keyEvent != null) true else super.onKeyUp(keyCode, event)
+        return if (shfEvent != null) true else super.onKeyUp(keyCode, event)
     }
 
 }
