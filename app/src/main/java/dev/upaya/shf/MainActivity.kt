@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         val shfEvent = KeyToSHFMap.getSHF(keyCode)
         ViewModelProvider(this)[SHFViewModel::class.java].setSHFEvent(shfEvent)
 
-        return if (shfEvent != null) true else super.onKeyUp(keyCode, event)
+        return if (shfEvent != null) true else super.onKeyDown(keyCode, event)
     }
 
 }
