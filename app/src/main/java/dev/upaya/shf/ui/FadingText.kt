@@ -29,7 +29,7 @@ fun FadingText(text: String) {
         text = text,
         fontSize = 50.sp,
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.onBackground,
+        color = MaterialTheme.colors.secondary,
         modifier = Modifier.alpha(alpha.value)
     )
 
