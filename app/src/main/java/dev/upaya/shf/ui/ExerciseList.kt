@@ -18,7 +18,7 @@ fun ExerciseList() {
         )
         ExerciseEntry(
             title = "See / Hear / Feel (deep)",
-            description = "Note SHF with a focus on really \"soaking in\"",
+            description = "Note SHF with a focus on deeply \"soaking in\"",
         )
         ExerciseEntry(
             title = "Pleasant / Unpleasant / Neutral",

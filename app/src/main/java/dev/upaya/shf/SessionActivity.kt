@@ -5,13 +5,13 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
+import dev.upaya.shf.ui.SessionContent
 import timber.log.Timber
 
-import dev.upaya.shf.ui.SessionContent
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
-class MainActivity : ComponentActivity() {
+class SessionActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
