@@ -13,24 +13,32 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun ExerciseList() {
     Column(modifier = Modifier.fillMaxWidth()) {
         ExerciseEntry(
-            title = "See / Hear / Feel (steady)",
-            description = "Note SHF while keeping a steady pace"
+            title = "SHF (steady)",
+            description = "See/Hear/Feel while keeping a steady pace"
         )
         ExerciseEntry(
-            title = "See / Hear / Feel (deep)",
-            description = "Note SHF with a focus on deeply \"soaking in\"",
+            title = "SHF (deep)",
+            description = "See/Hear/Feel with a focus on deeply \"soaking in\"",
         )
         ExerciseEntry(
-            title = "Pleasant / Unpleasant / Neutral",
-            description = "Note the valence of sensations",
+            title = "Valence",
+            description = "Pleasant / Unpleasant / Neutral",
         )
         ExerciseEntry(
-            title = "Mahasi Sayadaw - Basic I",
-            description = "Note \"rising\" and \"falling\" for each breath",
+            title = "Mahasi-Style - Basic I",
+            description = "Rising/Falling for each breath",
         )
         ExerciseEntry(
-            title = "Mahasi Sayadaw - Basic II",
+            title = "Mahasi-Style - Basic II",
             description = "Like \"Basic I\" plus noting every distraction",
+        )
+        ExerciseEntry(
+            title = "Do Nothing",
+            description = "Any intention to control attention is let go of at soon as it is noticed",
+        )
+        ExerciseEntry(
+            title = "Focus on Rest",
+            description = "SHF with focus on inner and outer restful states",
         )
     }
 }
