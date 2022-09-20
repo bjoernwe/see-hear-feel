@@ -3,6 +3,7 @@ package dev.upaya.shf.ui
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +29,7 @@ fun FadingText(text: String) {
         text = text,
         fontSize = 50.sp,
         textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onBackground,
         modifier = Modifier.alpha(alpha.value)
     )
 

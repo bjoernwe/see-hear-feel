@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import timber.log.Timber
 
-import dev.upaya.shf.ui.MainContent
+import dev.upaya.shf.ui.SessionContent
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { SHFTheme(darkTheme = true, content = { MainContent() }) }
+        setContent { SHFTheme(darkTheme = true, content = { SessionContent() }) }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

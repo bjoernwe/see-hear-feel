@@ -1,11 +1,11 @@
 package dev.upaya.shf.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +20,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun MainContent() {
+fun SessionContent() {
 
     val viewModel: SHFViewModel = viewModel()
     val interactionSource = remember { MutableInteractionSource() }
@@ -32,22 +32,19 @@ fun MainContent() {
         interactionSource.emit(PressInteraction.Release(press))
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-
-        Column(
-            Modifier
-                .fillMaxHeight()
-                .clickable(
-                    onClick = {},
-                    interactionSource = interactionSource,
-                    indication = rememberRipple(bounded = false, radius = 100.dp),
-                ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            FadingText(text = viewModel.lastSHFLabel ?: "")
-        }
-
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+            .clickable(
+                onClick = {},
+                interactionSource = interactionSource,
+                indication = rememberRipple(bounded = false, radius = 100.dp),
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        FadingText(text = viewModel.lastSHFLabel ?: "")
     }
 
 }
@@ -56,5 +53,5 @@ fun MainContent() {
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { MainContent() }
+    SHFTheme(darkTheme = true) { SessionContent() }
 }
