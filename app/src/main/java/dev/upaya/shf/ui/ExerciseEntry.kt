@@ -24,15 +24,41 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
         modifier = Modifier.padding(5.dp),
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+        ) {
 
-            Icon(painter = painterResource(id = R.drawable.ic_launcher_foreground), contentDescription = null)
+            Icon(
+                painter = painterResource(id = R.drawable.ic_round_self_improvement_24),
+                contentDescription = null,
+                Modifier
+                    .size(64.dp)
+                    .padding(4.dp),
+            )
+            
+            Spacer(modifier = Modifier.width(4.dp))
 
-            Column(modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically)) {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp)
+                .padding(bottom = 4.dp)
+                .align(Alignment.CenterVertically)) {
 
-                Text(title, style = MaterialTheme.typography.h6)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(description, style = MaterialTheme.typography.body1)
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.h6,
+                    color = MaterialTheme.colors.secondary,
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = description,
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
+                )
 
             }
 

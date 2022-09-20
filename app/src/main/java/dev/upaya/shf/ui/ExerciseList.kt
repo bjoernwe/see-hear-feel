@@ -12,9 +12,26 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun ExerciseList() {
     Column(modifier = Modifier.fillMaxWidth()) {
-        ExerciseEntry()
-        ExerciseEntry()
-        ExerciseEntry()
+        ExerciseEntry(
+            title = "See / Hear / Feel (steady)",
+            description = "Note SHF while keeping a steady pace"
+        )
+        ExerciseEntry(
+            title = "See / Hear / Feel (deep)",
+            description = "Note SHF with a focus on really \"soaking in\"",
+        )
+        ExerciseEntry(
+            title = "Pleasant / Unpleasant / Neutral",
+            description = "Note the valence of sensations",
+        )
+        ExerciseEntry(
+            title = "Mahasi Sayadaw - Basic I",
+            description = "Note \"rising\" and \"falling\" for each breath",
+        )
+        ExerciseEntry(
+            title = "Mahasi Sayadaw - Basic II",
+            description = "Like \"Basic I\" plus noting every distraction",
+        )
     }
 }
 
