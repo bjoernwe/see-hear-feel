@@ -20,8 +20,8 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
 
     Surface(
         elevation = 2.dp,
-        shape = MaterialTheme.shapes.medium,
         modifier = Modifier.padding(5.dp),
+        shape = MaterialTheme.shapes.medium,
     ) {
 
         Row(
@@ -40,11 +40,13 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
             
             Spacer(modifier = Modifier.width(4.dp))
 
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .padding(bottom = 4.dp)
-                .align(Alignment.CenterVertically)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+                    .padding(bottom = 4.dp)
+                    .align(Alignment.CenterVertically)
+            ) {
 
                 Text(
                     text = title,
