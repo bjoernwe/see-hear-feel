@@ -7,9 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import dev.upaya.shf.keymaps.HeadsetKeyMap
 import dev.upaya.shf.ui.SessionContent
-import timber.log.Timber
-
 import dev.upaya.shf.ui.theme.SHFTheme
+import timber.log.Timber
 
 
 class SessionActivity : ComponentActivity() {
