@@ -15,13 +15,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import dev.upaya.shf.ExerciseConfig
 import dev.upaya.shf.SessionActivity
 import dev.upaya.shf.R
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseEntry(title: String = "Title", description: String = "Description") {
+fun ExerciseEntry(cfg: ExerciseConfig) {
 
     val context = LocalContext.current
 
@@ -60,7 +61,7 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
             ) {
 
                 Text(
-                    text = title,
+                    text = cfg.title,
                     style = MaterialTheme.typography.h6,
                     color = MaterialTheme.colors.secondary,
                 )
@@ -68,7 +69,7 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = description,
+                    text = cfg.description,
                     style = MaterialTheme.typography.body1,
                     color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
                 )
@@ -86,6 +87,6 @@ fun ExerciseEntry(title: String = "Title", description: String = "Description") 
 @Composable
 fun ExerciseEntryPreview() {
     SHFTheme {
-        ExerciseEntry()
+        ExerciseEntry(ExerciseConfig("Title", "Description"))
     }
 }

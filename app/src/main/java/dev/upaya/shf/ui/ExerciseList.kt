@@ -17,9 +17,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun ExerciseList(exerciseConfigs: List<ExerciseConfig>) {
     Surface {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(exerciseConfigs) { cfg ->
-                ExerciseEntry(cfg.title, cfg.description)
-            }
+            items(exerciseConfigs) { ExerciseEntry(it) }
         }
     }
 }
