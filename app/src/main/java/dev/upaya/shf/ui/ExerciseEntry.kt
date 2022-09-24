@@ -22,7 +22,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseEntry(cfg: ExerciseConfig) {
+fun ExerciseEntry(cfg: ExerciseConfig, onClick: () -> Unit = {}) {
 
     val context = LocalContext.current
 
@@ -33,6 +33,7 @@ fun ExerciseEntry(cfg: ExerciseConfig) {
             .padding(5.dp)
             .clickable {
                 startActivity(context, Intent(context, SessionActivity::class.java), null)
+                onClick()
             },
     ) {
 
