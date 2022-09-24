@@ -12,7 +12,7 @@ class ExerciseListActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { SHFTheme(darkTheme = true, content = { ExerciseList() }) }
+        setContent { SHFTheme(darkTheme = true, content = { ExerciseList(exampleExercises) }) }
     }
 
 }
