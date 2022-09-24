@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import dev.upaya.shf.keymaps.InputKey
-import dev.upaya.shf.keymaps.SHFLabels
+import dev.upaya.shf.labelmaps.LabelMapSHF
 
 
 class SHFViewModel : ViewModel() {
@@ -19,7 +19,7 @@ class SHFViewModel : ViewModel() {
     }
 
     fun setInputKey(inputKey: InputKey) {
-        this.lastSHFLabel = SHFLabels.getLabel(inputKey)
+        this.lastSHFLabel = LabelMapSHF.getLabel(inputKey)
     }
 
 }
