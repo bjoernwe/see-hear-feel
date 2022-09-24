@@ -18,6 +18,10 @@ fun ExerciseList() {
         Column(modifier = Modifier.fillMaxWidth()) {
 
             ExerciseEntry(
+                title = "SHF",
+                description = "Standard See/Hear/Feel"
+            )
+            ExerciseEntry(
                 title = "SHF (steady)",
                 description = "See/Hear/Feel while keeping a steady pace"
             )
