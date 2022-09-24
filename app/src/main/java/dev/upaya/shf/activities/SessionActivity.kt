@@ -1,10 +1,11 @@
-package dev.upaya.shf
+package dev.upaya.shf.activities
 
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
+import dev.upaya.shf.SHFViewModel
 import dev.upaya.shf.keymaps.HeadsetKeyMap
 import dev.upaya.shf.ui.SessionContent
 import dev.upaya.shf.ui.theme.SHFTheme

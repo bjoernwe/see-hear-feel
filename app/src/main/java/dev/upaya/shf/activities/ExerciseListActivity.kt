@@ -1,8 +1,9 @@
-package dev.upaya.shf
+package dev.upaya.shf.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import dev.upaya.shf.exampleExercises
 import dev.upaya.shf.ui.ExerciseList
 
 import dev.upaya.shf.ui.theme.SHFTheme

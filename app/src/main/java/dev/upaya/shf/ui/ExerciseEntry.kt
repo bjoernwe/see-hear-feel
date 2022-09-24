@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import dev.upaya.shf.ExerciseConfig
-import dev.upaya.shf.SessionActivity
+import dev.upaya.shf.activities.SessionActivity
 import dev.upaya.shf.R
 import dev.upaya.shf.ui.theme.SHFTheme
 
