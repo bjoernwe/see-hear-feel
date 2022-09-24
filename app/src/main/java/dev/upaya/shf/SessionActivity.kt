@@ -22,10 +22,12 @@ class SessionActivity : ComponentActivity() {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
 
-        val shfEvent = HeadsetKeyMap.getSHF(keyCode)
-        ViewModelProvider(this)[SHFViewModel::class.java].setSHFEvent(shfEvent)
+        HeadsetKeyMap.getInputKey(keyCode)?.let {
+            ViewModelProvider(this)[SHFViewModel::class.java].setInputKey(it)
+            return true
+        }
 
-        return if (shfEvent != null) true else super.onKeyDown(keyCode, event)
+        return super.onKeyDown(keyCode, event)
     }
 
 }

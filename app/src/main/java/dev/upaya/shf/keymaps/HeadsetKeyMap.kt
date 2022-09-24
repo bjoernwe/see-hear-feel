@@ -1,17 +1,17 @@
 package dev.upaya.shf.keymaps
 
-import android.view.KeyEvent
+import android.view.KeyEvent.*
 
 
 class HeadsetKeyMap {
 
-    companion object : ISHFKeyMap  {
+    companion object : IInputKeyMap  {
 
-        override fun getSHF(keyCode: Int): String? {
+        override fun getInputKey(keyCode: Int): InputKey? {
             return when (keyCode) {
-                KeyEvent.KEYCODE_VOLUME_UP -> "SEE"
-                KeyEvent.KEYCODE_VOLUME_DOWN -> "HEAR"
-                KeyEvent.KEYCODE_HEADSETHOOK -> "FEEL"
+                KEYCODE_VOLUME_UP -> InputKey.KEY_1
+                KEYCODE_VOLUME_DOWN -> InputKey.KEY_2
+                KEYCODE_HEADSETHOOK -> InputKey.KEY_3
                 else -> null
             }
 
