@@ -1,13 +1,13 @@
-package dev.upaya.shf
+package dev.upaya.shf.keymaps
 
 import android.view.KeyEvent
 
 
-class KeyToSHFMap {
+class HeadsetKeyMap {
 
-    companion object {
+    companion object : ISHFKeyMap  {
 
-        fun getSHF(keyCode: Int): String? {
+        override fun getSHF(keyCode: Int): String? {
             return when (keyCode) {
                 KeyEvent.KEYCODE_VOLUME_UP -> "SEE"
                 KeyEvent.KEYCODE_VOLUME_DOWN -> "HEAR"

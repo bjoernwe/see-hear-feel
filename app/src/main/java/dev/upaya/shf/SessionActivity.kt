@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
+import dev.upaya.shf.keymaps.HeadsetKeyMap
 import dev.upaya.shf.ui.SessionContent
 import timber.log.Timber
 
@@ -22,7 +23,7 @@ class SessionActivity : ComponentActivity() {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
 
-        val shfEvent = KeyToSHFMap.getSHF(keyCode)
+        val shfEvent = HeadsetKeyMap.getSHF(keyCode)
         ViewModelProvider(this)[SHFViewModel::class.java].setSHFEvent(shfEvent)
 
         return if (shfEvent != null) true else super.onKeyDown(keyCode, event)
