@@ -4,7 +4,7 @@ import dev.upaya.shf.keymaps.InputKey
 
 
 class LabelMapSHF {
-    companion object : ILabelMap {
+    companion object : LabelMap {
         override fun getLabel(key: InputKey): String {
             return when(key) {
                 InputKey.KEY_1 -> "SEE"

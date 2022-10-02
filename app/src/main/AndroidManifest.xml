@@ -22,11 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activities.SessionActivity"
-            android:exported="false"
-            android:theme="@style/Theme.SHF">
-        </activity>
     </application>
 
 </manifest>

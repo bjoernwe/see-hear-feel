@@ -3,6 +3,6 @@ package dev.upaya.shf.labelmaps
 import dev.upaya.shf.keymaps.InputKey
 
 
-interface ILabelMap {
+interface LabelMap {
     fun getLabel(key: InputKey): String
 }
