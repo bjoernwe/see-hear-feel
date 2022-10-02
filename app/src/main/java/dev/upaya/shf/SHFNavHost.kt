@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.keymaps.InputKey
 import dev.upaya.shf.labelmaps.LabelMap
 import dev.upaya.shf.labelmaps.LabelMapSHF

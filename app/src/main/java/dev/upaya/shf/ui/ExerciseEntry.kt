@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.ExerciseConfig
+import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.R
 import dev.upaya.shf.ui.theme.SHFTheme
 

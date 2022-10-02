@@ -1,4 +1,4 @@
-package dev.upaya.shf.activities
+package dev.upaya.shf
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -8,10 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import dev.upaya.shf.ExerciseConfig
-import dev.upaya.shf.SHFNavHost
-import dev.upaya.shf.SHFViewModel
-import dev.upaya.shf.exampleExercises
+import dev.upaya.shf.exercises.ExerciseConfig
+import dev.upaya.shf.exercises.exampleExercises
 import dev.upaya.shf.keymaps.HeadsetKeyMap
 
 import dev.upaya.shf.ui.theme.SHFTheme

@@ -1,4 +1,4 @@
-package dev.upaya.shf
+package dev.upaya.shf.exercises
 
 import dev.upaya.shf.labelmaps.LabelMapBreathOther
 
