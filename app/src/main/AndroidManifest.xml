@@ -14,7 +14,7 @@
         android:theme="@style/Theme.SHF"
         tools:targetApi="31">
         <activity
-            android:name=".activities.ExerciseListActivity"
+            android:name=".ExerciseListActivity"
             android:exported="true"
             android:theme="@style/Theme.SHF">
             <intent-filter>
