@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.exercises.exampleExercises
 import dev.upaya.shf.ui.ExerciseList
 import dev.upaya.shf.ui.SessionContent
 
@@ -17,15 +16,13 @@ fun SHFNavHost(
     modifier: Modifier = Modifier,
 ) {
 
-    val exerciseConfigs = exampleExercises
-
     NavHost(
         navController = navController,
         startDestination = "exercises",
         modifier = modifier
     ) {
         composable(route = "exercises") {
-            ExerciseList(exerciseConfigs = exerciseConfigs) { cfg ->
+            ExerciseList { cfg ->
                 viewModel.lastLabel = ""  // Workaround: Avoid showing previous label on new screen
                 viewModel.activateLabelMap(cfg.labelMap)
                 navController.navigate("session")
