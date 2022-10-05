@@ -26,6 +26,7 @@ fun SHFNavHost(
     ) {
         composable(route = "exercises") {
             ExerciseList(exerciseConfigs = exerciseConfigs) { cfg ->
+                viewModel.lastLabel = ""  // Workaround: Avoid showing previous label on new screen
                 viewModel.activateLabelMap(cfg.labelMap)
                 navController.navigate("session")
             }
