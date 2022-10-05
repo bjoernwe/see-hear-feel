@@ -13,19 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.input_devices.InputKey
-import dev.upaya.shf.labelmaps.LabelMap
-import dev.upaya.shf.labelmaps.LabelMapSHF
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionContent(lastInputKey: InputKey?, labelMap: LabelMap = LabelMapSHF) {
+fun SessionContent(label: String) {
 
     val interactionSource = remember { MutableInteractionSource() }
 
     // Simulate a key press on value change
-    LaunchedEffect(lastInputKey) {
+    LaunchedEffect(label) {
         val press = PressInteraction.Press(Offset.Zero)
         interactionSource.emit(press)
         interactionSource.emit(PressInteraction.Release(press))
@@ -43,7 +40,7 @@ fun SessionContent(lastInputKey: InputKey?, labelMap: LabelMap = LabelMapSHF) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        lastInputKey?.let { key -> FadingText(text = labelMap.getLabel(key)) }
+        FadingText(text = label)
     }
 
 }
@@ -52,5 +49,5 @@ fun SessionContent(lastInputKey: InputKey?, labelMap: LabelMap = LabelMapSHF) {
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionContent(lastInputKey = null) }
+    SHFTheme(darkTheme = true) { SessionContent(label = "LABEL") }
 }

@@ -14,7 +14,6 @@ class InputDeviceHeadset {
                 KEYCODE_HEADSETHOOK -> InputKey.KEY_3
                 else -> null
             }
-
         }
 
     }

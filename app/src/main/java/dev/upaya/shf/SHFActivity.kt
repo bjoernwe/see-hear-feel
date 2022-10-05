@@ -8,9 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import dev.upaya.shf.exercises.ExerciseConfig
-import dev.upaya.shf.exercises.exampleExercises
-import dev.upaya.shf.input_devices.InputDeviceHeadset
 
 import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
@@ -20,39 +17,34 @@ class ExerciseListActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { SHFApp(exampleExercises) }
+        setContent { SHFApp() }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
 
-        InputDeviceHeadset.getInputKey(keyCode)?.let {
-            ViewModelProvider(this)[SHFViewModel::class.java].setInputKey(it)
-            return true
-        }
+        val vm: SHFViewModel = ViewModelProvider(this)[SHFViewModel::class.java]
+        val inputKey = vm.inputDevice.getInputKey(keyCode) ?: return super.onKeyDown(keyCode, event)
 
-        return super.onKeyDown(keyCode, event)
+        vm.setInputKey(inputKey)
+
+        return true
     }
 
 }
 
 
 @Composable
-fun SHFApp(exerciseConfigs: List<ExerciseConfig>) {
+fun SHFApp() {
 
     val navController = rememberNavController()
-    val vm: SHFViewModel = viewModel()
+    val viewModel: SHFViewModel = viewModel()
 
     SHFTheme(darkTheme = true) {
         SHFNavHost(
             navController = navController,
-            exerciseConfigs = exerciseConfigs,
-            lastInputKey = vm.lastInputKey,
-            labelMap = vm.activeLabelMap,
-            onSelectExercise = { cfg ->
-                vm.activateLabelMap(cfg.labelMap)
-            }
+            viewModel = viewModel,
         )
     }
 
