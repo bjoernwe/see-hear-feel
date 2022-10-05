@@ -1,6 +1,6 @@
 package dev.upaya.shf.labelmaps
 
-import dev.upaya.shf.keymaps.InputKey
+import dev.upaya.shf.input_devices.InputKey
 
 
 class LabelMapSHF {

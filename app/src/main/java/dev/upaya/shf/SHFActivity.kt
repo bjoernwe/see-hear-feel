@@ -10,7 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.exercises.exampleExercises
-import dev.upaya.shf.keymaps.HeadsetKeyMap
+import dev.upaya.shf.input_devices.InputDeviceHeadset
 
 import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
@@ -27,7 +27,7 @@ class ExerciseListActivity : ComponentActivity() {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
 
-        HeadsetKeyMap.getInputKey(keyCode)?.let {
+        InputDeviceHeadset.getInputKey(keyCode)?.let {
             ViewModelProvider(this)[SHFViewModel::class.java].setInputKey(it)
             return true
         }

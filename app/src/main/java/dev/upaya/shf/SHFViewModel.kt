@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import dev.upaya.shf.keymaps.InputKey
+import dev.upaya.shf.input_devices.InputKey
 import dev.upaya.shf.labelmaps.LabelMap
 import dev.upaya.shf.labelmaps.LabelMapSHF
 

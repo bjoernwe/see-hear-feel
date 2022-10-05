@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.keymaps.InputKey
+import dev.upaya.shf.input_devices.InputKey
 import dev.upaya.shf.labelmaps.LabelMap
 import dev.upaya.shf.labelmaps.LabelMapSHF
 import dev.upaya.shf.ui.theme.SHFTheme

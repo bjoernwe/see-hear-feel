@@ -1,11 +1,11 @@
-package dev.upaya.shf.keymaps
+package dev.upaya.shf.input_devices
 
 import android.view.KeyEvent.*
 
 
-class HeadsetKeyMap {
+class InputDeviceHeadset {
 
-    companion object : IInputKeyMap  {
+    companion object : InputDevice  {
 
         override fun getInputKey(keyCode: Int): InputKey? {
             return when (keyCode) {
