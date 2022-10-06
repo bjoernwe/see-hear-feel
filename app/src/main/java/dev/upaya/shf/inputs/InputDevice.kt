@@ -1,4 +1,4 @@
-package dev.upaya.shf.input_devices
+package dev.upaya.shf.inputs
 
 interface InputDevice {
     fun getInputKey(keyCode: Int): InputKey?
