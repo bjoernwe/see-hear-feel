@@ -29,9 +29,7 @@ fun SessionScreen(
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }
     LaunchedEffect(inputEvent) {
-        val press = PressInteraction.Press(Offset.Zero)
-        interactionSource.emit(press)
-        interactionSource.emit(PressInteraction.Release(press))
+        interactionSource.simulatePress()
     }
 
     Column(
@@ -56,4 +54,11 @@ fun SessionScreen(
 @Composable
 fun MainContentPreview() {
     SHFTheme(darkTheme = true) { SessionScreen() }
+}
+
+
+suspend fun MutableInteractionSource.simulatePress() {
+    val press = PressInteraction.Press(Offset.Zero)
+    this.emit(press)
+    this.emit(PressInteraction.Release(press))
 }
