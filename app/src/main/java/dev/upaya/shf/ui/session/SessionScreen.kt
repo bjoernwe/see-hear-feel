@@ -19,11 +19,12 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionScreen() {
+fun SessionScreen(
+    viewModel: SessionViewModel = viewModel(),
+) {
 
-    val vm: SessionViewModel = viewModel()
-    val inputEvent = vm.inputEvent.collectAsState()
-    val label: String by vm.label.collectAsState(initial = "")
+    val inputEvent = viewModel.inputEvent.collectAsState()
+    val label: String by viewModel.label.collectAsState(initial = "")
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }

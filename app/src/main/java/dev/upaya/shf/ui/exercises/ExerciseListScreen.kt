@@ -17,10 +17,12 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseListScreen(onClick: (ExerciseConfig) -> Unit = {}) {
+fun ExerciseListScreen(
+    viewModel: ExerciseViewModel = viewModel(),
+    onClick: (ExerciseConfig) -> Unit = {},
+) {
 
-    val vm: ExerciseViewModel = viewModel()
-    val exercises by vm.exercises.collectAsState()
+    val exercises by viewModel.exercises.collectAsState()
 
     Surface {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {

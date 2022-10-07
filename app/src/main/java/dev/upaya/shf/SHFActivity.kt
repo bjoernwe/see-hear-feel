@@ -26,7 +26,7 @@ class SHFActivity : ComponentActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
-        if (inputEventSource.updateInputKey(keyCode))
+        if (inputEventSource.updateInputEvent(keyCode))
             return true
         return super.onKeyDown(keyCode, event)
     }

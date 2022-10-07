@@ -17,7 +17,7 @@ class InputEventSource @Inject constructor() {
         _inputEvent.value = null
     }
 
-    fun updateInputKey(keyCode: Int): Boolean {
+    fun updateInputEvent(keyCode: Int): Boolean {
         val inputKey = inputDevice.getInputKey(keyCode) ?: return false
         _inputEvent.value = InputEvent(inputKey = inputKey)
         return true
