@@ -19,7 +19,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionContent(inputEvent: InputEvent?) {
+fun SessionSceen(inputEvent: InputEvent?) {
 
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -53,5 +53,5 @@ fun SessionContent(inputEvent: InputEvent?) {
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionContent(inputEvent = InputEvent(InputKey.KEY_1)) }
+    SHFTheme(darkTheme = true) { SessionSceen(inputEvent = InputEvent(InputKey.KEY_1)) }
 }

@@ -16,7 +16,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseList(onClick: (ExerciseConfig) -> Unit = {}) {
+fun ExerciseSceen(onClick: (ExerciseConfig) -> Unit = {}) {
 
     val vm: ExerciseViewModel = viewModel()
     val exercises by vm.exercises.collectAsState()
@@ -35,6 +35,6 @@ fun ExerciseList(onClick: (ExerciseConfig) -> Unit = {}) {
 @Composable
 fun ExerciseListPreview() {
     SHFTheme(darkTheme = true) {
-        ExerciseList()
+        ExerciseSceen()
     }
 }
