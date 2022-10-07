@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.upaya.shf.ui.theme.SHFTheme
+import dev.upaya.shf.ui.varelaFontFamily
 
 
 @Composable
@@ -43,7 +44,7 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        FadingText(text = label, key = inputEvent)
+        FadingText(text = label, key = inputEvent, fontFamily = varelaFontFamily)
     }
 
 }
