@@ -1,4 +1,4 @@
-package dev.upaya.shf
+package dev.upaya.shf.ui.session
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SHFViewModel @Inject constructor(
+class SessionViewModel @Inject constructor(
     private val inputEventSource: InputEventSource,
 ) : ViewModel() {
 

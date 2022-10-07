@@ -6,7 +6,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.SHFViewModel
+import dev.upaya.shf.ui.session.SessionViewModel
+import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.session.SessionScreen
 
 
@@ -22,8 +23,8 @@ fun SHFNavHost(
         modifier = modifier
     ) {
         composable(route = "exercises") {
-            val vm: SHFViewModel = viewModel()
-            ExerciseSceen { cfg ->
+            val vm: SessionViewModel = viewModel()
+            ExerciseListScreen { cfg ->
                 vm.resetInputEvent()  // Workaround: Avoid showing previous label on new screen
                 vm.activateLabelMap(cfg.labelMap)
                 navController.navigate("session")

@@ -14,7 +14,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.upaya.shf.SHFViewModel
 import dev.upaya.shf.ui.FadingText
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -22,7 +21,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun SessionScreen() {
 
-    val vm: SHFViewModel = viewModel()
+    val vm: SessionViewModel = viewModel()
     val inputEvent = vm.inputEvent.collectAsState()
 
     // Simulate a key press on value change

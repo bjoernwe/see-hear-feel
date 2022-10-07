@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui
+package dev.upaya.shf.ui.exercises
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,11 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.exercises.ExerciseViewModel
+import dev.upaya.shf.ui.ExerciseEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseSceen(onClick: (ExerciseConfig) -> Unit = {}) {
+fun ExerciseListScreen(onClick: (ExerciseConfig) -> Unit = {}) {
 
     val vm: ExerciseViewModel = viewModel()
     val exercises by vm.exercises.collectAsState()
@@ -35,6 +36,6 @@ fun ExerciseSceen(onClick: (ExerciseConfig) -> Unit = {}) {
 @Composable
 fun ExerciseListPreview() {
     SHFTheme(darkTheme = true) {
-        ExerciseSceen()
+        ExerciseListScreen()
     }
 }
