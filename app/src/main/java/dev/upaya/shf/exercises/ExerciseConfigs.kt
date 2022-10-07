@@ -1,6 +1,9 @@
 package dev.upaya.shf.exercises
 
 import dev.upaya.shf.labelmaps.LabelMapBreathOther
+import dev.upaya.shf.labelmaps.LabelMapLetGo
+import dev.upaya.shf.labelmaps.LabelMapPosNegNeutral
+import dev.upaya.shf.labelmaps.LabelMapRisingFalling
 
 
 val exampleExercises: List<ExerciseConfig> = listOf(
@@ -17,12 +20,14 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         description = "See/Hear/Feel with a focus on deeply \"soaking in\"",
     ),
     ExerciseConfig(
-        title = "Valence",
+        title = "Affective Valence",
         description = "Pleasant / Unpleasant / Neutral",
+        labelMap = LabelMapPosNegNeutral,
     ),
     ExerciseConfig(
         title = "Mahasi-Style - Basic I",
         description = "Rising/Falling for each breath",
+        labelMap = LabelMapRisingFalling,
     ),
     ExerciseConfig(
         title = "Mahasi-Style - Basic II",
@@ -32,6 +37,7 @@ val exampleExercises: List<ExerciseConfig> = listOf(
     ExerciseConfig(
         title = "Do Nothing",
         description = "Any intention to control attention is let go of at soon as it is noticed",
+        labelMap = LabelMapLetGo,
     ),
     ExerciseConfig(
         title = "Focus on Rest",
