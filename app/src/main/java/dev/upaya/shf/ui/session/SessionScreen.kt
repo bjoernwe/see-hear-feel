@@ -23,7 +23,7 @@ fun SessionScreen(
     viewModel: SessionViewModel = viewModel(),
 ) {
 
-    val inputEvent = viewModel.inputEvent.collectAsState()
+    val inputEvent by viewModel.inputEvent.collectAsState()
     val label: String by viewModel.label.collectAsState(initial = "")
 
     // Simulate a key press on value change
