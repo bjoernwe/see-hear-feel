@@ -5,15 +5,19 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-
+import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.inputs.InputEventSource
 import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class ExerciseListActivity : ComponentActivity() {
+
+    @Inject lateinit var inputEventSource: InputEventSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +25,10 @@ class ExerciseListActivity : ComponentActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
-
-        val vm: SHFViewModel = ViewModelProvider(this)[SHFViewModel::class.java]
-        val inputKey = vm.inputDevice.getInputKey(keyCode) ?: return super.onKeyDown(keyCode, event)
-
-        vm.setInputKey(inputKey)
-
-        return true
+        if (inputEventSource.updateInputKey(keyCode))
+            return true
+        return super.onKeyDown(keyCode, event)
     }
 
 }

@@ -13,16 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.upaya.shf.inputs.InputEvent
+import dev.upaya.shf.inputs.InputKey
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionContent(label: String) {
+fun SessionContent(inputEvent: InputEvent?) {
 
     val interactionSource = remember { MutableInteractionSource() }
 
     // Simulate a key press on value change
-    LaunchedEffect(label) {
+    LaunchedEffect(inputEvent) {
         val press = PressInteraction.Press(Offset.Zero)
         interactionSource.emit(press)
         interactionSource.emit(PressInteraction.Release(press))
@@ -40,7 +42,9 @@ fun SessionContent(label: String) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        FadingText(text = label)
+        if (inputEvent != null) {
+            FadingText(text = inputEvent.inputKey.name)
+        }
     }
 
 }
@@ -49,5 +53,5 @@ fun SessionContent(label: String) {
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionContent(label = "LABEL") }
+    SHFTheme(darkTheme = true) { SessionContent(inputEvent = InputEvent(InputKey.KEY_1)) }
 }

@@ -1,6 +1,8 @@
 package dev.upaya.shf
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,6 +17,7 @@ fun SHFNavHost(
     viewModel: SHFViewModel,
     modifier: Modifier = Modifier,
 ) {
+    val inputEvent by viewModel.inputEvent.collectAsState()
 
     NavHost(
         navController = navController,
@@ -23,13 +26,13 @@ fun SHFNavHost(
     ) {
         composable(route = "exercises") {
             ExerciseList { cfg ->
-                viewModel.lastLabel = ""  // Workaround: Avoid showing previous label on new screen
+                viewModel.resetInputEvent()  // Workaround: Avoid showing previous label on new screen
                 viewModel.activateLabelMap(cfg.labelMap)
                 navController.navigate("session")
             }
         }
         composable(route = "session") {
-            SessionContent(label = viewModel.lastLabel)
+            SessionContent(inputEvent = inputEvent)
         }
     }
 
