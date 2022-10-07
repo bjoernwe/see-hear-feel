@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui
+package dev.upaya.shf.ui.session
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,17 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.inputs.InputEvent
-import dev.upaya.shf.inputs.InputKey
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.upaya.shf.SHFViewModel
+import dev.upaya.shf.ui.FadingText
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionSceen(inputEvent: InputEvent?) {
+fun SessionScreen() {
 
-    val interactionSource = remember { MutableInteractionSource() }
+    val vm: SHFViewModel = viewModel()
+    val inputEvent = vm.inputEvent.collectAsState()
 
     // Simulate a key press on value change
+    val interactionSource = remember { MutableInteractionSource() }
     LaunchedEffect(inputEvent) {
         val press = PressInteraction.Press(Offset.Zero)
         interactionSource.emit(press)
@@ -42,9 +45,7 @@ fun SessionSceen(inputEvent: InputEvent?) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (inputEvent != null) {
-            FadingText(text = inputEvent.inputKey.name)
-        }
+        inputEvent.value?.inputKey?.let { inputKey -> FadingText(text = inputKey.name) }
     }
 
 }
@@ -53,5 +54,5 @@ fun SessionSceen(inputEvent: InputEvent?) {
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionSceen(inputEvent = InputEvent(InputKey.KEY_1)) }
+    SHFTheme(darkTheme = true) { SessionScreen() }
 }
