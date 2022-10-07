@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ExerciseListActivity : ComponentActivity() {
+class SHFActivity : ComponentActivity() {
 
     @Inject lateinit var inputEventSource: InputEventSource
 
