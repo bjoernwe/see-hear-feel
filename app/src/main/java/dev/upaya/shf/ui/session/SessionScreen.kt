@@ -23,6 +23,7 @@ fun SessionScreen() {
 
     val vm: SessionViewModel = viewModel()
     val inputEvent = vm.inputEvent.collectAsState()
+    val label: String by vm.label.collectAsState(initial = "")
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }
@@ -44,7 +45,7 @@ fun SessionScreen() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        inputEvent.value?.inputKey?.let { inputKey -> FadingText(text = inputKey.name) }
+        FadingText(text = label)
     }
 
 }

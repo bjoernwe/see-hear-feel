@@ -25,8 +25,7 @@ fun SHFNavHost(
         composable(route = "exercises") {
             val vm: SessionViewModel = viewModel()
             ExerciseListScreen { cfg ->
-                vm.resetInputEvent()  // Workaround: Avoid showing previous label on new screen
-                vm.activateLabelMap(cfg.labelMap)
+                vm.setCurrentExercise(exerciseConfig = cfg)
                 navController.navigate("session")
             }
         }
