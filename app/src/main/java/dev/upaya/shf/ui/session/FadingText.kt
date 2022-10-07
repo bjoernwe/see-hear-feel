@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui
+package dev.upaya.shf.ui.session
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun FadingText(text: String) {
+fun FadingText(text: String, key: Any? = null) {
 
     val alpha = remember { Animatable(1f) }
 
-    LaunchedEffect(text) {
+    LaunchedEffect(key, text) {
         alpha.snapTo(1f)
         alpha.animateTo(0f, animationSpec = spring(stiffness = Spring.StiffnessVeryLow))
     }

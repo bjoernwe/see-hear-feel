@@ -14,7 +14,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.upaya.shf.ui.FadingText
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -44,7 +43,7 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        FadingText(text = label)
+        FadingText(text = label, key = inputEvent)
     }
 
 }
