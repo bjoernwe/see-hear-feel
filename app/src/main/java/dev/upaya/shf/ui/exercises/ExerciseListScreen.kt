@@ -28,7 +28,7 @@ fun ExerciseListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Exercise List") },
+                title = { Text(text = "Noting Exercises") },
                 backgroundColor = MaterialTheme.colors.secondary,
             )
         }
