@@ -1,5 +1,6 @@
 package dev.upaya.shf.ui.exercises
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,7 +25,9 @@ fun ExerciseListScreen(
 
     val exercises by viewModel.exercises.collectAsState()
 
-    Surface {
+    Surface(
+        modifier = Modifier.fillMaxSize()
+    ) {
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(exercises) { cfg ->
                 ExerciseEntry(cfg = cfg, onClick = onClick)
