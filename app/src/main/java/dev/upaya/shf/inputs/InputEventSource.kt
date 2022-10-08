@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class InputEventSource @Inject constructor() {
 
-    private val inputDevice: InputDevice = InputDeviceHeadset
+    private val inputDevice: InputDevice = InputDeviceGeneric
 
     private val _inputEvent: MutableStateFlow<InputEvent?> = MutableStateFlow(null)
     val inputEvent: StateFlow<InputEvent?> = _inputEvent
