@@ -10,6 +10,8 @@ class LabelMapSHF {
                 InputKey.KEY_1 -> "SEE"
                 InputKey.KEY_2 -> "HEAR"
                 InputKey.KEY_3 -> "FEEL"
+                InputKey.KEY_4 -> "GONE"
+                else -> "OTHER"
             }
         }
     }

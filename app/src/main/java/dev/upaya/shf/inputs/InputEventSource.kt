@@ -9,7 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class InputEventSource @Inject constructor() {
 
-    private val inputDevice: InputDevice = InputDeviceHeadset
+    private val inputDevice: InputDevice = InputDevicePS4
 
     private val _inputEvent: MutableStateFlow<InputEvent?> = MutableStateFlow(null)
     val inputEvent: StateFlow<InputEvent?> = _inputEvent
@@ -19,7 +19,7 @@ class InputEventSource @Inject constructor() {
     }
 
     fun updateInputEvent(keyCode: Int): Boolean {
-        val inputKey = inputDevice.getInputKey(keyCode) ?: return false
+        val inputKey = inputDevice.getInputKey(keyCode)
         _inputEvent.value = InputEvent(inputKey = inputKey)
         return true
     }

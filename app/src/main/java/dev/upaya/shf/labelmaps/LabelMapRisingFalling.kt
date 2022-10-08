@@ -9,7 +9,8 @@ class LabelMapRisingFalling {
             return when(key) {
                 InputKey.KEY_1 -> "RISING"
                 InputKey.KEY_2 -> "FALLING"
-                InputKey.KEY_3 -> "OTHER"
+                InputKey.KEY_3 -> "DISTRACT"
+                else -> "OTHER"
             }
         }
     }

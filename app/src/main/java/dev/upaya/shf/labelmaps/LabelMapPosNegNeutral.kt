@@ -10,6 +10,7 @@ class LabelMapPosNegNeutral {
                 InputKey.KEY_1 -> "POSITIVE"
                 InputKey.KEY_2 -> "NEGATIVE"
                 InputKey.KEY_3 -> "NEUTRAL"
+                else -> "OTHER"
             }
         }
     }
