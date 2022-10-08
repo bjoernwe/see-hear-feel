@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,13 +24,22 @@ fun ExerciseListScreen(
 ) {
 
     val exercises by viewModel.exercises.collectAsState()
-
-    Surface(
-        modifier = Modifier.fillMaxSize()
+    
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Exercise List") },
+                backgroundColor = MaterialTheme.colors.secondary,
+            )
+        }
     ) {
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(exercises) { cfg ->
-                ExerciseEntry(cfg = cfg, onClick = onClick)
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(exercises) { cfg ->
+                    ExerciseEntry(cfg = cfg, onClick = onClick)
+                }
             }
         }
     }
