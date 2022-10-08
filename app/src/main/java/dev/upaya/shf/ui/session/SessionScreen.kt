@@ -14,6 +14,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.ui.varelaFontFamily
 
@@ -25,6 +26,9 @@ fun SessionScreen(
 
     val inputEvent by viewModel.inputEvent.collectAsState()
     val label: String by viewModel.label.collectAsState(initial = "")
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(color = MaterialTheme.colors.background)
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.exercises.ExerciseViewModel
 import dev.upaya.shf.ui.ExerciseEntry
@@ -24,7 +25,10 @@ fun ExerciseListScreen(
 ) {
 
     val exercises by viewModel.exercises.collectAsState()
-    
+    val systemUiController = rememberSystemUiController()
+
+    systemUiController.setStatusBarColor(color = MaterialTheme.colors.secondaryVariant)
+
     Scaffold(
         topBar = {
             TopAppBar(
