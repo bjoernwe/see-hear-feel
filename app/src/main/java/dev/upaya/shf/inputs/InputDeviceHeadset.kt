@@ -9,10 +9,13 @@ class InputDeviceHeadset {
 
         override fun getInputKey(keyCode: Int): InputKey {
             return when (keyCode) {
-                KEYCODE_VOLUME_UP -> InputKey.KEY_1
-                KEYCODE_VOLUME_DOWN -> InputKey.KEY_2
-                KEYCODE_HEADSETHOOK -> InputKey.KEY_3
-                else -> InputKey.UNDEFINED
+                KEYCODE_VOLUME_UP -> InputKey.KEY_A
+                KEYCODE_VOLUME_DOWN -> InputKey.KEY_B
+                KEYCODE_HEADSETHOOK -> InputKey.KEY_X
+                KEYCODE_A -> InputKey.KEY_A
+                KEYCODE_B -> InputKey.KEY_B
+                KEYCODE_X -> InputKey.KEY_X
+                else -> InputKey.UNMAPPED
             }
         }
 

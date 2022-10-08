@@ -7,10 +7,14 @@ class LabelMapSHF {
     companion object : LabelMap {
         override fun getLabel(key: InputKey): String {
             return when(key) {
-                InputKey.KEY_1 -> "SEE"
-                InputKey.KEY_2 -> "HEAR"
-                InputKey.KEY_3 -> "FEEL"
-                InputKey.KEY_4 -> "GONE"
+                InputKey.KEY_LEFT -> "SEE"
+                InputKey.KEY_RIGHT -> "HEAR"
+                InputKey.KEY_DOWN -> "FEEL"
+                InputKey.KEY_UP -> "GONE"
+                InputKey.KEY_A -> "SEE"
+                InputKey.KEY_B -> "HEAR"
+                InputKey.KEY_X -> "FEEL"
+                InputKey.KEY_Y -> "GONE"
                 else -> "OTHER"
             }
         }
