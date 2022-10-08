@@ -12,14 +12,6 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         description = "Standard See/Hear/Feel",
     ),
     ExerciseConfig(
-        title = "SHF (steady)",
-        description = "See/Hear/Feel while keeping a steady pace",
-    ),
-    ExerciseConfig(
-        title = "SHF (deep)",
-        description = "See/Hear/Feel with a focus on deeply \"soaking in\"",
-    ),
-    ExerciseConfig(
         title = "Affective Valence",
         description = "Pleasant / Unpleasant / Neutral",
         labelMap = LabelMapPosNegNeutral,
