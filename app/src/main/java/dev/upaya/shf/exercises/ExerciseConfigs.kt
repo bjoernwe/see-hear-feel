@@ -1,15 +1,17 @@
 package dev.upaya.shf.exercises
 
-import dev.upaya.shf.labelmaps.LabelMapBreathOther
-import dev.upaya.shf.labelmaps.LabelMapLetGo
-import dev.upaya.shf.labelmaps.LabelMapPosNegNeutral
-import dev.upaya.shf.labelmaps.LabelMapRisingFalling
+import dev.upaya.shf.labelmaps.*
 
 
 val exampleExercises: List<ExerciseConfig> = listOf(
     ExerciseConfig(
         title = "SHF",
         description = "Standard See/Hear/Feel",
+    ),
+    ExerciseConfig(
+        title = "Meditator & Auditor",
+        description = "The auditor has to be convinced that the meditator has really been mindful",
+        labelMap = LabelMapAuditor,
     ),
     ExerciseConfig(
         title = "Affective Valence",
