@@ -14,6 +14,11 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         labelMap = LabelMapAuditor,
     ),
     ExerciseConfig(
+        title = "Full Circle Auditor",
+        description = "The auditor has to be convinced of Clarity & Equanimity in center and periphery",
+        labelMap = LabelMapSHFAuditor,
+    ),
+    ExerciseConfig(
         title = "Affective Valence",
         description = "Pleasant / Unpleasant / Neutral",
         labelMap = LabelMapPosNegNeutral,
