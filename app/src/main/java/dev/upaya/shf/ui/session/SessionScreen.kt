@@ -36,9 +36,8 @@ fun SessionScreen(
     val label: String by viewModel.label.collectAsState(initial = "")
 
     // Simulate a key press on value change
-    val interactionSource = remember { MutableInteractionSource() }
-    LaunchedEffect(inputEvent) {
-        interactionSource.simulatePress()
+    val interactionSource = remember { MutableInteractionSource() }.apply {
+        LaunchedEffect(inputEvent) { simulatePress() }
     }
 
     Column(
