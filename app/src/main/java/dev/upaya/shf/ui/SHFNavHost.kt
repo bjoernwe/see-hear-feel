@@ -6,7 +6,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.exercises.ExerciseViewModel
 import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.session.SessionScreen
@@ -26,9 +25,8 @@ fun SHFNavHost(
         modifier = modifier
     ) {
         composable(route = "exercises") {
-            val exerciseViewModel: ExerciseViewModel = hiltViewModel()
             ExerciseListScreen(
-                viewModel = exerciseViewModel,
+                viewModel = hiltViewModel(),
             ) { cfg ->
                 sessionViewModel.setCurrentExercise(exerciseConfig = cfg)
                 navController.navigate("session")
