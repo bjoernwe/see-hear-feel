@@ -14,7 +14,7 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         labelMap = LabelMapAuditor,
     ),
     ExerciseConfig(
-        title = "Full Circle Auditor",
+        title = "SHF & Advanced Auditor",
         description = "The auditor has to be convinced of Clarity & Equanimity in center and periphery",
         labelMap = LabelMapSHFAuditor,
     ),
