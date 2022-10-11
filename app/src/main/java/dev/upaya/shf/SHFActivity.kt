@@ -2,6 +2,7 @@ package dev.upaya.shf
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -29,6 +30,14 @@ class SHFActivity : ComponentActivity() {
         if (keyCode != KeyEvent.KEYCODE_BACK && inputEventSource.updateInputEvent(keyCode))
             return true
         return super.onKeyDown(keyCode, event)
+    }
+
+    fun setKeepScreenOn() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    fun clearKeepScreenOn() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
 }
