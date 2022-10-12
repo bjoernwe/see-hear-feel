@@ -1,17 +1,25 @@
 package dev.upaya.shf.exercises.labelmaps
 
+import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.exercises.labels.labelOther
 import dev.upaya.shf.inputs.InputKey
 
 
 class LabelMapLetGo {
+
     companion object : LabelMap {
-        override fun getLabel(key: InputKey): String {
+
+        private val labelLetGo = Label("Letting Go")
+
+        override fun getLabel(key: InputKey): Label {
             return when(key) {
-                InputKey.KEY_A -> "LET GO"
-                InputKey.KEY_UP -> "LET GO"
-                InputKey.KEY_DOWN -> "LET GO"
-                else -> "OTHER"
+                InputKey.KEY_A -> labelLetGo
+                InputKey.KEY_UP -> labelLetGo
+                InputKey.KEY_DOWN -> labelLetGo
+                else -> labelOther
             }
         }
+
     }
+
 }

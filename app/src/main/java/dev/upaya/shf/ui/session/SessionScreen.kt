@@ -17,9 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
+import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.ui.varelaFontFamily
 
@@ -33,7 +35,7 @@ fun SessionScreen(
     KeepScreenOn()
 
     val inputEvent by viewModel.inputEvent.collectAsState()
-    val label: String by viewModel.label.collectAsState(initial = "")
+    val label: Label by viewModel.label.collectAsState(initial = Label(""))
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
@@ -52,7 +54,21 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        FadingText(text = label, key = inputEvent, fontFamily = varelaFontFamily)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            FadingText(
+                text = label.primary.uppercase(),
+                key = inputEvent,
+                fontFamily = varelaFontFamily
+            )
+            label.secondary?.let { secondaryLabel ->
+                FadingText(
+                    text = secondaryLabel.uppercase(),
+                    key = inputEvent,
+                    fontSize = 20.sp,
+                    fontFamily = varelaFontFamily
+                )
+            }
+        }
     }
 
 }

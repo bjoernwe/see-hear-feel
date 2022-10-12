@@ -1,22 +1,31 @@
 package dev.upaya.shf.exercises.labelmaps
 
+import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.exercises.labels.labelOther
 import dev.upaya.shf.inputs.InputKey
 
 
 class LabelMapBreathOther {
+
     companion object : LabelMap {
-        override fun getLabel(key: InputKey): String {
+
+        private val labelBreath = Label("Breath")
+        private val labelDistraction = Label("Distraction")
+
+        override fun getLabel(key: InputKey): Label {
             return when(key) {
-                InputKey.KEY_A -> "BREATH"
-                InputKey.KEY_B -> "DISTRACT"
-                InputKey.KEY_X -> "DISTRACT"
-                InputKey.KEY_Y -> "BREATH"
-                InputKey.KEY_UP -> "BREATH"
-                InputKey.KEY_DOWN -> "BREATH"
-                InputKey.KEY_LEFT -> "DISTRACT"
-                InputKey.KEY_RIGHT -> "DISTRACT"
-                else -> "OTHER"
+                InputKey.KEY_A -> labelBreath
+                InputKey.KEY_B -> labelDistraction
+                InputKey.KEY_X -> labelDistraction
+                InputKey.KEY_Y -> labelBreath
+                InputKey.KEY_UP -> labelBreath
+                InputKey.KEY_DOWN -> labelBreath
+                InputKey.KEY_LEFT -> labelDistraction
+                InputKey.KEY_RIGHT -> labelDistraction
+                else -> labelOther
             }
         }
+
     }
+
 }
