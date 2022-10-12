@@ -1,7 +1,7 @@
 package dev.upaya.shf.exercises
 
-import dev.upaya.shf.exercises.labels.LabelMap
-import dev.upaya.shf.exercises.labels.LabelMapSHF
+import dev.upaya.shf.exercises.labelmaps.LabelMap
+import dev.upaya.shf.exercises.labelmaps.LabelMapSHF
 
 
 data class ExerciseConfig(

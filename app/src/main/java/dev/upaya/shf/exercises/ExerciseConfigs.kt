@@ -1,6 +1,6 @@
 package dev.upaya.shf.exercises
 
-import dev.upaya.shf.exercises.labels.*
+import dev.upaya.shf.exercises.labelmaps.*
 
 
 val exampleExercises: List<ExerciseConfig> = listOf(

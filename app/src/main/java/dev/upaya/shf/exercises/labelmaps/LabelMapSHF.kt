@@ -1,4 +1,4 @@
-package dev.upaya.shf.exercises.labels
+package dev.upaya.shf.exercises.labelmaps
 
 import dev.upaya.shf.inputs.InputKey
 
