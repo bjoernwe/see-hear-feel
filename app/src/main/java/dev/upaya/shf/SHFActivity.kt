@@ -32,6 +32,11 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
+        return super.onKeyUp(keyCode, event)
+    }
+
     fun setKeepScreenOn() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
