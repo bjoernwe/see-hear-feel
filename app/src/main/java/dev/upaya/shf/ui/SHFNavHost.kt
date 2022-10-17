@@ -31,7 +31,7 @@ fun SHFNavHost(
             }
         }
         composable(route = "session") {
-            SessionScreen()
+            SessionScreen(viewModel = sessionViewModel)
         }
     }
 
