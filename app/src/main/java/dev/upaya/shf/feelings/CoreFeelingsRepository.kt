@@ -9,22 +9,31 @@ private val FEELINGS = listOf("Core1", "Core2", "Core3")
 
 class CoreFeelingsRepository {
 
-    private var currentListIndex = 0
-    private val currentList = FEELINGS.shuffled().toMutableList()
-    private val _currentFeeling = MutableStateFlow(currentList[currentListIndex])
+    private val urnList = UrnList(initial = FEELINGS)
 
-    val currentFeeling: StateFlow<String> = _currentFeeling
+    private val _currentFeeling = MutableStateFlow<String?>(urnList.getCurrent())
+    val currentFeeling: StateFlow<String?> = _currentFeeling
+
+    private val _finalList = MutableStateFlow<List<String>>(emptyList())
+    val finalList: StateFlow<List<String>> = _finalList
 
     fun keepCurrentFeeling() {
-        currentListIndex += 1
-        currentListIndex %= currentList.size
-        _currentFeeling.value = currentList[currentListIndex]
+        _currentFeeling.value = urnList.getNext()
     }
 
     fun discardCurrentFeeling() {
-        currentList.removeAt(currentListIndex)
-        currentListIndex %= currentList.size
-        _currentFeeling.value = currentList[currentListIndex]
+
+        urnList.getCurrent()?.let { current ->
+            _finalList.value = listOf(current) + _finalList.value
+        }
+
+        urnList.removeCurrent()
+
+        if (urnList.getSize() == 1) {
+            discardCurrentFeeling()
+        }
+
+        _currentFeeling.value = urnList.getCurrent()
     }
 
 }

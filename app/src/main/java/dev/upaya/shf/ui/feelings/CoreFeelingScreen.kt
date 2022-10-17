@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.feelings
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
@@ -16,7 +17,7 @@ fun CoreFeelingScreen(
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
 ) {
 
-    val coreFeeling by coreFeelingViewModel.currentCoreFeeling.collectAsState()
+    val currentCoreFeeling by coreFeelingViewModel.currentCoreFeeling.collectAsState()
     val inputEvent by sessionViewModel.inputEvent.collectAsState()
     val label by sessionViewModel.label.collectAsState(initial = Label(primary = ""))
 
@@ -27,9 +28,16 @@ fun CoreFeelingScreen(
         }
     }
 
-    Column {
-        Text(coreFeeling, color = Color.White)
-        Text(label.primary, color = Color.White)
+    val finalList by coreFeelingViewModel.finalList.collectAsState()
+
+    if (currentCoreFeeling == null) {
+        LazyColumn {
+            items(finalList) { cf ->
+                Text(cf)
+            }
+        }
+    } else {
+        Text(currentCoreFeeling ?: "[N/A]", color = Color.White)
     }
 
 }
