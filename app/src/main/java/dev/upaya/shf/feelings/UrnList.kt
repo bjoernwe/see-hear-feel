@@ -6,10 +6,6 @@ class UrnList(initial: List<String>) {
     private val values = initial.shuffled().toMutableList()
     private var index = 0
 
-    fun getSize(): Int {
-        return values.size
-    }
-
     fun getCurrent(): String? {
         return values.getOrNull(index)
     }

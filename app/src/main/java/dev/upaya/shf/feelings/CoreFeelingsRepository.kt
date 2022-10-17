@@ -14,7 +14,7 @@ class CoreFeelingsRepository {
 
     private val urnList = UrnList(initial = FEELINGS)
 
-    private val _currentFeeling = MutableStateFlow<String?>(urnList.getCurrent())
+    private val _currentFeeling = MutableStateFlow(urnList.getCurrent())
     val currentFeeling: StateFlow<String?> = _currentFeeling
 
     private val _finalList = MutableStateFlow<List<String>>(emptyList())
@@ -31,10 +31,6 @@ class CoreFeelingsRepository {
         }
 
         urnList.removeCurrent()
-
-        if (urnList.getSize() == 1) {
-            discardCurrentFeeling()
-        }
 
         _currentFeeling.value = urnList.getCurrent()
     }
