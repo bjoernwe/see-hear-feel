@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.KeepScreenOn
+import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.exercises.SessionViewModel
 import dev.upaya.shf.ui.varelaFontFamily
 
@@ -23,6 +25,9 @@ fun CoreFeelingScreen(
     sessionViewModel: SessionViewModel,
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
 ) {
+
+    SetStatusBarColor()
+    KeepScreenOn()
 
     val currentCoreFeeling by coreFeelingViewModel.currentCoreFeeling.collectAsState()
     val inputEvent by sessionViewModel.inputEvent.collectAsState()

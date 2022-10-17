@@ -22,6 +22,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
 import dev.upaya.shf.ui.exercises.SessionViewModel
 import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.KeepScreenOn
+import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -70,29 +72,4 @@ private suspend fun MutableInteractionSource.simulatePress() {
     val press = PressInteraction.Press(Offset.Zero)
     this.emit(press)
     this.emit(PressInteraction.Release(press))
-}
-
-
-@Composable
-private fun SetStatusBarColor(color: Color = MaterialTheme.colors.background) {
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(color = color)
-}
-
-
-@Composable
-private fun KeepScreenOn() {
-    val context = LocalContext.current
-    DisposableEffect(context) {
-        context.getActivity()?.setKeepScreenOn()
-        onDispose {
-            context.getActivity()?.clearKeepScreenOn()
-        }
-    }
-}
-
-private fun Context.getActivity(): SHFActivity? = when (this) {
-    is SHFActivity -> this
-    is ContextWrapper -> baseContext.getActivity()
-    else -> null
 }
