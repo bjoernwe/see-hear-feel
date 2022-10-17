@@ -12,15 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.upaya.shf.exercises.ExerciseConfig
-import dev.upaya.shf.exercises.ExerciseViewModel
+import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.ui.ExerciseEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun ExerciseListScreen(
-    viewModel: ExerciseViewModel = hiltViewModel(),
+    viewModel: ExerciseListViewModel = hiltViewModel(),
     onClick: (ExerciseConfig) -> Unit = {},
 ) {
 

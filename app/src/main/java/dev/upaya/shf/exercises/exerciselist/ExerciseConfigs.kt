@@ -1,7 +1,6 @@
-package dev.upaya.shf.exercises
+package dev.upaya.shf.exercises.exerciselist
 
 import dev.upaya.shf.exercises.labelmaps.*
-import dev.upaya.shf.ui.SHFSessionRoutes
 
 
 val exampleExercises: List<ExerciseConfig> = listOf(
@@ -47,6 +46,6 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         title = "Core Feelings",
         description = "Exploration of the Core Feelings described by Douglas Tataryn",
         labelMap = LabelMapKeepDiscard,
-        route = SHFSessionRoutes.FEELINGS,
+        route = ExerciseRoute.FEELINGS,
     ),
 )

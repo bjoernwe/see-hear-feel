@@ -1,4 +1,4 @@
-package dev.upaya.shf.exercises
+package dev.upaya.shf.exercises.exerciselist
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

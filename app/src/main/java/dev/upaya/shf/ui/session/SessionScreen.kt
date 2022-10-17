@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
+import dev.upaya.shf.ui.exercises.SessionViewModel
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.theme.SHFTheme
 

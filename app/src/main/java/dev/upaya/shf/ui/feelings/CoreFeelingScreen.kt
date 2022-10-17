@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.ui.session.SessionViewModel
+import dev.upaya.shf.ui.exercises.SessionViewModel
 
 
 @Composable

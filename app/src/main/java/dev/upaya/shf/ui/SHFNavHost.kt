@@ -6,15 +6,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.SessionViewModel
+import dev.upaya.shf.ui.exercises.SessionViewModel
+import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.feelings.CoreFeelingScreen
 import dev.upaya.shf.ui.session.SessionScreen
-
-
-enum class SHFSessionRoutes {
-    NOTING, FEELINGS
-}
 
 
 @Composable
@@ -38,11 +34,11 @@ fun SHFNavHost(
             }
         }
 
-        composable(route = SHFSessionRoutes.NOTING.name) {
+        composable(route = ExerciseRoute.NOTING.name) {
             SessionScreen(viewModel = sessionViewModel)
         }
 
-        composable(route = SHFSessionRoutes.FEELINGS.name) {
+        composable(route = ExerciseRoute.FEELINGS.name) {
             CoreFeelingScreen(sessionViewModel = sessionViewModel)
         }
 

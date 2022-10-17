@@ -10,7 +10,7 @@ private val FEELINGS = listOf("Core1", "Core2", "Core3")
 class CoreFeelingsRepository {
 
     private var currentListIndex = 0
-    private val currentList = FEELINGS.toMutableList()
+    private val currentList = FEELINGS.shuffled().toMutableList()
     private val _currentFeeling = MutableStateFlow(currentList[currentListIndex])
 
     val currentFeeling: StateFlow<String> = _currentFeeling
