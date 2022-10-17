@@ -1,6 +1,7 @@
 package dev.upaya.shf.exercises
 
 import dev.upaya.shf.exercises.labelmaps.*
+import dev.upaya.shf.ui.SHFSessionRoutes
 
 
 val exampleExercises: List<ExerciseConfig> = listOf(
@@ -41,5 +42,11 @@ val exampleExercises: List<ExerciseConfig> = listOf(
     ExerciseConfig(
         title = "Focus on Rest",
         description = "SHF with focus on inner and outer restful states",
+    ),
+    ExerciseConfig(
+        title = "Core Feelings",
+        description = "Exploration of the Core Feelings described by Douglas Tataryn",
+        labelMap = LabelMapKeepDiscard,
+        route = SHFSessionRoutes.FEELINGS,
     ),
 )
