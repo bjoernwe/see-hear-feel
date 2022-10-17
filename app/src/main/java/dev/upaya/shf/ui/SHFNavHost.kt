@@ -25,15 +25,13 @@ fun SHFNavHost(
         modifier = modifier
     ) {
         composable(route = "exercises") {
-            ExerciseListScreen(
-                viewModel = hiltViewModel(),
-            ) { cfg ->
+            ExerciseListScreen { cfg ->
                 sessionViewModel.setCurrentExercise(exerciseConfig = cfg)
                 navController.navigate("session")
             }
         }
         composable(route = "session") {
-            SessionScreen(viewModel = sessionViewModel)
+            SessionScreen()
         }
     }
 

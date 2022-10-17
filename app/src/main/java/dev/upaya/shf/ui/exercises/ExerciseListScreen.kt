@@ -10,7 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.exercises.ExerciseConfig
 import dev.upaya.shf.exercises.ExerciseViewModel
@@ -20,7 +20,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun ExerciseListScreen(
-    viewModel: ExerciseViewModel = viewModel(),
+    viewModel: ExerciseViewModel = hiltViewModel(),
     onClick: (ExerciseConfig) -> Unit = {},
 ) {
 
