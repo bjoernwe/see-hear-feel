@@ -63,7 +63,7 @@ fun CoreFeelingScreen(
             }
         } else {
             Text(
-                text = "I feel ...",
+                text = "\"I feel ...\"",
                 fontSize = 20.sp,
                 fontFamily = varelaFontFamily,
                 color = MaterialTheme.colors.secondary,
