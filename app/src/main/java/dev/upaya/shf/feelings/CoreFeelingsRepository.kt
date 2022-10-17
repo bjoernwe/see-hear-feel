@@ -17,8 +17,8 @@ class CoreFeelingsRepository {
     private val _currentFeeling = MutableStateFlow(urnList.getCurrent())
     val currentFeeling: StateFlow<String?> = _currentFeeling
 
-    private val _finalList = MutableStateFlow<List<String>>(emptyList())
-    val finalList: StateFlow<List<String>> = _finalList
+    private val _resultList = MutableStateFlow<List<String>>(emptyList())
+    val resultList: StateFlow<List<String>> = _resultList
 
     fun keepCurrentFeeling() {
         _currentFeeling.value = urnList.getNext()
@@ -27,7 +27,7 @@ class CoreFeelingsRepository {
     fun discardCurrentFeeling() {
 
         urnList.getCurrent()?.let { current ->
-            _finalList.value = listOf(current) + _finalList.value
+            _resultList.value = listOf(current) + _resultList.value
         }
 
         urnList.removeCurrent()

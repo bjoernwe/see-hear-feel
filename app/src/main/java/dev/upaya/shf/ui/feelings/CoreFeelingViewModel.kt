@@ -12,7 +12,7 @@ class CoreFeelingViewModel @Inject constructor() : ViewModel() {
 
     private val coreFeelingsRepository = CoreFeelingsRepository()
     val currentCoreFeeling: StateFlow<String?> = coreFeelingsRepository.currentFeeling
-    val finalList = coreFeelingsRepository.finalList
+    val resultList = coreFeelingsRepository.resultList
 
     fun keepCurrentFeeling() {
         coreFeelingsRepository.keepCurrentFeeling()

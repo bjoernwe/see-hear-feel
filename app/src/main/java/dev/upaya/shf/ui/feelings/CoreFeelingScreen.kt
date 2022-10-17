@@ -32,7 +32,7 @@ fun CoreFeelingScreen(
 
     if (currentCoreFeeling == null) {
 
-        val finalList by coreFeelingViewModel.finalList.collectAsState()
+        val finalList by coreFeelingViewModel.resultList.collectAsState()
 
         CoreFeelingsResult(
             resultList = finalList,
