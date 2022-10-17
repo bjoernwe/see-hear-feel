@@ -15,6 +15,7 @@ class UrnList(initial: List<String>) {
     }
 
     fun removeCurrent() {
+        if (values.isEmpty()) { return }
         values.removeAt(index)
         resetIndex()
     }
