@@ -17,13 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.theme.SHFTheme
-import dev.upaya.shf.ui.varelaFontFamily
 
 
 @Composable
@@ -54,21 +52,7 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            FadingText(
-                text = label.primary.uppercase(),
-                key = inputEvent,
-                fontFamily = varelaFontFamily
-            )
-            label.secondary?.let { secondaryLabel ->
-                FadingText(
-                    text = secondaryLabel.uppercase(),
-                    key = inputEvent,
-                    fontSize = 20.sp,
-                    fontFamily = varelaFontFamily
-                )
-            }
-        }
+        LabelText(label = label, key = inputEvent)
     }
 
 }
