@@ -45,13 +45,12 @@ fun CurrentCoreFeeling(
             color = MaterialTheme.colors.secondary,
         )
 
-        label?.let {
-            FadingText(
-                text = "(${it.primary.lowercase()})",
-                key = inputEvent,
-                fontSize = 15.sp,
-            )
-        }
+        FadingText(
+            text = "(${(label?.primary ?: "").lowercase()})",
+            key = inputEvent,
+            fontSize = 15.sp,
+        )
+    }
 
     }
 
