@@ -15,13 +15,11 @@ class UrnList(initial: List<String>) {
     }
 
     fun removeCurrent() {
-        if (values.isEmpty()) { return }
         values.removeAt(index)
         resetIndex()
     }
 
     fun getNext(): String? {
-        if (values.isEmpty()) { return null }
         index += 1
         resetIndex()
         return getCurrent()
