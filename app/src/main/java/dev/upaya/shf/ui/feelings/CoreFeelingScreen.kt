@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
@@ -54,7 +53,12 @@ fun CoreFeelingScreen(
         if (currentCoreFeeling == null) {
             LazyColumn {
                 itemsIndexed(finalList) { i, cf ->
-                    Text("${i+1}) $cf")
+                    Text(
+                        text = "${i+1}) $cf",
+                        fontSize = 20.sp,
+                        fontFamily = varelaFontFamily,
+                        color = MaterialTheme.colors.secondary,
+                    )
                 }
             }
         } else {
@@ -64,10 +68,9 @@ fun CoreFeelingScreen(
                 fontFamily = varelaFontFamily,
                 color = MaterialTheme.colors.secondary,
             )
-            Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = currentCoreFeeling ?: "",
-                fontSize = 50.sp,
+                text = currentCoreFeeling?.uppercase() ?: "",
+                fontSize = 40.sp,
                 fontFamily = varelaFontFamily,
                 color = MaterialTheme.colors.secondary,
             )

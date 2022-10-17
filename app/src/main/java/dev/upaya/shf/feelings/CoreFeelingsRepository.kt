@@ -4,7 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 
-private val FEELINGS = listOf("Core1", "Core2", "Core3")
+private val FEELINGS = listOf(
+    "inadequate", "empty (loss)", "insignificant", "bad (person)",
+    "hopeless", "helpless", "lost", "alone", "worthless"
+)
 
 
 class CoreFeelingsRepository {
