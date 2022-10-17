@@ -16,6 +16,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.exercises.SessionViewModel
+import dev.upaya.shf.ui.session.FadingText
 import dev.upaya.shf.ui.varelaFontFamily
 
 
@@ -30,7 +31,7 @@ fun CoreFeelingScreen(
 
     val currentCoreFeeling by coreFeelingViewModel.currentCoreFeeling.collectAsState()
     val inputEvent by sessionViewModel.inputEvent.collectAsState()
-    val label by sessionViewModel.label.collectAsState(initial = Label(primary = ""))
+    val label: Label? by sessionViewModel.label.collectAsState(initial = null)
 
     LaunchedEffect(inputEvent) {
         when (label) {
@@ -74,6 +75,13 @@ fun CoreFeelingScreen(
                 fontFamily = varelaFontFamily,
                 color = MaterialTheme.colors.secondary,
             )
+            label?.let {
+                FadingText(
+                    text = "(${it.primary.lowercase()})",
+                    key = inputEvent,
+                    fontSize = 15.sp,
+                )
+            }
         }
 
     }
