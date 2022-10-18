@@ -18,7 +18,13 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun FadingText(text: String, fontSize: TextUnit = 50.sp, fontFamily: FontFamily? = null, key: Any? = null) {
+fun FadingText(
+    text: String,
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 50.sp,
+    fontFamily: FontFamily? = null,
+    key: Any? = null
+) {
 
     val alpha = remember { Animatable(1f) }
 
@@ -33,7 +39,7 @@ fun FadingText(text: String, fontSize: TextUnit = 50.sp, fontFamily: FontFamily?
         fontFamily = fontFamily,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colors.secondary,
-        modifier = Modifier.alpha(alpha.value)
+        modifier = modifier.alpha(alpha.value)
     )
 
 }
