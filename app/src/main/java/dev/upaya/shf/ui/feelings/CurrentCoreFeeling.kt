@@ -54,7 +54,7 @@ fun CurrentCoreFeeling(
                 text = "\"I feel ...\"",
                 fontSize = 20.sp,
                 fontFamily = varelaFontFamily,
-                color = MaterialTheme.colors.secondary,
+                color = MaterialTheme.colors.secondaryVariant,
             )
         }
 
@@ -77,6 +77,7 @@ fun CurrentCoreFeeling(
                     else -> ""
                 },
                 modifier = Modifier.padding(bottom = 30.dp),
+                color = MaterialTheme.colors.secondaryVariant,
                 fontSize = 20.sp,
                 key = inputEvent,
             )

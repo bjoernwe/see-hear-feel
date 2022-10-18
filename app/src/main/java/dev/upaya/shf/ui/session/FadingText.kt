@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +23,7 @@ fun FadingText(
     text: String,
     modifier: Modifier = Modifier,
     fontSize: TextUnit = 50.sp,
+    color: Color = MaterialTheme.colors.secondary,
     fontFamily: FontFamily? = null,
     key: Any? = null
 ) {
@@ -35,10 +37,10 @@ fun FadingText(
 
     Text(
         text = text,
+        color = color,
         fontSize = fontSize,
         fontFamily = fontFamily,
         textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.secondary,
         modifier = modifier.alpha(alpha.value)
     )
 
