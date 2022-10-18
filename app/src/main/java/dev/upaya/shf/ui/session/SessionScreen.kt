@@ -48,7 +48,12 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        LabelText(label = label, key = inputEvent)
+        LabelText(
+            label = label,
+            primaryColor = MaterialTheme.colors.secondary,
+            secondaryColor = MaterialTheme.colors.secondaryVariant,
+            key = inputEvent,
+        )
     }
 
 }
