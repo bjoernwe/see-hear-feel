@@ -43,9 +43,15 @@ val exampleExercises: List<ExerciseConfig> = listOf(
         description = "SHF with focus on inner and outer restful states",
     ),
     ExerciseConfig(
+        title = "SIBAM",
+        description = "Noting according to the five categories of experience used in Somatic Experiencing (SE)",
+        labelMap = LabelMapSibam,
+    ),
+    ExerciseConfig(
         title = "Core Feelings",
         description = "Exploration of the Core Feelings described by Douglas Tataryn",
         labelMap = LabelMapKeepDiscard,
         route = ExerciseRoute.FEELINGS,
     ),
 )
+

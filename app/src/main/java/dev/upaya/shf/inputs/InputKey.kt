@@ -6,6 +6,6 @@ enum class InputKey {
     KEY_X, KEY_Y,
     KEY_UP, KEY_DOWN,
     KEY_LEFT, KEY_RIGHT,
-    // KEY_L1, KEY_R1,
-    // KEY_L2, KEY_R2,
+    KEY_L1, KEY_R1,
+    KEY_L2, KEY_R2,
 }
