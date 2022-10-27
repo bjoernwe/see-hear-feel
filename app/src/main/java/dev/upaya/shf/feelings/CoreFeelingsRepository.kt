@@ -24,20 +24,25 @@ class CoreFeelingsRepository {
     val resultList: StateFlow<List<String>> = _resultList
 
     fun keepCurrentFeeling() {
-        _currentFeeling.value = urnList.getNext()
-        _round.value = urnList.getRound()
+        urnList.keepCurrent()
+        updateUrnFlows()
     }
 
     fun discardCurrentFeeling() {
+        addCurrentFeelingToResultList()
+        urnList.removeCurrent()
+        updateUrnFlows()
+    }
 
+    private fun addCurrentFeelingToResultList() {
         urnList.getCurrent()?.let { current ->
             if (round.value > 0) {
                 _resultList.value = listOf(current) + _resultList.value
             }
         }
+    }
 
-        urnList.removeCurrent()
-
+    private fun updateUrnFlows() {
         _currentFeeling.value = urnList.getCurrent()
         _round.value = urnList.getRound()
     }

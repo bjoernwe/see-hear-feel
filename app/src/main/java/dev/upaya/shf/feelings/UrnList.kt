@@ -17,10 +17,9 @@ class UrnList(initial: List<String>) {
         resetIndex()
     }
 
-    fun getNext(): String? {
+    fun keepCurrent() {
         index += 1
         resetIndex()
-        return getCurrent()
     }
 
     fun getRound(): Int {
