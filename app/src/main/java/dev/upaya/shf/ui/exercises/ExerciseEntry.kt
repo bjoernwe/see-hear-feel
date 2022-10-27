@@ -49,7 +49,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 
                 Text(
                     text = cfg.title,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.body1,
                     color = MaterialTheme.colors.onSurface,
                 )
 
@@ -57,7 +57,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 
                 Text(
                     text = cfg.description,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
                 )
 
