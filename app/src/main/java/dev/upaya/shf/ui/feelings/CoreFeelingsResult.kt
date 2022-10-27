@@ -36,15 +36,26 @@ fun CoreFeelingsResult(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        LazyColumn {
-            itemsIndexed(resultList) { i, cf ->
-                Text(
-                    text = "${i+1}) $cf",
-                    fontSize = 20.sp,
-                    fontFamily = varelaFontFamily,
-                    color = MaterialTheme.colors.secondary,
-                )
+        if (resultList.isNotEmpty()) {
+
+            LazyColumn {
+                itemsIndexed(resultList) { i, cf ->
+                    Text(
+                        text = "${i+1}) $cf",
+                        fontSize = 20.sp,
+                        fontFamily = varelaFontFamily,
+                        color = MaterialTheme.colors.secondary,
+                    )
+                }
             }
+
+        } else {
+            Text(
+                text = "[ no resonating feelings ]",
+                fontSize = 20.sp,
+                fontFamily = varelaFontFamily,
+                color = MaterialTheme.colors.secondary,
+            )
         }
 
     }
