@@ -20,6 +20,7 @@ fun CoreFeelingScreen(
 
     val inputEvent by sessionViewModel.inputEvent.collectAsState()
     val label: Label? by sessionViewModel.label.collectAsState(initial = null)
+    val round: Int by coreFeelingViewModel.round.collectAsState()
 
     LaunchedEffect(inputEvent) {
         when (label) {
@@ -44,6 +45,7 @@ fun CoreFeelingScreen(
             currentCoreFeeling = currentCoreFeeling,
             inputEvent = inputEvent,
             label = label,
+            round = round,
         )
 
     }

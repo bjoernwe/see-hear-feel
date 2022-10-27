@@ -26,7 +26,8 @@ import dev.upaya.shf.ui.varelaFontFamily
 fun CurrentCoreFeeling(
     currentCoreFeeling: String?,
     inputEvent: InputEvent?,
-    label: Label?
+    label: Label?,
+    round: Int? = null,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }.apply {
@@ -48,15 +49,37 @@ fun CurrentCoreFeeling(
 
         Column(
             modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.Bottom,
+            //verticalArrangement = Arrangement.Bottom,
         ) {
-            Text(
-                text = "\"I feel ...\"",
-                fontSize = 20.sp,
-                fontFamily = varelaFontFamily,
-                color = MaterialTheme.colors.secondaryVariant,
-            )
-        }
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Top,
+            ) {
+                round?.let { rnd ->
+                    Text(
+                        text = "Round ${rnd+1}".uppercase(),
+                        fontSize = 20.sp,
+                        fontFamily = varelaFontFamily,
+                        color = MaterialTheme.colors.secondaryVariant,
+                        modifier = Modifier.padding(top = 30.dp)
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Bottom,
+            ) {
+                Text(
+                    text = "\"I feel ...\"",
+                    fontSize = 20.sp,
+                    fontFamily = varelaFontFamily,
+                    color = MaterialTheme.colors.secondaryVariant,
+                )
+            }
+
+       }
 
         Text(
             text = currentCoreFeeling?.uppercase() ?: "",
