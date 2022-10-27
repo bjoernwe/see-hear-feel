@@ -2,10 +2,7 @@ package dev.upaya.shf.ui.exercises
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,27 +19,25 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 
     Surface(
         elevation = 2.dp,
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
-            .padding(5.dp)
-            .clickable { onClick(cfg) },
+        modifier = Modifier.clickable { onClick(cfg) },
     ) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp)
+                .padding(8.dp)
         ) {
 
             Icon(
                 painter = painterResource(id = R.drawable.ic_round_self_improvement_24),
-                contentDescription = null,
-                Modifier
+                contentDescription = "Meditating Person",
+                tint = MaterialTheme.colors.secondary,
+                modifier = Modifier
                     .size(64.dp)
                     .padding(4.dp),
             )
-            
-            Spacer(modifier = Modifier.width(4.dp))
+
+            Spacer(modifier = Modifier.width(8.dp))
 
             Column(
                 modifier = Modifier
@@ -55,10 +50,10 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
                 Text(
                     text = cfg.title,
                     style = MaterialTheme.typography.h6,
-                    color = MaterialTheme.colors.secondary,
+                    color = MaterialTheme.colors.onSurface,
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp))
 
                 Text(
                     text = cfg.description,
@@ -78,7 +73,9 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 @Preview
 @Composable
 fun ExerciseEntryPreview() {
-    SHFTheme {
-        ExerciseEntry(ExerciseConfig("Title", "Description"))
+    SHFTheme(darkTheme = true) {
+        ExerciseEntry(
+            cfg = ExerciseConfig("Title", "Description"),
+        )
     }
 }
