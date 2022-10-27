@@ -33,7 +33,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
                 contentDescription = "Meditating Person",
                 tint = MaterialTheme.colors.secondary,
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(56.dp)
                     .padding(4.dp),
             )
 
