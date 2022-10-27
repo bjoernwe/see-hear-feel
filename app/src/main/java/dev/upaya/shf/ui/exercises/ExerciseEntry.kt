@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui
+package dev.upaya.shf.ui.exercises
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
