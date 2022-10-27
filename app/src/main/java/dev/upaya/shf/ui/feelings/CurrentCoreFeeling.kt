@@ -27,7 +27,7 @@ fun CurrentCoreFeeling(
     currentCoreFeeling: String?,
     inputEvent: InputEvent?,
     label: Label?,
-    round: Int? = null,
+    round: Int,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }.apply {
@@ -49,22 +49,20 @@ fun CurrentCoreFeeling(
 
         Column(
             modifier = Modifier.weight(1f),
-            //verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.Top,
             ) {
-                round?.let { rnd ->
-                    Text(
-                        text = "Round ${rnd+1}".uppercase(),
-                        fontSize = 20.sp,
-                        fontFamily = varelaFontFamily,
-                        color = MaterialTheme.colors.secondaryVariant,
-                        modifier = Modifier.padding(top = 30.dp)
-                    )
-                }
+                Text(
+                    text = "Round ${round+1}".uppercase(),
+                    fontSize = 20.sp,
+                    fontFamily = varelaFontFamily,
+                    color = MaterialTheme.colors.secondaryVariant,
+                    modifier = Modifier.padding(top = 30.dp)
+                )
             }
 
             Column(
@@ -95,8 +93,8 @@ fun CurrentCoreFeeling(
             FadingText(
                 text = when (label)
                 {
-                    LabelMapKeepDiscard.labelKeep -> "strong resonance"
-                    LabelMapKeepDiscard.labelDiscard -> "weak resonance"
+                    LabelMapKeepDiscard.labelKeep -> "strong resonance".uppercase()
+                    LabelMapKeepDiscard.labelDiscard -> "weak resonance".uppercase()
                     else -> ""
                 },
                 modifier = Modifier.padding(bottom = 30.dp),
@@ -119,6 +117,7 @@ fun CurrentCoreFeelingPreview() {
             currentCoreFeeling = "Core Feeling",
             inputEvent = null,
             label = LabelMapKeepDiscard.labelKeep,
+            round = 0,
         )
     }
 }
