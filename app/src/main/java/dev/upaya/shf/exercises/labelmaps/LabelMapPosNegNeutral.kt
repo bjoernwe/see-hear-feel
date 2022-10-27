@@ -22,7 +22,7 @@ class LabelMapPosNegNeutral {
                 InputKey.KEY_A -> labelNegative
                 InputKey.KEY_B -> labelNeutral
                 InputKey.KEY_X -> labelNeutral
-                InputKey.KEY_Y -> labelNeutral
+                InputKey.KEY_Y -> labelPositive
                 else -> labelOther
             }
         }
