@@ -41,6 +41,7 @@ fun ExerciseListScreen(
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(exercises) { cfg ->
                     ExerciseEntry(cfg = cfg, onClick = onClick)
+                    Divider()
                 }
             }
         }
