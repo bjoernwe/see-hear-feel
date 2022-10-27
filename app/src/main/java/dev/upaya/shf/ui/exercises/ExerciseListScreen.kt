@@ -12,7 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
-import dev.upaya.shf.ui.ExerciseEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
