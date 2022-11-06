@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SessionViewModel @Inject constructor(
+class LabelViewModel @Inject constructor(
     private val inputEventSource: InputEventSource,
 ) : ViewModel() {
 

@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.exercises.SessionViewModel
+import dev.upaya.shf.ui.exercises.LabelViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
@@ -22,7 +22,7 @@ fun SHFNavHost(
     modifier: Modifier = Modifier,
 ) {
 
-    val sessionViewModel: SessionViewModel = hiltViewModel()
+    val labelViewModel: LabelViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -34,17 +34,17 @@ fun SHFNavHost(
             val exerciseListViewModel: ExerciseListViewModel = hiltViewModel()
             val exercises by exerciseListViewModel.exercises.collectAsState()
             ExerciseListScreen(exercises = exercises) { cfg ->
-                sessionViewModel.setCurrentExercise(exerciseConfig = cfg)
+                labelViewModel.setCurrentExercise(exerciseConfig = cfg)
                 navController.navigate(cfg.route.name)
             }
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(sessionViewModel = sessionViewModel)
+            SessionScreen(labelViewModel = labelViewModel)
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {
-            CoreFeelingScreen(sessionViewModel = sessionViewModel)
+            CoreFeelingScreen(labelViewModel = labelViewModel)
         }
 
     }
