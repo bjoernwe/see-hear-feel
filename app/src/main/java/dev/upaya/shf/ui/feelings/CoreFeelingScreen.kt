@@ -6,7 +6,7 @@ import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.exercises.LabelViewModel
+import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.ui.input.InputViewModel
 
 

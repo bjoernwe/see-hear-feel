@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.exercises.LabelViewModel
+import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
