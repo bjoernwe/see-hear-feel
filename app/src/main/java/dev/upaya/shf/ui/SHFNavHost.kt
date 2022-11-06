@@ -40,7 +40,7 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(viewModel = sessionViewModel)
+            SessionScreen(sessionViewModel = sessionViewModel)
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {

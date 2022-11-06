@@ -16,7 +16,8 @@ class SessionViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _currentExercise: MutableStateFlow<ExerciseConfig?> = MutableStateFlow(null)
-    val inputEvent: StateFlow<InputEvent?> = inputEventSource.inputEvent
+    private val inputEvent: StateFlow<InputEvent?> = inputEventSource.inputEvent
+
     var label = inputEvent.transform { inputEvent ->
         if (inputEvent != null) {
             _currentExercise.value?.labelMap?.let {

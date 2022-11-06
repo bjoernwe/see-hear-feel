@@ -16,20 +16,22 @@ import dev.upaya.shf.ui.exercises.SessionViewModel
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
+import dev.upaya.shf.ui.input.InputViewModel
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun SessionScreen(
-    viewModel: SessionViewModel = hiltViewModel(),
+    inputViewModel: InputViewModel = hiltViewModel(),
+    sessionViewModel: SessionViewModel = hiltViewModel(),
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
 
-    val inputEvent by viewModel.inputEvent.collectAsState()
-    val label: Label by viewModel.label.collectAsState(initial = Label(""))
+    val inputEvent by inputViewModel.inputEvent.collectAsState()
+    val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
