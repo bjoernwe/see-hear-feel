@@ -1,10 +1,6 @@
 package dev.upaya.shf.ui.exercises
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +18,6 @@ fun ExerciseListScreen(
 ) {
 
     val systemUiController = rememberSystemUiController()
-
     systemUiController.setStatusBarColor(color = MaterialTheme.colors.secondaryVariant)
 
     Scaffold(
@@ -33,25 +28,18 @@ fun ExerciseListScreen(
             )
         }
     ) { padding ->
-        Surface(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ) {
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(exercises) { cfg ->
-                    ExerciseEntry(cfg = cfg, onClick = onClick)
-                    Divider()
-                }
-            }
-        }
+        ExerciseList(
+            exercises = exercises,
+            modifier = Modifier.padding(padding),
+            onClick = onClick,
+        )
     }
 }
 
 
 @Preview
 @Composable
-fun ExerciseListPreview() {
+fun ExerciseListScreenPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseListScreen(
             exercises = exampleExercises,
