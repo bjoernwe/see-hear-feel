@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
@@ -15,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
-import dev.upaya.shf.inputs.InputEventSource
 import dev.upaya.shf.inputs.InputKey
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -23,10 +21,8 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun ControllerVisualization(
     modifier: Modifier = Modifier,
-    inputEventSource: InputEventSource? = null,
+    inputKey: InputKey?,
 ) {
-
-    val inputEvent = inputEventSource?.inputEvent?.collectAsState()
 
     Image(
         painter = painterResource(R.drawable.stadia_controller_fill0_wght100_grad_25_opsz48),
@@ -37,7 +33,7 @@ fun ControllerVisualization(
             .aspectRatio(ratio = 1.2f)
             .drawWithContent {
                 drawContent()
-                drawButtons(inputKey = inputEvent?.value?.inputKey)
+                drawButtons(inputKey = inputKey)
             }
     )
 
@@ -110,6 +106,7 @@ private fun ContentDrawScope.drawButton(
 fun ControllerVisualizationPreview() {
     SHFTheme(darkTheme = true) {
         ControllerVisualization(
+            inputKey = InputKey.KEY_A,
             modifier = Modifier.fillMaxSize(),
         )
     }
