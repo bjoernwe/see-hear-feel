@@ -37,37 +37,29 @@ fun ControllerVisualization(
             .aspectRatio(ratio = 1.2f)
             .drawWithContent {
                 drawContent()
-                drawButtons(
-                    contentDrawScope = this,
-                    inputKey = inputEvent?.value?.inputKey,
-                )
+                drawButtons(inputKey = inputEvent?.value?.inputKey)
             }
     )
 
 }
 
 
-private fun drawButtons(
-    contentDrawScope: ContentDrawScope,
+private fun ContentDrawScope.drawButtons(
     inputKey: InputKey?,
 ) {
     drawButton(
-        contentDrawScope = contentDrawScope,
         inputKey = inputKey,
         targetKey = InputKey.KEY_A,
     )
     drawButton(
-        contentDrawScope = contentDrawScope,
         inputKey = inputKey,
         targetKey = InputKey.KEY_B,
     )
     drawButton(
-        contentDrawScope = contentDrawScope,
         inputKey = inputKey,
         targetKey = InputKey.KEY_X,
     )
     drawButton(
-        contentDrawScope = contentDrawScope,
         inputKey = inputKey,
         targetKey = InputKey.KEY_Y,
     )
@@ -93,8 +85,7 @@ private fun buttonOffset(inputKey: InputKey): Offset? {
 }
 
 
-private fun drawButton(
-    contentDrawScope: ContentDrawScope,
+private fun ContentDrawScope.drawButton(
     inputKey: InputKey?,
     targetKey: InputKey,
     buttonRadiusDivider: Float = 35f,
@@ -102,12 +93,12 @@ private fun drawButton(
     buttonColorInactive: Color = Color.Black,
 ) {
     buttonOffset(targetKey)?.let { buttonOffset ->
-        contentDrawScope.drawCircle(
+        this.drawCircle(
             color = if (inputKey == targetKey) buttonColorActive else buttonColorInactive,
-            radius = contentDrawScope.size.minDimension / buttonRadiusDivider,
-            center = contentDrawScope.center + Offset(
-                x = buttonOffset.x * contentDrawScope.size.minDimension,
-                y = buttonOffset.y * contentDrawScope.size.minDimension,
+            radius = this.size.minDimension / buttonRadiusDivider,
+            center = this.center + Offset(
+                x = buttonOffset.x * this.size.minDimension,
+                y = buttonOffset.y * this.size.minDimension,
             )
         )
     }
