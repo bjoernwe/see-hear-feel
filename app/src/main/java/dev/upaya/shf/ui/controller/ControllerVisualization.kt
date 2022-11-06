@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
@@ -21,10 +20,10 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun ControllerVisualization(
     modifier: Modifier = Modifier,
-    inputEventSource: InputEventSource,
+    inputEventSource: InputEventSource? = null,
 ) {
 
-    val inputEvent by inputEventSource.inputEvent.collectAsState()
+    val inputEvent = inputEventSource?.inputEvent?.collectAsState()
 
     Icon(
         painter = painterResource(R.drawable.stadia_controller_fill0_wght100_grad_25_opsz48),
@@ -32,12 +31,10 @@ fun ControllerVisualization(
         modifier = modifier
             .drawWithContent {
                 drawContent()
-                inputEvent?.inputKey?.let { inputKey ->
-                    drawButtons(
-                        contentDrawScope = this,
-                        inputKey = inputKey,
-                    )
-                }
+                drawButtons(
+                    contentDrawScope = this,
+                    inputKey = inputEvent?.value?.inputKey,
+                )
             }
     )
 }
@@ -45,7 +42,7 @@ fun ControllerVisualization(
 
 private fun drawButtons(
     contentDrawScope: ContentDrawScope,
-    inputKey: InputKey,
+    inputKey: InputKey?,
 ) {
     drawButton(
         contentDrawScope = contentDrawScope,
@@ -91,7 +88,7 @@ private fun buttonOffset(inputKey: InputKey): Offset? {
 
 private fun drawButton(
     contentDrawScope: ContentDrawScope,
-    inputKey: InputKey,
+    inputKey: InputKey?,
     targetKey: InputKey,
     buttonRadiusDivider: Float = 35f,
     buttonColorActive: Color = Color.Green,
@@ -113,11 +110,9 @@ private fun drawButton(
 @Preview
 @Composable
 fun ControllerVisualizationPreview() {
-    val inputEventSource = InputEventSource()
     SHFTheme(darkTheme = true) {
         ControllerVisualization(
             modifier = Modifier.fillMaxSize(),
-            inputEventSource = inputEventSource,
         )
     }
 }
