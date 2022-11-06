@@ -1,7 +1,7 @@
 package dev.upaya.shf.ui.controller
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -9,6 +9,7 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
@@ -25,10 +26,13 @@ fun ControllerVisualization(
 
     val inputEvent = inputEventSource?.inputEvent?.collectAsState()
 
-    Icon(
+    Image(
         painter = painterResource(R.drawable.stadia_controller_fill0_wght100_grad_25_opsz48),
-        contentDescription = "Game Controller Outline",
+        contentDescription = "Game Controller",
+        contentScale = ContentScale.Fit,
         modifier = modifier
+            .aspectRatio(ratio = 1.2f)
+            .fillMaxSize()
             .drawWithContent {
                 drawContent()
                 drawButtons(
@@ -37,6 +41,7 @@ fun ControllerVisualization(
                 )
             }
     )
+
 }
 
 
