@@ -18,9 +18,10 @@ class InputEventSource @Inject constructor() {
         _inputEvent.value = null
     }
 
-    fun updateInputEvent(keyCode: Int) {
+    fun updateInputEvent(keyCode: Int): Boolean {
         val inputKey = inputDevice.getInputKey(keyCode)
         _inputEvent.value = InputEvent(inputKey = inputKey)
+        return inputKey != InputKey.UNMAPPED
     }
 
 }
