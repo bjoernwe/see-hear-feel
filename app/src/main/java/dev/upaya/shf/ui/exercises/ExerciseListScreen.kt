@@ -10,24 +10,18 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.R
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
-import dev.upaya.shf.ui.controller.ControllerDialog
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun ExerciseListScreen(
     exercises: List<ExerciseConfig>,
-    onClick: (ExerciseConfig) -> Unit = {},
+    onExerciseClick: (ExerciseConfig) -> Unit = {},
+    onControllerButtonClick: () -> Unit = {},
 ) {
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(color = MaterialTheme.colors.secondaryVariant)
-
-    val controllerDialogVisible = remember { mutableStateOf(false) }
-
-    if (controllerDialogVisible.value) {
-        ControllerDialog(visible = controllerDialogVisible)
-    }
 
     Scaffold(
         topBar = {
@@ -35,7 +29,7 @@ fun ExerciseListScreen(
                 title = { Text(text = "Noting Exercises") },
                 backgroundColor = MaterialTheme.colors.secondary,
                 actions = {
-                    IconButton(onClick = { controllerDialogVisible.value = true }) {
+                    IconButton(onClick = onControllerButtonClick) {
                         Icon(
                             painter = painterResource(R.drawable.ic_round_videogame_asset_24),
                             contentDescription = "Game Controller",
@@ -48,7 +42,7 @@ fun ExerciseListScreen(
         ExerciseList(
             exercises = exercises,
             modifier = Modifier.padding(padding),
-            onClick = onClick,
+            onClick = onExerciseClick,
         )
     }
 
