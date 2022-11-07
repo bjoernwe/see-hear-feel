@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
-import dev.upaya.shf.ui.controller.ControllerVisualization
+import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.feelings.CoreFeelingScreen
@@ -58,7 +58,9 @@ fun SHFNavHost(
         composable(route = "controller") {
             val inputViewModel: InputViewModel = hiltViewModel()
             val inputEvent by inputViewModel.inputEvent.collectAsState()
-            ControllerVisualization(inputKey = inputEvent?.inputKey)
+            ControllerSetupScreen(
+                inputKey = inputEvent?.inputKey
+            )
         }
 
     }
