@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.inputs.InputKey
+import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -14,15 +15,19 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun ControllerSetupScreen(
     inputKey: InputKey?,
 ) {
+
+    SetStatusBarColor()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        ControllerVisualization(
-            inputKey = inputKey,
-            modifier = Modifier
-                .fillMaxSize(.5f)
+        Controller(
+            key = inputKey,
+            //inputKey = inputKey,
+            //modifier = Modifier
+            //    .fillMaxSize(.5f)
         )
     }
 }
