@@ -1,6 +1,6 @@
 package dev.upaya.shf.ui.controller
 
-import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
@@ -37,15 +37,19 @@ fun Controller(key: Any? = null) {
         val guidelineHorizontalX = createGuidelineFromStart(.553f)
         val guidelineVerticalCenter = createGuidelineFromTop(.416f)
 
-        val alpha = remember { Animatable(1f) }
+        val secondaryColor = MaterialTheme.colors.secondary
+        val colorX = remember { Animatable(Color.Black) }
 
         LaunchedEffect(key) {
-            alpha.snapTo(1f)
-            alpha.animateTo(0f, animationSpec = spring(stiffness = Spring.StiffnessVeryLow))
+            colorX.snapTo(secondaryColor)
+            colorX.animateTo(
+                targetValue = Color.Black,
+                animationSpec = spring(stiffness = Spring.StiffnessVeryLow)
+            )
         }
 
         Surface(
-            color = Color.Green.copy(alpha = alpha.value),
+            color = colorX.value,
             modifier = Modifier
                 .constrainAs(createRef()) {
                     centerAround(guidelineHorizontalX)
