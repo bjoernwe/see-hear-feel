@@ -1,11 +1,13 @@
 package dev.upaya.shf.ui.controller
 
+import androidx.compose.animation.Animatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -29,12 +31,15 @@ fun Controller(
 
         ControllerImage()
 
+        val colorAnimatableX = remember { Animatable(Color.Black) }
+
         ControllerButton(
             verticalCenterGuideline = createGuidelineFromTop(.416f),
             horizontalCenterGuideline = createGuidelineFromStart(.553f),
             inputKey = inputEvent?.inputKey,
             buttonKey = InputKey.KEY_X,
             changeKey = inputEvent,
+            colorAnimatable = colorAnimatableX,
         )
 
     }

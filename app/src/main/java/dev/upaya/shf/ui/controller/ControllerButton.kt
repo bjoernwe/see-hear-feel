@@ -1,6 +1,8 @@
 package dev.upaya.shf.ui.controller
 
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector4D
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.aspectRatio
@@ -29,17 +31,16 @@ fun ConstraintLayoutScope.ControllerButton(
     buttonKey: InputKey,
     inputKey: InputKey?,
     changeKey: Any? = null,
+    colorAnimatable: Animatable<Color, AnimationVector4D>,
     activeColor: Color = MaterialTheme.colors.secondary,
     inactiveColor: Color = Color.Black,
     buttonSizeRatio: Float = .044f,
 ) {
 
-    val buttonColor = remember { Animatable(Color.Black) }
-
-    LaunchedEffect(changeKey) {
-        if (inputKey == buttonKey) {
-            buttonColor.snapTo(activeColor)
-            buttonColor.animateTo(
+    if (inputKey == buttonKey) {
+        LaunchedEffect(changeKey) {
+            colorAnimatable.snapTo(activeColor)
+            colorAnimatable.animateTo(
                 targetValue = inactiveColor,
                 animationSpec = spring(stiffness = Spring.StiffnessVeryLow)
             )
@@ -47,7 +48,7 @@ fun ConstraintLayoutScope.ControllerButton(
     }
 
     Surface(
-        color = buttonColor.value,
+        color = colorAnimatable.value,
         modifier = Modifier
             .constrainAs(createRef()) {
                 centerAround(horizontalCenterGuideline)
@@ -67,12 +68,14 @@ fun ConstraintLayoutScope.ControllerButton(
 @Composable
 fun ControllerButtonPreview() {
     SHFTheme {
+        val colorAnimatable = remember { Animatable(Color.Black) }
         ConstraintLayout {
             ControllerButton(
                 horizontalCenterGuideline = createGuidelineFromStart(.5f),
                 verticalCenterGuideline = createGuidelineFromTop(.5f),
                 inputKey = InputKey.KEY_X,
                 buttonKey = InputKey.KEY_X,
+                colorAnimatable = colorAnimatable,
             )
         }
     }
