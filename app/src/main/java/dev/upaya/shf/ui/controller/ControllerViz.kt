@@ -1,27 +1,25 @@
 package dev.upaya.shf.ui.controller
 
-import androidx.compose.animation.Animatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import dev.upaya.shf.R
-import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.inputs.InputKey
+import dev.upaya.shf.inputs.KeyPressStates
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun Controller(
-    inputEvent: InputEvent?,
+    keyPressStates: KeyPressStates,
 ) {
 
     ConstraintLayout(
@@ -31,15 +29,10 @@ fun Controller(
 
         ControllerImage()
 
-        val colorAnimatableX = remember { Animatable(Color.Black) }
-
         ControllerButton(
             verticalCenterGuideline = createGuidelineFromTop(.416f),
             horizontalCenterGuideline = createGuidelineFromStart(.553f),
-            inputKey = inputEvent?.inputKey,
-            buttonKey = InputKey.KEY_X,
-            changeKey = inputEvent,
-            colorAnimatable = colorAnimatableX,
+            pressed = keyPressStates[InputKey.KEY_X] != null,
         )
 
     }
@@ -66,7 +59,7 @@ fun ControllerImage() {
 fun ControllerPreview() {
     SHFTheme(darkTheme = true) {
         Controller(
-            inputEvent = null,
+            keyPressStates = mutableMapOf()
         )
     }
 }

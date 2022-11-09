@@ -3,17 +3,20 @@ package dev.upaya.shf.ui.controller
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.inputs.InputEvent
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.ui.SetStatusBarColor
+import dev.upaya.shf.ui.input.InputViewModel
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun ControllerSetupScreen(
-    inputEvent: InputEvent?,
+    inputViewModel: InputViewModel = hiltViewModel(),
 ) {
 
     SetStatusBarColor()
@@ -23,8 +26,11 @@ fun ControllerSetupScreen(
         modifier = Modifier
             .fillMaxSize(),
     ) {
+
+        val keyPressStates by inputViewModel.keyPressStates.collectAsState()
+
         Controller(
-            inputEvent = inputEvent,
+            keyPressStates = keyPressStates,
         )
     }
 }
@@ -34,8 +40,6 @@ fun ControllerSetupScreen(
 @Composable
 fun ControllerSetupScreenPreview() {
     SHFTheme(darkTheme = true) {
-        ControllerSetupScreen(
-            inputEvent = null,
-        )
+        ControllerSetupScreen()
     }
 }

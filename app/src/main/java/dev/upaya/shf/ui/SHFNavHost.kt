@@ -14,7 +14,6 @@ import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.feelings.CoreFeelingScreen
-import dev.upaya.shf.ui.input.InputViewModel
 import dev.upaya.shf.ui.session.SessionScreen
 
 
@@ -56,11 +55,7 @@ fun SHFNavHost(
         }
 
         composable(route = "controller") {
-            val inputViewModel: InputViewModel = hiltViewModel()
-            val inputEvent by inputViewModel.inputEvent.collectAsState()
-            ControllerSetupScreen(
-                inputEvent = inputEvent,
-            )
+            ControllerSetupScreen()
         }
 
     }

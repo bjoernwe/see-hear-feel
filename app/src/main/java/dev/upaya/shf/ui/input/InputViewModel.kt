@@ -12,4 +12,5 @@ class InputViewModel @Inject constructor(
     inputEventSource: InputEventSource,
 ) : ViewModel() {
     val inputEvent: StateFlow<InputEvent?> = inputEventSource.inputEvent
+    val keyPressStates: StateFlow<KeyPressStates> = inputEventSource.keyPressStates
 }
