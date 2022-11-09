@@ -29,10 +29,31 @@ fun ControllerVisualization(
 
         ControllerImage()
 
+        val guidelineAY = createGuidelineFromStart(.622f)
+        val guidelineBX = createGuidelineFromTop(.416f)
+
         ControllerButton(
-            verticalCenterGuideline = createGuidelineFromTop(.416f),
+            verticalCenterGuideline = createGuidelineFromTop(.332f),
+            horizontalCenterGuideline = guidelineAY,
+            pressed = keyPressStates[InputKey.KEY_Y] != null,
+        )
+
+        ControllerButton(
+            verticalCenterGuideline = guidelineBX,
+            horizontalCenterGuideline = createGuidelineFromStart(.692f),
+            pressed = keyPressStates[InputKey.KEY_B] != null,
+        )
+
+        ControllerButton(
+            verticalCenterGuideline = guidelineBX,
             horizontalCenterGuideline = createGuidelineFromStart(.553f),
             pressed = keyPressStates[InputKey.KEY_X] != null,
+        )
+
+        ControllerButton(
+            verticalCenterGuideline = createGuidelineFromTop(.499f),
+            horizontalCenterGuideline = guidelineAY,
+            pressed = keyPressStates[InputKey.KEY_A] != null,
         )
 
     }
