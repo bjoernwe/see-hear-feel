@@ -59,7 +59,7 @@ fun SHFNavHost(
             val inputViewModel: InputViewModel = hiltViewModel()
             val inputEvent by inputViewModel.inputEvent.collectAsState()
             ControllerSetupScreen(
-                inputKey = inputEvent?.inputKey
+                inputEvent = inputEvent,
             )
         }
 
