@@ -32,7 +32,7 @@ fun ControllerSetupScreen(
 
         val keyPressStates by inputViewModel.keyPressStates.collectAsState()
 
-        Controller(
+        ControllerVisualization(
             keyPressStates = keyPressStates,
         )
     }
