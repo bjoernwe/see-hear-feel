@@ -21,9 +21,9 @@ class InputDeviceGeneric {
                 KEYCODE_BUTTON_Y -> InputKey.KEY_Y
                 KEYCODE_BUTTON_R1 -> InputKey.KEY_R1
                 KEYCODE_BUTTON_R2 -> InputKey.KEY_R2
-                KEYCODE_VOLUME_UP -> InputKey.KEY_A
-                KEYCODE_VOLUME_DOWN -> InputKey.KEY_B
-                KEYCODE_HEADSETHOOK -> InputKey.KEY_X
+                KEYCODE_VOLUME_UP -> InputKey.KEY_LEFT
+                KEYCODE_VOLUME_DOWN -> InputKey.KEY_RIGHT
+                KEYCODE_HEADSETHOOK -> InputKey.KEY_DOWN
                 else -> InputKey.UNMAPPED
             }
         }
