@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -24,15 +25,23 @@ fun ControllerVisualization(
     keyPressStates: KeyPressStates,
 ) {
 
-    ConstraintLayout(
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .aspectRatio(1.2f)
+            .fillMaxSize(.9f),
     ) {
-        ControllerImage()
-        ControllerCross(keyPressStates = keyPressStates)
-        ButtonsABXY(keyPressStates = keyPressStates)
-        ButtonsLR(keyPressStates = keyPressStates)
+        ConstraintLayout(
+            modifier = Modifier
+                .aspectRatio(1.2f)
+        ) {
+            ControllerImage()
+            ControllerCross(keyPressStates = keyPressStates)
+            ButtonsABXY(keyPressStates = keyPressStates)
+            ButtonsLR(keyPressStates = keyPressStates)
+        }
     }
+
 }
 
 
