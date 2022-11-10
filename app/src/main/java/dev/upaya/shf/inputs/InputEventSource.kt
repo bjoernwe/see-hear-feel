@@ -34,7 +34,8 @@ class InputEventSource @Inject constructor() {
         if (inputKey == InputKey.UNMAPPED)
             return false
 
-        _inputEvent.value = InputEvent(inputKey = inputKey)
+        if (_keyPressStates.value[inputKey] == null)
+            _inputEvent.value = InputEvent(inputKey = inputKey)
 
         _keyPressStates.value = _keyPressStates.value.toMutableMap().apply {
             this[inputKey] = Date()
