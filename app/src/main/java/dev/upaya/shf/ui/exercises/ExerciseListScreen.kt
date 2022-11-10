@@ -32,7 +32,7 @@ fun ExerciseListScreen(
                     IconButton(onClick = onControllerButtonClick) {
                         Icon(
                             painter = painterResource(R.drawable.ic_round_videogame_asset_24),
-                            contentDescription = "Game Controller",
+                            contentDescription = "Controller Setup",
                         )
                     }
                 }
