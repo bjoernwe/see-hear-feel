@@ -164,8 +164,8 @@ fun ConstraintLayoutScope.ButtonsLR(
         verticalCenterGuideline = guidelineLR2,
         horizontalCenterGuideline = guidelineL,
         pressed = keyPressStates[InputKey.KEY_L2] != null,
-        buttonSizeRatio = .1f,
-        aspectRatio = 5f,
+        buttonSizeRatio = .07f,
+        aspectRatio = 3.5f,
         shape = RoundedCornerShape(50),
     )
 
@@ -182,8 +182,8 @@ fun ConstraintLayoutScope.ButtonsLR(
         verticalCenterGuideline = guidelineLR2,
         horizontalCenterGuideline = guidelineR,
         pressed = keyPressStates[InputKey.KEY_R2] != null,
-        buttonSizeRatio = .1f,
-        aspectRatio = 5f,
+        buttonSizeRatio = .07f,
+        aspectRatio = 3.5f,
         shape = RoundedCornerShape(50),
     )
 }
