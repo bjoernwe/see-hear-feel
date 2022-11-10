@@ -28,11 +28,10 @@ fun ControllerVisualization(
         modifier = Modifier
             .aspectRatio(1.2f)
     ) {
-
         ControllerImage()
-
         ControllerCross(keyPressStates = keyPressStates)
         ButtonsABXY(keyPressStates = keyPressStates)
+        ButtonsLR(keyPressStates = keyPressStates)
     }
 }
 
@@ -47,7 +46,6 @@ fun ControllerImage(
         contentScale = ContentScale.Fit,
         colorFilter = ColorFilter.tint(color = tintColor),
         modifier = Modifier
-            //.background(MaterialTheme.colors.background)
             .aspectRatio(ratio = 1.2f)
             .fillMaxSize()
     )
@@ -130,6 +128,54 @@ fun ConstraintLayoutScope.ButtonsABXY(
         verticalCenterGuideline = createGuidelineFromTop(.499f),
         horizontalCenterGuideline = guidelineAY,
         pressed = keyPressStates[InputKey.KEY_A] != null,
+    )
+}
+
+
+@Composable
+fun ConstraintLayoutScope.ButtonsLR(
+    keyPressStates: KeyPressStates,
+) {
+
+    val guidelineLR1 = createGuidelineFromTop(.15f)
+    val guidelineLR2 = createGuidelineFromTop(.1f)
+    val guidelineL = createGuidelineFromStart(.37f)
+    val guidelineR = createGuidelineFromStart(.63f)
+
+    ControllerButton(
+        verticalCenterGuideline = guidelineLR1,
+        horizontalCenterGuideline = guidelineL,
+        pressed = keyPressStates[InputKey.KEY_L1] != null,
+        buttonSizeRatio = .1f,
+        aspectRatio = 5f,
+        shape = RoundedCornerShape(50),
+    )
+
+    ControllerButton(
+        verticalCenterGuideline = guidelineLR2,
+        horizontalCenterGuideline = guidelineL,
+        pressed = keyPressStates[InputKey.KEY_L2] != null,
+        buttonSizeRatio = .1f,
+        aspectRatio = 5f,
+        shape = RoundedCornerShape(50),
+    )
+
+    ControllerButton(
+        verticalCenterGuideline = guidelineLR1,
+        horizontalCenterGuideline = guidelineR,
+        pressed = keyPressStates[InputKey.KEY_R1] != null,
+        buttonSizeRatio = .1f,
+        aspectRatio = 5f,
+        shape = RoundedCornerShape(50),
+    )
+
+    ControllerButton(
+        verticalCenterGuideline = guidelineLR2,
+        horizontalCenterGuideline = guidelineR,
+        pressed = keyPressStates[InputKey.KEY_R2] != null,
+        buttonSizeRatio = .1f,
+        aspectRatio = 5f,
+        shape = RoundedCornerShape(50),
     )
 }
 
