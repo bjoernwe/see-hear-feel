@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.controller
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -25,6 +26,7 @@ fun ControllerSetupScreen(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .background(MaterialTheme.colors.background)
             .fillMaxSize(),
