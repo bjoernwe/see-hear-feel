@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutBaseScope
@@ -21,9 +22,11 @@ fun ConstraintLayoutScope.ControllerButton(
     verticalCenterGuideline: ConstraintLayoutBaseScope.HorizontalAnchor,
     horizontalCenterGuideline: ConstraintLayoutBaseScope.VerticalAnchor,
     pressed: Boolean,
-    activeColor: Color = MaterialTheme.colors.secondary,
-    inactiveColor: Color = Color.Black,
+    activeColor: Color = Color.White,
+    inactiveColor: Color = MaterialTheme.colors.secondaryVariant,
     buttonSizeRatio: Float = .044f,
+    aspectRatio: Float = 1f,
+    shape: Shape = CircleShape,
 ) {
 
     Surface(
@@ -34,8 +37,8 @@ fun ConstraintLayoutScope.ControllerButton(
                 centerAround(verticalCenterGuideline)
             }
             .fillMaxSize(buttonSizeRatio)
-            .aspectRatio(1f)
-            .clip(CircleShape)
+            .aspectRatio(aspectRatio)
+            .clip(shape)
     ) {
         // Button empty
     }
