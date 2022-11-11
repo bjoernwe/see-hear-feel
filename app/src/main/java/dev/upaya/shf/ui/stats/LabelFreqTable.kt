@@ -26,7 +26,7 @@ import java.lang.Float.max
 @Composable
 fun LabelFreqTable(labelFreqs: LabelFreqs) {
 
-    LazyColumn() {
+    LazyColumn {
 
         items(labelFreqs.entries.toList()) { (label, count) ->
 
@@ -60,7 +60,7 @@ fun LabelWithBar(
             modifier = Modifier
                 .fillMaxSize()
                 .align(CenterVertically)
-                .weight(.2f)
+                .weight(1f)
                 .padding(end = 6.dp)
         )
 
@@ -68,7 +68,7 @@ fun LabelWithBar(
             size = barSize,
             maxSize = maxBarSize,
             modifier = Modifier
-                .weight(1f)
+                .weight(2f)
         )
 
     }
