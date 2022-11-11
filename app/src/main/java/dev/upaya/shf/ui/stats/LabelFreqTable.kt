@@ -15,15 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.exercises.labels.labelFeel
 import dev.upaya.shf.exercises.labels.labelHear
 import dev.upaya.shf.exercises.labels.labelSee
+import dev.upaya.shf.ui.input.LabelFreqs
 import dev.upaya.shf.ui.theme.SHFTheme
 import java.lang.Float.max
-
-
-typealias LabelFreqs = Map<Label, Int>
 
 
 @Composable
@@ -131,7 +128,7 @@ fun HorizontalBar(
 @Composable
 fun LabelFreqTablePreview() {
 
-    val labelFreqs: LabelFreqs = mapOf(
+    val labelFreqs: LabelFreqs = mutableMapOf(
         labelSee to 15,
         labelHear to 5,
         labelFeel to 1,
