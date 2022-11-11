@@ -15,6 +15,7 @@ import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.feelings.CoreFeelingScreen
 import dev.upaya.shf.ui.session.SessionScreen
+import dev.upaya.shf.ui.stats.StatsScreen
 
 
 @Composable
@@ -47,7 +48,18 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(labelViewModel = labelViewModel)
+            SessionScreen(
+                labelViewModel = labelViewModel,
+                statsButtonOnClick = {
+                    navController.navigate("stats")
+                }
+            )
+        }
+
+        composable(route = "stats") {
+            StatsScreen(
+                labelFreqs = labelViewModel.labelStats
+            )
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {

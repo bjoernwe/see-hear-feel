@@ -4,14 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import dev.upaya.shf.R
 import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
@@ -25,6 +29,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun SessionScreen(
     inputViewModel: InputViewModel = hiltViewModel(),
     labelViewModel: LabelViewModel = hiltViewModel(),
+    statsButtonOnClick: () -> Unit = {},
 ) {
 
     SetStatusBarColor()
@@ -50,12 +55,36 @@ fun SessionScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        LabelText(
-            label = label,
-            primaryColor = MaterialTheme.colors.secondary,
-            secondaryColor = MaterialTheme.colors.secondaryVariant,
-            key = inputEvent,
-        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+
+            IconButton(
+                onClick = statsButtonOnClick,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_round_bar_chart_24),
+                    contentDescription = "Statistics",
+                    tint = MaterialTheme.colors.secondaryVariant,
+                    modifier = Modifier
+                )
+            }
+
+            LabelText(
+                label = label,
+                primaryColor = MaterialTheme.colors.secondary,
+                secondaryColor = MaterialTheme.colors.secondaryVariant,
+                key = inputEvent,
+                modifier = Modifier
+                    .align(Alignment.Center)
+            )
+
+        }
+
     }
 
 }
