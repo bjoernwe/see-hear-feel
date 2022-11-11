@@ -15,9 +15,9 @@ class LabelMapAuditor {
         override fun getLabel(key: InputKey): Label {
             return when(key) {
                 InputKey.KEY_LEFT -> labelAuditor
-                InputKey.KEY_RIGHT -> labelAuditor
+                InputKey.KEY_RIGHT -> labelMeditator
                 InputKey.KEY_DOWN -> labelMeditator
-                InputKey.KEY_UP -> labelMeditator
+                InputKey.KEY_UP -> labelAuditor
                 InputKey.KEY_A -> labelMeditator
                 InputKey.KEY_B -> labelAuditor
                 InputKey.KEY_X -> labelMeditator
