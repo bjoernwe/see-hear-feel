@@ -18,6 +18,8 @@ class LabelMapKeepDiscard {
                 InputKey.KEY_B -> labelDiscard
                 InputKey.KEY_UP -> labelKeep
                 InputKey.KEY_DOWN -> labelDiscard
+                InputKey.KEY_LEFT -> labelDiscard
+                InputKey.KEY_RIGHT -> labelKeep
                 else -> labelOther
             }
         }
