@@ -98,7 +98,7 @@ fun HorizontalBar(
             .padding(4.dp)
     ) {
 
-        if (barSize > 0.01f) {
+        if (barSize > 0f) {
 
             Surface(
                 shape = MaterialTheme.shapes.small,
