@@ -51,6 +51,7 @@ fun SHFNavHost(
             SessionScreen(
                 labelViewModel = labelViewModel,
                 statsButtonOnClick = {
+                    navController.popBackStack()
                     navController.navigate("stats")
                 }
             )
