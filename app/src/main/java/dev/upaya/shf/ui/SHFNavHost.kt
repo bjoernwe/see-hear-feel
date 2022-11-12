@@ -23,8 +23,6 @@ fun SHFNavHost(
     modifier: Modifier = Modifier,
 ) {
 
-    val sessionViewModel: SessionViewModel = hiltViewModel()
-
     NavHost(
         navController = navController,
         startDestination = "exercises",
@@ -32,6 +30,7 @@ fun SHFNavHost(
     ) {
 
         composable(route = "exercises") {
+            val sessionViewModel: SessionViewModel = hiltViewModel()
             val exerciseListViewModel: ExerciseListViewModel = hiltViewModel()
             val exercises by exerciseListViewModel.exercises.collectAsState()
             ExerciseListScreen(
@@ -47,11 +46,11 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(sessionViewModel = sessionViewModel)
+            SessionScreen()
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {
-            CoreFeelingScreen(sessionViewModel = sessionViewModel)
+            CoreFeelingScreen()
         }
 
         composable(route = "controller") {

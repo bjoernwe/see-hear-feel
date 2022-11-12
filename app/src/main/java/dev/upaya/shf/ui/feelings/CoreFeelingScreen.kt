@@ -12,7 +12,7 @@ import dev.upaya.shf.ui.input.InputViewModel
 
 @Composable
 fun CoreFeelingScreen(
-    sessionViewModel: SessionViewModel,
+    sessionViewModel: SessionViewModel = hiltViewModel(),
     inputViewModel: InputViewModel = hiltViewModel(),
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
 ) {
