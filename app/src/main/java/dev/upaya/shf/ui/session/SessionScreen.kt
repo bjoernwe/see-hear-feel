@@ -22,12 +22,17 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun SessionScreen(
+    onSessionEnd: () -> Unit,
     inputViewModel: InputViewModel = hiltViewModel(),
     sessionViewModel: SessionViewModel = hiltViewModel(),
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
+
+    DisposableEffect(sessionViewModel) {
+        onDispose(onSessionEnd)
+    }
 
     val inputEvent by inputViewModel.inputEvent.collectAsState()
     val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
@@ -63,5 +68,9 @@ fun SessionScreen(
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionScreen() }
+    SHFTheme(darkTheme = true) {
+        SessionScreen(
+            onSessionEnd = {}
+        )
+    }
 }
