@@ -26,17 +26,22 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionScreen(
+fun NotingScreen(
+    onSessionEnd: () -> Unit,
     inputViewModel: InputViewModel = hiltViewModel(),
-    labelViewModel: LabelViewModel = hiltViewModel(),
+    sessionViewModel: SessionViewModel = hiltViewModel(),
     statsButtonOnClick: () -> Unit = {},
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
 
+    DisposableEffect(sessionViewModel) {
+        onDispose(onSessionEnd)
+    }
+
     val inputEvent by inputViewModel.inputEvent.collectAsState()
-    val label: Label by labelViewModel.label.collectAsState(initial = Label(""))
+    val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
@@ -93,5 +98,9 @@ fun SessionScreen(
 @Preview
 @Composable
 fun MainContentPreview() {
-    SHFTheme(darkTheme = true) { SessionScreen() }
+    SHFTheme(darkTheme = true) {
+        NotingScreen(
+            onSessionEnd = {}
+        )
+    }
 }

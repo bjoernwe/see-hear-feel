@@ -8,14 +8,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.input.LabelViewModel
+import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.feelings.CoreFeelingScreen
 import dev.upaya.shf.ui.session.SessionScreen
-import dev.upaya.shf.ui.stats.StatsScreen
 
 
 @Composable
@@ -24,7 +23,7 @@ fun SHFNavHost(
     modifier: Modifier = Modifier,
 ) {
 
-    val labelViewModel: LabelViewModel = hiltViewModel()
+    val sessionViewModel: SessionViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -38,7 +37,7 @@ fun SHFNavHost(
             ExerciseListScreen(
                 exercises = exercises,
                 onExerciseClick = { cfg ->
-                    labelViewModel.setCurrentExercise(exerciseConfig = cfg)
+                    sessionViewModel.beginSession(exerciseConfig = cfg)
                     navController.navigate(cfg.route.name)
                 },
                 onControllerButtonClick = {
@@ -48,12 +47,14 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(
-                labelViewModel = labelViewModel,
-                statsButtonOnClick = {
+            NotingScreen(
+                onSessionEnd = {
+                    sessionViewModel.endSession()
+                },
+                        statsButtonOnClick = {
                     navController.popBackStack()
                     navController.navigate("stats")
-                }
+                },
             )
         }
 
@@ -64,7 +65,11 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {
-            CoreFeelingScreen(labelViewModel = labelViewModel)
+            CoreFeelingScreen(
+                onSessionEnd = {
+                    sessionViewModel.endSession()
+                }
+            )
         }
 
         composable(route = "controller") {

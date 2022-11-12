@@ -28,14 +28,7 @@ fun ExerciseListScreen(
             TopAppBar(
                 title = { Text(text = "Noting Exercises") },
                 backgroundColor = MaterialTheme.colors.secondary,
-                actions = {
-                    IconButton(onClick = onControllerButtonClick) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_round_videogame_asset_24),
-                            contentDescription = "Controller Setup",
-                        )
-                    }
-                }
+                actions = { ControllerButton(onControllerButtonClick = onControllerButtonClick) }
             )
         }
     ) { padding ->
@@ -46,6 +39,17 @@ fun ExerciseListScreen(
         )
     }
 
+}
+
+
+@Composable
+fun ControllerButton(onControllerButtonClick: () -> Unit) {
+    IconButton(onClick = onControllerButtonClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_round_videogame_asset_24),
+            contentDescription = "Controller Setup",
+        )
+    }
 }
 
 

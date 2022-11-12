@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.feelings
+package dev.upaya.shf.ui.session.feelings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

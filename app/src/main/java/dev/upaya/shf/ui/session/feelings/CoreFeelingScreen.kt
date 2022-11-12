@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.feelings
+package dev.upaya.shf.ui.session.feelings
 
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -6,13 +6,14 @@ import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.input.LabelViewModel
+import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.input.InputViewModel
 
 
 @Composable
 fun CoreFeelingScreen(
-    labelViewModel: LabelViewModel,
+    onSessionEnd: () -> Unit,
+    sessionViewModel: SessionViewModel = hiltViewModel(),
     inputViewModel: InputViewModel = hiltViewModel(),
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
 ) {
@@ -20,8 +21,12 @@ fun CoreFeelingScreen(
     SetStatusBarColor()
     KeepScreenOn()
 
+    DisposableEffect(sessionViewModel) {
+        onDispose(onSessionEnd)
+    }
+
     val inputEvent by inputViewModel.inputEvent.collectAsState()
-    val label: Label? by labelViewModel.label.collectAsState(initial = null)
+    val label: Label? by sessionViewModel.label.collectAsState(initial = null)
     val round: Int by coreFeelingViewModel.round.collectAsState()
 
     LaunchedEffect(inputEvent) {

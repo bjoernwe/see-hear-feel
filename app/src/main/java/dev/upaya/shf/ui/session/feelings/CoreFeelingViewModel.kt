@@ -1,8 +1,8 @@
-package dev.upaya.shf.ui.feelings
+package dev.upaya.shf.ui.session.feelings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.feelings.CoreFeelingsRepository
+import dev.upaya.shf.exercises.feelings.CoreFeelingsRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
