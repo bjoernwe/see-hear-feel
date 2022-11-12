@@ -1,4 +1,4 @@
-package dev.upaya.shf.feelings
+package dev.upaya.shf.exercises.feelings
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

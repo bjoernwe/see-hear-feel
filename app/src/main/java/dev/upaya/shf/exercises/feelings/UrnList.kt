@@ -1,4 +1,4 @@
-package dev.upaya.shf.feelings
+package dev.upaya.shf.exercises.feelings
 
 
 class UrnList(initial: List<String>) {
