@@ -38,7 +38,8 @@ fun SHFNavHost(
             ExerciseListScreen(
                 exercises = exercises,
                 onExerciseClick = { cfg ->
-                    sessionViewModel.beginSession(exerciseConfig = cfg)
+                    sessionViewModel.resetSession()
+                    sessionViewModel.startSession(exerciseConfig = cfg)
                     navController.navigate(cfg.route.name)
                 },
                 onControllerButtonClick = {
@@ -50,7 +51,7 @@ fun SHFNavHost(
         composable(route = ExerciseRoute.NOTING.name) {
             NotingScreen(
                 onSessionEnd = {
-                    sessionViewModel.endSession()
+                    sessionViewModel.stopSession()
                 },
                 statsButtonOnClick = {
                     navController.popBackStack()
@@ -68,7 +69,7 @@ fun SHFNavHost(
         composable(route = ExerciseRoute.FEELINGS.name) {
             CoreFeelingScreen(
                 onSessionEnd = {
-                    sessionViewModel.endSession()
+                    sessionViewModel.stopSession()
                 }
             )
         }

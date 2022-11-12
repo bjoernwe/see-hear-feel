@@ -14,6 +14,10 @@ class InputEventStats @Inject constructor() {
     private val _labelFreqs = mutableStateMapOf<Label, Int>()
     val labelFreqs: SnapshotStateMap<Label, Int> = _labelFreqs
 
+    fun resetStats() {
+        _labelFreqs.clear()
+    }
+
     fun reportInputEvent(label: Label) {
         _labelFreqs[label] = labelFreqs.getOrDefault(label, defaultValue = 0) + 1
     }

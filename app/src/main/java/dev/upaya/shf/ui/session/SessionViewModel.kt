@@ -29,13 +29,17 @@ class SessionViewModel @Inject constructor(
         initStatsCollection()
     }
 
-    fun beginSession(exerciseConfig: ExerciseConfig) {
+    fun startSession(exerciseConfig: ExerciseConfig) {
         activeSessionSource.beginSession(exerciseConfig = exerciseConfig)
-        inputEventSource.resetInputEvent()
     }
 
-    fun endSession() {
+    fun stopSession() {
         activeSessionSource.endSession()
+    }
+
+    fun resetSession() {
+        inputEventSource.resetInputEvent()
+        inputEventStats.resetStats()
     }
 
     private fun StateFlow<InputEvent?>.transformToLabel(): Flow<Label> {
