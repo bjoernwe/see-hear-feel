@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
@@ -24,14 +23,14 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun SessionScreen(
     inputViewModel: InputViewModel = hiltViewModel(),
-    labelViewModel: LabelViewModel = hiltViewModel(),
+    sessionViewModel: SessionViewModel = hiltViewModel(),
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
 
     val inputEvent by inputViewModel.inputEvent.collectAsState()
-    val label: Label by labelViewModel.label.collectAsState(initial = Label(""))
+    val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
