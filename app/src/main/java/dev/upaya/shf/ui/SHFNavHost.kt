@@ -13,8 +13,9 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
-import dev.upaya.shf.ui.feelings.CoreFeelingScreen
-import dev.upaya.shf.ui.session.SessionScreen
+import dev.upaya.shf.ui.session.noting.NotingScreen
+import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
+import dev.upaya.shf.ui.stats.StatsScreen
 
 
 @Composable
@@ -51,7 +52,7 @@ fun SHFNavHost(
                 onSessionEnd = {
                     sessionViewModel.endSession()
                 },
-                        statsButtonOnClick = {
+                statsButtonOnClick = {
                     navController.popBackStack()
                     navController.navigate("stats")
                 },
@@ -60,7 +61,7 @@ fun SHFNavHost(
 
         composable(route = "stats") {
             StatsScreen(
-                labelFreqs = labelViewModel.labelStats
+                labelFreqs = sessionViewModel.labelFreqs
             )
         }
 

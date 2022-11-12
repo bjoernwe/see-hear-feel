@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session
+package dev.upaya.shf.ui.session.noting
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,11 +16,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.R
-import dev.upaya.shf.ui.input.LabelViewModel
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.input.InputViewModel
+import dev.upaya.shf.ui.session.LabelText
+import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
 
