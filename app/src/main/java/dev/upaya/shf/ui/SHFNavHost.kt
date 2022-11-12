@@ -13,8 +13,8 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
-import dev.upaya.shf.ui.feelings.CoreFeelingScreen
-import dev.upaya.shf.ui.session.SessionScreen
+import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
+import dev.upaya.shf.ui.session.NotingScreen
 
 
 @Composable
@@ -47,7 +47,7 @@ fun SHFNavHost(
         }
 
         composable(route = ExerciseRoute.NOTING.name) {
-            SessionScreen(
+            NotingScreen(
                 onSessionEnd = {
                     sessionViewModel.endSession()
                 }

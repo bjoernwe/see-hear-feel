@@ -21,7 +21,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionScreen(
+fun NotingScreen(
     onSessionEnd: () -> Unit,
     inputViewModel: InputViewModel = hiltViewModel(),
     sessionViewModel: SessionViewModel = hiltViewModel(),
@@ -69,7 +69,7 @@ fun SessionScreen(
 @Composable
 fun MainContentPreview() {
     SHFTheme(darkTheme = true) {
-        SessionScreen(
+        NotingScreen(
             onSessionEnd = {}
         )
     }

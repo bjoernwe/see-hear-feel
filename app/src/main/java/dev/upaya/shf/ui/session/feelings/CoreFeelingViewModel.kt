@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.feelings
+package dev.upaya.shf.ui.session.feelings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
