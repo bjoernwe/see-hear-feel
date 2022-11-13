@@ -22,11 +22,23 @@ fun StatsScreen(
             )
         }
     ) { scaffoldPadding ->
-        LabelStatsCard(
-            labelFreqs = labelFreqs,
+
+        Column(
             modifier = Modifier
                 .padding(scaffoldPadding)
-        )
+        ) {
+
+            /*NotingSummaryCard(
+                sessionTimeSeconds = 60,
+                numNotings = labelFreqs.values.sum(),
+            )*/
+
+            LabelStatsCard(
+                labelFreqs = labelFreqs,
+            )
+
+        }
+
     }
     
 }
