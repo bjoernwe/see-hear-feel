@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.exercises.labels.labelFeel
@@ -51,16 +52,12 @@ fun StatsScreen(
 
                     Text(
                         text = "Labels",
-                        //fontWeight = Bold,
-                        style = MaterialTheme.typography.h6,
+                        fontWeight = Bold,
+                        style = MaterialTheme.typography.body1,
                         color = MaterialTheme.colors.secondaryVariant,
                     )
 
                     Spacer(modifier = Modifier.padding(top = 12.dp))
-                    //Divider(
-                    //    modifier = Modifier
-                    //        .padding(top = 4.dp, bottom = 12.dp)
-                    //)
 
                     LabelFreqTable(
                         labelFreqs = labelFreqs,
