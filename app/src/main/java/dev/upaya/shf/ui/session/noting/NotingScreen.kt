@@ -1,6 +1,5 @@
 package dev.upaya.shf.ui.session.noting
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -51,7 +50,6 @@ fun NotingScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background)
             .clickable(
                 onClick = {},
                 interactionSource = interactionSource,

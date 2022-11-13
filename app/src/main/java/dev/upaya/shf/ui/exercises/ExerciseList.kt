@@ -1,11 +1,8 @@
 package dev.upaya.shf.ui.exercises
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,14 +17,12 @@ fun ExerciseList(
     modifier: Modifier = Modifier,
     onClick: (ExerciseConfig) -> Unit = {},
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize()
+    LazyColumn(
+        modifier = modifier
     ) {
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(exercises) { cfg ->
-                ExerciseEntry(cfg = cfg, onClick = onClick)
-                Divider()
-            }
+        items(exercises) { cfg ->
+            ExerciseEntry(cfg = cfg, onClick = onClick)
+            Divider()
         }
     }
 }
