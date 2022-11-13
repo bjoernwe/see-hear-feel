@@ -14,14 +14,15 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun LabelFreqTable(labelFreqs: LabelFreqs) {
 
+    val maxLabelCount = labelFreqs.values.maxOrNull()?.toFloat() ?: 1f
+
     LazyColumn {
 
         items(labelFreqs.entries.toList()) { (label, count) ->
 
             StatsEntryBar(
                 text = label.primary.uppercase(),
-                barSize = count.toFloat(),
-                maxBarSize = labelFreqs.values.maxOrNull()?.toFloat() ?: 0f,
+                barSize = count.toFloat() / maxLabelCount,
             )
 
         }

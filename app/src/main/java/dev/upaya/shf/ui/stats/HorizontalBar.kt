@@ -1,7 +1,6 @@
 package dev.upaya.shf.ui.stats
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -17,19 +16,10 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun HorizontalBar(
     size: Float,
-    maxSize: Float,
     modifier: Modifier = Modifier,
 ) {
 
-    fun getRelativeSize(size: Float): Float {
-        return if (maxSize > 0) {
-            size / maxSize
-        } else {
-            0f
-        }
-    }
-
-    val barSize: Float = getRelativeSize(size)
+    val barSize: Float = size.coerceIn(0f, 1f)
     val barSizeComplement = 1f - barSize
 
     Row(
@@ -69,7 +59,6 @@ fun HorizontalBarPreview() {
     SHFTheme(darkTheme = true) {
         HorizontalBar(
             size = .66f,
-            maxSize = 1f,
         )
     }
 }

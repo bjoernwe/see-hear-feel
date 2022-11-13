@@ -18,7 +18,6 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun StatsEntryBar(
     text: String,
     barSize: Float,
-    maxBarSize: Float,
     columnWeight: Float = .5f,
 ) {
 
@@ -38,7 +37,6 @@ fun StatsEntryBar(
 
         HorizontalBar(
             size = barSize,
-            maxSize = maxBarSize,
             modifier = Modifier
                 .weight(1f)
         )
@@ -54,8 +52,7 @@ fun StatsEntryBarPreview() {
     SHFTheme(darkTheme = true) {
         StatsEntryBar(
             text = "Label",
-            barSize = 2f,
-            maxBarSize = 3f,
+            barSize = .66f,
         )
     }
 }
