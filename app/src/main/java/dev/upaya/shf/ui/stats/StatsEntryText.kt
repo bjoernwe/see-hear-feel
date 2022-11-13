@@ -1,7 +1,7 @@
 package dev.upaya.shf.ui.stats
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -30,7 +30,7 @@ fun StatsEntryText(
             color = MaterialTheme.colors.onSurface,
             textAlign = TextAlign.Right,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .align(Alignment.CenterVertically)
                 .weight(columnWeight)
                 .padding(end = 6.dp)
@@ -42,7 +42,7 @@ fun StatsEntryText(
             color = MaterialTheme.colors.secondary,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .align(Alignment.CenterVertically)
                 .weight(1f)
                 .padding(end = 6.dp)
