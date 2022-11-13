@@ -52,7 +52,7 @@ fun SHFNavHost(
                 onSessionEnd = {
                     sessionViewModel.stopSession()
                 },
-                statsButtonOnClick = {
+                onStopButtonClick = {
                     navController.popBackStack()
                     navController.navigate("stats")
                 },
