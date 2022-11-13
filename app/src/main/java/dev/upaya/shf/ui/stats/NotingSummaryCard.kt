@@ -1,5 +1,6 @@
 package dev.upaya.shf.ui.stats
 
+import android.text.format.DateUtils
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -7,7 +8,10 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun NotingSummaryCard() {
+fun NotingSummaryCard(
+    sessionTimeSeconds: Int,
+    numNotings: Int,
+) {
 
     StatsCard(
         title = "Noting",
@@ -16,13 +20,18 @@ fun NotingSummaryCard() {
         Column {
 
             StatsEntryText(
-                textLabel = "Session Time",
-                textValue = "0:42:00",
+                textLabel = "Time",
+                textValue = DateUtils.formatElapsedTime(sessionTimeSeconds.toLong()),
             )
 
             StatsEntryText(
                 textLabel = "Notings",
-                textValue = "512",
+                textValue = numNotings.toString(),
+            )
+
+            StatsEntryText(
+                textLabel = "Notings / Sec",
+                textValue = numNotings.toFloat().div(sessionTimeSeconds.toFloat()).toString(),
             )
 
         }
@@ -36,6 +45,9 @@ fun NotingSummaryCard() {
 @Composable
 fun NotingSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
-        NotingSummaryCard()
+        NotingSummaryCard(
+            sessionTimeSeconds = 60,
+            numNotings = 512,
+        )
     }
 }
