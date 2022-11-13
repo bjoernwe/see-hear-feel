@@ -6,6 +6,7 @@ import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.session.ActiveSessionSource
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.roundToInt
 
 
 typealias LabelFreqs = Map<Label, Int>
@@ -46,7 +47,7 @@ private fun List<InputEvent>.calcSessionLength(): Int? {
     val firstDate = this.first()
     val lastDate = this.last()
 
-    return (lastDate.date.time - firstDate.date.time).div(1000).toInt()
+    return (lastDate.date.time - firstDate.date.time).toFloat().div(1000f).roundToInt()
 }
 
 
