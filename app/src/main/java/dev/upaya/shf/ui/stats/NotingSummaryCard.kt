@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.ui.theme.SHFTheme
+import java.util.*
 
 
 @Composable
@@ -29,9 +30,11 @@ fun NotingSummaryCard(
                 textValue = numNotings.toString(),
             )
 
+            val notingsPerSecond = numNotings.toFloat().div(sessionTimeSeconds.toFloat())
+
             StatsEntryText(
-                textLabel = "Notings / Sec",
-                textValue = numNotings.toFloat().div(sessionTimeSeconds.toFloat()).toString(),
+                textLabel = "Speed",
+                textValue = "%.2f".format(locale = Locale.ENGLISH, notingsPerSecond),
             )
 
         }

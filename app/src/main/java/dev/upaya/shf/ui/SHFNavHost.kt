@@ -38,7 +38,6 @@ fun SHFNavHost(
             ExerciseListScreen(
                 exercises = exercises,
                 onExerciseClick = { cfg ->
-                    sessionViewModel.resetSession()
                     sessionViewModel.startSession(exerciseConfig = cfg)
                     navController.navigate(cfg.route.name)
                 },
@@ -61,9 +60,7 @@ fun SHFNavHost(
         }
 
         composable(route = "stats") {
-            StatsScreen(
-                labelFreqs = sessionViewModel.labelFreqs
-            )
+            StatsScreen()
         }
 
         composable(route = ExerciseRoute.FEELINGS.name) {

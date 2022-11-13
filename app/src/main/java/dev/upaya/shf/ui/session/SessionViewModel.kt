@@ -8,6 +8,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
 import dev.upaya.shf.session.ActiveSessionSource
 import dev.upaya.shf.ui.input.InputEventStats
+import dev.upaya.shf.ui.input.LabelFreqs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.transform
@@ -23,13 +24,13 @@ class SessionViewModel @Inject constructor(
 ) : ViewModel() {
 
     var label: Flow<Label> = inputEventSource.inputEvent.transformToLabel()
-    var labelFreqs = inputEventStats.labelFreqs
 
     init {
         initStatsCollection()
     }
 
     fun startSession(exerciseConfig: ExerciseConfig) {
+        resetSession()
         activeSessionSource.beginSession(exerciseConfig = exerciseConfig)
     }
 
@@ -37,9 +38,21 @@ class SessionViewModel @Inject constructor(
         activeSessionSource.endSession()
     }
 
-    fun resetSession() {
+    private fun resetSession() {
         inputEventSource.resetInputEvent()
         inputEventStats.resetStats()
+    }
+
+    fun getNumEvents(): Int {
+        return inputEventStats.inputEvents.size
+    }
+
+    fun getSessionLength(): Int? {
+        return inputEventStats.sessionTime
+    }
+
+    fun getLabelFreqs(): LabelFreqs {
+        return inputEventStats.labelFreqs
     }
 
     private fun StateFlow<InputEvent?>.transformToLabel(): Flow<Label> {
@@ -54,8 +67,10 @@ class SessionViewModel @Inject constructor(
 
     private fun initStatsCollection() {
         viewModelScope.launch {
-            label.collect { label ->
-                inputEventStats.reportInputEvent(label)
+            inputEventSource.inputEvent.collect { inputEventOrNull ->
+                inputEventOrNull?.let { inputEvent ->
+                    inputEventStats.reportInputEvent(inputEvent)
+                }
             }
         }
     }
