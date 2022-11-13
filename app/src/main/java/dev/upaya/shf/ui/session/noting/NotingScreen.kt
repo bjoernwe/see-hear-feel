@@ -8,12 +8,9 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import dev.upaya.shf.R
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
@@ -73,19 +70,11 @@ fun NotingScreen(
                     .align(Alignment.Center)
             )
 
-            IconButton(
+            StopButton(
                 onClick = onStopButtonClick,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_stop_circle_24),
-                    contentDescription = "End Session",
-                    tint = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .scale(2f)
-                )
-            }
+                    .align(Alignment.BottomCenter),
+            )
 
         }
 
