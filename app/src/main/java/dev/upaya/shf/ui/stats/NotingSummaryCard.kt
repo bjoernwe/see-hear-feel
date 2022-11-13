@@ -21,7 +21,7 @@ fun NotingSummaryCard(
         Column {
 
             StatsEntryText(
-                textLabel = "Time",
+                textLabel = "Session",
                 textValue = DateUtils.formatElapsedTime(sessionTimeSeconds.toLong()),
             )
 
