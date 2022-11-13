@@ -53,8 +53,12 @@ fun SHFNavHost(
                     sessionViewModel.stopSession()
                 },
                 onStopButtonClick = {
-                    navController.popBackStack()
-                    navController.navigate("stats")
+                    if (sessionViewModel.getNumEvents() == 0) {
+                        navController.navigateUp()
+                    } else {
+                        navController.popBackStack()
+                        navController.navigate("stats")
+                    }
                 },
             )
         }
