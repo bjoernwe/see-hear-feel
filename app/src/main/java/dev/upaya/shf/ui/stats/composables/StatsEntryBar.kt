@@ -1,8 +1,6 @@
 package dev.upaya.shf.ui.stats.composables
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +19,10 @@ fun StatsEntryBar(
     columnWeight: Float = .5f,
 ) {
 
-    Row {
+    Row(
+        modifier = Modifier
+            .wrapContentHeight()
+    ) {
 
         Text(
             text = text.uppercase(),
@@ -29,10 +30,15 @@ fun StatsEntryBar(
             color = MaterialTheme.colors.onSurface,
             textAlign = TextAlign.Right,
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .align(Alignment.CenterVertically)
                 .weight(columnWeight)
                 .padding(end = 6.dp)
+        )
+
+        Spacer(
+            modifier = Modifier
+                .width(6.dp)
         )
 
         HorizontalBar(

@@ -1,8 +1,6 @@
 package dev.upaya.shf.ui.stats.composables
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +17,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun StatsEntryText(
     textLabel: String,
     textValue: String,
-    columnWeight: Float = .5f,
+    columnWeight: Float = 1f,
 ) {
 
     Row {
@@ -34,6 +32,11 @@ fun StatsEntryText(
                 .align(Alignment.CenterVertically)
                 .weight(columnWeight)
                 .padding(end = 6.dp)
+        )
+
+        Spacer(
+            modifier = Modifier
+                .width(6.dp)
         )
 
         Text(

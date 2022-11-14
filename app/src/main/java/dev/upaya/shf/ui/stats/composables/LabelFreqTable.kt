@@ -23,6 +23,7 @@ fun LabelFreqTable(labelFreqs: LabelFreqs) {
             StatsEntryBar(
                 text = label.primary.uppercase(),
                 barSize = count.toFloat() / maxLabelCount,
+                columnWeight = .5f,
             )
 
         }
