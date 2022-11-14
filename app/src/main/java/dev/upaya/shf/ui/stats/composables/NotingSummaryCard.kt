@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.stats
+package dev.upaya.shf.ui.stats.composables
 
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.*
