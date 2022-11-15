@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -24,13 +25,14 @@ fun ExerciseListScreen(
     systemUiController.setStatusBarColor(color = MaterialTheme.colors.secondaryVariant)
 
     Scaffold(
+        backgroundColor = Color.Transparent,
         topBar = {
             TopAppBar(
                 title = { Text(text = "Noting Exercises") },
                 backgroundColor = MaterialTheme.colors.secondary,
                 actions = { ControllerButton(onControllerButtonClick = onControllerButtonClick) }
             )
-        }
+        },
     ) { padding ->
         ExerciseList(
             exercises = exercises,
