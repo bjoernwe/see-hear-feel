@@ -1,11 +1,14 @@
 package dev.upaya.shf.ui.session.noting
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,11 +26,13 @@ fun StopButton(
         onClick = onClick,
         modifier = modifier
             .padding(10.dp)
+            .clip(CircleShape)
+            .background(color = MaterialTheme.colors.primary.copy(alpha = .5f))
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_baseline_stop_circle_24),
             contentDescription = "End Session",
-            tint = MaterialTheme.colors.primary,
+            tint = MaterialTheme.colors.background,
             modifier = Modifier
                 .scale(2f)
         )
