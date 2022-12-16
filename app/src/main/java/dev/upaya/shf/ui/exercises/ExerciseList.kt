@@ -20,8 +20,8 @@ fun ExerciseList(
     LazyColumn(
         modifier = modifier
     ) {
-        items(exercises.toList()) { cfg ->
-            ExerciseEntry(exerciseEntry = cfg, onClick = onClick)
+        items(exercises.toList()) { exc ->
+            ExerciseEntry(exerciseEntry = exc, onClick = onClick)
             Divider()
         }
     }
