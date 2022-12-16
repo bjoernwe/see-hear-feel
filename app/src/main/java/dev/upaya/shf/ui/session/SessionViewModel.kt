@@ -3,6 +3,7 @@ package dev.upaya.shf.ui.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
 import dev.upaya.shf.session.ActiveSessionSource
@@ -28,7 +29,7 @@ class SessionViewModel @Inject constructor(
         initStatsCollection()
     }
 
-    fun startSession(exerciseID: String) {
+    fun startSession(exerciseID: ExerciseID) {
         resetSession()
         activeSessionSource.beginSession(exerciseID = exerciseID)
     }

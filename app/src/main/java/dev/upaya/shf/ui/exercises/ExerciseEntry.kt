@@ -11,11 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.R
+import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseEntry(exerciseEntry: Pair<String, ExerciseConfig>, onClick: (String) -> Unit = {}) {
+fun ExerciseEntry(exerciseEntry: Pair<ExerciseID, ExerciseConfig>, onClick: (ExerciseID) -> Unit = {}) {
 
     Row(
         modifier = Modifier
@@ -69,7 +70,7 @@ fun ExerciseEntry(exerciseEntry: Pair<String, ExerciseConfig>, onClick: (String)
 fun ExerciseEntryPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseEntry(
-            exerciseEntry = Pair("test", ExerciseConfig("Title", "Description")),
+            exerciseEntry = Pair(ExerciseID.DO_NOTHING, ExerciseConfig("Title", "Description")),
         )
     }
 }

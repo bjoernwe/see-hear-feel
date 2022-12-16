@@ -10,14 +10,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.R
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
+import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun ExerciseListScreen(
-    exercises: Map<String, ExerciseConfig>,
-    onExerciseClick: (String) -> Unit = {},
+    exercises: Map<ExerciseID, ExerciseConfig>,
+    onExerciseClick: (ExerciseID) -> Unit = {},
     onControllerButtonClick: () -> Unit = {},
 ) {
 

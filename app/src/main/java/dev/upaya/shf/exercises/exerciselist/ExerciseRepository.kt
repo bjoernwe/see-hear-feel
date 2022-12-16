@@ -9,9 +9,9 @@ import javax.inject.Singleton
 @Singleton
 class ExerciseRepository @Inject constructor() {
 
-    val exercises: StateFlow<Map<String, ExerciseConfig>> = MutableStateFlow(exampleExercises)
+    val exercises: StateFlow<Map<ExerciseID, ExerciseConfig>> = MutableStateFlow(exampleExercises)
 
-    fun getExerciseConfig(exerciseID: String): ExerciseConfig? {
+    fun getExerciseConfig(exerciseID: ExerciseID): ExerciseConfig? {
         return exampleExercises[exerciseID]
     }
 
