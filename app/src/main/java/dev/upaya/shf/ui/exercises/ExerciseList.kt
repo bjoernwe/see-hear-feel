@@ -13,15 +13,15 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun ExerciseList(
-    exercises: List<ExerciseConfig>,
+    exercises: Map<String, ExerciseConfig>,
     modifier: Modifier = Modifier,
-    onClick: (ExerciseConfig) -> Unit = {},
+    onClick: (String) -> Unit = {},
 ) {
     LazyColumn(
         modifier = modifier
     ) {
-        items(exercises) { cfg ->
-            ExerciseEntry(cfg = cfg, onClick = onClick)
+        items(exercises.toList()) { cfg ->
+            ExerciseEntry(exerciseEntry = cfg, onClick = onClick)
             Divider()
         }
     }
@@ -33,7 +33,7 @@ fun ExerciseList(
 fun ExerciseListPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseList(
-            exercises = exampleExercises.values.toList(),
+            exercises = exampleExercises,
         )
     }
 }

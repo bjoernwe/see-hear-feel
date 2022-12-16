@@ -16,8 +16,8 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun ExerciseListScreen(
-    exercises: List<ExerciseConfig>,
-    onExerciseClick: (ExerciseConfig) -> Unit = {},
+    exercises: Map<String, ExerciseConfig>,
+    onExerciseClick: (String) -> Unit = {},
     onControllerButtonClick: () -> Unit = {},
 ) {
 
@@ -60,7 +60,7 @@ fun ControllerButton(onControllerButtonClick: () -> Unit) {
 fun ExerciseListScreenPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseListScreen(
-            exercises = exampleExercises.values.toList(),
+            exercises = exampleExercises,
         )
     }
 }

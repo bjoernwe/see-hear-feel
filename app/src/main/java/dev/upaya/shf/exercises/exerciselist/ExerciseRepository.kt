@@ -1,10 +1,18 @@
 package dev.upaya.shf.exercises.exerciselist
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class ExerciseRepository {
-    private val _exercises: MutableStateFlow<List<ExerciseConfig>> = MutableStateFlow(exampleExercises.values.toList())
-    val exercises: StateFlow<List<ExerciseConfig>> = _exercises
+@Singleton
+class ExerciseRepository @Inject constructor() {
+
+    fun getExercises(): Map<String, ExerciseConfig> {
+        return exampleExercises
+    }
+
+    fun getExerciseConfig(exerciseID: String): ExerciseConfig? {
+        return exampleExercises[exerciseID]
+    }
+
 }

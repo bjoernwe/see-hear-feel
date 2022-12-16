@@ -15,11 +15,11 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
+fun ExerciseEntry(exerciseEntry: Pair<String, ExerciseConfig>, onClick: (String) -> Unit = {}) {
 
     Row(
         modifier = Modifier
-            .clickable { onClick(cfg) }
+            .clickable { onClick(exerciseEntry.first) }
             .fillMaxWidth()
             .padding(8.dp)
     ) {
@@ -44,7 +44,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
         ) {
 
             Text(
-                text = cfg.title,
+                text = exerciseEntry.second.title,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
             )
@@ -52,7 +52,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
             Spacer(modifier = Modifier.height(2.dp))
 
             Text(
-                text = cfg.description,
+                text = exerciseEntry.second.description,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
             )
@@ -69,7 +69,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 fun ExerciseEntryPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseEntry(
-            cfg = ExerciseConfig("Title", "Description"),
+            exerciseEntry = Pair("test", ExerciseConfig("Title", "Description")),
         )
     }
 }
