@@ -14,7 +14,8 @@ import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
 import dev.upaya.shf.ui.session.noting.notingScreen
-import dev.upaya.shf.ui.stats.StatsScreen
+import dev.upaya.shf.ui.stats.navigateToNotingStats
+import dev.upaya.shf.ui.stats.notingStats
 
 
 @Composable
@@ -48,13 +49,11 @@ fun SHFNavHost(
         notingScreen(
             onStopButtonClick = {
                 navController.popBackStack()
-                navController.navigate("stats")
+                navController.navigateToNotingStats()
             },
         )
 
-        composable(route = "stats") {
-            StatsScreen()
-        }
+        notingStats()
 
         composable(route = ExerciseRoute.FEELINGS.name) {
             CoreFeelingScreen(
