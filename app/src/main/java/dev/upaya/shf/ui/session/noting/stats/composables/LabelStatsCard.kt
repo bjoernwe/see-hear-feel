@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.stats.composables
+package dev.upaya.shf.ui.session.noting.stats.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

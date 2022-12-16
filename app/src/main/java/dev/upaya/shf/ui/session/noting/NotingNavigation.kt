@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.session.SessionViewModel
-import dev.upaya.shf.ui.stats.navigateToNotingStats
-import dev.upaya.shf.ui.stats.notingStats
+import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
+import dev.upaya.shf.ui.session.noting.stats.notingStats
 
 
 fun NavGraphBuilder.notingGraph(
