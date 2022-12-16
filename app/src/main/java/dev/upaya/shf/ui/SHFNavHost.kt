@@ -50,6 +50,9 @@ fun SHFNavHost(
         }
 
         notingScreen(
+            onSessionEnd = {
+                sessionViewModel.stopSession()
+            },
             onStopButtonClick = {
                 navController.popBackStack()
                 navController.navigateToNotingStats()
