@@ -10,7 +10,7 @@ import dev.upaya.shf.ui.controller.controllerSetupScreen
 import dev.upaya.shf.ui.controller.navigateToControllerSetup
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.exercises.exerciseListScreen
-import dev.upaya.shf.ui.exercises.navigateToExercise
+import dev.upaya.shf.ui.session.navigateToExerciseSession
 import dev.upaya.shf.ui.session.feelings.coreFeelingsScreen
 import dev.upaya.shf.ui.session.noting.notingGraph
 
@@ -32,7 +32,7 @@ fun SHFNavHost(
             onExerciseClick = { exerciseID ->
                 exerciseListViewModel.getExerciseConfig(exerciseID)?.route?.let { exerciseRoute ->
                     sessionViewModel.startSession(exerciseID = exerciseID)
-                    navController.navigateToExercise(
+                    navController.navigateToExerciseSession(
                         exerciseRoute = exerciseRoute,
                         exerciseID = exerciseID,
                     )
