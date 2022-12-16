@@ -1,6 +1,8 @@
 package dev.upaya.shf.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -32,8 +34,9 @@ fun SHFNavHost(
 
         composable(route = "exercises") {
             val exerciseListViewModel: ExerciseListViewModel = hiltViewModel()
+            val exercises by exerciseListViewModel.exercises.collectAsState()
             ExerciseListScreen(
-                exercises = exerciseListViewModel.getExercises(),
+                exercises = exercises,
                 onExerciseClick = { exerciseID ->
                     exerciseListViewModel.getExerciseConfig(exerciseID)?.route?.let { cfg ->
                         sessionViewModel.startSession(exerciseID = exerciseID)
