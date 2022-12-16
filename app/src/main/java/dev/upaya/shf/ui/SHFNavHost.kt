@@ -11,8 +11,8 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
 import dev.upaya.shf.ui.controller.ControllerSetupScreen
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
-import dev.upaya.shf.ui.session.noting.NotingScreen
 import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
+import dev.upaya.shf.ui.session.noting.notingScreen
 import dev.upaya.shf.ui.stats.StatsScreen
 
 
@@ -46,21 +46,12 @@ fun SHFNavHost(
             )
         }
 
-        composable(route = ExerciseRoute.NOTING.name) {
-            NotingScreen(
-                onSessionEnd = {
-                    sessionViewModel.stopSession()
-                },
-                onStopButtonClick = {
-                    if (sessionViewModel.getNumEvents() == 0) {
-                        navController.navigateUp()
-                    } else {
-                        navController.popBackStack()
-                        navController.navigate("stats")
-                    }
-                },
-            )
-        }
+        notingScreen(
+            onStopButtonClick = {
+                navController.popBackStack()
+                navController.navigate("stats")
+            },
+        )
 
         composable(route = "stats") {
             StatsScreen()
