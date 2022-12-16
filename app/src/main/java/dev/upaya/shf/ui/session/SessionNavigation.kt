@@ -9,5 +9,5 @@ fun NavController.navigateToExerciseSession(
     exerciseRoute: ExerciseRoute,
     exerciseID: ExerciseID,
 ) {
-    this.navigate(exerciseRoute.name)
+    this.navigate("${exerciseRoute.name}/${exerciseID}")
 }

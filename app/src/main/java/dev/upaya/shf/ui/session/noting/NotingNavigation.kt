@@ -15,7 +15,10 @@ fun NavGraphBuilder.notingGraph(
     sessionViewModel: SessionViewModel,
 ) {
     
-    navigation(startDestination = "noting_session", route = ExerciseRoute.NOTING.name) {
+    navigation(
+        startDestination = "noting_session",
+        route = "${ExerciseRoute.NOTING.name}/{exerciseID}",
+    ) {
 
         notingScreen(
             onSessionEnd = {

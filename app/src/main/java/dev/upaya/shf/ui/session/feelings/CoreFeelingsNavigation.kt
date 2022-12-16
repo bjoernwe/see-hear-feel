@@ -10,7 +10,9 @@ fun NavGraphBuilder.coreFeelingsScreen(
     sessionViewModel: SessionViewModel,
 ) {
 
-    composable(route = ExerciseRoute.FEELINGS.name) {
+    composable(
+        route = "${ExerciseRoute.FEELINGS.name}/{exerciseID}"
+    ) {
         CoreFeelingScreen(
             onSessionEnd = {
                 sessionViewModel.stopSession()
