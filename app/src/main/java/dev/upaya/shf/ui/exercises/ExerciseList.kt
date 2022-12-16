@@ -33,7 +33,7 @@ fun ExerciseList(
 fun ExerciseListPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseList(
-            exercises = exampleExercises,
+            exercises = exampleExercises.values.toList(),
         )
     }
 }

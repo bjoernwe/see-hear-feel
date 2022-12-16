@@ -60,7 +60,7 @@ fun ControllerButton(onControllerButtonClick: () -> Unit) {
 fun ExerciseListScreenPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseListScreen(
-            exercises = exampleExercises,
+            exercises = exampleExercises.values.toList(),
         )
     }
 }

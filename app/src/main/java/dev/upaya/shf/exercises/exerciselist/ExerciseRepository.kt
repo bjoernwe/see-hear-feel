@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 class ExerciseRepository {
-    private val _exercises = MutableStateFlow(exampleExercises)
+    private val _exercises: MutableStateFlow<List<ExerciseConfig>> = MutableStateFlow(exampleExercises.values.toList())
     val exercises: StateFlow<List<ExerciseConfig>> = _exercises
 }
