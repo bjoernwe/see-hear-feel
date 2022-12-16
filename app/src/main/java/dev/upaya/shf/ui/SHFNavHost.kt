@@ -8,7 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
-import dev.upaya.shf.ui.controller.ControllerSetupScreen
+import dev.upaya.shf.ui.controller.controllerSetupScreen
+import dev.upaya.shf.ui.controller.navigateToControllerSetup
 import dev.upaya.shf.ui.exercises.ExerciseListScreen
 import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
@@ -39,7 +40,7 @@ fun SHFNavHost(
                     }
                 },
                 onControllerButtonClick = {
-                    navController.navigate("controller")
+                    navController.navigateToControllerSetup()
                 }
             )
         }
@@ -63,9 +64,7 @@ fun SHFNavHost(
             )
         }
 
-        composable(route = "controller") {
-            ControllerSetupScreen()
-        }
+        controllerSetupScreen()
 
     }
 
