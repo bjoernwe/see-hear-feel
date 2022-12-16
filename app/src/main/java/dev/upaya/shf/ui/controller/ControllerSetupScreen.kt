@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.input.InputViewModel
+import dev.upaya.shf.ui.session.input.InputViewModel
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

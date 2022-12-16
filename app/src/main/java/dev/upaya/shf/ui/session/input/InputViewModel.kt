@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.input
+package dev.upaya.shf.ui.session.input
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -7,8 +7,8 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
 import dev.upaya.shf.session.ActiveSessionSource
-import dev.upaya.shf.ui.input.InputEventStats
-import dev.upaya.shf.ui.input.LabelFreqs
+import dev.upaya.shf.ui.session.input.InputEventStats
+import dev.upaya.shf.ui.session.input.LabelFreqs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.transform

@@ -7,7 +7,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.SessionViewModel
-import dev.upaya.shf.ui.input.InputViewModel
+import dev.upaya.shf.ui.session.input.InputViewModel
 
 
 @Composable

@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.input
+package dev.upaya.shf.ui.session.input
 
 import dev.upaya.shf.exercises.labelmaps.LabelMap
 import dev.upaya.shf.exercises.labels.Label
