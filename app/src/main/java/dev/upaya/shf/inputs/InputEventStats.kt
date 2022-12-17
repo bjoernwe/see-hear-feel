@@ -1,8 +1,7 @@
-package dev.upaya.shf.ui.session.input
+package dev.upaya.shf.inputs
 
 import dev.upaya.shf.exercises.labelmaps.LabelMap
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.InputEvent
 import kotlin.math.roundToInt
 
 

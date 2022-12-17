@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.input
+package dev.upaya.shf.ui.controller
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,9 +8,8 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class InputViewModel @Inject constructor(
+class ControllerSetupViewModel @Inject constructor(
     inputEventSource: InputEventSource,
 ) : ViewModel() {
-    val inputEvent: StateFlow<InputEvent?> = inputEventSource.inputEvent
     val keyPressStates: StateFlow<KeyPressStates> = inputEventSource.keyPressStates
 }

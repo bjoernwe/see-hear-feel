@@ -23,10 +23,6 @@ class InputEventSource @Inject constructor() {
     )
     val keyPressStates: StateFlow<KeyPressStates> = _keyPressStates
 
-    fun resetInputEvent() {
-        _inputEvent.value = null
-    }
-
     fun keyDown(keyCode: Int): Boolean {
 
         val inputKey = inputDevice.getInputKey(keyCode)

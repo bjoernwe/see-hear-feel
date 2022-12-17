@@ -7,20 +7,18 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.SessionViewModel
-import dev.upaya.shf.ui.session.input.InputViewModel
 
 
 @Composable
 fun CoreFeelingScreen(
     sessionViewModel: SessionViewModel = hiltViewModel(),
-    inputViewModel: InputViewModel = hiltViewModel(),
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
 
-    val inputEvent by inputViewModel.inputEvent.collectAsState()
+    val inputEvent by sessionViewModel.inputEvent.collectAsState()
     val label: Label? by sessionViewModel.label.collectAsState(initial = null)
     val round: Int by coreFeelingViewModel.round.collectAsState()
 

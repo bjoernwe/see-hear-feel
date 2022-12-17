@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.ui.session.input.LabelFreqs
+import dev.upaya.shf.inputs.LabelFreqs
 import dev.upaya.shf.ui.session.noting.stats.composables.LabelStatsCard
 import dev.upaya.shf.ui.session.noting.stats.composables.NotingSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme

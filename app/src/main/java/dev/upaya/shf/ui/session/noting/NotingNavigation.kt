@@ -11,7 +11,6 @@ import androidx.navigation.navigation
 import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.session.SessionViewModel
-import dev.upaya.shf.ui.session.input.InputViewModel
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
 
@@ -57,10 +56,9 @@ private fun NavGraphBuilder.notingScreen(
 
         val sessionScope = remember(backStackEntry) { navController.getBackStackEntry(routeNotingGraphWithArg) }
         val sessionViewModel: SessionViewModel = hiltViewModel(viewModelStoreOwner = sessionScope)
-        val inputViewModel: InputViewModel = hiltViewModel()
 
         val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
-        val inputEvent by inputViewModel.inputEvent.collectAsState()
+        val inputEvent by sessionViewModel.inputEvent.collectAsState()
 
         NotingScreen(
             label = label,

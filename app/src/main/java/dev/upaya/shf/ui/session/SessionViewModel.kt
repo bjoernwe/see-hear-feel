@@ -8,9 +8,8 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
-import dev.upaya.shf.ui.session.input.InputEventStats
-import dev.upaya.shf.ui.session.input.LabelFreqs
 import dev.upaya.shf.ui.session.noting.routeArgExerciseId
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.transform
@@ -25,15 +24,14 @@ class SessionViewModel @Inject constructor(
     private val inputEventSource: InputEventSource,
 ) : ViewModel() {
 
-    internal var label: Flow<Label> = inputEventSource.inputEvent.transformToLabel()
+    internal var inputEvent = inputEventSource.inputEvent
+    internal var label: Flow<Label> = inputEvent.transformToLabel()
 
     private val exerciseId = ExerciseID.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
     private val inputEventStats = InputEventStats(labelMap = labelMap)
 
-    init {
-        initStatsCollection()
-    }
+    private val statsCollectionJob = startStatsCollection()
 
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
@@ -55,14 +53,18 @@ class SessionViewModel @Inject constructor(
         }
     }
 
-    private fun initStatsCollection() {
-        viewModelScope.launch {
+    private fun startStatsCollection(): Job {
+        return viewModelScope.launch {
             inputEventSource.inputEvent.collect { inputEventOrNull ->
                 inputEventOrNull?.let { inputEvent ->
                     inputEventStats.reportInputEvent(inputEvent)
                 }
             }
         }
+    }
+
+    internal fun stopStatsCollection() {
+        statsCollectionJob.cancel()
     }
 
 }

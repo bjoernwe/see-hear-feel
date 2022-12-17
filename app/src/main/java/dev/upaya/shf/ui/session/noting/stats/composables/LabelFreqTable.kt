@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.exercises.labels.labelFeel
 import dev.upaya.shf.exercises.labels.labelHear
 import dev.upaya.shf.exercises.labels.labelSee
-import dev.upaya.shf.ui.session.input.LabelFreqs
+import dev.upaya.shf.inputs.LabelFreqs
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

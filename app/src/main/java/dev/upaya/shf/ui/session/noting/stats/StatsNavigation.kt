@@ -20,6 +20,7 @@ internal fun NavGraphBuilder.notingStatsScreen(
 
         val sessionScope = remember(backStackEntry) { navController.getBackStackEntry(routeNotingGraphWithArg) }
         val sessionViewModel: SessionViewModel = hiltViewModel(viewModelStoreOwner = sessionScope)
+        sessionViewModel.stopStatsCollection()
 
         StatsScreen(
             sessionLength = sessionViewModel.getSessionLength(),
