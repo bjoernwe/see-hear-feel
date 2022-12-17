@@ -8,10 +8,10 @@ import androidx.navigation.compose.rememberNavController
 import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.controller.controllerSetupScreen
 import dev.upaya.shf.ui.controller.navigateToControllerSetup
-import dev.upaya.shf.ui.exercises.ExerciseListViewModel
 import dev.upaya.shf.ui.exercises.exerciseListScreen
-import dev.upaya.shf.ui.session.navigateToExerciseSession
+import dev.upaya.shf.ui.exercises.routeExerciseList
 import dev.upaya.shf.ui.session.feelings.coreFeelingsScreen
+import dev.upaya.shf.ui.session.navigateToExerciseSession
 import dev.upaya.shf.ui.session.noting.notingGraph
 
 
@@ -21,22 +21,16 @@ fun SHFNavHost(
 ) {
 
     val sessionViewModel: SessionViewModel = hiltViewModel()
-    val exerciseListViewModel: ExerciseListViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
-        startDestination = "exercises",
+        startDestination = routeExerciseList,
     ) {
 
         exerciseListScreen(
             onExerciseClick = { exerciseID ->
-                exerciseListViewModel.getExerciseConfig(exerciseID)?.route?.let { exerciseRoute ->
-                    sessionViewModel.startSession(exerciseID = exerciseID)
-                    navController.navigateToExerciseSession(
-                        exerciseRoute = exerciseRoute,
-                        exerciseID = exerciseID,
-                    )
-                }
+                sessionViewModel.startSession(exerciseID = exerciseID)
+                navController.navigateToExerciseSession(exerciseID)
             },
             onControllerButtonClick = {
                 navController.navigateToControllerSetup()

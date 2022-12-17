@@ -51,6 +51,5 @@ val exampleExercises: Map<ExerciseID, ExerciseConfig> = mapOf(
         title = "Core Feelings",
         description = "Exploration of the Core Feelings described by Douglas Tataryn",
         labelMap = LabelMapKeepDiscard,
-        route = ExerciseRoute.FEELINGS,
     ),
 )
