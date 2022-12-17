@@ -2,6 +2,9 @@ package dev.upaya.shf.inputs
 
 import dev.upaya.shf.exercises.labelmaps.LabelMap
 import dev.upaya.shf.exercises.labels.Label
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 
@@ -10,10 +13,17 @@ typealias LabelFreqs = Map<Label, Int>
 
 class InputEventStats(
     private val labelMap: LabelMap,
+    inputEventSource: InputEventSource,
+    coroutineScope: CoroutineScope,
 ) {
 
     private val _inputEvents = mutableListOf<InputEvent>()
     internal val inputEvents: List<InputEvent> = _inputEvents
+
+    private val inputEventCollectionJob = startStatsCollection(
+        inputEventSource = inputEventSource,
+        coroutineScope = coroutineScope,
+    )
 
     val sessionTime: Int?
         get() = inputEvents.calcSessionLength()
@@ -21,8 +31,21 @@ class InputEventStats(
     val labelFreqs: LabelFreqs
         get() = inputEvents.toLabelFreqs(labelMap)
 
-    fun reportInputEvent(inputEvent: InputEvent) {
-        _inputEvents.add(inputEvent)
+    private fun startStatsCollection(
+        inputEventSource: InputEventSource,
+        coroutineScope: CoroutineScope
+    ): Job {
+        return coroutineScope.launch {
+            inputEventSource.inputEvent.collect { inputEventOrNull ->
+                inputEventOrNull?.let { inputEvent ->
+                    _inputEvents.add(inputEvent)
+                }
+            }
+        }
+    }
+
+    internal fun stop() {
+        inputEventCollectionJob.cancel()
     }
 
 }
