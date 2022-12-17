@@ -4,10 +4,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
+import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStats
+
+
+private const val routeNotingGraph = "noting_graph"
+private const val routeNotingSession = "noting_session"
+
+private const val routeArgExerciseId = "exerciseId"
 
 
 fun NavGraphBuilder.notingGraph(
@@ -16,8 +22,8 @@ fun NavGraphBuilder.notingGraph(
 ) {
     
     navigation(
-        startDestination = "noting_session",
-        route = "${ExerciseRoute.NOTING.name}/{exerciseID}",
+        route = "${routeNotingGraph}/{${routeArgExerciseId}}",
+        startDestination = routeNotingSession,
     ) {
 
         notingScreen(
@@ -42,7 +48,7 @@ private fun NavGraphBuilder.notingScreen(
     onStopButtonClick: () -> Unit,
 ) {
 
-    composable("noting_session") {
+    composable(routeNotingSession) {
 
         NotingScreen(
             onSessionEnd = onSessionEnd,
@@ -51,4 +57,9 @@ private fun NavGraphBuilder.notingScreen(
 
     }
 
+}
+
+
+fun NavController.navigateToNoting(exerciseID: ExerciseID) {
+    navigate("${routeNotingGraph}/${exerciseID}")
 }
