@@ -12,7 +12,6 @@ import dev.upaya.shf.ui.session.input.InputViewModel
 
 @Composable
 fun CoreFeelingScreen(
-    onSessionEnd: () -> Unit,
     sessionViewModel: SessionViewModel = hiltViewModel(),
     inputViewModel: InputViewModel = hiltViewModel(),
     coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
@@ -20,10 +19,6 @@ fun CoreFeelingScreen(
 
     SetStatusBarColor()
     KeepScreenOn()
-
-    DisposableEffect(sessionViewModel) {
-        onDispose(onSessionEnd)
-    }
 
     val inputEvent by inputViewModel.inputEvent.collectAsState()
     val label: Label? by sessionViewModel.label.collectAsState(initial = null)

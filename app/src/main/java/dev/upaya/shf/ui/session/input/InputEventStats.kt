@@ -3,34 +3,24 @@ package dev.upaya.shf.ui.session.input
 import dev.upaya.shf.exercises.labelmaps.LabelMap
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.InputEvent
-import dev.upaya.shf.session.ActiveSessionSource
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.math.roundToInt
 
 
 typealias LabelFreqs = Map<Label, Int>
 
 
-@Singleton
-class InputEventStats @Inject constructor(
-    private val activeSessionSource: ActiveSessionSource,
+class InputEventStats(
+    private val labelMap: LabelMap,
 ) {
 
     private val _inputEvents = mutableListOf<InputEvent>()
-    val inputEvents: List<InputEvent> = _inputEvents
+    internal val inputEvents: List<InputEvent> = _inputEvents
 
     val sessionTime: Int?
         get() = inputEvents.calcSessionLength()
 
     val labelFreqs: LabelFreqs
-        get() = activeSessionSource.exerciseConfig.value?.let {
-            inputEvents.toLabelFreqs(it.labelMap)
-        } ?: mutableMapOf()
-
-    fun resetStats() {
-        _inputEvents.clear()
-    }
+        get() = inputEvents.toLabelFreqs(labelMap)
 
     fun reportInputEvent(inputEvent: InputEvent) {
         _inputEvents.add(inputEvent)

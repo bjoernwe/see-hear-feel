@@ -5,8 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import dev.upaya.shf.ui.session.SessionViewModel
+import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.session.input.LabelFreqs
 import dev.upaya.shf.ui.session.noting.stats.composables.LabelStatsCard
 import dev.upaya.shf.ui.session.noting.stats.composables.NotingSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -14,7 +14,9 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun StatsScreen(
-    sessionViewModel: SessionViewModel = hiltViewModel(),
+    sessionLength: Int?,
+    numEvents: Int,
+    labelFreqs: LabelFreqs,
 ) {
 
     Scaffold(
@@ -32,12 +34,12 @@ fun StatsScreen(
         ) {
 
             NotingSummaryCard(
-                sessionTimeSeconds = sessionViewModel.getSessionLength() ?: 0,
-                numNotings = sessionViewModel.getNumEvents(),
+                sessionTimeSeconds = sessionLength ?: 0,
+                numNotings = numEvents,
             )
 
             LabelStatsCard(
-                labelFreqs = sessionViewModel.getLabelFreqs(),
+                labelFreqs = labelFreqs,
             )
 
         }
@@ -51,6 +53,10 @@ fun StatsScreen(
 @Composable
 fun StatsScreenPreview() {
     SHFTheme(darkTheme = true) {
-        StatsScreen()
+        StatsScreen(
+            sessionLength = 123,
+            numEvents = 42,
+            labelFreqs = mapOf(Label("foo") to 1, Label("bar") to 2),
+        )
     }
 }
