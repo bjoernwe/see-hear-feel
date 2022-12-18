@@ -75,3 +75,19 @@ fun SharedFlow<InputEvent>.transformToLabel(
     )
 
 }
+
+
+fun SharedFlow<InputEvent>.transformToLabel(
+    labelMap: LabelMap,
+    scope: CoroutineScope
+): SharedFlow<Label> {
+
+    return this.transform { inputEvent ->
+        emit(labelMap.getLabel(inputEvent.inputKey))
+    }.shareIn(
+        scope = scope,
+        started = SharingStarted.Eagerly,
+        replay = 0,
+    )
+
+}
