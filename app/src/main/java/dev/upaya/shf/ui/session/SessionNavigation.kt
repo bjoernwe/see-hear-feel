@@ -10,7 +10,7 @@ fun NavController.navigateToExerciseSession(
     exerciseID: ExerciseID,
 ) {
     when (exerciseID) {
-        ExerciseID.CORE_FEELINGS -> navigateToFeelingsSession()
+        ExerciseID.CORE_FEELINGS -> navigateToFeelingsSession(exerciseID)
         else -> navigateToNoting(exerciseID)
     }
 }
