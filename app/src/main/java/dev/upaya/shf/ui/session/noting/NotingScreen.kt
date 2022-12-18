@@ -11,34 +11,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.input.InputViewModel
 import dev.upaya.shf.ui.session.LabelText
-import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun NotingScreen(
-    onSessionEnd: () -> Unit,
-    inputViewModel: InputViewModel = hiltViewModel(),
-    sessionViewModel: SessionViewModel = hiltViewModel(),
+    label: Label,
+    inputEvent: InputEvent?,
     onStopButtonClick: () -> Unit = {},
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
-
-    DisposableEffect(sessionViewModel) {
-        onDispose(onSessionEnd)
-    }
-
-    val inputEvent by inputViewModel.inputEvent.collectAsState()
-    val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
@@ -90,7 +80,8 @@ fun NotingScreen(
 fun MainContentPreview() {
     SHFTheme(darkTheme = true) {
         NotingScreen(
-            onSessionEnd = {}
+            label = Label("label"),
+            inputEvent = null,
         )
     }
 }

@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.stats.composables
+package dev.upaya.shf.ui.session.noting.stats.composables
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.exercises.labels.labelFeel
 import dev.upaya.shf.exercises.labels.labelHear
 import dev.upaya.shf.exercises.labels.labelSee
-import dev.upaya.shf.ui.input.LabelFreqs
+import dev.upaya.shf.inputs.LabelFreqs
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

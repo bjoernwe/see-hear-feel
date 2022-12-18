@@ -12,6 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
+import dev.upaya.shf.exercises.labelmaps.LabelMap
+import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.inputs.InputEvent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
 
 
 @Composable
@@ -44,4 +49,29 @@ internal suspend fun MutableInteractionSource.simulatePress() {
     val press = PressInteraction.Press(Offset.Zero)
     this.emit(press)
     this.emit(PressInteraction.Release(press))
+}
+
+
+fun <T> Flow<T>.asSharedFlow(scope: CoroutineScope): SharedFlow<T> {
+    return this.shareIn(
+        scope = scope,
+        started = SharingStarted.Eagerly,
+        replay = 0,
+    )
+}
+
+
+fun SharedFlow<InputEvent>.transformToLabel(
+    labelMap: LabelMap,
+    scope: CoroutineScope
+): SharedFlow<Label> {
+
+    return this.transform { inputEvent ->
+        emit(labelMap.getLabel(inputEvent.inputKey))
+    }.shareIn(
+        scope = scope,
+        started = SharingStarted.Eagerly,
+        replay = 0,
+    )
+
 }

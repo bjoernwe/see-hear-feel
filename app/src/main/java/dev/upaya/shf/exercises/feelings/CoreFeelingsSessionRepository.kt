@@ -2,6 +2,7 @@ package dev.upaya.shf.exercises.feelings
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 
 private val FEELINGS = listOf(
@@ -10,7 +11,7 @@ private val FEELINGS = listOf(
 )
 
 
-class CoreFeelingsRepository {
+class CoreFeelingsSessionRepository @Inject constructor() {
 
     private val urnList = UrnList(initial = FEELINGS)
 

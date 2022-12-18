@@ -1,13 +1,15 @@
 package dev.upaya.shf.inputs
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.transform
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
-typealias KeyPressStates = MutableMap<InputKey, Date?>
+typealias KeyPressStates = Map<InputKey, Date?>
 
 
 @Singleton
@@ -16,16 +18,10 @@ class InputEventSource @Inject constructor() {
     private val inputDevice: InputDevice = InputDeviceGeneric
 
     private val _inputEvent: MutableStateFlow<InputEvent?> = MutableStateFlow(null)
-    val inputEvent: StateFlow<InputEvent?> = _inputEvent
+    val inputEvent: Flow<InputEvent> = _inputEvent.asFlow()
 
-    private val _keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(
-        initKeyPressStates()
-    )
+    private val _keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
     val keyPressStates: StateFlow<KeyPressStates> = _keyPressStates
-
-    fun resetInputEvent() {
-        _inputEvent.value = null
-    }
 
     fun keyDown(keyCode: Int): Boolean {
 
@@ -61,6 +57,10 @@ class InputEventSource @Inject constructor() {
 }
 
 
-private fun initKeyPressStates(): KeyPressStates {
-    return InputKey.values().associateWith { null }.toMutableMap()
+private fun <T> StateFlow<T?>.asFlow(): Flow<T> {
+    return this.transform { value ->
+        if (value != null) {
+            emit(value)
+        }
+    }
 }

@@ -6,7 +6,6 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.inputs.InputEventSource
 import dev.upaya.shf.ui.SHFNavHost
@@ -54,8 +53,7 @@ class SHFActivity : ComponentActivity() {
 
 @Composable
 fun SHFApp() {
-    val navController = rememberNavController()
     SHFTheme(darkTheme = true) {
-        SHFNavHost(navController = navController)
+        SHFNavHost()
     }
 }

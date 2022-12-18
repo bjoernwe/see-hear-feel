@@ -11,15 +11,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.R
+import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
+fun ExerciseEntry(exerciseEntry: Pair<ExerciseId, ExerciseConfig>, onClick: (ExerciseId) -> Unit = {}) {
 
     Row(
         modifier = Modifier
-            .clickable { onClick(cfg) }
+            .clickable { onClick(exerciseEntry.first) }
             .fillMaxWidth()
             .padding(8.dp)
     ) {
@@ -44,7 +45,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
         ) {
 
             Text(
-                text = cfg.title,
+                text = exerciseEntry.second.title,
                 style = MaterialTheme.typography.body1,
                 color = MaterialTheme.colors.onSurface,
             )
@@ -52,7 +53,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
             Spacer(modifier = Modifier.height(2.dp))
 
             Text(
-                text = cfg.description,
+                text = exerciseEntry.second.description,
                 style = MaterialTheme.typography.body2,
                 color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
             )
@@ -69,7 +70,7 @@ fun ExerciseEntry(cfg: ExerciseConfig, onClick: (ExerciseConfig) -> Unit = {}) {
 fun ExerciseEntryPreview() {
     SHFTheme(darkTheme = true) {
         ExerciseEntry(
-            cfg = ExerciseConfig("Title", "Description"),
+            exerciseEntry = Pair(ExerciseId.DO_NOTHING, ExerciseConfig("Title", "Description")),
         )
     }
 }

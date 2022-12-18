@@ -8,5 +8,4 @@ data class ExerciseConfig(
     val title: String,
     val description: String,
     val labelMap: LabelMap = LabelMapSHF,
-    val route: ExerciseRoute = ExerciseRoute.NOTING,
 )

@@ -1,83 +1,44 @@
 package dev.upaya.shf.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.SessionViewModel
-import dev.upaya.shf.exercises.exerciselist.ExerciseRoute
-import dev.upaya.shf.ui.controller.ControllerSetupScreen
-import dev.upaya.shf.ui.exercises.ExerciseListScreen
-import dev.upaya.shf.ui.exercises.ExerciseListViewModel
-import dev.upaya.shf.ui.session.noting.NotingScreen
-import dev.upaya.shf.ui.session.feelings.CoreFeelingScreen
-import dev.upaya.shf.ui.stats.StatsScreen
+import androidx.navigation.compose.rememberNavController
+import dev.upaya.shf.ui.controller.controllerSetupScreen
+import dev.upaya.shf.ui.controller.navigateToControllerSetup
+import dev.upaya.shf.ui.exercises.exerciseListScreen
+import dev.upaya.shf.ui.exercises.routeExerciseList
+import dev.upaya.shf.ui.session.feelings.coreFeelingsScreen
+import dev.upaya.shf.ui.session.navigateToExerciseSession
+import dev.upaya.shf.ui.session.noting.notingGraph
 
 
 @Composable
 fun SHFNavHost(
-    navController: NavHostController,
-    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
 ) {
-
-    val sessionViewModel: SessionViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
-        startDestination = "exercises",
-        modifier = modifier
+        startDestination = routeExerciseList,
     ) {
 
-        composable(route = "exercises") {
-            val exerciseListViewModel: ExerciseListViewModel = hiltViewModel()
-            val exercises by exerciseListViewModel.exercises.collectAsState()
-            ExerciseListScreen(
-                exercises = exercises,
-                onExerciseClick = { cfg ->
-                    sessionViewModel.startSession(exerciseConfig = cfg)
-                    navController.navigate(cfg.route.name)
-                },
-                onControllerButtonClick = {
-                    navController.navigate("controller")
-                }
-            )
-        }
+        exerciseListScreen(
+            onExerciseClick = { exerciseId ->
+                navController.navigateToExerciseSession(exerciseId)
+            },
+            onControllerButtonClick = {
+                navController.navigateToControllerSetup()
+            }
+        )
 
-        composable(route = ExerciseRoute.NOTING.name) {
-            NotingScreen(
-                onSessionEnd = {
-                    sessionViewModel.stopSession()
-                },
-                onStopButtonClick = {
-                    if (sessionViewModel.getNumEvents() == 0) {
-                        navController.navigateUp()
-                    } else {
-                        navController.popBackStack()
-                        navController.navigate("stats")
-                    }
-                },
-            )
-        }
+        notingGraph(
+            navController = navController,
+        )
 
-        composable(route = "stats") {
-            StatsScreen()
-        }
+        coreFeelingsScreen()
 
-        composable(route = ExerciseRoute.FEELINGS.name) {
-            CoreFeelingScreen(
-                onSessionEnd = {
-                    sessionViewModel.stopSession()
-                }
-            )
-        }
-
-        composable(route = "controller") {
-            ControllerSetupScreen()
-        }
+        controllerSetupScreen()
 
     }
 
