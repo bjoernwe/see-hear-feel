@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.feelings
+package dev.upaya.shf.ui.session.feelings.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.InputEvent
-import dev.upaya.shf.ui.session.FadingText
+import dev.upaya.shf.ui.session.noting.session.composables.FadingText
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.ui.varelaFontFamily
