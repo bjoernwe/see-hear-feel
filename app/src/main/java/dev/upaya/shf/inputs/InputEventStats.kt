@@ -14,17 +14,14 @@ typealias LabelFreqs = Map<Label, Int>
 
 class InputEventStats(
     private val labelMap: LabelMap,
-    inputEventFlow: Flow<InputEvent>,
-    coroutineScope: CoroutineScope,
+    private val inputEventFlow: Flow<InputEvent>,
+    private val coroutineScope: CoroutineScope,
 ) {
 
     private val _inputEvents = mutableListOf<InputEvent>()
     internal val inputEvents: List<InputEvent> = _inputEvents
 
-    private val inputEventCollectionJob = startStatsCollection(
-        inputEventFlow = inputEventFlow,
-        coroutineScope = coroutineScope,
-    )
+    private var inputEventCollectionJob: Job? = null
 
     val sessionTime: Int?
         get() = inputEvents.calcSessionLength()
@@ -32,19 +29,20 @@ class InputEventStats(
     val labelFreqs: LabelFreqs
         get() = inputEvents.toLabelFreqs(labelMap)
 
-    private fun startStatsCollection(
-        inputEventFlow: Flow<InputEvent>,
-        coroutineScope: CoroutineScope
-    ): Job {
+    internal fun start() {
+        inputEventCollectionJob = initStatsCollectionJob()
+    }
+
+    internal fun stop() {
+        inputEventCollectionJob?.cancel()
+    }
+
+    private fun initStatsCollectionJob(): Job {
         return coroutineScope.launch {
             inputEventFlow.collect { inputEvent ->
                 _inputEvents.add(inputEvent)
             }
         }
-    }
-
-    internal fun stop() {
-        inputEventCollectionJob.cancel()
     }
 
 }

@@ -1,8 +1,6 @@
 package dev.upaya.shf.ui.session.noting
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -59,6 +57,13 @@ private fun NavGraphBuilder.notingScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
+
+        DisposableEffect(sessionViewModel) {
+            sessionViewModel.startStatsCollection()
+            onDispose {
+                sessionViewModel.stopStatsCollection()
+            }
+        }
 
         NotingScreen(
             label = label,

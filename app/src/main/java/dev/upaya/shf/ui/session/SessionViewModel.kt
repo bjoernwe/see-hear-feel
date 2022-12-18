@@ -55,6 +55,10 @@ class SessionViewModel @Inject constructor(
         )
     }
 
+    internal fun startStatsCollection() {
+        inputEventStats.start()
+    }
+
     internal fun stopStatsCollection() {
         inputEventStats.stop()
     }
