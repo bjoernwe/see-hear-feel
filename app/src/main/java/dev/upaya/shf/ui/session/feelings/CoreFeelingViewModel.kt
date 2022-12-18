@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
-import dev.upaya.shf.exercises.feelings.CoreFeelingsRepository
+import dev.upaya.shf.exercises.feelings.CoreFeelingsSessionRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.inputs.InputEventSource
@@ -22,7 +22,7 @@ class CoreFeelingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
-    private val coreFeelingsRepository: CoreFeelingsRepository,
+    private val coreFeelingsSessionRepository: CoreFeelingsSessionRepository,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
@@ -32,16 +32,16 @@ class CoreFeelingViewModel @Inject constructor(
 
     internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(labelMap = labelMap, scope = viewModelScope)
 
-    val currentCoreFeeling: StateFlow<String?> = coreFeelingsRepository.currentFeeling
-    val resultList = coreFeelingsRepository.resultList
-    val round: StateFlow<Int> = coreFeelingsRepository.round
+    val currentCoreFeeling: StateFlow<String?> = coreFeelingsSessionRepository.currentFeeling
+    val resultList = coreFeelingsSessionRepository.resultList
+    val round: StateFlow<Int> = coreFeelingsSessionRepository.round
 
     fun keepCurrentFeeling() {
-        coreFeelingsRepository.keepCurrentFeeling()
+        coreFeelingsSessionRepository.keepCurrentFeeling()
     }
 
     fun discardCurrentFeeling() {
-        coreFeelingsRepository.discardCurrentFeeling()
+        coreFeelingsSessionRepository.discardCurrentFeeling()
     }
 
 }

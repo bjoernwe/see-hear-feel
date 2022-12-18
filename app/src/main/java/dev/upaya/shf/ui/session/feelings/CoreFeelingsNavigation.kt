@@ -1,5 +1,6 @@
 package dev.upaya.shf.ui.session.feelings
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -7,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
+import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
 
 
@@ -30,14 +32,19 @@ fun NavGraphBuilder.coreFeelingsScreen() {
         val round by coreFeelingViewModel.round.collectAsState()
         val resultList by coreFeelingViewModel.resultList.collectAsState()
 
+        LaunchedEffect(inputEvent) {
+            when (label) {
+                LabelMapKeepDiscard.labelKeep -> coreFeelingViewModel.keepCurrentFeeling()
+                LabelMapKeepDiscard.labelDiscard -> coreFeelingViewModel.discardCurrentFeeling()
+            }
+        }
+
         CoreFeelingScreen(
             inputEvent = inputEvent,
             label = label,
             currentCoreFeeling = currentCoreFeeling,
             round = round,
             resultList = resultList,
-            onKeep = coreFeelingViewModel::keepCurrentFeeling,
-            onDiscard = coreFeelingViewModel::discardCurrentFeeling,
         )
     }
 

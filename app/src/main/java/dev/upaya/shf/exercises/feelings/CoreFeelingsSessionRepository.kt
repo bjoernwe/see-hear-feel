@@ -11,7 +11,7 @@ private val FEELINGS = listOf(
 )
 
 
-class CoreFeelingsRepository @Inject constructor() {
+class CoreFeelingsSessionRepository @Inject constructor() {
 
     private val urnList = UrnList(initial = FEELINGS)
 
