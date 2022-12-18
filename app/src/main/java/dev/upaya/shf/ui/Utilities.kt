@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.SHFActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
 
 
 @Composable
@@ -44,4 +46,25 @@ internal suspend fun MutableInteractionSource.simulatePress() {
     val press = PressInteraction.Press(Offset.Zero)
     this.emit(press)
     this.emit(PressInteraction.Release(press))
+}
+
+
+fun <T> StateFlow<T>.asSharedFlow(scope: CoroutineScope): SharedFlow<T> {
+
+    var initial = true
+
+    return this.transform { value ->
+
+        if (initial) {
+            initial = false
+        } else {
+            emit(value)
+        }
+
+    }.shareIn(
+        scope = scope,
+        started = SharingStarted.Eagerly,
+        replay = 0,
+    )
+
 }

@@ -18,8 +18,8 @@ fun CoreFeelingScreen(
     SetStatusBarColor()
     KeepScreenOn()
 
-    val inputEvent by sessionViewModel.inputEvent.collectAsState()
-    val label: Label? by sessionViewModel.label.collectAsState(initial = null)
+    val inputEvent by sessionViewModel.inputEventFlow.collectAsState(null)
+    val label: Label? by sessionViewModel.labelFlow.collectAsState(null)
     val round: Int by coreFeelingViewModel.round.collectAsState()
 
     LaunchedEffect(inputEvent) {

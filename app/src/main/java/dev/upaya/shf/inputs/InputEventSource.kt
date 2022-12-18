@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-typealias KeyPressStates = MutableMap<InputKey, Date?>
+typealias KeyPressStates = Map<InputKey, Date?>
 
 
 @Singleton
@@ -15,12 +15,10 @@ class InputEventSource @Inject constructor() {
 
     private val inputDevice: InputDevice = InputDeviceGeneric
 
-    private val _inputEvent: MutableStateFlow<InputEvent?> = MutableStateFlow(null)
-    val inputEvent: StateFlow<InputEvent?> = _inputEvent
+    private val _inputEvent: MutableStateFlow<InputEvent> = MutableStateFlow(InputEvent(InputKey.KEY_A))
+    val inputEvent: StateFlow<InputEvent> = _inputEvent
 
-    private val _keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(
-        initKeyPressStates()
-    )
+    private val _keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
     val keyPressStates: StateFlow<KeyPressStates> = _keyPressStates
 
     fun keyDown(keyCode: Int): Boolean {
@@ -54,9 +52,4 @@ class InputEventSource @Inject constructor() {
         return true
     }
 
-}
-
-
-private fun initKeyPressStates(): KeyPressStates {
-    return InputKey.values().associateWith { null }.toMutableMap()
 }

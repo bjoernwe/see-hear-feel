@@ -8,10 +8,10 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseID
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
+import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.session.noting.routeArgExerciseId
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 
@@ -22,13 +22,13 @@ class SessionViewModel @Inject constructor(
     inputEventSource: InputEventSource,
 ) : ViewModel() {
 
-    internal var inputEvent = inputEventSource.inputEvent
-    internal var label: Flow<Label> = inputEvent.transformToLabel()
+    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
+    internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(scope = viewModelScope)
 
     private val exerciseId = ExerciseID.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
     private val inputEventStats = InputEventStats(
-        inputEventSource = inputEventSource,
+        inputEventFlow = inputEventFlow,
         labelMap = labelMap,
         coroutineScope = viewModelScope,
     )
@@ -45,12 +45,14 @@ class SessionViewModel @Inject constructor(
         return inputEventStats.labelFreqs
     }
 
-    private fun StateFlow<InputEvent?>.transformToLabel(): Flow<Label> {
+    private fun SharedFlow<InputEvent>.transformToLabel(scope: CoroutineScope): SharedFlow<Label> {
         return this.transform { inputEvent ->
-            if (inputEvent != null) {
-                emit(labelMap.getLabel(inputEvent.inputKey))
-            }
-        }
+            emit(labelMap.getLabel(inputEvent.inputKey))
+        }.shareIn(
+            scope = scope,
+            started = SharingStarted.Eagerly,
+            replay = 0,
+        )
     }
 
     internal fun stopStatsCollection() {

@@ -57,8 +57,8 @@ private fun NavGraphBuilder.notingScreen(
         val sessionScope = remember(backStackEntry) { navController.getBackStackEntry(routeNotingGraphWithArg) }
         val sessionViewModel: SessionViewModel = hiltViewModel(viewModelStoreOwner = sessionScope)
 
-        val label: Label by sessionViewModel.label.collectAsState(initial = Label(""))
-        val inputEvent by sessionViewModel.inputEvent.collectAsState()
+        val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
+        val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
 
         NotingScreen(
             label = label,
