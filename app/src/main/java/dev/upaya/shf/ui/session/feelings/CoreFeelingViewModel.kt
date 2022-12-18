@@ -8,9 +8,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CoreFeelingViewModel @Inject constructor() : ViewModel() {
+class CoreFeelingViewModel @Inject constructor(
+    private val coreFeelingsRepository: CoreFeelingsRepository,
+) : ViewModel() {
 
-    private val coreFeelingsRepository = CoreFeelingsRepository()
     val currentCoreFeeling: StateFlow<String?> = coreFeelingsRepository.currentFeeling
     val resultList = coreFeelingsRepository.resultList
     val round: StateFlow<Int> = coreFeelingsRepository.round
