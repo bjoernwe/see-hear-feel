@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.SessionViewModel
+import dev.upaya.shf.ui.session.noting.SessionViewModel
 import dev.upaya.shf.ui.session.noting.routeNotingGraphWithArg
 
 

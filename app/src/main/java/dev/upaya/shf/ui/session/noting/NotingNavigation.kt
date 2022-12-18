@@ -8,7 +8,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
 
@@ -18,6 +17,11 @@ private const val routeNotingSession = "noting_session"
 
 internal const val routeArgExerciseId = "exerciseId"
 internal const val routeNotingGraphWithArg = "$routeNotingGraph/{$routeArgExerciseId}"
+
+
+fun NavController.navigateToNoting(exerciseId: ExerciseId) {
+    navigate("${routeNotingGraph}/${exerciseId}")
+}
 
 
 fun NavGraphBuilder.notingGraph(
@@ -73,9 +77,4 @@ private fun NavGraphBuilder.notingScreen(
 
     }
 
-}
-
-
-fun NavController.navigateToNoting(exerciseId: ExerciseId) {
-    navigate("${routeNotingGraph}/${exerciseId}")
 }

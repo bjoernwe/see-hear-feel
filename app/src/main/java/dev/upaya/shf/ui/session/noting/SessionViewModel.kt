@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session
+package dev.upaya.shf.ui.session.noting
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,6 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
 import dev.upaya.shf.ui.asSharedFlow
-import dev.upaya.shf.ui.session.noting.routeArgExerciseId
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

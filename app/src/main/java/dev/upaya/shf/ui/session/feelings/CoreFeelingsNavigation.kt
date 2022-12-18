@@ -17,6 +17,11 @@ internal const val routeArgExerciseId = "exerciseId"
 internal const val routeFeelingsWithArg = "$routeFeelingsSession/{${routeArgExerciseId}}"
 
 
+fun NavController.navigateToFeelingsSession(exerciseId: ExerciseId) {
+    navigate("${routeFeelingsSession}/${exerciseId}")
+}
+
+
 fun NavGraphBuilder.coreFeelingsScreen() {
 
     composable(
@@ -48,9 +53,4 @@ fun NavGraphBuilder.coreFeelingsScreen() {
         )
     }
 
-}
-
-
-fun NavController.navigateToFeelingsSession(exerciseId: ExerciseId) {
-    navigate("${routeFeelingsSession}/${exerciseId}")
 }
