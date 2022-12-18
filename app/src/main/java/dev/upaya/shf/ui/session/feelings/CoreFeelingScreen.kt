@@ -6,21 +6,18 @@ import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.KeepScreenOn
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.session.SessionViewModel
 
 
 @Composable
 fun CoreFeelingScreen(
-    sessionViewModel: SessionViewModel = hiltViewModel(),
-    coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel()
+    coreFeelingViewModel: CoreFeelingViewModel = hiltViewModel(),
 ) {
 
     SetStatusBarColor()
     KeepScreenOn()
 
-    val inputEvent by sessionViewModel.inputEventFlow.collectAsState(null)
-    val label: Label? by sessionViewModel.labelFlow.collectAsState(null)
-    val round: Int by coreFeelingViewModel.round.collectAsState()
+    val inputEvent by coreFeelingViewModel.inputEventFlow.collectAsState(null)
+    val label: Label? by coreFeelingViewModel.labelFlow.collectAsState(null)
 
     LaunchedEffect(inputEvent) {
         when (label) {
@@ -40,6 +37,8 @@ fun CoreFeelingScreen(
         )
 
     } else {
+
+        val round: Int by coreFeelingViewModel.round.collectAsState()
 
         CurrentCoreFeeling(
             currentCoreFeeling = currentCoreFeeling,

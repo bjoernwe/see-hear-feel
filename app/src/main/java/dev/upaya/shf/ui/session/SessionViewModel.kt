@@ -10,7 +10,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
 import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.session.noting.routeArgExerciseId
-import kotlinx.coroutines.CoroutineScope
+import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -23,7 +23,6 @@ class SessionViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
-    internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(scope = viewModelScope)
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
@@ -32,6 +31,8 @@ class SessionViewModel @Inject constructor(
         labelMap = labelMap,
         coroutineScope = viewModelScope,
     )
+
+    internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
 
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
@@ -43,16 +44,6 @@ class SessionViewModel @Inject constructor(
 
     fun getLabelFreqs(): LabelFreqs {
         return inputEventStats.labelFreqs
-    }
-
-    private fun SharedFlow<InputEvent>.transformToLabel(scope: CoroutineScope): SharedFlow<Label> {
-        return this.transform { inputEvent ->
-            emit(labelMap.getLabel(inputEvent.inputKey))
-        }.shareIn(
-            scope = scope,
-            started = SharingStarted.Eagerly,
-            replay = 0,
-        )
     }
 
     internal fun startStatsCollection() {
