@@ -3,7 +3,7 @@ package dev.upaya.shf.ui.session.feelings
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.exercises.exerciselist.ExerciseID
+import dev.upaya.shf.exercises.exerciselist.ExerciseId
 
 
 private const val routeFeelingsSession = "feelings_session"
@@ -22,6 +22,6 @@ fun NavGraphBuilder.coreFeelingsScreen() {
 }
 
 
-fun NavController.navigateToFeelingsSession(exerciseId: ExerciseID) {
+fun NavController.navigateToFeelingsSession(exerciseId: ExerciseId) {
     navigate("${routeFeelingsSession}/${exerciseId}")
 }

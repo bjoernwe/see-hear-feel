@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.exercises.exerciselist.ExerciseID
+import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
@@ -25,7 +25,7 @@ class SessionViewModel @Inject constructor(
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
     internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(scope = viewModelScope)
 
-    private val exerciseId = ExerciseID.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
+    private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
     private val inputEventStats = InputEventStats(
         inputEventFlow = inputEventFlow,

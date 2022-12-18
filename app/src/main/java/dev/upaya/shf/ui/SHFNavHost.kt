@@ -24,8 +24,8 @@ fun SHFNavHost(
     ) {
 
         exerciseListScreen(
-            onExerciseClick = { exerciseID ->
-                navController.navigateToExerciseSession(exerciseID)
+            onExerciseClick = { exerciseId ->
+                navController.navigateToExerciseSession(exerciseId)
             },
             onControllerButtonClick = {
                 navController.navigateToControllerSetup()

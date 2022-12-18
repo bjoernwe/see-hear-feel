@@ -5,14 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.exercises.exerciselist.ExerciseID
+import dev.upaya.shf.exercises.exerciselist.ExerciseId
 
 
 const val routeExerciseList = "exercises"
 
 
 fun NavGraphBuilder.exerciseListScreen(
-    onExerciseClick: (ExerciseID) -> Unit,
+    onExerciseClick: (ExerciseId) -> Unit,
     onControllerButtonClick: () -> Unit,
 ) {
 
