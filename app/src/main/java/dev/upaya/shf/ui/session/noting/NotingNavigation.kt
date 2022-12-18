@@ -19,7 +19,7 @@ private const val routeNotingGraph = "noting_graph"
 private const val routeNotingSession = "noting_session"
 
 internal const val routeArgExerciseId = "exerciseId"
-internal const val routeNotingGraphWithArg = "${routeNotingGraph}/{${routeArgExerciseId}}"
+internal const val routeNotingGraphWithArg = "$routeNotingGraph/{$routeArgExerciseId}"
 
 
 fun NavGraphBuilder.notingGraph(
