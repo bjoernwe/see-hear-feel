@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.ui.session.noting.intros.composables.TextWithUrl
+import dev.upaya.shf.ui.session.noting.intros.composables.YouTubeImage
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -28,6 +29,8 @@ fun NotingIntroScreen(
         TextWithUrl {
             append(exercise.description)
         }
+
+        YouTubeImage(videoId = "StBTuX0tqU8")
 
         Button(
             onClick = onClickButton,
