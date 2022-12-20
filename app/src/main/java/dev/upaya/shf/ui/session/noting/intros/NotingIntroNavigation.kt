@@ -31,7 +31,7 @@ internal fun NavGraphBuilder.notingIntroScreen(
 
         val exerciseId = sessionViewModel.exerciseId
         val exercises by exerciseListViewModel.exercises.collectAsState()
-        val exercise = exercises.getOrDefault(exerciseId, null)
+        val exercise = exercises.getValue(exerciseId)
 
         NotingIntroScreen(
             exercise = exercise,
