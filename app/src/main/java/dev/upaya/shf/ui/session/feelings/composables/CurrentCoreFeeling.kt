@@ -101,6 +101,7 @@ fun CurrentCoreFeeling(
                 color = MaterialTheme.colors.secondaryVariant,
                 fontSize = 20.sp,
                 key = inputEvent,
+                fadingDurationMillis = 1200,
             )
         }
 
