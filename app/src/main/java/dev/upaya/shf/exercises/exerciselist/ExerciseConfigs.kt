@@ -11,7 +11,7 @@ enum class ExerciseId {
 val exampleExercises: Map<ExerciseId, ExerciseConfig> = mapOf(
     ExerciseId.SHF to ExerciseConfig(
         title = "See Hear Feel",
-        description = "Standard See/Hear/Feel",
+        description = "Shinzen Young's signature technique",
     ),
     ExerciseId.AUDITOR to ExerciseConfig(
         title = "Meditator & Auditor",

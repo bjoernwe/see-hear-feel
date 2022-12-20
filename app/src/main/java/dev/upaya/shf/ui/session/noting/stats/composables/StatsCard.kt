@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.ui.theme.SHFTheme
+import dev.upaya.shf.ui.theme.surfaceElevation
 
 
 @Composable
@@ -24,7 +25,7 @@ fun StatsCard(
     Surface(
         shape = MaterialTheme.shapes.small,
         color = MaterialTheme.colors.primarySurface,
-        elevation = 8.dp,
+        elevation = surfaceElevation,
         modifier = Modifier
             .padding(8.dp)
     ) {

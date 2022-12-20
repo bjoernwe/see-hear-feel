@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.session.noting.intros.composables
 
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
@@ -26,6 +27,7 @@ fun TextWithUrl(
 
     ClickableText(
         text = annotatedText,
+        style = MaterialTheme.typography.body1,
         onClick = { offset ->
             annotatedText.getStringAnnotations(
                 tag = tagUrl,

@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.session.noting.intros.composables
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
@@ -10,14 +11,19 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun YouTubeImage(videoId: String) {
+fun YouTubeImage(
+    modifier: Modifier = Modifier,
+    videoId: String,
+) {
 
     val uriHandler = LocalUriHandler.current
 
     AsyncImage(
-        modifier = Modifier.clickable {
-            uriHandler.openUri("https://youtube.com/watch?v=${videoId}")
-        },
+        modifier = modifier
+            .aspectRatio(1.78f)
+            .clickable {
+                uriHandler.openUri("https://youtube.com/watch?v=${videoId}")
+           },
         model = "https://img.youtube.com/vi/${videoId}/maxresdefault.jpg",
         contentDescription = null,
     )
