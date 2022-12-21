@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.exercises
+package dev.upaya.shf.ui.exercises.composables
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,50 +13,57 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.R
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.ui.theme.SHFTheme
+import dev.upaya.shf.ui.theme.surfaceElevation
 
 
 @Composable
 fun ExerciseEntry(exerciseEntry: Pair<ExerciseId, ExerciseConfig>, onClick: (ExerciseId) -> Unit = {}) {
 
-    Row(
-        modifier = Modifier
-            .clickable { onClick(exerciseEntry.first) }
-            .fillMaxWidth()
-            .padding(8.dp)
+    Surface(
+        elevation = surfaceElevation,
     ) {
 
-        Icon(
-            painter = painterResource(id = R.drawable.ic_round_self_improvement_24),
-            contentDescription = "Meditating Person",
-            tint = MaterialTheme.colors.secondary,
+        Row(
             modifier = Modifier
-                .size(56.dp)
-                .padding(4.dp),
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column(
-            modifier = Modifier
+                .clickable { onClick(exerciseEntry.first) }
                 .fillMaxWidth()
-                .padding(4.dp)
-                .padding(bottom = 4.dp)
-                .align(Alignment.CenterVertically),
+                .padding(8.dp)
         ) {
 
-            Text(
-                text = exerciseEntry.second.title,
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onSurface,
+            Icon(
+                painter = painterResource(id = R.drawable.ic_round_self_improvement_24),
+                contentDescription = "Meditating Person",
+                tint = MaterialTheme.colors.secondary,
+                modifier = Modifier
+                    .size(56.dp)
+                    .padding(4.dp),
             )
 
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                text = exerciseEntry.second.description,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
+                    .padding(bottom = 4.dp)
+                    .align(Alignment.CenterVertically),
+            ) {
+
+                Text(
+                    text = exerciseEntry.second.title,
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onSurface,
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+
+                Text(
+                    text = exerciseEntry.second.description,
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
+                )
+
+            }
 
         }
 

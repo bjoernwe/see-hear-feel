@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session
+package dev.upaya.shf.ui.session.noting.session.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -22,7 +22,7 @@ fun StatsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Statistics") },
+                title = { Text(text = "Statistics", color = MaterialTheme.colors.onSecondary) },
                 backgroundColor = MaterialTheme.colors.secondary,
             )
         }
