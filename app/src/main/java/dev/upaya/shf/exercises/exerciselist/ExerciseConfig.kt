@@ -6,6 +6,6 @@ import dev.upaya.shf.exercises.labelmaps.LabelMapSHF
 
 data class ExerciseConfig(
     val title: String,
-    val description: String,
+    val descriptionShort: String,
     val labelMap: LabelMap = LabelMapSHF,
 )

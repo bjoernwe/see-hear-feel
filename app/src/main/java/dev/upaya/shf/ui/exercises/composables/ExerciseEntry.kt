@@ -58,7 +58,7 @@ fun ExerciseEntry(exerciseEntry: Pair<ExerciseId, ExerciseConfig>, onClick: (Exe
                 Spacer(modifier = Modifier.height(2.dp))
 
                 Text(
-                    text = exerciseEntry.second.description,
+                    text = exerciseEntry.second.descriptionShort,
                     style = MaterialTheme.typography.body2,
                     color = MaterialTheme.colors.onSurface.copy(alpha = .5f),
                 )

@@ -45,7 +45,7 @@ fun NotingIntroScreen(
             )
 
             TextWithUrl {
-                append(exercise.description)
+                append(exercise.descriptionShort)
             }
 
             YouTubeImage(
@@ -80,7 +80,7 @@ fun NotingIntroScreenPreview() {
         NotingIntroScreen(
             exercise = ExerciseConfig(
                 title = "Title",
-                description = "Description",
+                descriptionShort = "Description",
             ),
             onClickButton = {},
         )
