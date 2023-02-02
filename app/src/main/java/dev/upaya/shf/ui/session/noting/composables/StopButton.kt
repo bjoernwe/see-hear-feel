@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting
+package dev.upaya.shf.ui.session.noting.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
