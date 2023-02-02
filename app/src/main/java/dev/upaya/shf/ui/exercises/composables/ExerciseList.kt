@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
-import dev.upaya.shf.ui.exercises.ExerciseEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

@@ -4,14 +4,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.R
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
+import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.exercises.composables.ExerciseList
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -23,14 +22,13 @@ fun ExerciseListScreen(
     onControllerButtonClick: () -> Unit = {},
 ) {
 
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(color = MaterialTheme.colors.secondaryVariant)
+    SetStatusBarColor(MaterialTheme.colors.secondaryVariant)
 
     Scaffold(
-        backgroundColor = Color.Transparent,
+        //backgroundColor = Color.Transparent,
         topBar = {
             TopAppBar(
-                title = { Text(text = "Noting Exercises") },
+                title = { Text(text = "Noting Exercises", color = MaterialTheme.colors.onSecondary) },
                 backgroundColor = MaterialTheme.colors.secondary,
                 actions = { ControllerButton(onControllerButtonClick = onControllerButtonClick) }
             )

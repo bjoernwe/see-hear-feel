@@ -1,8 +1,6 @@
-package dev.upaya.shf.ui.session
+package dev.upaya.shf.ui.session.noting.composables
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,14 +23,15 @@ fun FadingText(
     fontSize: TextUnit = 50.sp,
     color: Color = MaterialTheme.colors.secondary,
     fontFamily: FontFamily? = null,
-    key: Any? = null
+    key: Any? = null,
+    fadingDurationMillis: Int = 800,
 ) {
 
     val alpha = remember { Animatable(1f) }
 
     LaunchedEffect(key, text) {
         alpha.snapTo(1f)
-        alpha.animateTo(0f, animationSpec = spring(stiffness = Spring.StiffnessVeryLow))
+        alpha.animateTo(0f, animationSpec = tween(fadingDurationMillis))
     }
 
     Text(
