@@ -2,12 +2,12 @@ package dev.upaya.shf.ui.session.noting
 
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
-import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.session.noting.session.notingSessionScreen
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
 
@@ -33,7 +33,7 @@ fun NavGraphBuilder.notingGraph(
         startDestination = routeNotingSession,
     ) {
 
-        notingScreen(
+        notingSessionScreen(
             navController = navController,
             onStopButtonClick = {
                 navController.navigateToNotingStats()
@@ -49,32 +49,16 @@ fun NavGraphBuilder.notingGraph(
 }
 
 
-private fun NavGraphBuilder.notingScreen(
+@Composable
+internal fun getScopedSessionViewModel(
+    routeForScope: String,
+    backStackEntry: NavBackStackEntry,
     navController: NavController,
-    onStopButtonClick: () -> Unit,
-) {
+): SessionViewModel {
 
-    composable(routeNotingSession) { backStackEntry ->
-
-        val sessionScope = remember(backStackEntry) { navController.getBackStackEntry(routeNotingGraphWithArg) }
-        val sessionViewModel: SessionViewModel = hiltViewModel(viewModelStoreOwner = sessionScope)
-
-        val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
-        val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
-
-        DisposableEffect(sessionViewModel) {
-            sessionViewModel.startStatsCollection()
-            onDispose {
-                sessionViewModel.stopStatsCollection()
-            }
-        }
-
-        NotingScreen(
-            label = label,
-            inputEvent = inputEvent,
-            onStopButtonClick = onStopButtonClick,
-        )
-
+    val sessionScope = remember(backStackEntry) {
+        navController.getBackStackEntry(routeForScope)
     }
 
+    return hiltViewModel(viewModelStoreOwner = sessionScope)
 }
