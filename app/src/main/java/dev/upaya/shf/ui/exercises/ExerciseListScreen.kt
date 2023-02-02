@@ -12,6 +12,7 @@ import dev.upaya.shf.R
 import dev.upaya.shf.exercises.exerciselist.ExerciseConfig
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.exampleExercises
+import dev.upaya.shf.ui.exercises.composables.ExerciseList
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
