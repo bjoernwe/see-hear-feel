@@ -48,7 +48,6 @@ class InputEventSourceTest {
         inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it is emitted twice
-        print(emittedValues)
         val numEmittedValues = emittedValues.size
         assertEquals(2, numEmittedValues)
     }
@@ -71,7 +70,6 @@ class InputEventSourceTest {
         inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it is emitted only once
-        print(emittedValues)
         val numEmittedValues = emittedValues.size
         assertEquals(1, numEmittedValues)
     }
