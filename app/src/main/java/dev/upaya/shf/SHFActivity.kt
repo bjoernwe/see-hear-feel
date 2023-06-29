@@ -25,18 +25,25 @@ class SHFActivity : ComponentActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
-        if (keyCode != KeyEvent.KEYCODE_BACK && inputEventSource.registerKeyDown(keyCode)) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            return super.onKeyDown(keyCode, event)
+
+        if (inputEventSource.registerKeyDown(keyCode))
             return true
-        }
+
         return super.onKeyDown(keyCode, event)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+
         Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
-        if (inputEventSource.registerKeyUp(keyCode)) {
+
+        if (inputEventSource.registerKeyUp(keyCode))
             return true
-        }
+
         return super.onKeyUp(keyCode, event)
     }
 
