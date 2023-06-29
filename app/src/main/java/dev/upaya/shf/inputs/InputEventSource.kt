@@ -23,7 +23,7 @@ class InputEventSource @Inject constructor() {
     private val _keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
     val keyPressStates: StateFlow<KeyPressStates> = _keyPressStates
 
-    fun keyDown(keyCode: Int): Boolean {
+    fun registerKeyDown(keyCode: Int): Boolean {
 
         val inputKey = inputDevice.getInputKey(keyCode)
 
@@ -40,7 +40,7 @@ class InputEventSource @Inject constructor() {
         return true
     }
 
-    fun keyUp(keyCode: Int): Boolean {
+    fun registerKeyUp(keyCode: Int): Boolean {
 
         val inputKey = inputDevice.getInputKey(keyCode)
 
