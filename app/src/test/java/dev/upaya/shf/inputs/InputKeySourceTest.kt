@@ -1,13 +1,11 @@
 package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.withContext
 import org.junit.Assert.*
 import org.junit.Before
 
@@ -15,13 +13,13 @@ import org.junit.Test
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class InputEventSourceTest {
+class InputKeySourceTest {
 
-    private lateinit var inputSource: InputEventSource
+    private lateinit var inputSource: InputKeySource
 
     @Before
     fun setUp() {
-        inputSource = InputEventSource()
+        inputSource = InputKeySource()
     }
 
     /*
@@ -33,18 +31,17 @@ class InputEventSourceTest {
     - https://stackoverflow.com/a/65909194/1261573
     */
     @Test
-    fun registerKeyDown_registeringKeyTwiceWithRelease_emitsTwice() = runTest {
+    fun registerKeyDown_registeringKeyTwice_emitsTwice() = runTest {
 
         // GIVEN a GenericInputSource and list of its emitted values
-        val emittedValues = mutableListOf<InputEvent>()
+        val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputEvent.toList(emittedValues)
+            inputSource.inputKeyDown.toList(emittedValues)
         }
 
         // WHEN a key is registered two times in row without key with release in between
         inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-        inputSource.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
         inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it is emitted twice
@@ -53,35 +50,13 @@ class InputEventSourceTest {
     }
 
     @Test
-    fun registerKeyDown_registeringKeyMultipleTimesWithoutRelease_emitsOnce() = runTest {
-
-        // GIVEN a GenericInputSource and list of its emitted values
-        val emittedValues = mutableListOf<InputEvent>()
-        val dispatcher = UnconfinedTestDispatcher(testScheduler)
-        backgroundScope.launch(dispatcher) {
-            inputSource.inputEvent.toList(emittedValues)
-        }
-
-        // WHEN a key is registered two times in row without key release in between
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-        withContext(Dispatchers.IO) {
-            Thread.sleep(1) // KeyEvents have a temporal resolution of 1ms
-        }
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-
-        // THEN it is emitted only once
-        val numEmittedValues = emittedValues.size
-        assertEquals(1, numEmittedValues)
-    }
-
-    @Test
     fun registerKeyDown_registeringUnmappedKey_doesNotEmit() = runTest {
 
         // GIVEN a GenericInputSource and list of its emitted values
-        val emittedValues = mutableListOf<InputEvent>()
+        val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputEvent.toList(emittedValues)
+            inputSource.inputKeyDown.toList(emittedValues)
         }
 
         // WHEN an unmapped key is registered
@@ -96,10 +71,10 @@ class InputEventSourceTest {
     fun registerKeyUp_registeringUnmappedKey_doesNotEmit() = runTest {
 
         // GIVEN a GenericInputSource and list of its emitted values
-        val emittedValues = mutableListOf<InputEvent>()
+        val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputEvent.toList(emittedValues)
+            inputSource.inputKeyUp.toList(emittedValues)
         }
 
         // WHEN an unmapped key is registered
@@ -108,6 +83,25 @@ class InputEventSourceTest {
         // THEN it is not emitted
         val numEmittedValues = emittedValues.size
         assertEquals(0, numEmittedValues)
+    }
+
+    @Test
+    fun registerKeyUp_registeringKeyTwice_emitsTwice() = runTest {
+
+        // GIVEN a GenericInputSource and list of its emitted values
+        val emittedValues = mutableListOf<InputKey>()
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
+        backgroundScope.launch(dispatcher) {
+            inputSource.inputKeyUp.toList(emittedValues)
+        }
+
+        // WHEN a key is registered two times in row without key with release in between
+        inputSource.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
+        inputSource.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
+
+        // THEN it is emitted twice
+        val numEmittedValues = emittedValues.size
+        assertEquals(2, numEmittedValues)
     }
 
 }
