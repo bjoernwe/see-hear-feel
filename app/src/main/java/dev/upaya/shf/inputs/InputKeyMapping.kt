@@ -3,11 +3,11 @@ package dev.upaya.shf.inputs
 import android.view.KeyEvent.*
 
 
-class InputDeviceGeneric {
+class InputKeyMapping {
 
-    companion object : InputDevice  {
+    companion object  {
 
-        override fun getInputKey(keyCode: Int): InputKey {
+        fun getInputKey(keyCode: Int): InputKey {
             return when (keyCode) {
                 KEYCODE_DPAD_UP -> InputKey.KEY_UP
                 KEYCODE_DPAD_DOWN -> InputKey.KEY_DOWN

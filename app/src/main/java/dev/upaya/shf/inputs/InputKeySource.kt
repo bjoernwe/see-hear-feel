@@ -10,8 +10,6 @@ import javax.inject.Singleton
 @Singleton
 class InputKeySource @Inject constructor() {
 
-    private val inputDevice: InputDevice = InputDeviceGeneric
-
     private val _inputKeyDown = MutableSharedFlow<InputKey>(
         replay = 1, // behavior similar to StateFlow
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -26,7 +24,7 @@ class InputKeySource @Inject constructor() {
 
     fun registerKeyDown(keyCode: Int): Boolean {
 
-        val inputKey = inputDevice.getInputKey(keyCode)
+        val inputKey = InputKeyMapping.getInputKey(keyCode)
 
         if (inputKey == InputKey.UNMAPPED)
             return false
@@ -38,7 +36,7 @@ class InputKeySource @Inject constructor() {
 
     fun registerKeyUp(keyCode: Int): Boolean {
 
-        val inputKey = inputDevice.getInputKey(keyCode)
+        val inputKey = InputKeyMapping.getInputKey(keyCode)
 
         if (inputKey == InputKey.UNMAPPED)
             return false
