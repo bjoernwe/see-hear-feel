@@ -12,7 +12,6 @@ import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.inputs.InputEventSource
 import dev.upaya.shf.inputs.InputKey
 import dev.upaya.shf.inputs.InputKeySource
-import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +27,7 @@ class CoreFeelingViewModel @Inject constructor(
     private val coreFeelingsSessionRepository: CoreFeelingsSessionRepository,
 ) : ViewModel() {
 
-    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
+    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent
     private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[dev.upaya.shf.ui.session.noting.routeArgExerciseId]) as String)

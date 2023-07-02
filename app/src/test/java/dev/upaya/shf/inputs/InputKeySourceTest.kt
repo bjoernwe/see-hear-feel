@@ -104,4 +104,27 @@ class InputKeySourceTest {
         assertEquals(2, numEmittedValues)
     }
 
+    @Test
+    fun registerKeyDown_multipleConsumers_shareFlow() = runTest {
+
+        // GIVEN a GenericInputSource and two consumers
+        val consumedValues1 = mutableListOf<InputKey>()
+        val consumedValues2 = mutableListOf<InputKey>()
+        val dispatcher = UnconfinedTestDispatcher(testScheduler)
+        backgroundScope.launch(dispatcher) {
+            inputSource.inputKeyDown.toList(consumedValues1)
+        }
+        backgroundScope.launch(dispatcher) {
+            inputSource.inputKeyDown.toList(consumedValues2)
+        }
+
+        // WHEN a key is registered two times
+        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+
+        // THEN both consumers receive both events
+        assertEquals(2, consumedValues1.size)
+        assertEquals(2, consumedValues2.size)
+    }
+
 }
