@@ -19,9 +19,11 @@ class SessionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
+    inputKeySource: InputKeySource,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
+    private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
@@ -31,7 +33,7 @@ class SessionViewModel @Inject constructor(
         coroutineScope = viewModelScope,
     )
 
-    internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
+    internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
 
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
