@@ -33,7 +33,7 @@ class InputKeySourceTest {
     @Test
     fun registerKeyDown_registeringKeyTwice_emitsTwice() = runTest {
 
-        // GIVEN a GenericInputSource and list of its emitted values
+        // GIVEN a InputSource and list of its emitted values
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
@@ -52,7 +52,7 @@ class InputKeySourceTest {
     @Test
     fun registerKeyDown_registeringUnmappedKey_doesNotEmit() = runTest {
 
-        // GIVEN a GenericInputSource and list of its emitted values
+        // GIVEN a InputSource and list of its emitted values
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
@@ -70,7 +70,7 @@ class InputKeySourceTest {
     @Test
     fun registerKeyUp_registeringUnmappedKey_doesNotEmit() = runTest {
 
-        // GIVEN a GenericInputSource and list of its emitted values
+        // GIVEN a InputSource and list of its emitted values
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
@@ -88,7 +88,7 @@ class InputKeySourceTest {
     @Test
     fun registerKeyUp_registeringKeyTwice_emitsTwice() = runTest {
 
-        // GIVEN a GenericInputSource and list of its emitted values
+        // GIVEN a InputSource and list of its emitted values
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
@@ -107,7 +107,7 @@ class InputKeySourceTest {
     @Test
     fun registerKeyDown_multipleConsumers_shareFlow() = runTest {
 
-        // GIVEN a GenericInputSource and two consumers
+        // GIVEN a InputSource and two consumers
         val consumedValues1 = mutableListOf<InputKey>()
         val consumedValues2 = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
