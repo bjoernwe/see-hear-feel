@@ -62,7 +62,7 @@ class InputKeySourceTest {
         // WHEN an unmapped key is registered
         inputSource.registerKeyDown(KeyEvent.KEYCODE_ZENKAKU_HANKAKU)
 
-        // THEN it is emitted only once
+        // THEN nothing is emitted
         val numEmittedValues = emittedValues.size
         assertEquals(0, numEmittedValues)
     }
