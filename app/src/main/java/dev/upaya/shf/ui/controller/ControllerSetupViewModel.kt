@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ControllerSetupViewModel @Inject constructor(
-    inputEventSource: InputEventSource,
+    keyPressStateSource: KeyPressStateSource,
 ) : ViewModel() {
-    val keyPressStates: StateFlow<KeyPressStates> = inputEventSource.keyPressStates
+    val keyPressStates: StateFlow<KeyPressStates> = keyPressStateSource.keyPressStates
 }

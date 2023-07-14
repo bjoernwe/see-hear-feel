@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.inputs.InputEventSource
+import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
-    @Inject lateinit var inputEventSource: InputEventSource
+    @Inject lateinit var inputKeySource: InputKeySource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,18 +25,25 @@ class SHFActivity : ComponentActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
-        if (keyCode != KeyEvent.KEYCODE_BACK && inputEventSource.keyDown(keyCode)) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+            return super.onKeyDown(keyCode, event)
+
+        if (inputKeySource.registerKeyDown(keyCode))
             return true
-        }
+
         return super.onKeyDown(keyCode, event)
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+
         Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
-        if (inputEventSource.keyUp(keyCode)) {
+
+        if (inputKeySource.registerKeyUp(keyCode))
             return true
-        }
+
         return super.onKeyUp(keyCode, event)
     }
 

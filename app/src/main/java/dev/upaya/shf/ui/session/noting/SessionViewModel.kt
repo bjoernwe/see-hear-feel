@@ -8,7 +8,6 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.*
-import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -19,9 +18,11 @@ class SessionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
+    inputKeySource: InputKeySource,
 ) : ViewModel() {
 
-    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(scope = viewModelScope)
+    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent
+    private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
@@ -31,7 +32,7 @@ class SessionViewModel @Inject constructor(
         coroutineScope = viewModelScope,
     )
 
-    internal var labelFlow: SharedFlow<Label> = inputEventFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
+    internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
 
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
