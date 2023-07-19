@@ -1,12 +1,15 @@
 package dev.upaya.shf
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.PowerManager
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.background.ForegroundNotificationService
 import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -21,7 +24,13 @@ class SHFActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { SHFApp() }
+        val notificationServiceIntent = Intent(this, ForegroundNotificationService::class.java)
+        setContent {
+            SHFApp(
+                onSessionStart = { startForegroundService(notificationServiceIntent) },
+                onSessionStop = { stopService(notificationServiceIntent) },
+            )
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -59,8 +68,14 @@ class SHFActivity : ComponentActivity() {
 
 
 @Composable
-fun SHFApp() {
+fun SHFApp(
+    onSessionStart: () -> Unit,
+    onSessionStop: () -> Unit,
+) {
     SHFTheme(darkTheme = true) {
-        SHFNavHost()
+        SHFNavHost(
+            onSessionStart = onSessionStart,
+            onSessionStop = onSessionStop,
+        )
     }
 }

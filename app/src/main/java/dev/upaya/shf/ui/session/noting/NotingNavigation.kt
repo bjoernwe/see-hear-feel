@@ -26,6 +26,8 @@ fun NavController.navigateToNoting(exerciseId: ExerciseId) {
 
 fun NavGraphBuilder.notingGraph(
     navController: NavController,
+    onSessionStart: () -> Unit = {},
+    onSessionStop: () -> Unit = {},
 ) {
     
     navigation(
@@ -38,6 +40,8 @@ fun NavGraphBuilder.notingGraph(
             onStopButtonClick = {
                 navController.navigateToNotingStats()
             },
+            onSessionStart = onSessionStart,
+            onSessionStop = onSessionStop,
         )
 
         notingStatsScreen(

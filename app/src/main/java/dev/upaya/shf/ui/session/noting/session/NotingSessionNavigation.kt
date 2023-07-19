@@ -19,6 +19,8 @@ internal const val routeNotingSession = "noting_session"
 internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
     onStopButtonClick: () -> Unit,
+    onSessionStart: () -> Unit = {},
+    onSessionStop: () -> Unit = {},
 ) {
 
     composable(routeNotingSession) { backStackEntry ->
@@ -33,9 +35,11 @@ internal fun NavGraphBuilder.notingSessionScreen(
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
 
         DisposableEffect(sessionViewModel) {
+            onSessionStart()
             sessionViewModel.startStatsCollection()
             onDispose {
                 sessionViewModel.stopStatsCollection()
+                onSessionStop()
             }
         }
 

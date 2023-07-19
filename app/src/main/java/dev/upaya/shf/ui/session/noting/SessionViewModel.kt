@@ -32,7 +32,7 @@ class SessionViewModel @Inject constructor(
         coroutineScope = viewModelScope,
     )
 
-    internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap= labelMap, scope = viewModelScope)
+    internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = labelMap, scope = viewModelScope)
 
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
