@@ -46,7 +46,6 @@ class ForegroundNotificationService : Service() {
         val notification = NotificationCompat
             .Builder(this, CHANNEL_ID)
             .setContentTitle("SHF session running ...")
-            //.setContentText(":)")
             .setSmallIcon(R.drawable.ic_round_self_improvement_24)
             .setContentIntent(pendingIntent)
             .build()
@@ -56,7 +55,7 @@ class ForegroundNotificationService : Service() {
 
     private fun createNotificationChannel(channelId: String) {
         val name = "SHF Session"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(channelId, name, importance)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
