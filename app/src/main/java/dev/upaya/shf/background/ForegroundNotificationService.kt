@@ -30,8 +30,12 @@ class ForegroundNotificationService : Service() {
     }
 
     private fun showForegroundNotification() {
+        registerNotificationChannel(channelId = CHANNEL_ID)
+        val notification = createNotification("")
+        startForeground(ONGOING_NOTIFICATION_ID, notification)
+    }
 
-        createNotificationChannel(channelId = CHANNEL_ID)
+    private fun createNotification(contentText: String): Notification {
 
         val pendingIntent: PendingIntent = Intent(this, SHFActivity::class.java)
             .let { notificationIntent ->
@@ -43,17 +47,16 @@ class ForegroundNotificationService : Service() {
                 )
             }
 
-        val notification = NotificationCompat
+        return NotificationCompat
             .Builder(this, CHANNEL_ID)
             .setContentTitle("SHF session running ...")
+            .setContentText(contentText)
             .setSmallIcon(R.drawable.ic_round_self_improvement_24)
             .setContentIntent(pendingIntent)
             .build()
-
-        startForeground(ONGOING_NOTIFICATION_ID, notification)
     }
 
-    private fun createNotificationChannel(channelId: String) {
+    private fun registerNotificationChannel(channelId: String) {
         val name = "SHF Session"
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(channelId, name, importance)
@@ -63,5 +66,11 @@ class ForegroundNotificationService : Service() {
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
+    }
+
+    fun updateNotification(text: String) {
+        val notification = createNotification(contentText = text)
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(ONGOING_NOTIFICATION_ID, notification)
     }
 }
