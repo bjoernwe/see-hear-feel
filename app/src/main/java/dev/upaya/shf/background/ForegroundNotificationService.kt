@@ -1,5 +1,6 @@
 package dev.upaya.shf.background
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -13,6 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.SHFActivity
 import dev.upaya.shf.inputs.InputKeySource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -39,6 +44,11 @@ class ForegroundNotificationService : Service() {
         registerNotificationChannel(channelId = CHANNEL_ID)
         val notification = createNotification("")
         startForeground(ONGOING_NOTIFICATION_ID, notification)
+        scope.launch {
+            inputKeySource.inputKeyDown.collect {
+                updateNotification(it.toString())
+            }
+        }
     }
 
     private fun createNotification(contentText: String): Notification {
@@ -83,5 +93,10 @@ class ForegroundNotificationService : Service() {
         val notification = createNotification(contentText = text)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(ONGOING_NOTIFICATION_ID, notification)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
     }
 }
