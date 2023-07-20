@@ -14,10 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.SHFActivity
 import dev.upaya.shf.inputs.InputKeySource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -32,9 +28,6 @@ class ForegroundNotificationService : Service() {
 
     private val binder = LocalBinder()  // Allows an Activity to bind to this service
 
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.IO + job)
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showForegroundNotification()
         return super.onStartCommand(intent, flags, startId)
@@ -44,11 +37,6 @@ class ForegroundNotificationService : Service() {
         registerNotificationChannel(channelId = CHANNEL_ID)
         val notification = createNotification("")
         startForeground(ONGOING_NOTIFICATION_ID, notification)
-        scope.launch {
-            inputKeySource.inputKeyDown.collect {
-                updateNotification(it.toString())
-            }
-        }
     }
 
     private fun createNotification(contentText: String): Notification {
@@ -87,16 +75,5 @@ class ForegroundNotificationService : Service() {
 
     override fun onBind(intend: Intent): IBinder {
         return binder
-    }
-
-    fun updateNotification(text: String) {
-        val notification = createNotification(contentText = text)
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(ONGOING_NOTIFICATION_ID, notification)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
     }
 }
