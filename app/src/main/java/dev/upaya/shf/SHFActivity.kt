@@ -2,12 +2,13 @@ package dev.upaya.shf
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PowerManager
+import android.provider.Settings
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.ForegroundNotificationService
 import dev.upaya.shf.inputs.InputKeySource
@@ -24,11 +25,14 @@ class SHFActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val notificationServiceIntent = Intent(this, ForegroundNotificationService::class.java)
         setContent {
             SHFApp(
-                onSessionStart = { startForegroundService(notificationServiceIntent) },
-                onSessionStop = { stopService(notificationServiceIntent) },
+                onSessionStart = {
+                    if (!areNotificationsEnabled())
+                        openNotificationSettings()
+                    showSessionNotification()
+                },
+                onSessionStop = { stopSessionNotification() },
             )
         }
     }
@@ -64,6 +68,29 @@ class SHFActivity : ComponentActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
+    private fun showSessionNotification() {
+        val notificationServiceIntent = Intent(this, ForegroundNotificationService::class.java)
+        startForegroundService(notificationServiceIntent)
+    }
+
+    private fun stopSessionNotification() {
+        val notificationServiceIntent = Intent(this, ForegroundNotificationService::class.java)
+        stopService(notificationServiceIntent)
+    }
+
+    private fun areNotificationsEnabled(): Boolean {
+        return NotificationManagerCompat
+            .from(this)
+            .areNotificationsEnabled()
+    }
+
+    private fun openNotificationSettings() {
+        val intent = Intent().apply {
+            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        }
+        startActivity(intent)
+    }
 }
 
 
