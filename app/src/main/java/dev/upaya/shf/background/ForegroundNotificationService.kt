@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,11 @@ class ForegroundNotificationService : Service() {
 
     private val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
     private val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
+
+    private val binder = LocalBinder()  // Allows an Activity to bind to this service
+
+    private val job = SupervisorJob()
+    private val scope = CoroutineScope(Dispatchers.IO + job)
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showForegroundNotification()
@@ -64,8 +70,13 @@ class ForegroundNotificationService : Service() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
+    inner class LocalBinder : Binder() {
+        // Return this instance of LocalService so clients can call public methods.
+        fun getService(): ForegroundNotificationService = this@ForegroundNotificationService
+    }
+
+    override fun onBind(intend: Intent): IBinder {
+        return binder
     }
 
     fun updateNotification(text: String) {
