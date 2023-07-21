@@ -2,6 +2,7 @@ package dev.upaya.shf
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
@@ -27,18 +28,27 @@ class SHFActivity : ComponentActivity() {
 
     @Inject lateinit var inputKeySource: InputKeySource
 
-    var notificationService: ForegroundNotificationService? = null
+    private var notificationService: ForegroundNotificationService? = null
 
     private val connection = object : ServiceConnection {
 
         override fun onServiceConnected(className: ComponentName, serviceBinder: IBinder) {
-            // We've bound to ForegroundNotificationService, cast the IBinder and get ForegroundNotificationService instance.
             val binder = serviceBinder as ForegroundNotificationService.LocalBinder
             notificationService = binder.getService()
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
             notificationService = null
+        }
+
+        fun bindTo(contextWrapper: ContextWrapper) {
+            Intent(contextWrapper, ForegroundNotificationService::class.java).also { intent ->
+                bindService(intent, this, Context.BIND_AUTO_CREATE)
+            }
+        }
+
+        fun unbindFrom(contextWrapper: ContextWrapper) {
+            contextWrapper.unbindService(this)
         }
     }
 
@@ -58,14 +68,12 @@ class SHFActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        Intent(this, ForegroundNotificationService::class.java).also { intent ->
-            bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
+        connection.bindTo(this)
     }
 
     override fun onStop() {
         super.onStop()
-        unbindService(connection)
+        connection.unbindFrom(this)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
