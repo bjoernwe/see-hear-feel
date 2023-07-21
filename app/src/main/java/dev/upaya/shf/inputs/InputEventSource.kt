@@ -16,8 +16,6 @@ class InputEventSource @Inject constructor(
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
     val inputEvent: SharedFlow<InputEvent> = inputKeySource.inputKeyDown
-        .transform { inputKey ->
-            emit(InputEvent(inputKey))
-        }
+        .transform { inputKey -> emit(InputEvent(inputKey)) }
         .asSharedFlow(CoroutineScope(dispatcher))
 }
