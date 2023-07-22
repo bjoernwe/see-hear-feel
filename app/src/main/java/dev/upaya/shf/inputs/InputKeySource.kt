@@ -1,10 +1,10 @@
 package dev.upaya.shf.inputs
 
 import dev.upaya.shf.DefaultDispatcher
+import dev.upaya.shf.background.AccessibilitySettingSource
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.merge
@@ -17,11 +17,11 @@ import javax.inject.Singleton
 class InputKeySource @Inject constructor(
     foregroundInputKeySource: ForegroundInputKeySource,
     backgroundInputKeySource: BackgroundInputKeySource,
+    accessibilitySettingSource: AccessibilitySettingSource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputKeySource {
 
-    private val _usingBackgroundSource = MutableStateFlow(false)
-    val usingBackgroundSource: StateFlow<Boolean> = _usingBackgroundSource
+    val usingBackgroundSource: StateFlow<Boolean> = accessibilitySettingSource.backgroundServiceAvailability
 
     override val inputKeyDown: SharedFlow<InputKey> = merge(
         foregroundInputKeySource.inputKeyDown.transform { if (!usingBackgroundSource.value) emit(it) },
@@ -32,12 +32,4 @@ class InputKeySource @Inject constructor(
         foregroundInputKeySource.inputKeyUp.transform { if (!usingBackgroundSource.value) emit(it) },
         backgroundInputKeySource.inputKeyUp.transform { if (usingBackgroundSource.value) emit(it) },
     ).asSharedFlow(CoroutineScope(dispatcher))
-
-    fun switchToForeground() {
-        _usingBackgroundSource.value = false
-    }
-
-    fun switchToBackground() {
-        _usingBackgroundSource.value = true
-    }
 }

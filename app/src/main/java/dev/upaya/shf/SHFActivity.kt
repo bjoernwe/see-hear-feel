@@ -35,28 +35,15 @@ class SHFActivity : ComponentActivity() {
         setContent {
             SHFApp(
                 onSessionStart = {
-                    if (!areNotificationsEnabled())
-                        openNotificationSettings()
                     accessibilitySettingSource.updateAvailability()
-                    if (!isAccessibilityServiceActive())
-                        showAccessibilitySettings()
+                    showSessionNotification()
                 },
-                onSessionStop = {
-                    inputKeySource.switchToForeground()
-                    stopSessionNotification()
-                },
-                onToggleBackgroundSession = { isChecked ->
-                    accessibilitySettingSource.updateAvailability()
-                    if (isChecked) {
-                        showSessionNotification()
-                        inputKeySource.switchToBackground()
-                    } else {
-                        inputKeySource.switchToForeground()
-                        stopSessionNotification()
-                    }
-                }
+                onSessionStop = { stopSessionNotification() },
+                onToggleBackgroundSession = { },
             )
         }
+        openNotificationSettingsIfNecessary()
+        showAccessibilitySettingsIfNecessary()
     }
 
     override fun onStart() {
@@ -116,6 +103,11 @@ class SHFActivity : ComponentActivity() {
             .areNotificationsEnabled()
     }
 
+    private fun openNotificationSettingsIfNecessary() {
+        if (!areNotificationsEnabled())
+            openNotificationSettings()
+    }
+
     private fun openNotificationSettings() {
         val intent = Intent().apply {
             action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
@@ -126,6 +118,11 @@ class SHFActivity : ComponentActivity() {
 
     private fun isAccessibilityServiceActive(): Boolean {
         return Settings.Secure.getInt(this.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED) == 1
+    }
+
+    private fun showAccessibilitySettingsIfNecessary() {
+        if (!isAccessibilityServiceActive())
+            showAccessibilitySettings()
     }
 
     private fun showAccessibilitySettings() {
