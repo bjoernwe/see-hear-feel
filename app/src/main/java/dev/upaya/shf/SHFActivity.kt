@@ -1,12 +1,7 @@
 package dev.upaya.shf
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.provider.Settings
 import android.view.KeyEvent
 import android.view.WindowManager
@@ -17,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.AccessibilitySettingSource
 import dev.upaya.shf.background.BackgroundNotificationService
+import dev.upaya.shf.background.BackgroundNotificationServiceConnection
 import dev.upaya.shf.inputs.ForegroundInputKeySource
 import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
@@ -32,29 +28,7 @@ class SHFActivity : ComponentActivity() {
     @Inject lateinit var foregroundKeyRegistrar: ForegroundInputKeySource
     @Inject lateinit var accessibilitySettingSource: AccessibilitySettingSource
 
-    private var notificationService: BackgroundNotificationService? = null
-
-    private val connection = object : ServiceConnection {
-
-        override fun onServiceConnected(className: ComponentName, serviceBinder: IBinder) {
-            val binder = serviceBinder as BackgroundNotificationService.LocalBinder
-            notificationService = binder.getService()
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            notificationService = null
-        }
-
-        fun bindTo(contextWrapper: ContextWrapper) {
-            Intent(contextWrapper, BackgroundNotificationService::class.java).also { intent ->
-                bindService(intent, this, Context.BIND_AUTO_CREATE)
-            }
-        }
-
-        fun unbindFrom(contextWrapper: ContextWrapper) {
-            contextWrapper.unbindService(this)
-        }
-    }
+    private val notificationServiceConnection = BackgroundNotificationServiceConnection()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,12 +61,12 @@ class SHFActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        connection.bindTo(this)
+        notificationServiceConnection.bindTo(this)
     }
 
     override fun onStop() {
         super.onStop()
-        connection.unbindFrom(this)
+        notificationServiceConnection.unbindFrom(this)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
