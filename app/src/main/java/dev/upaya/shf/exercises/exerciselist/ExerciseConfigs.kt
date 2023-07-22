@@ -47,9 +47,4 @@ val exampleExercises: Map<ExerciseId, ExerciseConfig> = mapOf(
         description = "Noting according to the five categories of experience used in Somatic Experiencing (SE)",
         labelMap = LabelMapSibam,
     ),
-    ExerciseId.CORE_FEELINGS to ExerciseConfig(
-        title = "Core Feelings",
-        description = "Exploration of the Core Feelings described by Douglas Tataryn",
-        labelMap = LabelMapKeepDiscard,
-    ),
 )
