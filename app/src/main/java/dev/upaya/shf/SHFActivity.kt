@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.AccessibilitySettingSource
-import dev.upaya.shf.background.BackgroundNotificationService
 import dev.upaya.shf.background.BackgroundNotificationServiceConnection
+import dev.upaya.shf.background.startNotificationService
+import dev.upaya.shf.background.stopNotificationService
 import dev.upaya.shf.inputs.ForegroundInputKeySource
 import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
@@ -36,9 +37,9 @@ class SHFActivity : ComponentActivity() {
             SHFApp(
                 onSessionStart = {
                     accessibilitySettingSource.updateAvailability()
-                    showSessionNotification()
+                    startNotificationService()
                 },
-                onSessionStop = { stopSessionNotification() },
+                onSessionStop = { stopNotificationService() },
                 onToggleBackgroundSession = { },
             )
         }
@@ -85,16 +86,6 @@ class SHFActivity : ComponentActivity() {
 
     fun clearKeepScreenOn() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
-    private fun showSessionNotification() {
-        val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
-        startForegroundService(notificationServiceIntent)
-    }
-
-    private fun stopSessionNotification() {
-        val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
-        stopService(notificationServiceIntent)
     }
 
     private fun areNotificationsEnabled(): Boolean {
