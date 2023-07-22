@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_keys
 
 import dagger.Binds
 import dagger.Module

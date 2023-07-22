@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_keys
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -8,10 +8,10 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.feelings.CoreFeelingsSessionRepository
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.InputEvent
-import dev.upaya.shf.inputs.InputEventSource
-import dev.upaya.shf.inputs.InputKey
-import dev.upaya.shf.inputs.ForegroundInputKeySource
+import dev.upaya.shf.inputs.input_events.InputEvent
+import dev.upaya.shf.inputs.input_events.InputEventSource
+import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.input_keys.ForegroundInputKeySource
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,5 +1,6 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_events
 
+import dev.upaya.shf.inputs.input_keys.IInputKeySource
 import dev.upaya.shf.utils.DefaultDispatcher
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class InputEventSource @Inject constructor(
-    inputKeySource: InputKeySource,
+    inputKeySource: IInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
     val inputEvent: SharedFlow<InputEvent> = inputKeySource.inputKeyDown

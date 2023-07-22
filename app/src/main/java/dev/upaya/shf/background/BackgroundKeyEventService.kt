@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.inputs.BackgroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
 import timber.log.Timber
 import javax.inject.Inject
 

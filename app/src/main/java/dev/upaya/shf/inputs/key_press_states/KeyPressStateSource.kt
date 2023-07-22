@@ -1,5 +1,7 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.key_press_states
 
+import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.input_keys.InputKeySource
 import dev.upaya.shf.utils.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

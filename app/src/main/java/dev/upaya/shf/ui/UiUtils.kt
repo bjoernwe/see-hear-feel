@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.upaya.shf.exercises.labelmaps.LabelMap
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.InputKey
+import dev.upaya.shf.inputs.input_keys.InputKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 

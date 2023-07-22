@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.upaya.shf.exercises.labelmaps.LabelMapKeepDiscard
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.InputEvent
+import dev.upaya.shf.inputs.input_events.InputEvent
 import dev.upaya.shf.ui.session.noting.composables.FadingText
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme

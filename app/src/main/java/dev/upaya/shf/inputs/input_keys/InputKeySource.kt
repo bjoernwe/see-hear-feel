@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_keys
 
 import dev.upaya.shf.utils.DefaultDispatcher
 import dev.upaya.shf.background.settings.AccessibilitySettingSource

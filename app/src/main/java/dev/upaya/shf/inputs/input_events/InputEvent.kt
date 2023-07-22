@@ -1,5 +1,6 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_events
 
+import dev.upaya.shf.inputs.input_keys.InputKey
 import java.util.Date
 
 

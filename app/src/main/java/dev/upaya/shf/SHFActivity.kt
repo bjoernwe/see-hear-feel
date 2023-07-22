@@ -10,9 +10,9 @@ import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
-import dev.upaya.shf.inputs.BackgroundInputKeySource
-import dev.upaya.shf.inputs.ForegroundInputKeySource
-import dev.upaya.shf.inputs.InputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.ForegroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.AccessibilitySettings

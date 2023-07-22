@@ -18,7 +18,7 @@ import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.SHFActivity
-import dev.upaya.shf.inputs.BackgroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

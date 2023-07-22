@@ -1,7 +1,7 @@
 package dev.upaya.shf.exercises.labelmaps
 
 import dev.upaya.shf.exercises.labels.*
-import dev.upaya.shf.inputs.InputKey
+import dev.upaya.shf.inputs.input_keys.InputKey
 
 
 class LabelMapSHF {
