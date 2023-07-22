@@ -4,16 +4,20 @@ import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.inputs.InputKeySource
+import dev.upaya.shf.inputs.BackgroundInputKeySource
 import timber.log.Timber
 import javax.inject.Inject
 
 
+/**
+ * An AccessibilityService for receiving input keys even when app is stopped (e.g., behind lock
+ * screen).
+ */
 @AndroidEntryPoint
 class BackgroundKeyEventService : AccessibilityService() {
 
     @Inject
-    lateinit var inputKeySource: InputKeySource
+    lateinit var inputKeySource: BackgroundInputKeySource
 
     override fun onKeyEvent(keyEvent: KeyEvent?): Boolean {
 

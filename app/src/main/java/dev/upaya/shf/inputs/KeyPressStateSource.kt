@@ -16,7 +16,7 @@ typealias KeyPressStates = Map<InputKey, Date?>
 
 @Singleton
 class KeyPressStateSource @Inject constructor(
-    inputKeySource: InputKeySource,
+    inputKeySource: ForegroundInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
 
@@ -27,6 +27,7 @@ class KeyPressStateSource @Inject constructor(
 
         val scope = CoroutineScope(dispatcher)
 
+        // TODO: Simplify with forEach?
         scope.launch {
             inputKeySource.inputKeyDown.collect { inputKey ->
                 _keyPressStates.value = _keyPressStates.value

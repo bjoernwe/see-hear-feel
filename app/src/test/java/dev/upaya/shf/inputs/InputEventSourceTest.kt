@@ -18,9 +18,9 @@ class InputEventSourceTest {
     fun registerKeyDown_multipleConsumers_shareFlow() = runTest {
 
         // GIVEN an InputEventSource with InputKeySource
-        val inputKeySource = InputKeySource()
+        val inputKeySource = ForegroundInputKeySource()
         val inputEventSource = InputEventSource(
-            inputKeySource = inputKeySource,
+            inputKeySource = inputKeySource as IInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
         )
 
@@ -48,9 +48,9 @@ class InputEventSourceTest {
     fun registerKeyDown_emittedEvent_containsCurrentTimeStamp() = runTest {
 
         // GIVEN an InputEventSource with InputKeySource
-        val inputKeySource = InputKeySource()
+        val inputKeySource = ForegroundInputKeySource()
         val inputEventSource = InputEventSource(
-            inputKeySource = inputKeySource,
+            inputKeySource = inputKeySource as IInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
         )
 

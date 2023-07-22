@@ -11,7 +11,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.InputEvent
 import dev.upaya.shf.inputs.InputEventSource
 import dev.upaya.shf.inputs.InputKey
-import dev.upaya.shf.inputs.InputKeySource
+import dev.upaya.shf.inputs.ForegroundInputKeySource
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +23,7 @@ class CoreFeelingViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
-    inputKeySource: InputKeySource,
+    inputKeySource: ForegroundInputKeySource,
     private val coreFeelingsSessionRepository: CoreFeelingsSessionRepository,
 ) : ViewModel() {
 

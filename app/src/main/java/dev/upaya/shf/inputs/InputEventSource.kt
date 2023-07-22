@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class InputEventSource @Inject constructor(
-    inputKeySource: InputKeySource,
+    inputKeySource: IInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
     val inputEvent: SharedFlow<InputEvent> = inputKeySource.inputKeyDown

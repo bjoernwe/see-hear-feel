@@ -1,49 +1,43 @@
 package dev.upaya.shf.inputs
 
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import dev.upaya.shf.DefaultDispatcher
+import dev.upaya.shf.ui.asSharedFlow
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class InputKeySource @Inject constructor() {
+class InputKeySource @Inject constructor(
+    foregroundInputKeySource: ForegroundInputKeySource,
+    backgroundInputKeySource: BackgroundInputKeySource,
+    @DefaultDispatcher dispatcher: CoroutineDispatcher,
+) : IInputKeySource {
 
-    private val _inputKeyDown = MutableSharedFlow<InputKey>(
-        replay = 1, // behavior similar to StateFlow
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    private val _inputKeyUp = MutableSharedFlow<InputKey>(
-        replay = 1, // behavior similar to StateFlow
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
+    private val _usingBackgroundSource = MutableStateFlow(false)
+    val usingBackgroundSource: StateFlow<Boolean> = _usingBackgroundSource
 
-    val inputKeyDown: SharedFlow<InputKey> = _inputKeyDown
-    val inputKeyUp: SharedFlow<InputKey> = _inputKeyUp
+    override val inputKeyDown: SharedFlow<InputKey> = merge(
+        foregroundInputKeySource.inputKeyDown.transform { if (!usingBackgroundSource.value) emit(it) },
+        backgroundInputKeySource.inputKeyDown.transform { if (usingBackgroundSource.value) emit(it) },
+    ).asSharedFlow(CoroutineScope(dispatcher))
 
-    fun registerKeyDown(keyCode: Int): Boolean {
+    override val inputKeyUp: SharedFlow<InputKey> = merge(
+        foregroundInputKeySource.inputKeyUp.transform { if (!usingBackgroundSource.value) emit(it) },
+        backgroundInputKeySource.inputKeyUp.transform { if (usingBackgroundSource.value) emit(it) },
+    ).asSharedFlow(CoroutineScope(dispatcher))
 
-        val inputKey = InputKeyMapping.getInputKey(keyCode)
-
-        if (inputKey == InputKey.UNMAPPED)
-            return false
-
-        _inputKeyDown.tryEmit(inputKey)
-
-        return true
+    fun switchToForeground() {
+        _usingBackgroundSource.value = false
     }
 
-    fun registerKeyUp(keyCode: Int): Boolean {
-
-        val inputKey = InputKeyMapping.getInputKey(keyCode)
-
-        if (inputKey == InputKey.UNMAPPED)
-            return false
-
-        _inputKeyUp.tryEmit(inputKey)
-
-        return true
+    fun switchToBackground() {
+        _usingBackgroundSource.value = true
     }
-
 }

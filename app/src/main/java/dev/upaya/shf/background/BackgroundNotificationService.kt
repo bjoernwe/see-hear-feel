@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.SHFActivity
-import dev.upaya.shf.inputs.InputKeySource
+import dev.upaya.shf.inputs.BackgroundInputKeySource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -25,11 +25,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+/**
+ * Technically speaking, this service is a "Foreground Service" in Android terminology, because it
+ * permanently shows a notification. Practically speaking, however, it allows us to display a
+ * notification while the app is in background.
+ */
 @AndroidEntryPoint
-class ForegroundNotificationService : Service() {
+class BackgroundNotificationService : Service() {
 
     @Inject
-    lateinit var inputKeySource: InputKeySource
+    lateinit var inputKeySource: BackgroundInputKeySource
 
     private val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
     private val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
@@ -69,7 +74,7 @@ class ForegroundNotificationService : Service() {
 
         return NotificationCompat
             .Builder(this, CHANNEL_ID)
-            .setContentTitle("SHF session running ...")
+            .setContentTitle("SHF session running")
             .setSmallIcon(R.drawable.ic_round_self_improvement_24)
             .setContentIntent(pendingIntent)
             .build()
@@ -85,7 +90,7 @@ class ForegroundNotificationService : Service() {
 
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods.
-        fun getService(): ForegroundNotificationService = this@ForegroundNotificationService
+        fun getService(): BackgroundNotificationService = this@BackgroundNotificationService
     }
 
     override fun onBind(intend: Intent): IBinder {
