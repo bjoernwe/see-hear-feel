@@ -9,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
-import dev.upaya.shf.inputs.input_keys.GlobalInputRegistrarSwitch
 import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -22,7 +21,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
-    @Inject lateinit var globalInputRegistrarSwitch: GlobalInputRegistrarSwitch
     @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +29,8 @@ class SHFActivity : ComponentActivity() {
             SHFApp(
                 onSessionStart = {
                     startNotificationService()
-                    globalInputRegistrarSwitch.switchOn()
                 },
                 onSessionStop = {
-                    globalInputRegistrarSwitch.switchOff()
                     stopNotificationService()
                 },
                 onToggleBackgroundSession = { },
