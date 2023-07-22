@@ -1,4 +1,4 @@
-package dev.upaya.shf
+package dev.upaya.shf.utils
 
 import dagger.Module
 import dagger.Provides
