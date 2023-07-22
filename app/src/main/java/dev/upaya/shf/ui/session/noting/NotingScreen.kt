@@ -54,6 +54,7 @@ fun NotingScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(24.dp)
         ) {
 
             Switch(
