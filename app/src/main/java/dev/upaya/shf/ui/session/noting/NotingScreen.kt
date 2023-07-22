@@ -26,8 +26,6 @@ fun NotingScreen(
     label: Label,
     inputEvent: InputEvent?,
     onStopButtonClick: () -> Unit = {},
-    usingBackgroundKeySource: Boolean,
-    onToggleBackgroundSession: (Boolean) -> Unit,
 ) {
 
     SetStatusBarColor()
@@ -56,13 +54,6 @@ fun NotingScreen(
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
-
-            Switch(
-                checked = usingBackgroundKeySource,
-                onCheckedChange = onToggleBackgroundSession,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-            )
 
             LabelText(
                 label = label,
@@ -93,8 +84,6 @@ fun MainContentPreview() {
         NotingScreen(
             label = Label("label"),
             inputEvent = null,
-            usingBackgroundKeySource = true,
-            onToggleBackgroundSession = {},
         )
     }
 }

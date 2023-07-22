@@ -23,7 +23,6 @@ internal fun NavGraphBuilder.notingSessionScreen(
     onStopButtonClick: () -> Unit,
     onSessionStart: () -> Unit = {},
     onSessionStop: () -> Unit = {},
-    onToggleBackgroundSession: (Boolean) -> Unit,
 ) {
 
     composable(routeNotingSession) { backStackEntry ->
@@ -37,7 +36,6 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
-        val usingBackgroundKeySource by sessionViewModel.usingBackgroundSource.collectAsState()
 
         DisposableEffect(sessionViewModel) {
 
@@ -58,8 +56,6 @@ internal fun NavGraphBuilder.notingSessionScreen(
             label = label,
             inputEvent = inputEvent,
             onStopButtonClick = onStopButtonClick,
-            usingBackgroundKeySource = usingBackgroundKeySource,
-            onToggleBackgroundSession = onToggleBackgroundSession,
         )
 
     }

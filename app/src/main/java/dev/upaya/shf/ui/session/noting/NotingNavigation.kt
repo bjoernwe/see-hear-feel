@@ -28,7 +28,6 @@ fun NavGraphBuilder.notingGraph(
     navController: NavController,
     onSessionStart: () -> Unit = {},
     onSessionStop: () -> Unit = {},
-    onToggleBackgroundSession: (Boolean) -> Unit,
 ) {
     
     navigation(
@@ -43,7 +42,6 @@ fun NavGraphBuilder.notingGraph(
             },
             onSessionStart = onSessionStart,
             onSessionStop = onSessionStop,
-            onToggleBackgroundSession = onToggleBackgroundSession,
         )
 
         notingStatsScreen(

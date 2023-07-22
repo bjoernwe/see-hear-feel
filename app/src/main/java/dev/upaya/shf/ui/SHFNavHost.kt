@@ -17,7 +17,6 @@ fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
     onSessionStart: () -> Unit = {},
     onSessionStop: () -> Unit = {},
-    onToggleBackgroundSession: (Boolean) -> Unit,
 ) {
 
     NavHost(
@@ -34,7 +33,6 @@ fun SHFNavHost(
             navController = navController,
             onSessionStart = onSessionStart,
             onSessionStop = onSessionStop,
-            onToggleBackgroundSession = onToggleBackgroundSession,
         )
 
         controllerSetupScreen()

@@ -33,7 +33,6 @@ class SHFActivity : ComponentActivity() {
                 onSessionStop = {
                     stopNotificationService()
                 },
-                onToggleBackgroundSession = { },
             )
         }
         NotificationSettings.openNotificationSettingsIfNecessary(this)
@@ -70,13 +69,11 @@ class SHFActivity : ComponentActivity() {
 fun SHFApp(
     onSessionStart: () -> Unit,
     onSessionStop: () -> Unit,
-    onToggleBackgroundSession: (Boolean) -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
             onSessionStart = onSessionStart,
             onSessionStop = onSessionStop,
-            onToggleBackgroundSession = onToggleBackgroundSession,
         )
     }
 }
