@@ -24,17 +24,16 @@ class SHFActivity : ComponentActivity() {
     @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContent {
             SHFApp(
-                onSessionStart = {
-                    startNotificationService()
-                },
-                onSessionStop = {
-                    stopNotificationService()
-                },
+                onSessionStart = ::startNotificationService,
+                onSessionStop = ::stopNotificationService,
             )
         }
+
         NotificationSettings.openNotificationSettingsIfNecessary(this)
         AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
     }
