@@ -16,7 +16,7 @@ typealias KeyPressStates = Map<InputKey, Date?>
 
 @Singleton
 class KeyPressStateSource @Inject constructor(
-    inputKeySource: ForegroundInputKeySource,
+    inputKeySource: InputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
 
