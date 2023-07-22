@@ -27,22 +27,15 @@ class KeyPressStateSource @Inject constructor(
 
         val scope = CoroutineScope(dispatcher)
 
-        // TODO: Simplify with forEach?
         scope.launch {
             inputKeySource.inputKeyDown.collect { inputKey ->
-                _keyPressStates.value = _keyPressStates.value
-                    .toMutableMap()
-                    .apply { this[inputKey] = Date() }
-                    .toMap()
+                _keyPressStates.addStateFor(inputKey)
             }
         }
 
         scope.launch {
             inputKeySource.inputKeyUp.collect { inputKey ->
-                _keyPressStates.value = _keyPressStates.value
-                    .toMutableMap()
-                    .apply { remove(inputKey) }
-                    .toMap()
+                _keyPressStates.removeStateFor(inputKey)
             }
         }
 
