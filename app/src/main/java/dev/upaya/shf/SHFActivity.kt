@@ -8,7 +8,6 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.AccessibilitySettingSource
 import dev.upaya.shf.background.BackgroundNotificationServiceConnection
@@ -43,7 +42,7 @@ class SHFActivity : ComponentActivity() {
                 onToggleBackgroundSession = { },
             )
         }
-        openNotificationSettingsIfNecessary()
+        NotificationSettings.openNotificationSettingsIfNecessary(this)
         showAccessibilitySettingsIfNecessary()
     }
 
@@ -86,25 +85,6 @@ class SHFActivity : ComponentActivity() {
 
     fun clearKeepScreenOn() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
-    private fun areNotificationsEnabled(): Boolean {
-        return NotificationManagerCompat
-            .from(this)
-            .areNotificationsEnabled()
-    }
-
-    private fun openNotificationSettingsIfNecessary() {
-        if (!areNotificationsEnabled())
-            openNotificationSettings()
-    }
-
-    private fun openNotificationSettings() {
-        val intent = Intent().apply {
-            action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
-            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-        }
-        startActivity(intent)
     }
 
     private fun isAccessibilityServiceActive(): Boolean {
