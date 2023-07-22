@@ -1,7 +1,9 @@
 package dev.upaya.shf.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.view.WindowManager
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.material.MaterialTheme
@@ -42,6 +44,16 @@ private fun Context.getActivity(): SHFActivity? = when (this) {
     is SHFActivity -> this
     is ContextWrapper -> baseContext.getActivity()
     else -> null
+}
+
+
+private fun Activity.setKeepScreenOn() {
+    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+}
+
+
+private fun Activity.clearKeepScreenOn() {
+    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 }
 
 
