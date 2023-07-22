@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
@@ -26,7 +25,6 @@ class SHFActivity : ComponentActivity() {
 
     @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
     @Inject @BackgroundKeySource lateinit var backgroundKeyRegistrar: IInputKeyRegistrar
-    @Inject lateinit var accessibilitySettingSource: AccessibilitySettingSource
 
     private val notificationServiceConnection = BackgroundNotificationServiceConnection()
 
@@ -35,7 +33,6 @@ class SHFActivity : ComponentActivity() {
         setContent {
             SHFApp(
                 onSessionStart = {
-                    accessibilitySettingSource.updateAvailability(this)
                     startNotificationService()
                     foregroundKeyRegistrar.enableRegistrar()
                     backgroundKeyRegistrar.enableRegistrar()

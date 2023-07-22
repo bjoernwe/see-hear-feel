@@ -1,8 +1,7 @@
 package dev.upaya.shf.inputs.input_keys
 
-import dev.upaya.shf.background.settings.AccessibilitySetting
+import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.inputs.DefaultDispatcher
-import dev.upaya.shf.background.settings.IBooleanSource
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +21,7 @@ import javax.inject.Singleton
 class GlobalInputKeySource @Inject constructor(
     @ForegroundKeySource foregroundInputKeySource: IInputKeyRegistrar,
     @BackgroundKeySource backgroundInputKeySource: IInputKeyRegistrar,
-    @AccessibilitySetting accessibilitySettingSource: IBooleanSource,
+    accessibilitySettingSource: AccessibilitySettingSource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputKeySource {
 
