@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
@@ -26,8 +25,6 @@ class SHFActivity : ComponentActivity() {
     @Inject lateinit var globalInputRegistrarSwitch: GlobalInputRegistrarSwitch
     @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
 
-    private val notificationServiceConnection = BackgroundNotificationServiceConnection()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -45,16 +42,6 @@ class SHFActivity : ComponentActivity() {
         }
         NotificationSettings.openNotificationSettingsIfNecessary(this)
         AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        notificationServiceConnection.bindTo(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        notificationServiceConnection.unbindFrom(this)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
