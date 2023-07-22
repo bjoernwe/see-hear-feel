@@ -10,6 +10,8 @@ import javax.inject.Singleton
 @Singleton
 class ForegroundInputKeySource @Inject constructor() : IInputKeySource, IInputKeyRegistrar {
 
+    private var isEnabled = false
+
     private val _inputKeyDown = MutableSharedFlow<InputKey>(
         replay = 1, // behavior similar to StateFlow
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -24,17 +26,22 @@ class ForegroundInputKeySource @Inject constructor() : IInputKeySource, IInputKe
 
     override fun registerKeyDown(keyCode: Int): Boolean {
 
+        if (!isEnabled)
+            return false
+
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
         if (inputKey == InputKey.UNMAPPED)
             return false
 
         _inputKeyDown.tryEmit(inputKey)
-
         return true
     }
 
     override fun registerKeyUp(keyCode: Int): Boolean {
+
+        if (!isEnabled)
+            return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
@@ -42,8 +49,15 @@ class ForegroundInputKeySource @Inject constructor() : IInputKeySource, IInputKe
             return false
 
         _inputKeyUp.tryEmit(inputKey)
-
         return true
+    }
+
+    override fun enableRegistrar() {
+        isEnabled = true
+    }
+
+    override fun disableRegistrar() {
+        isEnabled = false
     }
 
 }
