@@ -15,15 +15,23 @@ object InputKeyRegistrarModule {
     @Provides
     @Singleton
     @ForegroundKeySource
-    fun providesForegroundKeySource(): IInputKeyRegistrar {
-        return InputKeyRegistrar()
+    fun providesForegroundKeySource(
+        globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
+    ): IInputKeyRegistrar {
+        return InputKeyRegistrar(
+            globalInputRegistrarSwitch = globalInputRegistrarSwitch,
+        )
     }
 
     @Provides
     @Singleton
     @BackgroundKeySource
-    fun providesBackgroundKeySource(): IInputKeyRegistrar {
-        return InputKeyRegistrar()
+    fun providesBackgroundKeySource(
+        globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
+    ): IInputKeyRegistrar {
+        return InputKeyRegistrar(
+            globalInputRegistrarSwitch = globalInputRegistrarSwitch,
+        )
     }
 }
 

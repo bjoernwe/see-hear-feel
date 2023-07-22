@@ -8,9 +8,9 @@ import javax.inject.Singleton
 
 
 @Singleton
-class InputKeyRegistrar @Inject constructor() : IInputKeyRegistrar {
-
-    private var isEnabled = false
+class InputKeyRegistrar @Inject constructor(
+    private val globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
+) : IInputKeyRegistrar {
 
     private val _inputKeyDown = MutableSharedFlow<InputKey>(
         replay = 1, // behavior similar to StateFlow
@@ -26,7 +26,7 @@ class InputKeyRegistrar @Inject constructor() : IInputKeyRegistrar {
 
     override fun registerKeyDown(keyCode: Int): Boolean {
 
-        if (!isEnabled)
+        if (!globalInputRegistrarSwitch.value.value)
             return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
@@ -40,7 +40,7 @@ class InputKeyRegistrar @Inject constructor() : IInputKeyRegistrar {
 
     override fun registerKeyUp(keyCode: Int): Boolean {
 
-        if (!isEnabled)
+        if (!globalInputRegistrarSwitch.value.value)
             return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
@@ -50,13 +50,5 @@ class InputKeyRegistrar @Inject constructor() : IInputKeyRegistrar {
 
         _inputKeyUp.tryEmit(inputKey)
         return true
-    }
-
-    override fun enableRegistrar() {
-        isEnabled = true
-    }
-
-    override fun disableRegistrar() {
-        isEnabled = false
     }
 }

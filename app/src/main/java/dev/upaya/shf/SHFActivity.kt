@@ -9,8 +9,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
-import dev.upaya.shf.inputs.input_keys.BackgroundKeySource
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
+import dev.upaya.shf.inputs.input_keys.GlobalInputRegistrarSwitch
 import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -23,8 +23,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
+    @Inject lateinit var globalInputRegistrarSwitch: GlobalInputRegistrarSwitch
     @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
-    @Inject @BackgroundKeySource lateinit var backgroundKeyRegistrar: IInputKeyRegistrar
 
     private val notificationServiceConnection = BackgroundNotificationServiceConnection()
 
@@ -34,12 +34,10 @@ class SHFActivity : ComponentActivity() {
             SHFApp(
                 onSessionStart = {
                     startNotificationService()
-                    foregroundKeyRegistrar.enableRegistrar()
-                    backgroundKeyRegistrar.enableRegistrar()
+                    globalInputRegistrarSwitch.switchOn()
                 },
                 onSessionStop = {
-                    foregroundKeyRegistrar.disableRegistrar()
-                    backgroundKeyRegistrar.disableRegistrar()
+                    globalInputRegistrarSwitch.switchOff()
                     stopNotificationService()
                 },
                 onToggleBackgroundSession = { },
