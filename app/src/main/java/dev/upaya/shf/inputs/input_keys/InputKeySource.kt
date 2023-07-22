@@ -1,6 +1,6 @@
 package dev.upaya.shf.inputs.input_keys
 
-import dev.upaya.shf.utils.DefaultDispatcher
+import dev.upaya.shf.inputs.DefaultDispatcher
 import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
