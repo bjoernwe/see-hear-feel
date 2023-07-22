@@ -35,7 +35,7 @@ class SHFActivity : ComponentActivity() {
         setContent {
             SHFApp(
                 onSessionStart = {
-                    accessibilitySettingSource.updateAvailability()
+                    accessibilitySettingSource.updateAvailability(this)
                     startNotificationService()
                     foregroundKeyRegistrar.enableRegistrar()
                     backgroundKeyRegistrar.enableRegistrar()

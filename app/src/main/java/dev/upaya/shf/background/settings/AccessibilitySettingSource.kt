@@ -2,7 +2,6 @@ package dev.upaya.shf.background.settings
 
 import android.content.Context
 import android.provider.Settings
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import timber.log.Timber
@@ -11,22 +10,18 @@ import javax.inject.Singleton
 
 
 @Singleton
-class AccessibilitySettingSource @Inject constructor(
-    @ApplicationContext private val appContext: Context,
-) {
+class AccessibilitySettingSource @Inject constructor() : IBooleanSource {
 
-    private val _backgroundServiceIsAvailable = MutableStateFlow(
-        getAccessibilityServiceAvailability()
-    )
-    val backgroundServiceAvailability: StateFlow<Boolean> = _backgroundServiceIsAvailable
+    private val _backgroundServiceIsAvailable = MutableStateFlow(false)
+    override val value: StateFlow<Boolean> = _backgroundServiceIsAvailable
 
-    fun updateAvailability() {
-            _backgroundServiceIsAvailable.value = getAccessibilityServiceAvailability()
+    fun updateAvailability(context: Context) {
+            _backgroundServiceIsAvailable.value = getAccessibilityServiceAvailability(context = context)
     }
 
-    private fun getAccessibilityServiceAvailability(): Boolean {
+    private fun getAccessibilityServiceAvailability(context: Context): Boolean {
         try {
-            return Settings.Secure.getInt(appContext.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED) == 1
+            return Settings.Secure.getInt(context.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED) == 1
         } catch (e: Settings.SettingNotFoundException) {
             Timber.e(e)
         }

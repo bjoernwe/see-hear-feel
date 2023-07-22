@@ -1,26 +1,24 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_keys
 
 import android.view.KeyEvent
-import dev.upaya.shf.inputs.input_keys.InputKey
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Before
-
 import org.junit.Test
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class BackgroundInputKeySourceTest {
+class InputKeyRegistrarTest {
 
-    private lateinit var inputSource: BackgroundInputKeySource
+    private lateinit var inputKeyRegistrar: IInputKeyRegistrar
 
     @Before
     fun setUp() {
-        inputSource = BackgroundInputKeySource()
+        inputKeyRegistrar = InputKeyRegistrar().apply { enableRegistrar() }
     }
 
     /*
@@ -38,16 +36,16 @@ class BackgroundInputKeySourceTest {
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyDown.toList(emittedValues)
+            inputKeyRegistrar.inputKeyDown.toList(emittedValues)
         }
 
         // WHEN a key is registered two times in row without key with release in between
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it is emitted twice
         val numEmittedValues = emittedValues.size
-        assertEquals(2, numEmittedValues)
+        Assert.assertEquals(2, numEmittedValues)
     }
 
     @Test
@@ -57,15 +55,15 @@ class BackgroundInputKeySourceTest {
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyDown.toList(emittedValues)
+            inputKeyRegistrar.inputKeyDown.toList(emittedValues)
         }
 
         // WHEN an unmapped key is registered
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_ZENKAKU_HANKAKU)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_ZENKAKU_HANKAKU)
 
         // THEN nothing is emitted
         val numEmittedValues = emittedValues.size
-        assertEquals(0, numEmittedValues)
+        Assert.assertEquals(0, numEmittedValues)
     }
 
     @Test
@@ -75,15 +73,15 @@ class BackgroundInputKeySourceTest {
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyUp.toList(emittedValues)
+            inputKeyRegistrar.inputKeyUp.toList(emittedValues)
         }
 
         // WHEN an unmapped key is registered
-        inputSource.registerKeyUp(KeyEvent.KEYCODE_ZENKAKU_HANKAKU)
+        inputKeyRegistrar.registerKeyUp(KeyEvent.KEYCODE_ZENKAKU_HANKAKU)
 
         // THEN it is not emitted
         val numEmittedValues = emittedValues.size
-        assertEquals(0, numEmittedValues)
+        Assert.assertEquals(0, numEmittedValues)
     }
 
     @Test
@@ -93,16 +91,16 @@ class BackgroundInputKeySourceTest {
         val emittedValues = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyUp.toList(emittedValues)
+            inputKeyRegistrar.inputKeyUp.toList(emittedValues)
         }
 
         // WHEN a key is registered two times in row without key with release in between
-        inputSource.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
-        inputSource.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyUp(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it is emitted twice
         val numEmittedValues = emittedValues.size
-        assertEquals(2, numEmittedValues)
+        Assert.assertEquals(2, numEmittedValues)
     }
 
     @Test
@@ -113,19 +111,19 @@ class BackgroundInputKeySourceTest {
         val consumedValues2 = mutableListOf<InputKey>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyDown.toList(consumedValues1)
+            inputKeyRegistrar.inputKeyDown.toList(consumedValues1)
         }
         backgroundScope.launch(dispatcher) {
-            inputSource.inputKeyDown.toList(consumedValues2)
+            inputKeyRegistrar.inputKeyDown.toList(consumedValues2)
         }
 
         // WHEN a key is registered two times
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-        inputSource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN both consumers receive both events
-        assertEquals(2, consumedValues1.size)
-        assertEquals(2, consumedValues2.size)
+        Assert.assertEquals(2, consumedValues1.size)
+        Assert.assertEquals(2, consumedValues2.size)
     }
 
 }
