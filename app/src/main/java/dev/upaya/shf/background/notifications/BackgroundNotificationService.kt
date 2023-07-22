@@ -1,6 +1,5 @@
 package dev.upaya.shf.background.notifications
 
-import android.app.Activity
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -119,16 +118,4 @@ class BackgroundNotificationService : Service() {
         super.onDestroy()
         job.cancel()
     }
-}
-
-
-fun Activity.startNotificationService() {
-    val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
-    startForegroundService(notificationServiceIntent)
-}
-
-
-fun Activity.stopNotificationService() {
-    val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
-    stopService(notificationServiceIntent)
 }
