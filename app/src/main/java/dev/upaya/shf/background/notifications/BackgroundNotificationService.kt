@@ -18,7 +18,8 @@ import androidx.core.app.NotificationCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.SHFActivity
-import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundKeySource
+import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -35,7 +36,8 @@ import javax.inject.Inject
 class BackgroundNotificationService : Service() {
 
     @Inject
-    lateinit var inputKeySource: BackgroundInputKeySource
+    @BackgroundKeySource
+    lateinit var backgroundInputKeySource: IInputKeyRegistrar
 
     private val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
     private val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
@@ -57,7 +59,7 @@ class BackgroundNotificationService : Service() {
         val notification = createNotification()
         startForeground(ONGOING_NOTIFICATION_ID, notification)
         scope.launch {
-            inputKeySource.inputKeyDown.collect { vibrate() }
+            backgroundInputKeySource.inputKeyDown.collect { vibrate() }
         }
     }
 

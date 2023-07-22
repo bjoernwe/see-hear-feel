@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class BackgroundInputKeySource @Inject constructor() : IInputKeySource, IInputKeyRegistrar {
+class InputKeyRegistrar @Inject constructor() : IInputKeyRegistrar {
 
     private var isEnabled = false
 

@@ -4,7 +4,8 @@ import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundKeySource
+import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class BackgroundKeyEventService : AccessibilityService() {
 
     @Inject
-    lateinit var inputKeySource: BackgroundInputKeySource
+    @BackgroundKeySource
+    lateinit var backgroundInputKeySource: IInputKeyRegistrar
 
     override fun onKeyEvent(keyEvent: KeyEvent?): Boolean {
 
@@ -28,10 +30,10 @@ class BackgroundKeyEventService : AccessibilityService() {
 
         when (keyEvent.action) {
             KeyEvent.ACTION_DOWN -> {
-                return inputKeySource.registerKeyDown(keyCode = keyEvent.keyCode)
+                return backgroundInputKeySource.registerKeyDown(keyCode = keyEvent.keyCode)
             }
             KeyEvent.ACTION_UP -> {
-                return inputKeySource.registerKeyUp(keyCode = keyEvent.keyCode)
+                return backgroundInputKeySource.registerKeyUp(keyCode = keyEvent.keyCode)
             }
             else -> {}
         }

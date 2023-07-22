@@ -10,9 +10,9 @@ import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
 import dev.upaya.shf.background.notifications.startNotificationService
 import dev.upaya.shf.background.notifications.stopNotificationService
-import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
-import dev.upaya.shf.inputs.input_keys.ForegroundInputKeySource
-import dev.upaya.shf.inputs.input_keys.InputKeySource
+import dev.upaya.shf.inputs.input_keys.BackgroundKeySource
+import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
+import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.AccessibilitySettings
@@ -24,9 +24,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
-    @Inject lateinit var inputKeySource: InputKeySource
-    @Inject lateinit var foregroundKeyRegistrar: ForegroundInputKeySource
-    @Inject lateinit var backgroundKeyRegistrar: BackgroundInputKeySource
+    @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
+    @Inject @BackgroundKeySource lateinit var backgroundKeyRegistrar: IInputKeyRegistrar
     @Inject lateinit var accessibilitySettingSource: AccessibilitySettingSource
 
     private val notificationServiceConnection = BackgroundNotificationServiceConnection()

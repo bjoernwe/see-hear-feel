@@ -12,7 +12,7 @@ import dev.upaya.shf.inputs.input_events.InputEventSource
 import dev.upaya.shf.inputs.input_events.InputEventStats
 import dev.upaya.shf.inputs.input_events.LabelFreqs
 import dev.upaya.shf.inputs.input_keys.InputKey
-import dev.upaya.shf.inputs.input_keys.InputKeySource
+import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class SessionViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
-    inputKeySource: InputKeySource,
+    inputKeySource: GlobalInputKeySource,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent

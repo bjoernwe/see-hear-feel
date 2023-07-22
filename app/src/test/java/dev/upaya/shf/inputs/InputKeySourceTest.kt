@@ -1,12 +1,9 @@
 package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
-import dev.upaya.shf.background.settings.AccessibilitySettingSource
-import dev.upaya.shf.inputs.input_keys.BackgroundInputKeySource
-import dev.upaya.shf.inputs.input_keys.ForegroundInputKeySource
 import dev.upaya.shf.inputs.input_keys.InputKey
 import dev.upaya.shf.inputs.input_keys.InputKeyMapping
-import dev.upaya.shf.inputs.input_keys.InputKeySource
+import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -25,7 +22,7 @@ class InputKeySourceTest {
         // GIVEN a InputKeySource (foreground/background)
         val foregroundInputKeySource = ForegroundInputKeySource()
         val backgroundInputKeySource = BackgroundInputKeySource()
-        val inputKeySource = InputKeySource(
+        val inputKeySource = GlobalInputKeySource(
             foregroundInputKeySource = foregroundInputKeySource,
             backgroundInputKeySource = backgroundInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),

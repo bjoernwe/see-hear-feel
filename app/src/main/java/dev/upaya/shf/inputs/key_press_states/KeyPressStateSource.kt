@@ -1,7 +1,7 @@
 package dev.upaya.shf.inputs.key_press_states
 
 import dev.upaya.shf.inputs.input_keys.InputKey
-import dev.upaya.shf.inputs.input_keys.InputKeySource
+import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
 import dev.upaya.shf.inputs.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +18,7 @@ typealias KeyPressStates = Map<InputKey, Date>
 
 @Singleton
 class KeyPressStateSource @Inject constructor(
-    inputKeySource: InputKeySource,
+    inputKeySource: GlobalInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
 

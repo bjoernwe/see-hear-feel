@@ -9,14 +9,19 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.transform
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
+/**
+ * [GlobalInputKeySource] is a [IInputKeySource] that merges together the input streams coming from
+ * [ForegroundKeySource] and [BackgroundKeySource].
+ */
 @Singleton
-class InputKeySource @Inject constructor(
-    foregroundInputKeySource: ForegroundInputKeySource,
-    backgroundInputKeySource: BackgroundInputKeySource,
+class GlobalInputKeySource @Inject constructor(
+    @ForegroundKeySource foregroundInputKeySource: IInputKeyRegistrar,
+    @BackgroundKeySource backgroundInputKeySource: IInputKeyRegistrar,
     accessibilitySettingSource: AccessibilitySettingSource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputKeySource {
