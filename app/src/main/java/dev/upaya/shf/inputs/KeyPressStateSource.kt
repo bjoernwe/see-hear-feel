@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-typealias KeyPressStates = Map<InputKey, Date?>
+typealias KeyPressStates = Map<InputKey, Date>
 
 
 @Singleton
