@@ -1,36 +1,19 @@
 package dev.upaya.shf.inputs.input_keys
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Qualifier
-import javax.inject.Singleton
 
 
 @Module
 @InstallIn(SingletonComponent::class)
-object InputKeySourceModule {
+@Suppress("unused")
+abstract class InputKeySourceModule {
 
-    @Provides
-    @Singleton
-    @ForegroundKeySource
-    fun providesForegroundKeySource(): IInputKeyRegistrar {
-        return InputKeyRegistrar()
-    }
+    @Binds
+    abstract fun bindInputKeySource(
+        inputKeySource: GlobalInputKeySource,
+    ): IInputKeySource
 
-    @Provides
-    @Singleton
-    @BackgroundKeySource
-    fun providesBackgroundKeySource(): IInputKeyRegistrar {
-        return InputKeyRegistrar()
-    }
 }
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class ForegroundKeySource
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class BackgroundKeySource
