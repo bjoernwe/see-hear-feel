@@ -31,7 +31,7 @@ class BackgroundKeyEventService : AccessibilityService() {
                 return inputKeySource.registerKeyDown(keyCode = keyEvent.keyCode)
             }
             KeyEvent.ACTION_UP -> {
-                return inputKeySource.registerKeyDown(keyCode = keyEvent.keyCode)
+                return inputKeySource.registerKeyUp(keyCode = keyEvent.keyCode)
             }
             else -> {}
         }
