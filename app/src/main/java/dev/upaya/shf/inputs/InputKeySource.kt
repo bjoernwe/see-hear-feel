@@ -1,7 +1,7 @@
 package dev.upaya.shf.inputs
 
 import dev.upaya.shf.utils.DefaultDispatcher
-import dev.upaya.shf.background.AccessibilitySettingSource
+import dev.upaya.shf.background.settings.AccessibilitySettingSource
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

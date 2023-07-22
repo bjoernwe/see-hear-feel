@@ -40,11 +40,12 @@ class BackgroundKeyEventService : AccessibilityService() {
     }
 
     override fun onServiceConnected() {
-        Timber.i("Service connected")
+        Timber.i("BackgroundKeyEventService connected")
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         Timber.i("Received event: $event")
     }
+
     override fun onInterrupt() {}
 }

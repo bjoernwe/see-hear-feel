@@ -7,10 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.background.AccessibilitySettingSource
-import dev.upaya.shf.background.BackgroundNotificationServiceConnection
-import dev.upaya.shf.background.startNotificationService
-import dev.upaya.shf.background.stopNotificationService
+import dev.upaya.shf.background.settings.AccessibilitySettingSource
+import dev.upaya.shf.background.notifications.BackgroundNotificationServiceConnection
+import dev.upaya.shf.background.notifications.startNotificationService
+import dev.upaya.shf.background.notifications.stopNotificationService
 import dev.upaya.shf.inputs.ForegroundInputKeySource
 import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost

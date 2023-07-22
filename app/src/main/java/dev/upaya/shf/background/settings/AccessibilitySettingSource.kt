@@ -1,4 +1,4 @@
-package dev.upaya.shf.background
+package dev.upaya.shf.background.settings
 
 import android.content.Context
 import android.provider.Settings

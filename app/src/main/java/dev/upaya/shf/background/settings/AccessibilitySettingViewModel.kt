@@ -1,4 +1,4 @@
-package dev.upaya.shf.background
+package dev.upaya.shf.background.settings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

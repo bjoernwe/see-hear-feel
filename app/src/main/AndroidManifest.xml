@@ -36,7 +36,7 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
-        <service android:name=".background.BackgroundNotificationService" />
+        <service android:name=".background.notifications.BackgroundNotificationService" />
     </application>
 
 </manifest>

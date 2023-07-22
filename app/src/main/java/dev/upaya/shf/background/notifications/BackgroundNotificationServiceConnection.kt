@@ -1,4 +1,4 @@
-package dev.upaya.shf.background
+package dev.upaya.shf.background.notifications
 
 import android.content.ComponentName
 import android.content.Context
