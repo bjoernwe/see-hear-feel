@@ -1,8 +1,6 @@
 package dev.upaya.shf
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
 import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -17,6 +15,8 @@ import dev.upaya.shf.inputs.ForegroundInputKeySource
 import dev.upaya.shf.inputs.InputKeySource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
+import dev.upaya.shf.utils.AccessibilitySettings
+import dev.upaya.shf.utils.NotificationSettings
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -43,7 +43,7 @@ class SHFActivity : ComponentActivity() {
             )
         }
         NotificationSettings.openNotificationSettingsIfNecessary(this)
-        showAccessibilitySettingsIfNecessary()
+        AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
     }
 
     override fun onStart() {
@@ -85,20 +85,6 @@ class SHFActivity : ComponentActivity() {
 
     fun clearKeepScreenOn() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
-    private fun isAccessibilityServiceActive(): Boolean {
-        return Settings.Secure.getInt(this.contentResolver, Settings.Secure.ACCESSIBILITY_ENABLED) == 1
-    }
-
-    private fun showAccessibilitySettingsIfNecessary() {
-        if (!isAccessibilityServiceActive())
-            showAccessibilitySettings()
-    }
-
-    private fun showAccessibilitySettings() {
-        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-        startActivity(intent)
     }
 }
 
