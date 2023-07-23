@@ -3,11 +3,12 @@ package dev.upaya.shf.inputs.input_events
 import dev.upaya.shf.inputs.DefaultDispatcher
 import dev.upaya.shf.inputs.input_keys.GlobalKeySource
 import dev.upaya.shf.inputs.input_keys.IInputKeySource
-import dev.upaya.shf.ui.asSharedFlow
+import dev.upaya.shf.inputs.input_keys.InputKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +19,13 @@ class InputEventSource @Inject constructor(
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputEventSource {
 
-    override val inputEvent: SharedFlow<InputEvent> = inputKeySource.inputKeyDown
-        .transform { inputKey -> emit(InputEvent(inputKey)) }
-        .asSharedFlow(CoroutineScope(dispatcher))
+    private val _inputEvent = MutableStateFlow(InputEvent(InputKey.UNMAPPED))
+    override val inputEvent: StateFlow<InputEvent> = _inputEvent
+
+    init {
+        CoroutineScope(dispatcher).launch {
+            inputKeySource.inputKeyDown.collect { _inputEvent.value = InputEvent(it) }
+        }
+    }
+
 }

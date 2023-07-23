@@ -1,8 +1,8 @@
 package dev.upaya.shf.inputs.input_events
 
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 interface IInputEventSource {
-    val inputEvent: SharedFlow<InputEvent>
+    val inputEvent: StateFlow<InputEvent>
 }
