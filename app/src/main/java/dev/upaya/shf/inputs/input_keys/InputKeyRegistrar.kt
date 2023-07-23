@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.input_keys
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -8,7 +8,9 @@ import javax.inject.Singleton
 
 
 @Singleton
-class InputKeySource @Inject constructor() {
+class InputKeyRegistrar @Inject constructor(
+    private val globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
+) : IInputKeyRegistrar {
 
     private val _inputKeyDown = MutableSharedFlow<InputKey>(
         replay = 1, // behavior similar to StateFlow
@@ -19,10 +21,13 @@ class InputKeySource @Inject constructor() {
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
 
-    val inputKeyDown: SharedFlow<InputKey> = _inputKeyDown
-    val inputKeyUp: SharedFlow<InputKey> = _inputKeyUp
+    override val inputKeyDown: SharedFlow<InputKey> = _inputKeyDown
+    override val inputKeyUp: SharedFlow<InputKey> = _inputKeyUp
 
-    fun registerKeyDown(keyCode: Int): Boolean {
+    override fun registerKeyDown(keyCode: Int): Boolean {
+
+        if (!globalInputRegistrarSwitch.value.value)
+            return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
@@ -30,11 +35,13 @@ class InputKeySource @Inject constructor() {
             return false
 
         _inputKeyDown.tryEmit(inputKey)
-
         return true
     }
 
-    fun registerKeyUp(keyCode: Int): Boolean {
+    override fun registerKeyUp(keyCode: Int): Boolean {
+
+        if (!globalInputRegistrarSwitch.value.value)
+            return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
@@ -42,8 +49,6 @@ class InputKeySource @Inject constructor() {
             return false
 
         _inputKeyUp.tryEmit(inputKey)
-
         return true
     }
-
 }

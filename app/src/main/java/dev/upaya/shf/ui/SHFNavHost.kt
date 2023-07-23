@@ -15,6 +15,8 @@ import dev.upaya.shf.ui.session.noting.notingGraph
 @Composable
 fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
+    onSessionStart: () -> Unit = {},
+    onSessionStop: () -> Unit = {},
 ) {
 
     NavHost(
@@ -29,6 +31,8 @@ fun SHFNavHost(
 
         notingGraph(
             navController = navController,
+            onSessionStart = onSessionStart,
+            onSessionStop = onSessionStop,
         )
 
         controllerSetupScreen()

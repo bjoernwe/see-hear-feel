@@ -2,14 +2,18 @@ package dev.upaya.shf
 
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.inputs.InputKeySource
+import dev.upaya.shf.background.notifications.startNotificationService
+import dev.upaya.shf.background.notifications.stopNotificationService
+import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
+import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
+import dev.upaya.shf.utils.AccessibilitySettings
+import dev.upaya.shf.utils.NotificationSettings
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,11 +21,21 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
-    @Inject lateinit var inputKeySource: InputKeySource
+    @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContent { SHFApp() }
+
+        setContent {
+            SHFApp(
+                onSessionStart = ::startNotificationService,
+                onSessionStop = ::stopNotificationService,
+            )
+        }
+
+        NotificationSettings.openNotificationSettingsIfNecessary(this)
+        AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -31,7 +45,7 @@ class SHFActivity : ComponentActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return super.onKeyDown(keyCode, event)
 
-        if (inputKeySource.registerKeyDown(keyCode))
+        if (foregroundKeyRegistrar.registerKeyDown(keyCode))
             return true
 
         return super.onKeyDown(keyCode, event)
@@ -41,26 +55,24 @@ class SHFActivity : ComponentActivity() {
 
         Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
 
-        if (inputKeySource.registerKeyUp(keyCode))
+        if (foregroundKeyRegistrar.registerKeyUp(keyCode))
             return true
 
         return super.onKeyUp(keyCode, event)
-    }
-
-    fun setKeepScreenOn() {
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-    }
-
-    fun clearKeepScreenOn() {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
 }
 
 
 @Composable
-fun SHFApp() {
+fun SHFApp(
+    onSessionStart: () -> Unit,
+    onSessionStop: () -> Unit,
+) {
     SHFTheme(darkTheme = true) {
-        SHFNavHost()
+        SHFNavHost(
+            onSessionStart = onSessionStart,
+            onSessionStop = onSessionStop,
+        )
     }
 }

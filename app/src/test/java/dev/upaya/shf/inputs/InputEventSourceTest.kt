@@ -1,6 +1,11 @@
 package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
+import dev.upaya.shf.inputs.input_events.InputEvent
+import dev.upaya.shf.inputs.input_events.InputEventSource
+import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
+import dev.upaya.shf.inputs.input_keys.IInputKeySource
+import dev.upaya.shf.inputs.input_keys.InputKeyRegistrar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -18,9 +23,9 @@ class InputEventSourceTest {
     fun registerKeyDown_multipleConsumers_shareFlow() = runTest {
 
         // GIVEN an InputEventSource with InputKeySource
-        val inputKeySource = InputKeySource()
+        val inputKeyRegistrar: IInputKeyRegistrar = InputKeyRegistrar().apply{ this.enableRegistrar() }
         val inputEventSource = InputEventSource(
-            inputKeySource = inputKeySource,
+            inputKeySource = inputKeyRegistrar as IInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
         )
 
@@ -36,8 +41,8 @@ class InputEventSourceTest {
         }
 
         // WHEN there are two events
-        inputKeySource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
-        inputKeySource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN both events are received by both consumers (i.e., the flow is shared)
         assertEquals(2, consumedValues1.size)
@@ -48,9 +53,9 @@ class InputEventSourceTest {
     fun registerKeyDown_emittedEvent_containsCurrentTimeStamp() = runTest {
 
         // GIVEN an InputEventSource with InputKeySource
-        val inputKeySource = InputKeySource()
+        val inputKeyRegistrar: IInputKeyRegistrar = InputKeyRegistrar().apply{ this.enableRegistrar() }
         val inputEventSource = InputEventSource(
-            inputKeySource = inputKeySource,
+            inputKeySource = inputKeyRegistrar as IInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
         )
 
@@ -62,7 +67,7 @@ class InputEventSourceTest {
         }
 
         // WHEN there is an event emitted
-        inputKeySource.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
+        inputKeyRegistrar.registerKeyDown(KeyEvent.KEYCODE_BUTTON_A)
 
         // THEN it contains the pressed key plus a current time stamp
         assertEquals(1, emittedValues.size)

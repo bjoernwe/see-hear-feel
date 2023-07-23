@@ -1,6 +1,8 @@
-package dev.upaya.shf.inputs
+package dev.upaya.shf.inputs.key_press_states
 
-import dev.upaya.shf.DefaultDispatcher
+import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
+import dev.upaya.shf.inputs.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,12 +13,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-typealias KeyPressStates = Map<InputKey, Date?>
+typealias KeyPressStates = Map<InputKey, Date>
 
 
 @Singleton
 class KeyPressStateSource @Inject constructor(
-    inputKeySource: InputKeySource,
+    inputKeySource: GlobalInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
 
@@ -29,19 +31,13 @@ class KeyPressStateSource @Inject constructor(
 
         scope.launch {
             inputKeySource.inputKeyDown.collect { inputKey ->
-                _keyPressStates.value = _keyPressStates.value
-                    .toMutableMap()
-                    .apply { this[inputKey] = Date() }
-                    .toMap()
+                _keyPressStates.addStateFor(inputKey)
             }
         }
 
         scope.launch {
             inputKeySource.inputKeyUp.collect { inputKey ->
-                _keyPressStates.value = _keyPressStates.value
-                    .toMutableMap()
-                    .apply { remove(inputKey) }
-                    .toMap()
+                _keyPressStates.removeStateFor(inputKey)
             }
         }
 
