@@ -25,7 +25,7 @@ class GlobalInputKeySource @Inject constructor(
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputKeySource {
 
-    val usingBackgroundSource: StateFlow<Boolean> = accessibilitySettingSource.value
+    private val usingBackgroundSource: StateFlow<Boolean> = accessibilitySettingSource.value
 
     override val inputKeyDown: SharedFlow<InputKey> = merge(
         foregroundInputKeySource.inputKeyDown.transform { if (!usingBackgroundSource.value) emit(it) },

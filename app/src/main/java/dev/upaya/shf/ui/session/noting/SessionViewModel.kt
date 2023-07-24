@@ -39,8 +39,6 @@ class SessionViewModel @Inject constructor(
 
     internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = labelMap, scope = viewModelScope)
 
-    val usingBackgroundSource: StateFlow<Boolean> = inputKeySource.usingBackgroundSource
-
     fun getNumEvents(): Int {
         return inputEventStats.inputEvents.size
     }
