@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.Intent
 
 
-fun Activity.startNotificationService() {
+fun Activity.startBackgroundNotificationService() {
     val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
     startForegroundService(notificationServiceIntent)
 }
 
 
-fun Activity.stopNotificationService() {
+fun Activity.stopBackgroundNotificationService() {
     val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
     stopService(notificationServiceIntent)
 }
