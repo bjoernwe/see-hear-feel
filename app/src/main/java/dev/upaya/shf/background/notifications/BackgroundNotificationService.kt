@@ -25,11 +25,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class BackgroundNotificationService : LifecycleService() {
 
+    companion object {
+        private const val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
+        private const val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
+    }
+
     @Inject
     lateinit var delayedInputEventSource: DelayedInputEventSource
-
-    private val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
-    private val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
 
     private lateinit var eventVibrator: EventVibrator
 
