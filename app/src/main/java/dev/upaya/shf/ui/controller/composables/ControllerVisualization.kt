@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.controller
+package dev.upaya.shf.ui.controller.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
