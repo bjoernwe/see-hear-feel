@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Binder
-import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +30,6 @@ class BackgroundNotificationService : LifecycleService() {
 
     private val CHANNEL_ID = "SHF_FOREGROUND_NOTIFICATION_SERVICE"
     private val ONGOING_NOTIFICATION_ID = 1  // Can't be 0
-
-    private val binder = LocalBinder()  // Allows an Activity to bind to this service
 
     private lateinit var eventVibrator: EventVibrator
 
@@ -80,16 +76,6 @@ class BackgroundNotificationService : LifecycleService() {
         val channel = NotificationChannel(CHANNEL_ID, name, importance)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
-    }
-
-    inner class LocalBinder : Binder() {
-        // Return this instance of LocalService so clients can call public methods.
-        fun getService(): BackgroundNotificationService = this@BackgroundNotificationService
-    }
-
-    override fun onBind(intent: Intent): IBinder {
-        super.onBind(intent)
-        return binder
     }
 
     override fun onDestroy() {
