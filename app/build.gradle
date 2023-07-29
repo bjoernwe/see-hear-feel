@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "dev.upaya.shf"
-        minSdk 29
+        minSdk 33
         targetSdk 33
         versionCode 6
         versionName '0.1.1'

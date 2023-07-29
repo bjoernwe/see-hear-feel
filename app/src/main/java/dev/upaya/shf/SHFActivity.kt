@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -11,13 +12,14 @@ import dev.upaya.shf.background.EventVibrator
 import dev.upaya.shf.background.notifications.startBackgroundNotificationService
 import dev.upaya.shf.background.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.background.settings.AccessibilitySettingSource
+import dev.upaya.shf.background.settings.NotificationPermissionSource
 import dev.upaya.shf.inputs.DelayedInputEventSource
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
 import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.AccessibilitySettings
-import dev.upaya.shf.utils.NotificationSettings
+import dev.upaya.shf.utils.NotificationPermission
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,6 +34,9 @@ class SHFActivity : ComponentActivity() {
     lateinit var accessibilitySettingSource: AccessibilitySettingSource
 
     @Inject
+    lateinit var notificationPermissionSource: NotificationPermissionSource
+
+    @Inject
     lateinit var delayedInputEventSource: DelayedInputEventSource
     private lateinit var eventVibrator: EventVibrator
 
@@ -39,7 +44,11 @@ class SHFActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        NotificationSettings.openNotificationSettingsIfNecessary(this)
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                isGranted: Boolean -> notificationPermissionSource.updatePermission(hasNotificationPermission = isGranted)
+        }
+
+        NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
         AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
 
         eventVibrator = EventVibrator(
