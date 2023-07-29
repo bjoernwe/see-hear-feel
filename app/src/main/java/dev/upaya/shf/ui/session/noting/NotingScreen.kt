@@ -16,6 +16,7 @@ import dev.upaya.shf.inputs.input_events.InputEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.KeepScreenOn
 import dev.upaya.shf.ui.session.noting.composables.LabelText
+import dev.upaya.shf.ui.session.noting.composables.SettingsButton
 import dev.upaya.shf.ui.session.noting.composables.StopButton
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -25,7 +26,8 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun NotingScreen(
     label: Label,
     inputEvent: InputEvent?,
-    onStopButtonClick: () -> Unit = {},
+    onStopButtonClick: () -> Unit,
+    onSettingsButtonClick: () -> Unit,
 ) {
 
     SetStatusBarColor()
@@ -54,6 +56,12 @@ fun NotingScreen(
                 .fillMaxSize()
                 .padding(24.dp)
         ) {
+
+            SettingsButton(
+                onClick = onSettingsButtonClick,
+                modifier = Modifier
+                    .align(Alignment.TopEnd),
+            )
 
             LabelText(
                 label = label,
@@ -84,6 +92,8 @@ fun MainContentPreview() {
         NotingScreen(
             label = Label("label"),
             inputEvent = null,
+            onStopButtonClick = {},
+            onSettingsButtonClick = {},
         )
     }
 }

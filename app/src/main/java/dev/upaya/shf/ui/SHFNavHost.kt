@@ -10,6 +10,7 @@ import dev.upaya.shf.ui.exercises.exerciseListScreen
 import dev.upaya.shf.ui.exercises.routeExerciseList
 import dev.upaya.shf.ui.session.noting.navigateToNoting
 import dev.upaya.shf.ui.session.noting.notingGraph
+import dev.upaya.shf.ui.settings.settingsScreen
 
 
 @Composable
@@ -24,6 +25,8 @@ fun SHFNavHost(
         startDestination = routeExerciseList,
     ) {
 
+        controllerSetupScreen()
+
         exerciseListScreen(
             onExerciseClick = { exerciseId -> navController.navigateToNoting(exerciseId) },
             onControllerButtonClick = navController::navigateToControllerSetup,
@@ -35,7 +38,7 @@ fun SHFNavHost(
             onSessionStop = onSessionStop,
         )
 
-        controllerSetupScreen()
+        settingsScreen()
 
     }
 
