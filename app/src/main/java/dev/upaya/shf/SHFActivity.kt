@@ -75,7 +75,7 @@ class SHFActivity : ComponentActivity() {
      * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
      */
     private fun startUserInteractionForSession() {
-        if (accessibilitySettingSource.value.value)
+        if (accessibilitySettingSource.isEnabled.value)
             startBackgroundNotificationService()
         else
             eventVibrator.startVibrator()

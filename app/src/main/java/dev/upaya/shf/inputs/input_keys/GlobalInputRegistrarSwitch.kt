@@ -19,14 +19,14 @@ import javax.inject.Singleton
 @Singleton
 class GlobalInputRegistrarSwitch @Inject constructor() : IBooleanSource {
 
-    private val _value = MutableStateFlow(false)
-    override val value: StateFlow<Boolean> = _value
+    private val _isEnabled = MutableStateFlow(false)
+    override val isEnabled: StateFlow<Boolean> = _isEnabled
 
     fun switchOn() {
-        _value.value = true
+        _isEnabled.value = true
     }
 
     fun switchOff() {
-        _value.value = false
+        _isEnabled.value = false
     }
 }

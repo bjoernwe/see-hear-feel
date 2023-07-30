@@ -26,7 +26,7 @@ class InputKeyRegistrar @Inject constructor(
 
     override fun registerKeyDown(keyCode: Int): Boolean {
 
-        if (!globalInputRegistrarSwitch.value.value)
+        if (!globalInputRegistrarSwitch.isEnabled.value)
             return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
@@ -40,7 +40,7 @@ class InputKeyRegistrar @Inject constructor(
 
     override fun registerKeyUp(keyCode: Int): Boolean {
 
-        if (!globalInputRegistrarSwitch.value.value)
+        if (!globalInputRegistrarSwitch.isEnabled.value)
             return false
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)

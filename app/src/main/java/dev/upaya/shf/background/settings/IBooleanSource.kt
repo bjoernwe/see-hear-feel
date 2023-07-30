@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 interface IBooleanSource {
-    val value: StateFlow<Boolean>
+    val isEnabled: StateFlow<Boolean>
 }
