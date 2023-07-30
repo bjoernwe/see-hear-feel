@@ -21,6 +21,10 @@ class AccessibilityPermissionSource @Inject constructor(
     private val _backgroundServiceIsAvailable = MutableStateFlow(getAccessibilityServiceAvailability(context = appContext))
     override val isEnabled: StateFlow<Boolean> = _backgroundServiceIsAvailable
 
+    /**
+     * Observe all changes made to Android's accessibility services, i.e., which ones are currently
+     * (in)active.
+     */
     private val accessibilityChangeObserver: ContentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
 
         override fun onChange(selfChange: Boolean) {
