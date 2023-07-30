@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs.input_events
+package dev.upaya.shf.inputs.events
 
 import kotlinx.coroutines.flow.StateFlow
 

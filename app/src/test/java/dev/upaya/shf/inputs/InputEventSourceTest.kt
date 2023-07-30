@@ -1,8 +1,8 @@
 package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
-import dev.upaya.shf.inputs.input_events.InputEvent
-import dev.upaya.shf.inputs.input_events.InputEventSource
+import dev.upaya.shf.inputs.events.InputEvent
+import dev.upaya.shf.inputs.events.InputEventSource
 import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
 import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
 import dev.upaya.shf.inputs.keys.IInputKeySource

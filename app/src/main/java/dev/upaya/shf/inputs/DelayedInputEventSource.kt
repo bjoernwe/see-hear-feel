@@ -1,6 +1,6 @@
 package dev.upaya.shf.inputs
 
-import dev.upaya.shf.inputs.input_events.IInputEventSource
+import dev.upaya.shf.inputs.events.IInputEventSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay

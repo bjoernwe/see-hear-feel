@@ -7,10 +7,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.input_events.InputEvent
-import dev.upaya.shf.inputs.input_events.InputEventSource
-import dev.upaya.shf.inputs.input_events.InputEventStats
-import dev.upaya.shf.inputs.input_events.LabelFreqs
+import dev.upaya.shf.inputs.events.InputEvent
+import dev.upaya.shf.inputs.events.InputEventSource
+import dev.upaya.shf.inputs.events.InputEventStats
+import dev.upaya.shf.inputs.events.LabelFreqs
 import dev.upaya.shf.inputs.keys.InputKey
 import dev.upaya.shf.inputs.keys.GlobalInputKeySource
 import dev.upaya.shf.ui.transformToLabel
