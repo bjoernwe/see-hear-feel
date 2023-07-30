@@ -8,9 +8,13 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,14 +28,30 @@ class PreferenceSource @Inject constructor(
     accessibilityPermissionSource: AccessibilityPermissionSource,
 ) {
 
+    private val scope = CoroutineScope(Dispatchers.IO)
+
     private val prefKeyLockScreenSession = booleanPreferencesKey("lock_screen_session")
 
-    val isLockScreenPreferred: Flow<Boolean> = appContext.dataStore.data.map { preferences ->
-        preferences[prefKeyLockScreenSession] ?: false
-    }
+    private val _isLockScreenPreferred = MutableStateFlow(false)
+    private val isLockScreenPreferred: StateFlow<Boolean> = _isLockScreenPreferred
 
-    val isLockScreenSessionEnabled: Flow<Boolean> = accessibilityPermissionSource.isEnabled
-        .combine(isLockScreenPreferred) { x, y -> x && y }
+    private val _isLockScreenSessionEnabled = MutableStateFlow(false)
+    val isLockScreenSessionEnabled: StateFlow<Boolean> = _isLockScreenSessionEnabled
+
+    init {
+
+        scope.launch {
+            appContext.dataStore.data
+                .map { prefs -> prefs[prefKeyLockScreenSession] ?: false }
+                .collect { pref -> _isLockScreenPreferred.value = pref }
+        }
+
+        scope.launch {
+            accessibilityPermissionSource.isEnabled
+                .combine(isLockScreenPreferred) { x, y -> x && y }
+                .collect { pref -> _isLockScreenSessionEnabled.value = pref }
+        }
+    }
 
     suspend fun setLockScreenSessionPreference(enabled: Boolean) {
         appContext.dataStore.edit { settings ->
