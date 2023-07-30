@@ -7,7 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.inputs.input_keys.GlobalInputRegistrarViewModel
+import dev.upaya.shf.inputs.keys.GlobalInputRegistrarViewModel
 import dev.upaya.shf.inputs.key_press_states.KeyPressStateViewModel
 
 

@@ -1,9 +1,9 @@
 package dev.upaya.shf.inputs.input_events
 
 import dev.upaya.shf.inputs.DefaultDispatcher
-import dev.upaya.shf.inputs.input_keys.GlobalKeySource
-import dev.upaya.shf.inputs.input_keys.IInputKeySource
-import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.keys.GlobalKeySource
+import dev.upaya.shf.inputs.keys.IInputKeySource
+import dev.upaya.shf.inputs.keys.InputKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -3,10 +3,10 @@ package dev.upaya.shf.inputs
 import android.view.KeyEvent
 import dev.upaya.shf.inputs.input_events.InputEvent
 import dev.upaya.shf.inputs.input_events.InputEventSource
-import dev.upaya.shf.inputs.input_keys.GlobalInputRegistrarSwitch
-import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
-import dev.upaya.shf.inputs.input_keys.IInputKeySource
-import dev.upaya.shf.inputs.input_keys.InputKeyRegistrar
+import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
+import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
+import dev.upaya.shf.inputs.keys.IInputKeySource
+import dev.upaya.shf.inputs.keys.InputKeyRegistrar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs.input_keys
+package dev.upaya.shf.inputs.keys
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

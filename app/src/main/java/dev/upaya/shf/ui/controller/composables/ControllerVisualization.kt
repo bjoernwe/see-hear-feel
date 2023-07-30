@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import dev.upaya.shf.R
-import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.keys.InputKey
 import dev.upaya.shf.inputs.key_press_states.KeyPressStates
 import dev.upaya.shf.ui.theme.SHFTheme
 

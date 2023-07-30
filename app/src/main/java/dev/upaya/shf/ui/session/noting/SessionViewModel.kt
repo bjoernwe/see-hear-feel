@@ -11,8 +11,8 @@ import dev.upaya.shf.inputs.input_events.InputEvent
 import dev.upaya.shf.inputs.input_events.InputEventSource
 import dev.upaya.shf.inputs.input_events.InputEventStats
 import dev.upaya.shf.inputs.input_events.LabelFreqs
-import dev.upaya.shf.inputs.input_keys.InputKey
-import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
+import dev.upaya.shf.inputs.keys.InputKey
+import dev.upaya.shf.inputs.keys.GlobalInputKeySource
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
