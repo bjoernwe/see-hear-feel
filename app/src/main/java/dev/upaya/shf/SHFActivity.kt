@@ -13,7 +13,7 @@ import dev.upaya.shf.background.EventVibrator
 import dev.upaya.shf.background.notifications.startBackgroundNotificationService
 import dev.upaya.shf.background.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
-import dev.upaya.shf.inputs.permissions.NotificationPermissionSource
+import dev.upaya.shf.inputs.permissions.notifications.NotificationPermissionSource
 import dev.upaya.shf.inputs.DelayedInputEventSource
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
 import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar

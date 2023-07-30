@@ -1,4 +1,4 @@
-package dev.upaya.shf.inputs.permissions
+package dev.upaya.shf.inputs.permissions.notifications
 
 import android.content.Context
 import android.content.Intent
