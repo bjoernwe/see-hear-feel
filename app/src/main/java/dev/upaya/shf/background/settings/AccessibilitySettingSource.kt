@@ -20,7 +20,7 @@ class AccessibilitySettingSource @Inject constructor(
     @ApplicationContext private val appContext: Context,
 ) : IBooleanSource {
 
-    private val _backgroundServiceIsAvailable = MutableStateFlow(false)
+    private val _backgroundServiceIsAvailable = MutableStateFlow(getAccessibilityServiceAvailability())
     override val isEnabled: StateFlow<Boolean> = _backgroundServiceIsAvailable
 
     private val accessibilityChangeObserver: ContentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
