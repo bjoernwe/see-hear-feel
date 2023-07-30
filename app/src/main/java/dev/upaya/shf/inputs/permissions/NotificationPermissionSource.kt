@@ -1,4 +1,4 @@
-package dev.upaya.shf.background.settings
+package dev.upaya.shf.inputs.permissions
 
 import android.content.Context
 import android.content.Intent

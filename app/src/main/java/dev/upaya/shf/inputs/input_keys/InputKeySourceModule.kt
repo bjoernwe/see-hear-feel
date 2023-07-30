@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.upaya.shf.background.settings.AccessibilitySettingSource
+import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
 import dev.upaya.shf.inputs.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Qualifier
@@ -21,13 +21,13 @@ object InputKeySourceModule {
     fun providesGlobalKeySource(
         @ForegroundKeySource foregroundInputKeySource: IInputKeyRegistrar,
         @BackgroundKeySource backgroundInputKeySource: IInputKeyRegistrar,
-        accessibilitySettingSource: AccessibilitySettingSource,
+        accessibilityPermissionSource: AccessibilityPermissionSource,
         @DefaultDispatcher dispatcher: CoroutineDispatcher,
     ): IInputKeySource {
         return GlobalInputKeySource(
             foregroundInputKeySource = foregroundInputKeySource,
             backgroundInputKeySource = backgroundInputKeySource,
-            accessibilitySettingSource = accessibilitySettingSource,
+            accessibilityPermissionSource = accessibilityPermissionSource,
             dispatcher = dispatcher,
         )
     }

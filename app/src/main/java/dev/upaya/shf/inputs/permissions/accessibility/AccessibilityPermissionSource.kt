@@ -1,4 +1,4 @@
-package dev.upaya.shf.background.settings
+package dev.upaya.shf.inputs.permissions.accessibility
 
 import android.content.ComponentName
 import android.content.Context
@@ -8,6 +8,7 @@ import android.os.Looper
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.background.BackgroundKeyEventService
+import dev.upaya.shf.inputs.permissions.IBooleanSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import timber.log.Timber
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class AccessibilitySettingSource @Inject constructor(
+class AccessibilityPermissionSource @Inject constructor(
     @ApplicationContext private val appContext: Context,
 ) : IBooleanSource {
 

@@ -1,6 +1,6 @@
 package dev.upaya.shf.inputs.input_keys
 
-import dev.upaya.shf.background.settings.AccessibilitySettingSource
+import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
 import dev.upaya.shf.inputs.DefaultDispatcher
 import dev.upaya.shf.ui.asSharedFlow
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,11 +21,11 @@ import javax.inject.Singleton
 class GlobalInputKeySource @Inject constructor(
     @ForegroundKeySource foregroundInputKeySource: IInputKeyRegistrar,
     @BackgroundKeySource backgroundInputKeySource: IInputKeyRegistrar,
-    accessibilitySettingSource: AccessibilitySettingSource,
+    accessibilityPermissionSource: AccessibilityPermissionSource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputKeySource {
 
-    private val usingBackgroundSource: StateFlow<Boolean> = accessibilitySettingSource.isEnabled
+    private val usingBackgroundSource: StateFlow<Boolean> = accessibilityPermissionSource.isEnabled
 
     override val inputKeyDown: SharedFlow<InputKey> = merge(
         foregroundInputKeySource.inputKeyDown.transform { if (!usingBackgroundSource.value) emit(it) },

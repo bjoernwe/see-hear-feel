@@ -29,7 +29,7 @@ class InputKeySourceTest {
             foregroundInputKeySource = foregroundInputKeySource,
             backgroundInputKeySource = backgroundInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
-            accessibilitySettingSource = accessibilitySettingSource,
+            accessibilityPermissionSource = accessibilitySettingSource,
         )
 
         // AND GIVEN its emitted values

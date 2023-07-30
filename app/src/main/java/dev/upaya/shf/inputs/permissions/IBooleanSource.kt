@@ -1,4 +1,4 @@
-package dev.upaya.shf.background.settings
+package dev.upaya.shf.inputs.permissions
 
 import kotlinx.coroutines.flow.StateFlow
 

@@ -1,4 +1,4 @@
-package dev.upaya.shf.background.settings
+package dev.upaya.shf.inputs.permissions.accessibility
 
 import android.content.Context
 import dagger.Module
@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.upaya.shf.inputs.permissions.IBooleanSource
 import javax.inject.Qualifier
 
 
@@ -18,7 +19,7 @@ object AccessibilitySettingModule {
     fun providesAccessibilitySetting(
         @ApplicationContext appContext: Context,
     ): IBooleanSource {
-        return AccessibilitySettingSource(
+        return AccessibilityPermissionSource(
             appContext = appContext,
         )
     }

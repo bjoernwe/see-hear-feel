@@ -1,6 +1,6 @@
 package dev.upaya.shf.inputs.input_keys
 
-import dev.upaya.shf.background.settings.IBooleanSource
+import dev.upaya.shf.inputs.permissions.IBooleanSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject

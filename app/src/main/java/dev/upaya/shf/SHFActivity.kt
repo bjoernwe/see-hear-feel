@@ -12,8 +12,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.EventVibrator
 import dev.upaya.shf.background.notifications.startBackgroundNotificationService
 import dev.upaya.shf.background.notifications.stopBackgroundNotificationService
-import dev.upaya.shf.background.settings.AccessibilitySettingSource
-import dev.upaya.shf.background.settings.NotificationPermissionSource
+import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
+import dev.upaya.shf.inputs.permissions.NotificationPermissionSource
 import dev.upaya.shf.inputs.DelayedInputEventSource
 import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
 import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
@@ -32,7 +32,7 @@ class SHFActivity : ComponentActivity() {
     @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
 
     @Inject
-    lateinit var accessibilitySettingSource: AccessibilitySettingSource
+    lateinit var accessibilityPermissionSource: AccessibilityPermissionSource
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
@@ -75,7 +75,7 @@ class SHFActivity : ComponentActivity() {
      * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
      */
     private fun startUserInteractionForSession() {
-        if (accessibilitySettingSource.isEnabled.value)
+        if (accessibilityPermissionSource.isEnabled.value)
             startBackgroundNotificationService()
         else
             eventVibrator.startVibrator()
