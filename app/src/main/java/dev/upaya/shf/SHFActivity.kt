@@ -15,6 +15,7 @@ import dev.upaya.shf.inputs.permissions.notifications.NotificationPermissionSour
 import dev.upaya.shf.inputs.DelayedInputEventSource
 import dev.upaya.shf.inputs.keys.ForegroundKeySource
 import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
+import dev.upaya.shf.inputs.preferences.PreferenceSource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.NotificationPermission
@@ -30,6 +31,9 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
+
+    @Inject
+    lateinit var preferenceSource: PreferenceSource
 
     @Inject
     lateinit var accessibilityPermissionSource: AccessibilityPermissionSource
