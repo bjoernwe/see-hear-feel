@@ -1,6 +1,5 @@
 package dev.upaya.shf
 
-import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.KeyEvent
@@ -11,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.EventVibrator
-import dev.upaya.shf.background.notifications.startBackgroundNotificationService
-import dev.upaya.shf.background.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
 import dev.upaya.shf.inputs.permissions.notifications.NotificationPermissionSource
 import dev.upaya.shf.inputs.DelayedInputEventSource
@@ -21,6 +18,9 @@ import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.NotificationPermission
+import dev.upaya.shf.utils.showAccessibilitySettingsIfNecessary
+import dev.upaya.shf.utils.startUserInteractionForSession
+import dev.upaya.shf.utils.stopUserInteractionForSession
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -39,7 +39,7 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     lateinit var delayedInputEventSource: DelayedInputEventSource
-    private lateinit var eventVibrator: EventVibrator
+    internal lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -70,24 +70,6 @@ class SHFActivity : ComponentActivity() {
 
     }
 
-    /**
-     * Start the user interaction that's happening during a session. In particular the parts that
-     * are kept out of other parts of the architecture because they depend on Android libraries
-     * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
-     */
-    private fun startUserInteractionForSession() {
-        // TODO: Use actual preference
-        if (accessibilityPermissionSource.isEnabled.value)
-            startBackgroundNotificationService()
-        else
-            eventVibrator.startVibrator()
-    }
-
-    private fun stopUserInteractionForSession() {
-        stopBackgroundNotificationService()
-        eventVibrator.stopVibrator()
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 
         Timber.tag("foo").i("Key pressed: %s", KeyEvent.keyCodeToString(keyCode))
@@ -109,17 +91,6 @@ class SHFActivity : ComponentActivity() {
             return true
 
         return super.onKeyUp(keyCode, event)
-    }
-
-    private fun showAccessibilitySettingsIfNecessary() {
-        if (accessibilityPermissionSource.isEnabled.value)
-            return
-        showAccessibilitySettings()
-    }
-
-    private fun showAccessibilitySettings() {
-        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
-        startActivity(intent)
     }
 
 }
