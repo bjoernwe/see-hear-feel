@@ -6,8 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.upaya.shf.inputs.IoDispatcher
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Qualifier
 
 
@@ -19,11 +17,9 @@ object AccessibilitySettingModule {
     @Provides
     fun providesAccessibilitySetting(
         @ApplicationContext appContext: Context,
-        @IoDispatcher dispatcher: CoroutineDispatcher,
     ): IBooleanSource {
         return AccessibilitySettingSource(
             appContext = appContext,
-            dispatcher = dispatcher,
         )
     }
 

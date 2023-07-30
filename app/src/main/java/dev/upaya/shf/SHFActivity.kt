@@ -1,6 +1,7 @@
 package dev.upaya.shf
 
 import android.os.Bundle
+import android.provider.Settings
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -63,6 +64,8 @@ class SHFActivity : ComponentActivity() {
                 onSessionStop = ::stopUserInteractionForSession,
             )
         }
+
+        Settings.Secure.getString(this.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
 
     }
 
