@@ -20,15 +20,13 @@ fun NavGraphBuilder.settingsScreen() {
 
     composable(route = routeSettings) {
 
-        val settingsViewModel: SettingsViewModel = hiltViewModel()
-        val hasNotificationPermission by settingsViewModel.hasNotificationPermission.collectAsState()
-        val hasAccessibilityPermission by settingsViewModel.hasAccessibilityPermission.collectAsState()
-        val backgroundSessionPermitted by settingsViewModel.backgroundSessionPermitted.collectAsState()
+        val permissionViewModel: PermissionViewModel = hiltViewModel()
+        val hasNotificationPermission by permissionViewModel.hasNotificationPermission.collectAsState()
+        val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
 
         SettingsScreen(
             hasNotificationPermission = hasNotificationPermission,
             hasAccessibilityPermission = hasAccessibilityPermission,
-            backgroundSessionPermitted = backgroundSessionPermitted,
         )
     }
 
