@@ -18,6 +18,7 @@ fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
     onSessionStart: () -> Unit = {},
     onSessionStop: () -> Unit = {},
+    showAccessibilitySettings: () -> Unit,
 ) {
 
     NavHost(
@@ -38,7 +39,9 @@ fun SHFNavHost(
             onSessionStop = onSessionStop,
         )
 
-        settingsScreen()
+        settingsScreen(
+            showAccessibilitySettings = showAccessibilitySettings,
+        )
 
     }
 

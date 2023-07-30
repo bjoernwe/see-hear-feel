@@ -1,5 +1,6 @@
 package dev.upaya.shf
 
+import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.view.KeyEvent
@@ -19,7 +20,6 @@ import dev.upaya.shf.inputs.keys.ForegroundKeySource
 import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
-import dev.upaya.shf.utils.AccessibilitySettings
 import dev.upaya.shf.utils.NotificationPermission
 import timber.log.Timber
 import javax.inject.Inject
@@ -49,8 +49,8 @@ class SHFActivity : ComponentActivity() {
                 isGranted: Boolean -> notificationPermissionSource.updatePermission(hasNotificationPermission = isGranted)
         }
 
+        // TODO: Necessary? Only when system dialog is actually used.
         NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
-        AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
 
         eventVibrator = EventVibrator(
             events = delayedInputEventSource.delayedInputEvent,
@@ -62,6 +62,7 @@ class SHFActivity : ComponentActivity() {
             SHFApp(
                 onSessionStart = ::startUserInteractionForSession,
                 onSessionStop = ::stopUserInteractionForSession,
+                showAccessibilitySettings = ::showAccessibilitySettingsIfNecessary
             )
         }
 
@@ -75,6 +76,7 @@ class SHFActivity : ComponentActivity() {
      * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
      */
     private fun startUserInteractionForSession() {
+        // TODO: Use actual preference
         if (accessibilityPermissionSource.isEnabled.value)
             startBackgroundNotificationService()
         else
@@ -109,6 +111,17 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
+    private fun showAccessibilitySettingsIfNecessary() {
+        if (accessibilityPermissionSource.isEnabled.value)
+            return
+        showAccessibilitySettings()
+    }
+
+    private fun showAccessibilitySettings() {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        startActivity(intent)
+    }
+
 }
 
 
@@ -116,11 +129,13 @@ class SHFActivity : ComponentActivity() {
 fun SHFApp(
     onSessionStart: () -> Unit,
     onSessionStop: () -> Unit,
+    showAccessibilitySettings: () -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
             onSessionStart = onSessionStart,
             onSessionStop = onSessionStop,
+            showAccessibilitySettings = showAccessibilitySettings,
         )
     }
 }

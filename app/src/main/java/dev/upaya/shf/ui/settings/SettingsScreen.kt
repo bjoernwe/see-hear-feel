@@ -14,26 +14,33 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsScreen(
-    hasNotificationPermission: Boolean,
     hasAccessibilityPermission: Boolean,
+    isLockScreenSessionEnabled: Boolean,
+    onSwitchLockScreenSession: (Boolean) -> Unit,
 ) {
 
     Column {
 
         Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            .fillMaxWidth()
+            .padding(8.dp)
         ) {
 
-            Text(
-                text = "Session on Lock-Screen",
-                modifier = Modifier
+            Column {
+
+                Text(
+                    text = "Session on Lock-Screen",
+                    modifier = Modifier
                     //.fillMaxWidth()
-            )
+                )
+
+                Text(text = "Accessibility service: $hasAccessibilityPermission")
+
+            }
 
             Switch(
-                checked = hasAccessibilityPermission,
-                onCheckedChange = null,
+                checked = isLockScreenSessionEnabled,
+                onCheckedChange = onSwitchLockScreenSession,
                 modifier = Modifier
                     .padding(4.dp)
             )
@@ -50,7 +57,8 @@ fun SettingsScreen(
 @Composable
 fun SettingsScreenPreview() {
     SettingsScreen(
-        hasNotificationPermission = true,
         hasAccessibilityPermission = true,
+        isLockScreenSessionEnabled = true,
+        onSwitchLockScreenSession = {},
     )
 }
