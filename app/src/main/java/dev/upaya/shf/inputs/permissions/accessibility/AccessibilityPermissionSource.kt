@@ -25,10 +25,16 @@ class AccessibilityPermissionSource @Inject constructor(
     override val isEnabled: StateFlow<Boolean> = _backgroundServiceIsAvailable
 
     private val accessibilityChangeObserver: ContentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+
         override fun onChange(selfChange: Boolean) {
             super.onChange(selfChange)
             updateAvailability()
         }
+
+        private fun updateAvailability() {
+            _backgroundServiceIsAvailable.value = getAccessibilityServiceAvailability()
+        }
+
     }
 
     init {
@@ -38,10 +44,6 @@ class AccessibilityPermissionSource @Inject constructor(
     private fun registerChangeObserver() {
         val uri = Settings.Secure.getUriFor(Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
         appContext.contentResolver.registerContentObserver(uri, false, accessibilityChangeObserver)
-    }
-
-    private fun updateAvailability() {
-            _backgroundServiceIsAvailable.value = getAccessibilityServiceAvailability()
     }
 
     /**
