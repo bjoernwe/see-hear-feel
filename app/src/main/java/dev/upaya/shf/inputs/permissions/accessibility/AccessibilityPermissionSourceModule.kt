@@ -14,7 +14,7 @@ import javax.inject.Qualifier
 @InstallIn(SingletonComponent::class)
 object AccessibilitySettingModule {
 
-    @AccessibilitySetting
+    @AccessibilityPermission
     @Provides
     fun providesAccessibilitySetting(
         @ApplicationContext appContext: Context,
@@ -28,4 +28,4 @@ object AccessibilitySettingModule {
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
-annotation class AccessibilitySetting
+annotation class AccessibilityPermission

@@ -14,11 +14,12 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class InputKeyRegistrarTest {
 
-    private lateinit var inputKeyRegistrar: IInputKeyRegistrar
+    private val globalInputRegistrarSwitch = GlobalInputRegistrarSwitch()
+    private val inputKeyRegistrar = InputKeyRegistrar(globalInputRegistrarSwitch)
 
     @Before
     fun setUp() {
-        inputKeyRegistrar = InputKeyRegistrar().apply { enableRegistrar() }
+        globalInputRegistrarSwitch.switchOn()
     }
 
     /*

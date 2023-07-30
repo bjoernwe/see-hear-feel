@@ -5,6 +5,7 @@ import dev.upaya.shf.background.settings.MockBooleanSource
 import dev.upaya.shf.inputs.input_keys.InputKey
 import dev.upaya.shf.inputs.input_keys.InputKeyMapping
 import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
+import dev.upaya.shf.inputs.input_keys.GlobalInputRegistrarSwitch
 import dev.upaya.shf.inputs.input_keys.InputKeyRegistrar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
@@ -23,8 +24,9 @@ class InputKeySourceTest {
 
         // GIVEN a InputKeySource (foreground/background)
         val accessibilitySettingSource = MockBooleanSource(false)
-        val foregroundInputKeySource = InputKeyRegistrar().apply { this.enableRegistrar() }
-        val backgroundInputKeySource = InputKeyRegistrar().apply { this.enableRegistrar() }
+        val globalInputRegistrarSwitch = GlobalInputRegistrarSwitch().apply { this.switchOn() }
+        val foregroundInputKeySource = InputKeyRegistrar(globalInputRegistrarSwitch)
+        val backgroundInputKeySource = InputKeyRegistrar(globalInputRegistrarSwitch)
         val inputKeySource = GlobalInputKeySource(
             foregroundInputKeySource = foregroundInputKeySource,
             backgroundInputKeySource = backgroundInputKeySource,
