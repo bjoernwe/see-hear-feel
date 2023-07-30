@@ -33,7 +33,7 @@ class PreferenceSource @Inject constructor(
     private val prefKeyLockScreenSession = booleanPreferencesKey("lock_screen_session")
 
     private val _isLockScreenPreferred = MutableStateFlow(false)
-    private val isLockScreenPreferred: StateFlow<Boolean> = _isLockScreenPreferred
+    val isLockScreenPreferred: StateFlow<Boolean> = _isLockScreenPreferred
 
     private val _isLockScreenSessionEnabled = MutableStateFlow(false)
     val isLockScreenSessionEnabled: StateFlow<Boolean> = _isLockScreenSessionEnabled

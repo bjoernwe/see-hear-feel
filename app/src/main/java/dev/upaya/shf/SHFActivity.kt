@@ -19,7 +19,7 @@ import dev.upaya.shf.inputs.preferences.PreferenceSource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.utils.NotificationPermission
-import dev.upaya.shf.utils.showAccessibilitySettingsIfNecessary
+import dev.upaya.shf.utils.showAccessibilitySettings
 import dev.upaya.shf.utils.startUserInteractionForSession
 import dev.upaya.shf.utils.stopUserInteractionForSession
 import timber.log.Timber
@@ -66,7 +66,7 @@ class SHFActivity : ComponentActivity() {
             SHFApp(
                 onSessionStart = ::startUserInteractionForSession,
                 onSessionStop = ::stopUserInteractionForSession,
-                showAccessibilitySettings = ::showAccessibilitySettingsIfNecessary
+                showAccessibilitySettings = ::showAccessibilitySettings
             )
         }
 

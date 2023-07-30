@@ -1,5 +1,6 @@
 package dev.upaya.shf.ui.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,9 +18,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsScreen(
+    isLockScreenPreferred: Boolean,
     hasAccessibilityPermission: Boolean,
-    isLockScreenSessionEnabled: Boolean,
     onSwitchLockScreenSession: (Boolean) -> Unit,
+    onRequestAccessibilitySettings: () -> Unit,
 ) {
 
     Scaffold(
@@ -49,13 +51,17 @@ fun SettingsScreen(
                         //.fillMaxWidth()
                     )
 
-                    Text(text = "Accessibility service: $hasAccessibilityPermission")
+                    Text(
+                        text = "Accessibility service: $hasAccessibilityPermission",
+                        Modifier.clickable(onClick = onRequestAccessibilitySettings)
+                    )
 
                 }
 
                 Switch(
-                    checked = isLockScreenSessionEnabled,
+                    checked = isLockScreenPreferred,
                     onCheckedChange = onSwitchLockScreenSession,
+                    enabled = hasAccessibilityPermission,
                     modifier = Modifier
                         .padding(4.dp)
                 )
@@ -74,8 +80,9 @@ fun SettingsScreen(
 @Composable
 fun SettingsScreenPreview() {
     SettingsScreen(
+        isLockScreenPreferred = true,
         hasAccessibilityPermission = true,
-        isLockScreenSessionEnabled = true,
         onSwitchLockScreenSession = {},
+        onRequestAccessibilitySettings = {},
     )
 }

@@ -28,21 +28,15 @@ fun NavGraphBuilder.settingsScreen(
         val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
 
         val preferenceViewModel: PreferenceViewModel = hiltViewModel()
-        val isLockScreenSessionEnabled by preferenceViewModel.isLockScreenSessionEnabled.collectAsState(false)
+        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState()
 
         val scope = rememberCoroutineScope()
 
         SettingsScreen(
+            isLockScreenPreferred = isLockScreenPreferred,
             hasAccessibilityPermission = hasAccessibilityPermission,
-            isLockScreenSessionEnabled = isLockScreenSessionEnabled,
-            onSwitchLockScreenSession = { newSwitchValue ->
-                scope.launch {
-                    if (!hasAccessibilityPermission)
-                        showAccessibilitySettings()
-                    else
-                        preferenceViewModel.setLockScreenPreference(newSwitchValue)
-                }
-            },
+            onSwitchLockScreenSession = { newValue -> scope.launch { preferenceViewModel.setLockScreenPreference(newValue) } },
+            onRequestAccessibilitySettings = showAccessibilitySettings,
         )
     }
 

@@ -12,7 +12,8 @@ class PreferenceViewModel @Inject constructor(
     private val preferenceSource: PreferenceSource,
 ) : ViewModel() {
 
-    val isLockScreenSessionEnabled: StateFlow<Boolean> = preferenceSource.isLockScreenSessionEnabled
+    val isLockScreenPreferred: StateFlow<Boolean> = preferenceSource.isLockScreenPreferred
+    //val isLockScreenSessionEnabled: StateFlow<Boolean> = preferenceSource.isLockScreenSessionEnabled
 
     suspend fun setLockScreenPreference(enableLockScreenSession: Boolean) {
         preferenceSource.setLockScreenSessionPreference(enabled = enableLockScreenSession)

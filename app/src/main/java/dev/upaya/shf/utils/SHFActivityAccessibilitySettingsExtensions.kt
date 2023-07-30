@@ -11,7 +11,7 @@ internal fun SHFActivity.showAccessibilitySettingsIfNecessary() {
     showAccessibilitySettings()
 }
 
-private fun SHFActivity.showAccessibilitySettings() {
+internal fun SHFActivity.showAccessibilitySettings() {
     val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
     startActivity(intent)
 }
