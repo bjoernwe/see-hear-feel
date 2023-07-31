@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import dev.upaya.shf.inputs.IntEvent
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -11,11 +12,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
-import java.util.Date
 
 
 class EventVibrator(
-    private val events: SharedFlow<Date>,
+    private val events: SharedFlow<IntEvent>,
     context: Context,
     private val scope: CoroutineScope,
 ) {
@@ -36,6 +36,8 @@ class EventVibrator(
         vibrationJob = SupervisorJob().also { job ->
             (scope + job).launch {
                 events.collect {
+                    if (it.value == 0)  // initial event, no actual delay
+                        return@collect
                     vibrate()
                     delay(100)
                     vibrate()
