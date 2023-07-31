@@ -17,6 +17,7 @@ import kotlin.math.min
 @Singleton
 class DelayedInputEventSource @Inject constructor(
     inputEventSource: IInputEventSource,
+    sessionStateSource: SessionStateSource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) {
 
@@ -26,13 +27,18 @@ class DelayedInputEventSource @Inject constructor(
     init {
         CoroutineScope(dispatcher).launch {
             while (isActive) {
-                val now = Date()
-                val timeSinceLastInput = now.time - inputEventSource.inputEvent.value.date.time
-                val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
-                val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
-                if (timeSinceLastInteraction >= 5000) {
-                    val lastCount = _delayedInputEvent.value.value
-                    _delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
+                val lastCount = _delayedInputEvent.value.value
+                if (sessionStateSource.isSessionRunning.value) {
+                    val now = Date()
+                    val timeSinceLastInput = now.time - inputEventSource.inputEvent.value.date.time
+                    val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
+                    val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
+                    if (timeSinceLastInteraction >= 5000) {
+                        _delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
+                    }
+                } else {
+                    if (lastCount > 0)
+                        _delayedInputEvent.value = IntEvent(0)
                 }
                 delay(100)
             }
