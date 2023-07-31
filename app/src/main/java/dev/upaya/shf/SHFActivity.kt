@@ -64,8 +64,8 @@ class SHFActivity : ComponentActivity() {
 
         setContent {
             SHFApp(
-                onSessionStart = ::startUserInteractionForSession,
-                onSessionStop = ::stopUserInteractionForSession,
+                startUserInteractionForSession = ::startUserInteractionForSession,
+                stopUserInteractionForSession = ::stopUserInteractionForSession,
                 showAccessibilitySettings = ::showAccessibilitySettings
             )
         }
@@ -102,14 +102,14 @@ class SHFActivity : ComponentActivity() {
 
 @Composable
 fun SHFApp(
-    onSessionStart: () -> Unit,
-    onSessionStop: () -> Unit,
+    startUserInteractionForSession: () -> Unit,
+    stopUserInteractionForSession: () -> Unit,
     showAccessibilitySettings: () -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
-            onSessionStart = onSessionStart,
-            onSessionStop = onSessionStop,
+            startUserInteractionForSession = startUserInteractionForSession,
+            stopUserInteractionForSession = stopUserInteractionForSession,
             showAccessibilitySettings = showAccessibilitySettings,
         )
     }

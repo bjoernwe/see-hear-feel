@@ -22,8 +22,8 @@ internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
     onStopButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
-    onSessionStart: () -> Unit = {},
-    onSessionStop: () -> Unit = {},
+    startUserInteractionForSession: () -> Unit = {},
+    stopUserInteractionForSession: () -> Unit = {},
 ) {
 
     composable(routeNotingSession) { backStackEntry ->
@@ -41,7 +41,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         DisposableEffect(sessionViewModel) {
 
             // session starts
-            onSessionStart()
+            startUserInteractionForSession()
             sessionViewModel.startStatsCollection()
             globalInputRegistrarViewModel.switchOn()
 
@@ -49,7 +49,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
                 // session ends
                 globalInputRegistrarViewModel.switchOff()
                 sessionViewModel.stopStatsCollection()
-                onSessionStop()
+                stopUserInteractionForSession()
             }
         }
 

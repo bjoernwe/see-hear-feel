@@ -16,8 +16,8 @@ import dev.upaya.shf.ui.settings.settingsScreen
 @Composable
 fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
-    onSessionStart: () -> Unit = {},
-    onSessionStop: () -> Unit = {},
+    startUserInteractionForSession: () -> Unit = {},
+    stopUserInteractionForSession: () -> Unit = {},
     showAccessibilitySettings: () -> Unit,
 ) {
 
@@ -35,8 +35,8 @@ fun SHFNavHost(
 
         notingGraph(
             navController = navController,
-            onSessionStart = onSessionStart,
-            onSessionStop = onSessionStop,
+            startUserInteractionForSession = startUserInteractionForSession,
+            stopUserInteractionForSession = stopUserInteractionForSession,
         )
 
         settingsScreen(
