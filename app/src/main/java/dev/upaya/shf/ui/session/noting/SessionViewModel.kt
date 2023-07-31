@@ -7,12 +7,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
 import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.inputs.SessionStateSource
 import dev.upaya.shf.inputs.events.InputEvent
 import dev.upaya.shf.inputs.events.InputEventSource
 import dev.upaya.shf.inputs.events.InputEventStats
 import dev.upaya.shf.inputs.events.LabelFreqs
 import dev.upaya.shf.inputs.keys.InputKey
 import dev.upaya.shf.inputs.keys.GlobalInputKeySource
+import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -24,6 +26,8 @@ class SessionViewModel @Inject constructor(
     exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
     inputKeySource: GlobalInputKeySource,
+    private val sessionStateSource: SessionStateSource,
+    private val globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent
@@ -51,12 +55,16 @@ class SessionViewModel @Inject constructor(
         return inputEventStats.labelFreqs
     }
 
-    internal fun startStatsCollection() {
+    internal fun startSession() {
+        sessionStateSource.startSession()
         inputEventStats.start()
+        globalInputRegistrarSwitch.switchOn()
     }
 
-    internal fun stopStatsCollection() {
+    internal fun stopSession() {
+        globalInputRegistrarSwitch.switchOff()
         inputEventStats.stop()
+        sessionStateSource.stopSession()
     }
 
 }
