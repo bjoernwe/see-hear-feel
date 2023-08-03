@@ -1,7 +1,12 @@
 package dev.upaya.shf.inputs.keys
 
+import kotlinx.coroutines.flow.SharedFlow
 
-interface IInputKeyRegistrar : IInputKeySource {
+
+interface IInputKeyRegistrar {
+
+    val inputKeyDown: SharedFlow<InputKey>
+    val inputKeyUp: SharedFlow<InputKey>
 
     /**
      * Should return false in two cases:

@@ -15,6 +15,7 @@ import dev.upaya.shf.inputs.events.LabelFreqs
 import dev.upaya.shf.inputs.keys.InputKey
 import dev.upaya.shf.inputs.keys.GlobalInputKeySource
 import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
+import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -31,7 +32,7 @@ class SessionViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent
-    private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown
+    private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown.asSharedFlow(viewModelScope)
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
     private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap

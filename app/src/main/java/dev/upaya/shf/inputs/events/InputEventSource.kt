@@ -1,8 +1,7 @@
 package dev.upaya.shf.inputs.events
 
 import dev.upaya.shf.inputs.DefaultDispatcher
-import dev.upaya.shf.inputs.keys.GlobalKeySource
-import dev.upaya.shf.inputs.keys.IInputKeySource
+import dev.upaya.shf.inputs.keys.GlobalInputKeySource
 import dev.upaya.shf.inputs.keys.InputKey
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 class InputEventSource @Inject constructor(
-    @GlobalKeySource inputKeySource: IInputKeySource,
+    inputKeySource: GlobalInputKeySource,
     @DefaultDispatcher dispatcher: CoroutineDispatcher,
 ) : IInputEventSource {
 
