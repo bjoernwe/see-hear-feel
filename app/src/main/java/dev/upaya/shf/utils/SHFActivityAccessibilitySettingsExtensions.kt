@@ -5,12 +5,6 @@ import android.provider.Settings
 import dev.upaya.shf.SHFActivity
 
 
-internal fun SHFActivity.showAccessibilitySettingsIfNecessary() {
-    if (accessibilityPermissionSource.isEnabled.value)
-        return
-    showAccessibilitySettings()
-}
-
 internal fun SHFActivity.showAccessibilitySettings() {
     val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
     startActivity(intent)

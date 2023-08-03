@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.background.EventVibrator
-import dev.upaya.shf.inputs.permissions.accessibility.AccessibilityPermissionSource
 import dev.upaya.shf.inputs.permissions.notifications.NotificationPermissionSource
 import dev.upaya.shf.inputs.DelayedInputEventSource
 import dev.upaya.shf.inputs.keys.ForegroundKeySource
@@ -34,9 +33,6 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     lateinit var preferenceSource: PreferenceSource
-
-    @Inject
-    lateinit var accessibilityPermissionSource: AccessibilityPermissionSource
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
