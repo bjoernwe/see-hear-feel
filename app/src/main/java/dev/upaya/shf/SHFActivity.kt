@@ -53,7 +53,7 @@ class SHFActivity : ComponentActivity() {
         NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
 
         eventVibrator = EventVibrator(
-            events = delayedInputEventSource.delayedInputEvent,
+            events = delayedInputEventSource.getDelayedInputEvent(scope = lifecycleScope),
             context = this,
             scope = lifecycleScope,
         )

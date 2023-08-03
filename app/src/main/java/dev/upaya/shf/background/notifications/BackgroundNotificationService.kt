@@ -38,7 +38,7 @@ class BackgroundNotificationService : LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showForegroundNotification()
         eventVibrator = EventVibrator(
-            events = delayedInputEventSource.delayedInputEvent,
+            events = delayedInputEventSource.getDelayedInputEvent(lifecycleScope),
             context = this,
             scope = lifecycleScope,
         ).apply { startVibrator() }

@@ -31,7 +31,7 @@ class SessionViewModel @Inject constructor(
     private val globalInputRegistrarSwitch: GlobalInputRegistrarSwitch,
 ) : ViewModel() {
 
-    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent
+    internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(viewModelScope)
     private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown.asSharedFlow(viewModelScope)
 
     private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)

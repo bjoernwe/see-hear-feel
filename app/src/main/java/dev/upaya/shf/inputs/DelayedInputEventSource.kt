@@ -1,11 +1,11 @@
 package dev.upaya.shf.inputs
 
-import dev.upaya.shf.inputs.events.IInputEventSource
-import kotlinx.coroutines.CoroutineDispatcher
+import dev.upaya.shf.inputs.events.InputEventSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -16,33 +16,34 @@ import kotlin.math.min
 
 @Singleton
 class DelayedInputEventSource @Inject constructor(
-    inputEventSource: IInputEventSource,
-    sessionStateSource: SessionStateSource,
-    @DefaultDispatcher dispatcher: CoroutineDispatcher,
+    private val inputEventSource: InputEventSource,
+    private val sessionStateSource: SessionStateSource,
 ) {
 
-    private val _delayedInputEvent = MutableStateFlow(IntEvent(0))
-    val delayedInputEvent: StateFlow<IntEvent> = _delayedInputEvent
+    fun getDelayedInputEvent(scope: CoroutineScope): StateFlow<IntEvent> {
 
-    init {
-        CoroutineScope(dispatcher).launch {
+        val delayedInputEvent = MutableStateFlow(IntEvent(0))
+
+        scope.launch {
+            val inputEvent = inputEventSource.inputEvent.stateIn(scope = this)
             while (isActive) {
-                val lastCount = _delayedInputEvent.value.value
+                val lastCount = delayedInputEvent.value.value
                 if (sessionStateSource.isSessionRunning.value) {
                     val now = Date()
-                    val timeSinceLastInput = now.time - inputEventSource.inputEvent.value.date.time
+                    val timeSinceLastInput = now.time - inputEvent.value.date.time
                     val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
                     val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
                     if (timeSinceLastInteraction >= 5000) {
-                        _delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
+                        delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
                     }
                 } else {
                     if (lastCount > 0)
-                        _delayedInputEvent.value = IntEvent(0)
+                        delayedInputEvent.value = IntEvent(0)
                 }
                 delay(100)
             }
         }
-    }
 
+        return delayedInputEvent
+    }
 }
