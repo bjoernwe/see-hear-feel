@@ -10,7 +10,6 @@ import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.ui.session.noting.session.notingSessionScreen
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
-import dev.upaya.shf.ui.settings.navigateToSettings
 
 
 private const val routeNotingGraph = "noting_graph"
@@ -39,7 +38,6 @@ fun NavGraphBuilder.notingGraph(
         notingSessionScreen(
             navController = navController,
             onStopButtonClick = navController::navigateToNotingStats,
-            onSettingsButtonClick = navController::navigateToSettings,
             startUserInteractionForSession = startUserInteractionForSession,
             stopUserInteractionForSession = stopUserInteractionForSession,
         )

@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting.composables
+package dev.upaya.shf.ui.start
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
@@ -15,12 +15,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
-import dev.upaya.shf.ui.start.StartButton
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun StopButton(
+fun StartButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
@@ -32,8 +31,8 @@ fun StopButton(
             .size(36.dp)
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_baseline_stop_circle_24),
-            contentDescription = "End Session",
+            painter = painterResource(id = R.drawable.baseline_play_circle_24),
+            contentDescription = "Start Session",
             tint = MaterialTheme.colors.background,
             modifier = Modifier
                 .scale(1.6f)
@@ -44,7 +43,7 @@ fun StopButton(
 
 @Preview
 @Composable
-fun StopButtonPreview() {
+fun StartButtonPreview() {
     SHFTheme(darkTheme = true) {
         StartButton(
             onClick = {},
