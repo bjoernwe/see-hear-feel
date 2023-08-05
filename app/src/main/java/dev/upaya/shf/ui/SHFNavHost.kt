@@ -10,19 +10,23 @@ import dev.upaya.shf.ui.exercises.exerciseListScreen
 import dev.upaya.shf.ui.exercises.routeExerciseList
 import dev.upaya.shf.ui.session.noting.navigateToNoting
 import dev.upaya.shf.ui.session.noting.notingGraph
+import dev.upaya.shf.ui.settings.settingsScreen
 
 
 @Composable
 fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
-    onSessionStart: () -> Unit = {},
-    onSessionStop: () -> Unit = {},
+    startUserInteractionForSession: () -> Unit = {},
+    stopUserInteractionForSession: () -> Unit = {},
+    showAccessibilitySettings: () -> Unit,
 ) {
 
     NavHost(
         navController = navController,
         startDestination = routeExerciseList,
     ) {
+
+        controllerSetupScreen()
 
         exerciseListScreen(
             onExerciseClick = { exerciseId -> navController.navigateToNoting(exerciseId) },
@@ -31,11 +35,13 @@ fun SHFNavHost(
 
         notingGraph(
             navController = navController,
-            onSessionStart = onSessionStart,
-            onSessionStop = onSessionStop,
+            startUserInteractionForSession = startUserInteractionForSession,
+            stopUserInteractionForSession = stopUserInteractionForSession,
         )
 
-        controllerSetupScreen()
+        settingsScreen(
+            showAccessibilitySettings = showAccessibilitySettings,
+        )
 
     }
 

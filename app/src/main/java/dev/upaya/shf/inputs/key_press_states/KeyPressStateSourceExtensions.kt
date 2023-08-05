@@ -1,6 +1,6 @@
 package dev.upaya.shf.inputs.key_press_states
 
-import dev.upaya.shf.inputs.input_keys.InputKey
+import dev.upaya.shf.inputs.keys.InputKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date
 

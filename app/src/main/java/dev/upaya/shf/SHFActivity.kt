@@ -1,19 +1,26 @@
 package dev.upaya.shf
 
 import android.os.Bundle
+import android.provider.Settings
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.background.notifications.startNotificationService
-import dev.upaya.shf.background.notifications.stopNotificationService
-import dev.upaya.shf.inputs.input_keys.ForegroundKeySource
-import dev.upaya.shf.inputs.input_keys.IInputKeyRegistrar
+import dev.upaya.shf.background.EventVibrator
+import dev.upaya.shf.inputs.permissions.notifications.NotificationPermissionSource
+import dev.upaya.shf.inputs.DelayedInputEventSource
+import dev.upaya.shf.inputs.keys.ForegroundKeySource
+import dev.upaya.shf.inputs.keys.IInputKeyRegistrar
+import dev.upaya.shf.inputs.preferences.PreferenceSource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
-import dev.upaya.shf.utils.AccessibilitySettings
-import dev.upaya.shf.utils.NotificationSettings
+import dev.upaya.shf.utils.NotificationPermission
+import dev.upaya.shf.utils.showAccessibilitySettings
+import dev.upaya.shf.utils.startUserInteractionForSession
+import dev.upaya.shf.utils.stopUserInteractionForSession
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,21 +28,46 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SHFActivity : ComponentActivity() {
 
-    @Inject @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
+    @Inject
+    @ForegroundKeySource lateinit var foregroundKeyRegistrar: IInputKeyRegistrar
+
+    @Inject
+    lateinit var preferenceSource: PreferenceSource
+
+    @Inject
+    lateinit var notificationPermissionSource: NotificationPermissionSource
+
+    @Inject
+    lateinit var delayedInputEventSource: DelayedInputEventSource
+    internal lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
 
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                isGranted: Boolean -> notificationPermissionSource.updatePermission(hasNotificationPermission = isGranted)
+        }
+
+        // TODO: Necessary? Only when system dialog is actually used.
+        NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
+
+        eventVibrator = EventVibrator(
+            events = delayedInputEventSource.getDelayedInputEvent(scope = lifecycleScope),
+            context = this,
+            scope = lifecycleScope,
+        )
+
         setContent {
             SHFApp(
-                onSessionStart = ::startNotificationService,
-                onSessionStop = ::stopNotificationService,
+                startUserInteractionForSession = ::startUserInteractionForSession,
+                stopUserInteractionForSession = ::stopUserInteractionForSession,
+                showAccessibilitySettings = ::showAccessibilitySettings
             )
         }
 
-        NotificationSettings.openNotificationSettingsIfNecessary(this)
-        AccessibilitySettings.showAccessibilitySettingsIfNecessary(this)
+        Settings.Secure.getString(this.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -66,13 +98,15 @@ class SHFActivity : ComponentActivity() {
 
 @Composable
 fun SHFApp(
-    onSessionStart: () -> Unit,
-    onSessionStop: () -> Unit,
+    startUserInteractionForSession: () -> Unit,
+    stopUserInteractionForSession: () -> Unit,
+    showAccessibilitySettings: () -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
-            onSessionStart = onSessionStart,
-            onSessionStop = onSessionStop,
+            startUserInteractionForSession = startUserInteractionForSession,
+            stopUserInteractionForSession = stopUserInteractionForSession,
+            showAccessibilitySettings = showAccessibilitySettings,
         )
     }
 }

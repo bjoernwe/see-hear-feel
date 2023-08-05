@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.theme.SHFTheme
-import dev.upaya.shf.ui.varelaFontFamily
+import dev.upaya.shf.ui.theme.varelaFontFamily
 
 
 @Composable

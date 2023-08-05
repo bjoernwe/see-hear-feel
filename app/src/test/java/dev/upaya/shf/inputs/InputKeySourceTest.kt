@@ -2,10 +2,11 @@ package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
 import dev.upaya.shf.background.settings.MockBooleanSource
-import dev.upaya.shf.inputs.input_keys.InputKey
-import dev.upaya.shf.inputs.input_keys.InputKeyMapping
-import dev.upaya.shf.inputs.input_keys.GlobalInputKeySource
-import dev.upaya.shf.inputs.input_keys.InputKeyRegistrar
+import dev.upaya.shf.inputs.keys.InputKey
+import dev.upaya.shf.inputs.keys.InputKeyMapping
+import dev.upaya.shf.inputs.keys.GlobalInputKeySource
+import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
+import dev.upaya.shf.inputs.keys.InputKeyRegistrar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
@@ -23,13 +24,14 @@ class InputKeySourceTest {
 
         // GIVEN a InputKeySource (foreground/background)
         val accessibilitySettingSource = MockBooleanSource(false)
-        val foregroundInputKeySource = InputKeyRegistrar().apply { this.enableRegistrar() }
-        val backgroundInputKeySource = InputKeyRegistrar().apply { this.enableRegistrar() }
+        val globalInputRegistrarSwitch = GlobalInputRegistrarSwitch().apply { this.switchOn() }
+        val foregroundInputKeySource = InputKeyRegistrar(globalInputRegistrarSwitch)
+        val backgroundInputKeySource = InputKeyRegistrar(globalInputRegistrarSwitch)
         val inputKeySource = GlobalInputKeySource(
             foregroundInputKeySource = foregroundInputKeySource,
             backgroundInputKeySource = backgroundInputKeySource,
             dispatcher = UnconfinedTestDispatcher(testScheduler),
-            accessibilitySettingSource = accessibilitySettingSource,
+            accessibilityPermissionSource = accessibilitySettingSource,
         )
 
         // AND GIVEN its emitted values
