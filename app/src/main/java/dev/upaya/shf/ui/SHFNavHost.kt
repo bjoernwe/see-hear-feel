@@ -37,6 +37,7 @@ fun SHFNavHost(
         )
 
         settingsScreen(
+            navController = navController,
             showAccessibilitySettings = showAccessibilitySettings,
         )
 

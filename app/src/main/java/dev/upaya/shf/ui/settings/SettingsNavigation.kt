@@ -19,6 +19,7 @@ fun NavController.navigateToSettings() {
 
 
 fun NavGraphBuilder.settingsScreen(
+    navController: NavController,
     showAccessibilitySettings: () -> Unit,
 ) {
 
@@ -33,6 +34,7 @@ fun NavGraphBuilder.settingsScreen(
         val scope = rememberCoroutineScope()
 
         SettingsScreen(
+            onBackButtonClick = navController::popBackStack,
             isLockScreenPreferred = isLockScreenPreferred,
             hasAccessibilityPermission = hasAccessibilityPermission,
             onSwitchLockScreenSession = { newValue -> scope.launch { preferenceViewModel.setLockScreenPreference(newValue) } },

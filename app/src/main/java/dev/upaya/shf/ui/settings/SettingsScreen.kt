@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
@@ -18,23 +20,35 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
+import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun SettingsScreen(
+    onBackButtonClick: () -> Unit,
     isLockScreenPreferred: Boolean,
     hasAccessibilityPermission: Boolean,
     onSwitchLockScreenSession: (Boolean) -> Unit,
     onRequestAccessibilitySettings: () -> Unit,
 ) {
 
+    SetStatusBarColor(
+        color = MaterialTheme.colors.secondaryVariant
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Settings", color = Color.White) },
-                //backgroundColor = MaterialTheme.colors.secondary,
-                //navigationIcon = { Icon(painter = painterResource(R.drawable.baseline_arrow_back_ios_24), contentDescription = "") },
+                title = {
+                    Text(text = "Settings", color = Color.Black)
+                },
+                backgroundColor = MaterialTheme.colors.secondaryVariant,
+                navigationIcon = {
+                    IconButton(onClick = onBackButtonClick) {
+                        Icon(painter = painterResource(R.drawable.baseline_arrow_back_ios_24), contentDescription = "")
+                    }
+                },
             )
         }
     ) { padding ->
@@ -132,6 +146,7 @@ fun SettingsScreen(
 fun SettingsScreenPreview() {
     SHFTheme(darkTheme = true) {
         SettingsScreen(
+            onBackButtonClick = {},
             isLockScreenPreferred = true,
             hasAccessibilityPermission = true,
             onSwitchLockScreenSession = {},
