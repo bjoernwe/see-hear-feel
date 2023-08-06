@@ -27,7 +27,16 @@ fun Blur(
         Icon(
             painter = painterResource(id = R.drawable.baseline_blur_on_24),
             contentDescription = "Blur",
-            tint = MaterialTheme.colors.secondary,
+            tint = Color.Gray,
+            modifier = Modifier
+                .matchParentSize()
+                .offset((-.5).dp, (-.5).dp)
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.baseline_blur_on_24),
+            contentDescription = "Blur",
+            tint = Color.Black,
             modifier = Modifier
                 .matchParentSize()
                 .offset(.5.dp, .5.dp)
@@ -36,7 +45,7 @@ fun Blur(
         Icon(
             painter = painterResource(id = R.drawable.baseline_blur_on_24),
             contentDescription = "Blur",
-            tint = Color.Black,
+            tint = MaterialTheme.colors.background,
             modifier = Modifier
                 .matchParentSize()
         )
