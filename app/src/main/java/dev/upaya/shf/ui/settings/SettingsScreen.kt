@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
 import dev.upaya.shf.ui.SetStatusBarColor
+import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
 import dev.upaya.shf.ui.settings.composables.LockScreenSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -27,6 +28,7 @@ fun SettingsScreen(
     hasAccessibilityPermission: Boolean,
     onSwitchLockScreenSession: (Boolean) -> Unit,
     onRequestAccessibilitySettings: () -> Unit,
+    onControllerSetupEntryClick: () -> Unit,
 ) {
 
     SetStatusBarColor(
@@ -55,6 +57,10 @@ fun SettingsScreen(
                 .padding(4.dp)
         ) {
 
+            ControllerSettingsEntry(
+                onControllerSetupEntryClick = onControllerSetupEntryClick,
+            )
+
             LockScreenSettingsEntry(
                 onRequestAccessibilitySettings,
                 hasAccessibilityPermission,
@@ -79,6 +85,7 @@ fun SettingsScreenPreview() {
             hasAccessibilityPermission = true,
             onSwitchLockScreenSession = {},
             onRequestAccessibilitySettings = {},
+            onControllerSetupEntryClick = {},
         )
     }
 }
