@@ -3,7 +3,9 @@ package dev.upaya.shf.ui.settings.composables
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,7 +23,7 @@ internal fun SettingsEntry(
     primaryText: String,
     secondaryText: String? = null,
     onTextClick: () -> Unit = {},
-    settingsEntryOption: @Composable () -> Unit = {},
+    settingsEntryOption: @Composable() (() -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -30,6 +32,8 @@ internal fun SettingsEntry(
     ) {
 
         settingsEntryIcon()
+
+        Spacer(modifier = Modifier.width(8.dp))
 
         Column(
             modifier = Modifier
@@ -56,7 +60,10 @@ internal fun SettingsEntry(
 
         }
 
-        settingsEntryOption()
+        if (settingsEntryOption != null) {
+            Spacer(modifier = Modifier.width(6.dp))
+            settingsEntryOption()
+        }
 
     }
 }

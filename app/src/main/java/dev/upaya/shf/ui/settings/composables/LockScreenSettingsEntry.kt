@@ -19,17 +19,16 @@ internal fun LockScreenSettingsEntry(
         settingsEntryIcon = {
             SettingsEntryIcon(id = R.drawable.baseline_screen_lock_portrait_24)
         },
-        primaryText = "Session during locked screen",
+        primaryText = "Run during locked screen",
         secondaryText = if (!hasAccessibilityPermission) "Click to enable accessibility service in system settings" else null,
-        onTextClick = onRequestAccessibilitySettings,
-        settingsEntryOption = {
-            Switch(
-                checked = hasAccessibilityPermission && isLockScreenPreferred,
-                enabled = hasAccessibilityPermission,
-                onCheckedChange = onSwitchLockScreenSession,
-            )
-        }
-    )
+        onTextClick = onRequestAccessibilitySettings
+    ) {
+        Switch(
+            checked = hasAccessibilityPermission && isLockScreenPreferred,
+            enabled = hasAccessibilityPermission,
+            onCheckedChange = onSwitchLockScreenSession,
+        )
+    }
 
 }
 

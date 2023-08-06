@@ -2,6 +2,7 @@ package dev.upaya.shf.ui.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -54,12 +55,14 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(4.dp)
+                .padding(12.dp)
         ) {
 
             ControllerSettingsEntry(
                 onControllerSetupEntryClick = onControllerSetupEntryClick,
             )
+
+            Divider()
 
             LockScreenSettingsEntry(
                 onRequestAccessibilitySettings,
@@ -67,6 +70,8 @@ fun SettingsScreen(
                 isLockScreenPreferred,
                 onSwitchLockScreenSession
             )
+
+            Divider()
 
         }
 
