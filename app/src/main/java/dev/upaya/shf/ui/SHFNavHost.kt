@@ -24,7 +24,9 @@ fun SHFNavHost(
         startDestination = routeStartScreen,
     ) {
 
-        controllerSetupScreen()
+        controllerSetupScreen(
+            navController = navController,
+        )
 
         startScreen(
             navController = navController,

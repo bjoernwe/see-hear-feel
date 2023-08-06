@@ -45,7 +45,10 @@ fun SettingsScreen(
                 backgroundColor = MaterialTheme.colors.secondaryVariant,
                 navigationIcon = {
                     IconButton(onClick = onBackButtonClick) {
-                        Icon(painter = painterResource(R.drawable.baseline_arrow_back_ios_24), contentDescription = "")
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_arrow_back_ios_24),
+                            contentDescription = "back"
+                        )
                     }
                 },
             )

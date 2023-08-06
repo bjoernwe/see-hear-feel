@@ -23,7 +23,7 @@ internal fun SettingsEntry(
     primaryText: String,
     secondaryText: String? = null,
     onTextClick: () -> Unit = {},
-    settingsEntryOption: @Composable() (() -> Unit)? = null,
+    settingsEntryOption: @Composable (() -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -38,8 +38,8 @@ internal fun SettingsEntry(
         Column(
             modifier = Modifier
                 .weight(1F)
-                .padding(start = 10.dp)
                 .clickable { onTextClick() }
+                .padding(start = 10.dp)
         ) {
 
             Text(
