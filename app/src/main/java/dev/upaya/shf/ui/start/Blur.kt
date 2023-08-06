@@ -30,7 +30,7 @@ fun Blur(
             tint = Color.Gray,
             modifier = Modifier
                 .matchParentSize()
-                .offset((-.5).dp, (-.5).dp)
+                .offset((-.75).dp, (-.75).dp)
         )
 
         Icon(
@@ -39,7 +39,7 @@ fun Blur(
             tint = Color.Black,
             modifier = Modifier
                 .matchParentSize()
-                .offset(.5.dp, .5.dp)
+                .offset(.75.dp, .75.dp)
         )
 
         Icon(
