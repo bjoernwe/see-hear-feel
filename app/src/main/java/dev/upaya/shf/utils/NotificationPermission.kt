@@ -12,7 +12,7 @@ class NotificationPermission {
 
         fun requestNotificationPermissionIfNecessary(context: Context, activityResultLauncher: ActivityResultLauncher<String>) {
             if (!areNotificationsEnabled(context = context))
-                activityResultLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS,)
+                activityResultLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         }
 
         private fun areNotificationsEnabled(context: Context): Boolean {
