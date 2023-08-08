@@ -19,7 +19,9 @@ fun NavController.navigateToControllerSetup() {
 }
 
 
-fun NavGraphBuilder.controllerSetupScreen() {
+fun NavGraphBuilder.controllerSetupScreen(
+    navController: NavController,
+) {
 
     composable(route = routeControllerSetup) {
 
@@ -34,6 +36,7 @@ fun NavGraphBuilder.controllerSetupScreen() {
 
         ControllerSetupScreen(
             keyPressStates = keyPressStates,
+            onBackButtonClick = navController::popBackStack,
         )
 
     }

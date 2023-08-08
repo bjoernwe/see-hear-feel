@@ -1,40 +1,56 @@
 package dev.upaya.shf.ui.settings
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
+import dev.upaya.shf.ui.SetStatusBarColor
+import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
+import dev.upaya.shf.ui.settings.composables.LockScreenSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun SettingsScreen(
+    onBackButtonClick: () -> Unit,
     isLockScreenPreferred: Boolean,
     hasAccessibilityPermission: Boolean,
     onSwitchLockScreenSession: (Boolean) -> Unit,
     onRequestAccessibilitySettings: () -> Unit,
+    onControllerSetupEntryClick: () -> Unit,
 ) {
+
+    SetStatusBarColor(
+        color = MaterialTheme.colors.secondaryVariant
+    )
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Settings", color = Color.White) },
-                //backgroundColor = MaterialTheme.colors.secondary,
-                //navigationIcon = { Icon(painter = painterResource(R.drawable.baseline_arrow_back_ios_24), contentDescription = "") },
+                title = {
+                    Text(text = "Settings", color = Color.Black)
+                },
+                backgroundColor = MaterialTheme.colors.secondaryVariant,
+                navigationIcon = {
+                    IconButton(onClick = onBackButtonClick) {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_arrow_back_ios_24),
+                            contentDescription = "back"
+                        )
+                    }
+                },
             )
         }
     ) { padding ->
@@ -42,83 +58,23 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .padding(4.dp)
+                .padding(12.dp)
         ) {
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                //.fillMaxWidth()
-                //.wrapContentHeight()
-                .padding(8.dp)
-            ) {
+            ControllerSettingsEntry(
+                onControllerSetupEntryClick = onControllerSetupEntryClick,
+            )
 
-                Icon(
-                    painter = painterResource(R.drawable.baseline_screen_lock_portrait_24),
-                    contentDescription = "Locked Screen",
-                    modifier = Modifier
-                        .size(36.dp)
-                        //.padding(8.dp)
-                        //.align(Alignment.Top)
-                        //.wrapContentSize()
-                        //.padding(8.dp)
-                )
+            Divider()
 
-                Column(
-                    modifier = Modifier
-                        .weight(1F)
-                        .padding(start = 10.dp)
-                        .clickable { onRequestAccessibilitySettings() }
-                ) {
+            LockScreenSettingsEntry(
+                onRequestAccessibilitySettings,
+                hasAccessibilityPermission,
+                isLockScreenPreferred,
+                onSwitchLockScreenSession
+            )
 
-                    Text(
-                        text = "Session on lock screen",
-                        modifier = Modifier
-                    )
-
-                    /*Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .wrapContentHeight()
-                    ) {
-
-                        Icon(
-                            painter = painterResource(R.drawable.baseline_check_box_24),
-                            contentDescription = "check",
-                            modifier = Modifier
-                                .padding(end = 4.dp)
-                                .size(14.dp)
-                        )
-
-                        Text(
-                            text = "Requires accessibility service: ",
-                            color = Color.Gray,
-                            modifier = Modifier
-                                //.padding(start = 4.dp)
-                        )
-
-                        Text(
-                            text = "$hasAccessibilityPermission",
-                            color = Color.Gray,
-                            textDecoration = TextDecoration.Underline,
-                            modifier = Modifier
-                                .clickable(onClick = onRequestAccessibilitySettings)
-                        )
-
-                    }*/
-
-                }
-
-                Switch(
-                    checked = hasAccessibilityPermission && isLockScreenPreferred,
-                    onCheckedChange = onSwitchLockScreenSession,
-                    enabled = hasAccessibilityPermission,
-                    modifier = Modifier
-                        //.padding(4.dp)
-                )
-
-            }
-
+            Divider()
 
         }
 
@@ -132,10 +88,12 @@ fun SettingsScreen(
 fun SettingsScreenPreview() {
     SHFTheme(darkTheme = true) {
         SettingsScreen(
+            onBackButtonClick = {},
             isLockScreenPreferred = true,
             hasAccessibilityPermission = true,
             onSwitchLockScreenSession = {},
             onRequestAccessibilitySettings = {},
+            onControllerSetupEntryClick = {},
         )
     }
 }

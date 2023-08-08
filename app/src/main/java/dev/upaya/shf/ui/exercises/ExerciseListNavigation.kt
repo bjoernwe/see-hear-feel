@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import dev.upaya.shf.exercises.exerciselist.ExerciseId
 
 
-const val routeExerciseList = "exercises"
+private const val routeExerciseList = "exercises"
 
 
 fun NavGraphBuilder.exerciseListScreen(

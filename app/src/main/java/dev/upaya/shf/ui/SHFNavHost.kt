@@ -5,12 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dev.upaya.shf.ui.controller.controllerSetupScreen
-import dev.upaya.shf.ui.controller.navigateToControllerSetup
-import dev.upaya.shf.ui.exercises.exerciseListScreen
-import dev.upaya.shf.ui.exercises.routeExerciseList
-import dev.upaya.shf.ui.session.noting.navigateToNoting
 import dev.upaya.shf.ui.session.noting.notingGraph
 import dev.upaya.shf.ui.settings.settingsScreen
+import dev.upaya.shf.ui.start.routeStartScreen
+import dev.upaya.shf.ui.start.startScreen
 
 
 @Composable
@@ -23,14 +21,15 @@ fun SHFNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = routeExerciseList,
+        startDestination = routeStartScreen,
     ) {
 
-        controllerSetupScreen()
+        controllerSetupScreen(
+            navController = navController,
+        )
 
-        exerciseListScreen(
-            onExerciseClick = { exerciseId -> navController.navigateToNoting(exerciseId) },
-            onControllerButtonClick = navController::navigateToControllerSetup,
+        startScreen(
+            navController = navController,
         )
 
         notingGraph(
@@ -40,6 +39,7 @@ fun SHFNavHost(
         )
 
         settingsScreen(
+            navController = navController,
             showAccessibilitySettings = showAccessibilitySettings,
         )
 
