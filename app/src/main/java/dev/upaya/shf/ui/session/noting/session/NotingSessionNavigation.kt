@@ -19,7 +19,6 @@ internal const val routeNotingSession = "noting_session"
 internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
     onStopButtonClick: () -> Unit,
-    onSettingsButtonClick: () -> Unit,
     startUserInteractionForSession: () -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
@@ -52,7 +51,6 @@ internal fun NavGraphBuilder.notingSessionScreen(
             label = label,
             inputEvent = inputEvent,
             onStopButtonClick = onStopButtonClick,
-            onSettingsButtonClick = onSettingsButtonClick,
         )
 
     }

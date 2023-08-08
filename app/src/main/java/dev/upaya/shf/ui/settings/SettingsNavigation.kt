@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import dev.upaya.shf.ui.controller.navigateToControllerSetup
 import kotlinx.coroutines.launch
 
 
@@ -19,6 +20,7 @@ fun NavController.navigateToSettings() {
 
 
 fun NavGraphBuilder.settingsScreen(
+    navController: NavController,
     showAccessibilitySettings: () -> Unit,
 ) {
 
@@ -33,10 +35,12 @@ fun NavGraphBuilder.settingsScreen(
         val scope = rememberCoroutineScope()
 
         SettingsScreen(
+            onBackButtonClick = navController::popBackStack,
             isLockScreenPreferred = isLockScreenPreferred,
             hasAccessibilityPermission = hasAccessibilityPermission,
             onSwitchLockScreenSession = { newValue -> scope.launch { preferenceViewModel.setLockScreenPreference(newValue) } },
             onRequestAccessibilitySettings = showAccessibilitySettings,
+            onControllerSetupEntryClick = navController::navigateToControllerSetup,
         )
     }
 
