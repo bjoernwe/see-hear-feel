@@ -6,21 +6,17 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import dev.upaya.shf.exercises.exerciselist.ExerciseId
 import dev.upaya.shf.ui.session.noting.session.notingSessionScreen
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
 
 
-private const val routeNotingGraph = "noting_graph"
+internal const val routeNotingGraph = "noting_graph"
 private const val routeNotingSession = "noting_session"
 
-internal const val routeArgExerciseId = "exerciseId"
-internal const val routeNotingGraphWithArg = "$routeNotingGraph/{$routeArgExerciseId}"
 
-
-fun NavController.navigateToNoting(exerciseId: ExerciseId) {
-    navigate("${routeNotingGraph}/${exerciseId}")
+fun NavController.navigateToNoting() {
+    navigate(routeNotingSession)
 }
 
 
@@ -31,7 +27,7 @@ fun NavGraphBuilder.notingGraph(
 ) {
     
     navigation(
-        route = routeNotingGraphWithArg,
+        route = routeNotingGraph,
         startDestination = routeNotingSession,
     ) {
 

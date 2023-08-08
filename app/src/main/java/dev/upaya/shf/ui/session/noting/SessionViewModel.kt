@@ -1,11 +1,9 @@
 package dev.upaya.shf.ui.session.noting
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.exercises.exerciselist.ExerciseId
-import dev.upaya.shf.exercises.exerciselist.ExerciseRepository
+import dev.upaya.shf.exercises.labelmaps.LabelMapSHF
 import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.inputs.SessionStateSource
 import dev.upaya.shf.inputs.events.InputEvent
@@ -23,8 +21,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    exerciseRepository: ExerciseRepository,
     inputEventSource: InputEventSource,
     inputKeySource: GlobalInputKeySource,
     private val sessionStateSource: SessionStateSource,
@@ -34,8 +30,7 @@ class SessionViewModel @Inject constructor(
     internal var inputEventFlow: SharedFlow<InputEvent> = inputEventSource.inputEvent.asSharedFlow(viewModelScope)
     private var inputKeyFlow: SharedFlow<InputKey> = inputKeySource.inputKeyDown.asSharedFlow(viewModelScope)
 
-    private val exerciseId = ExerciseId.valueOf(checkNotNull(savedStateHandle[routeArgExerciseId]) as String)
-    private val labelMap = checkNotNull(exerciseRepository.getExerciseConfig(exerciseId)).labelMap
+    private val labelMap = LabelMapSHF
     private val inputEventStats = InputEventStats(
         inputEventFlow = inputEventFlow,
         labelMap = labelMap,

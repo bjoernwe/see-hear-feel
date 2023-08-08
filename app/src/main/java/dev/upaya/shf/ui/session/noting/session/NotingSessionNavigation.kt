@@ -10,7 +10,7 @@ import dev.upaya.shf.exercises.labels.Label
 import dev.upaya.shf.ui.session.noting.NotingScreen
 import dev.upaya.shf.ui.session.noting.SessionViewModel
 import dev.upaya.shf.ui.session.noting.getScopedSessionViewModel
-import dev.upaya.shf.ui.session.noting.routeNotingGraphWithArg
+import dev.upaya.shf.ui.session.noting.routeNotingGraph
 
 
 internal const val routeNotingSession = "noting_session"
@@ -26,7 +26,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
     composable(routeNotingSession) { backStackEntry ->
 
         val sessionViewModel: SessionViewModel = getScopedSessionViewModel(
-            routeForScope = routeNotingGraphWithArg,
+            routeForScope = routeNotingGraph,
             backStackEntry = backStackEntry,
             navController = navController
         )
