@@ -7,12 +7,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
 import dev.upaya.shf.ui.session.noting.session.notingSessionScreen
+import dev.upaya.shf.ui.session.noting.session.routeNotingSession
 import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
 import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
 
 
 internal const val routeNotingGraph = "noting_graph"
-private const val routeNotingSession = "noting_session"
 
 
 fun NavController.navigateToNoting() {
