@@ -66,7 +66,7 @@ class BackgroundNotificationService : LifecycleService() {
         return NotificationCompat
             .Builder(this, CHANNEL_ID)
             .setContentTitle("SHF running in background")
-            .setContentText("Session continues during locked screen")
+            .setContentText("Session continues")
             .setSmallIcon(R.drawable.ic_round_self_improvement_24)
             .setContentIntent(pendingIntent)
             .build()
