@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.Label
 import dev.upaya.shf.ui.session.noting.NotingScreen
 import dev.upaya.shf.ui.session.noting.SessionViewModel
 import dev.upaya.shf.ui.session.noting.getScopedSessionViewModel

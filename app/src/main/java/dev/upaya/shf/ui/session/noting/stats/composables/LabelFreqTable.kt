@@ -4,10 +4,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.exercises.labels.labelFeel
-import dev.upaya.shf.exercises.labels.labelHear
-import dev.upaya.shf.exercises.labels.labelSee
-import dev.upaya.shf.inputs.events.LabelFreqs
+import dev.upaya.shf.ui.labelFeel
+import dev.upaya.shf.ui.labelHear
+import dev.upaya.shf.ui.labelSee
+import dev.upaya.shf.data.sources.LabelFreqs
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

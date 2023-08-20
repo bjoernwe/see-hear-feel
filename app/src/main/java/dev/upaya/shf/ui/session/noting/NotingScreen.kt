@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.events.InputEvent
+import dev.upaya.shf.ui.Label
+import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.KeepScreenOn
 import dev.upaya.shf.ui.session.noting.composables.LabelText

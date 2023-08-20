@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
-import dev.upaya.shf.inputs.key_press_states.KeyPressStates
+import dev.upaya.shf.data.KeyPressStates
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.controller.composables.ControllerVisualization
 import dev.upaya.shf.ui.theme.SHFTheme

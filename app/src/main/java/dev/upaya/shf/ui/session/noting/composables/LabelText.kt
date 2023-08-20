@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import dev.upaya.shf.exercises.labels.Label
+import dev.upaya.shf.ui.Label
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.ui.theme.varelaFontFamily
 
