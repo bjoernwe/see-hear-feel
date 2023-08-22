@@ -9,14 +9,14 @@ import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.session.routeNotingGraph
 
 
-private const val routeNotingStats = "noting_stats"
+private const val ROUTE_NOTING_STATS = "noting_stats"
 
 
 internal fun NavGraphBuilder.notingStatsScreen(
     navController: NavController,
 ) {
 
-    composable(route = routeNotingStats) { backStackEntry ->
+    composable(route = ROUTE_NOTING_STATS) { backStackEntry ->
 
         val sessionScope = remember(backStackEntry) {
             navController.getBackStackEntry(routeNotingGraph)
@@ -36,5 +36,5 @@ internal fun NavGraphBuilder.notingStatsScreen(
 
 
 internal fun NavController.navigateToNotingStats() {
-    this.navigate(route = routeNotingStats)
+    this.navigate(route = ROUTE_NOTING_STATS)
 }
