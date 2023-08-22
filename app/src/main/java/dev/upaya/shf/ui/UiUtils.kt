@@ -7,9 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.upaya.shf.exercises.labelmaps.LabelMap
-import dev.upaya.shf.exercises.labels.Label
-import dev.upaya.shf.inputs.keys.InputKey
+import dev.upaya.shf.data.sources.InputKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 

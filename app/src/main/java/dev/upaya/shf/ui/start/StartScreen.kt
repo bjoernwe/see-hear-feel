@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.session.noting.composables.SettingsButton
+import dev.upaya.shf.ui.session.composables.SettingsButton
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.ui.theme.varelaFontFamily
 

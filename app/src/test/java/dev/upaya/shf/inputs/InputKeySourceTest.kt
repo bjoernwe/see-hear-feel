@@ -1,12 +1,9 @@
 package dev.upaya.shf.inputs
 
 import android.view.KeyEvent
-import dev.upaya.shf.background.settings.MockBooleanSource
-import dev.upaya.shf.inputs.keys.InputKey
-import dev.upaya.shf.inputs.keys.InputKeyMapping
-import dev.upaya.shf.inputs.keys.GlobalInputKeySource
-import dev.upaya.shf.inputs.keys.GlobalInputRegistrarSwitch
-import dev.upaya.shf.inputs.keys.InputKeyRegistrar
+import dev.upaya.shf.app.settings.MockBooleanSource
+import dev.upaya.shf.data.sources.InputKey
+import dev.upaya.shf.data.sources.InputKeyMapping
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch

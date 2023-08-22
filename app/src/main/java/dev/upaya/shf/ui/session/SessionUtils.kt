@@ -7,7 +7,7 @@ import android.view.WindowManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
-import dev.upaya.shf.SHFActivity
+import dev.upaya.shf.app.SHFActivity
 
 
 @Composable
