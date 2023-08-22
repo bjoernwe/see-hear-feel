@@ -27,6 +27,7 @@ internal fun NavGraphBuilder.notingStatsScreen(
             sessionLength = sessionViewModel.getSessionLength(),
             numEvents = sessionViewModel.getNumEvents(),
             labelFreqs = sessionViewModel.getLabelFreqs(),
+            onBackButtonClick = navController::popBackStack,
         )
 
     }
