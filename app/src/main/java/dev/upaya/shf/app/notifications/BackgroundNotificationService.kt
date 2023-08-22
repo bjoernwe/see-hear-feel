@@ -37,11 +37,7 @@ class BackgroundNotificationService : LifecycleService() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         showForegroundNotification()
-        eventVibrator = EventVibrator(
-            events = keyPressRepository.getDelayedInputEvent(lifecycleScope),
-            context = this,
-            scope = lifecycleScope,
-        ).apply { startVibrator() }
+        eventVibrator = createVibrator()
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -49,6 +45,14 @@ class BackgroundNotificationService : LifecycleService() {
         registerNotificationChannel()
         val notification = createNotification()
         startForeground(ONGOING_NOTIFICATION_ID, notification)
+    }
+
+    private fun createVibrator(): EventVibrator {
+        return EventVibrator(
+            events = keyPressRepository.getDelayedInputEvent(lifecycleScope),
+            context = this,
+            scope = lifecycleScope,
+        ).apply { startVibrator() }
     }
 
     private fun createNotification(): Notification {
