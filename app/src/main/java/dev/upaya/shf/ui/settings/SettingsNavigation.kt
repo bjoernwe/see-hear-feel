@@ -7,7 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.controller.navigateToControllerSetup
+import dev.upaya.shf.ui.settings.controller.navigateToControllerSetup
 import kotlinx.coroutines.launch
 
 

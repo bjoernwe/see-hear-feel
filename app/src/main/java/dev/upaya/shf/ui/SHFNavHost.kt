@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import dev.upaya.shf.ui.controller.controllerSetupScreen
-import dev.upaya.shf.ui.session.noting.notingGraph
+import dev.upaya.shf.ui.settings.controller.controllerSetupScreen
+import dev.upaya.shf.ui.session.notingGraph
 import dev.upaya.shf.ui.settings.settingsScreen
 import dev.upaya.shf.ui.start.routeStartScreen
 import dev.upaya.shf.ui.start.startScreen

@@ -3,7 +3,7 @@ package dev.upaya.shf.ui.start
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.noting.navigateToNoting
+import dev.upaya.shf.ui.session.navigateToNoting
 import dev.upaya.shf.ui.settings.navigateToSettings
 
 

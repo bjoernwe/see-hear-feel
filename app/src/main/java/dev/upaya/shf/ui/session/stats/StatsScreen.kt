@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting.stats
+package dev.upaya.shf.ui.session.stats
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.ui.Label
 import dev.upaya.shf.data.sources.LabelFreqs
-import dev.upaya.shf.ui.session.noting.stats.composables.LabelStatsCard
-import dev.upaya.shf.ui.session.noting.stats.composables.NotingSummaryCard
+import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
+import dev.upaya.shf.ui.session.stats.composables.NotingSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

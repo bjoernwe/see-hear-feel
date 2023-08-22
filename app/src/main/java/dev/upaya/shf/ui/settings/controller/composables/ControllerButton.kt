@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.controller.composables
+package dev.upaya.shf.ui.settings.controller.composables
 
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize

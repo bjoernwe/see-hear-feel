@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting
+package dev.upaya.shf.ui.session
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

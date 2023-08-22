@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting.session
+package dev.upaya.shf.ui.session
 
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -7,10 +7,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.Label
-import dev.upaya.shf.ui.session.noting.NotingScreen
-import dev.upaya.shf.ui.session.noting.SessionViewModel
-import dev.upaya.shf.ui.session.noting.getScopedSessionViewModel
-import dev.upaya.shf.ui.session.noting.routeNotingGraph
 
 
 internal const val routeNotingSession = "noting_session"

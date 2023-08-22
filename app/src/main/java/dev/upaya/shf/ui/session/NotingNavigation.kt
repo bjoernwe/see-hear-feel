@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting
+package dev.upaya.shf.ui.session
 
 import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -6,10 +6,8 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
-import dev.upaya.shf.ui.session.noting.session.notingSessionScreen
-import dev.upaya.shf.ui.session.noting.session.routeNotingSession
-import dev.upaya.shf.ui.session.noting.stats.navigateToNotingStats
-import dev.upaya.shf.ui.session.noting.stats.notingStatsScreen
+import dev.upaya.shf.ui.session.stats.navigateToNotingStats
+import dev.upaya.shf.ui.session.stats.notingStatsScreen
 
 
 internal const val routeNotingGraph = "noting_graph"

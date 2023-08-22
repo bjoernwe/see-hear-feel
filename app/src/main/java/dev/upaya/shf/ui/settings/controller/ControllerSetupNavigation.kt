@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.controller
+package dev.upaya.shf.ui.settings.controller
 
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState

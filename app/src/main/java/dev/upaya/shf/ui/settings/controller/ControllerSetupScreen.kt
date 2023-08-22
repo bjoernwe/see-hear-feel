@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.controller
+package dev.upaya.shf.ui.settings.controller
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
 import dev.upaya.shf.data.KeyPressStates
 import dev.upaya.shf.ui.SetStatusBarColor
-import dev.upaya.shf.ui.controller.composables.ControllerVisualization
+import dev.upaya.shf.ui.settings.controller.composables.ControllerVisualization
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

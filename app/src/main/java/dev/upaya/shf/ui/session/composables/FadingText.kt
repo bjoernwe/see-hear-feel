@@ -1,4 +1,4 @@
-package dev.upaya.shf.ui.session.noting.composables
+package dev.upaya.shf.ui.session.composables
 
 import androidx.compose.animation.core.*
 import androidx.compose.material.MaterialTheme
