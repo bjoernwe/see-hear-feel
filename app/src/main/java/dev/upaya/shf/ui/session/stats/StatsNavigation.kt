@@ -18,9 +18,9 @@ internal fun NavGraphBuilder.notingStatsScreen(
 
     composable(route = routeNotingStats) { backStackEntry ->
 
-        val sessionScope = remember(backStackEntry) { navController.getBackStackEntry(
-            routeNotingGraph
-        ) }
+        val sessionScope = remember(backStackEntry) {
+            navController.getBackStackEntry(routeNotingGraph)
+        }
         val sessionViewModel: SessionViewModel = hiltViewModel(viewModelStoreOwner = sessionScope)
 
         StatsScreen(
