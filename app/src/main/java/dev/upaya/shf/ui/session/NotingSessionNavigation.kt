@@ -43,10 +43,17 @@ internal fun NavGraphBuilder.notingSessionScreen(
             }
         }
 
+        val onStopButtonClickConditional: () -> Unit = {
+            if (sessionViewModel.getNumEvents() > 0)
+                onStopButtonClick()
+            else
+                navController.popBackStack()
+        }
+
         NotingScreen(
             label = label,
             inputEvent = inputEvent,
-            onStopButtonClick = onStopButtonClick,
+            onStopButtonClick = onStopButtonClickConditional,
         )
 
     }
