@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.session.getScopedSessionViewModel
 import dev.upaya.shf.ui.session.routeNotingGraph
+import dev.upaya.shf.ui.session.routeNotingSession
+import dev.upaya.shf.ui.start.routeStartScreen
 
 
 private const val ROUTE_NOTING_STATS = "noting_stats"
@@ -26,7 +28,7 @@ internal fun NavGraphBuilder.notingStatsScreen(
             sessionLength = sessionViewModel.getSessionLength(),
             numEvents = sessionViewModel.getNumEvents(),
             labelFreqs = sessionViewModel.getLabelFreqs(),
-            onBackButtonClick = navController::popBackStack,
+            onBackButtonClick = { navController.popBackStack(route = routeStartScreen, inclusive = false) },
         )
 
     }
@@ -35,5 +37,10 @@ internal fun NavGraphBuilder.notingStatsScreen(
 
 
 internal fun NavController.navigateToNotingStats() {
-    this.navigate(route = ROUTE_NOTING_STATS)
+    this.navigate(route = ROUTE_NOTING_STATS) {
+        // Remove session screen from stack. Otherwise back button would lead back to the session.
+        popUpTo(route = routeNotingSession) {
+            inclusive = true
+        }
+    }
 }
