@@ -19,7 +19,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+private val prefKeyLockScreenSession = booleanPreferencesKey("lock_screen_session")
 
 
 @Singleton
@@ -29,8 +30,6 @@ class PreferencesDataSource @Inject constructor(
     @ApplicationCoroutineScope private val externalScope: CoroutineScope,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-
-    private val prefKeyLockScreenSession = booleanPreferencesKey("lock_screen_session")
 
     private val _isLockScreenPreferred = MutableStateFlow(false)
     val isLockScreenPreferred: StateFlow<Boolean> = _isLockScreenPreferred
