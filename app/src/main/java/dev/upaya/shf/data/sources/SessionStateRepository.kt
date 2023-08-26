@@ -4,18 +4,18 @@ import javax.inject.Inject
 
 
 class SessionStateRepository @Inject constructor(
-    private val sessionStateSource: SessionStateSource,
+    private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    val isSessionRunning = sessionStateSource.isSessionRunning
-    val isBackgroundSession = sessionStateSource.isBackgroundSession
+    val isSessionRunning = sessionStateDataSource.isSessionRunning
+    val isBackgroundSession = sessionStateDataSource.isBackgroundSession
 
     fun startSession(background: Boolean) {
-        sessionStateSource.startSession(background = background)
+        sessionStateDataSource.startSession(background = background)
     }
 
     fun stopSession() {
-        sessionStateSource.stopSession()
+        sessionStateDataSource.stopSession()
     }
 
 }

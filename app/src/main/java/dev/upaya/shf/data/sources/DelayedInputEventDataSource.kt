@@ -16,7 +16,7 @@ import kotlin.math.min
 @Singleton
 class DelayedInputEventDataSource @Inject constructor(
     private val inputEventDataSource: InputEventDataSource,
-    private val sessionStateSource: SessionStateSource,
+    private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
     fun getDelayedInputEvent(externalScope: CoroutineScope): StateFlow<IntEvent> {
@@ -27,7 +27,7 @@ class DelayedInputEventDataSource @Inject constructor(
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
             while (isActive) {
                 val lastCount = delayedInputEvent.value.value
-                if (sessionStateSource.isSessionRunning.value) {
+                if (sessionStateDataSource.isSessionRunning.value) {
                     val now = Date()
                     val timeSinceLastInput = now.time - inputEvent.value.date.time
                     val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
