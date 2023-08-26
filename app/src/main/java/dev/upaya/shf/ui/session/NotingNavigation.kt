@@ -20,7 +20,7 @@ fun NavController.navigateToNoting() {
 
 fun NavGraphBuilder.notingGraph(
     navController: NavController,
-    startUserInteractionForSession: () -> Unit = {},
+    startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
     

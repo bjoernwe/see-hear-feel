@@ -10,8 +10,8 @@ import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
  * are kept out of other parts of the architecture because they depend on Android libraries
  * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
  */
-internal fun SHFActivity.startUserInteractionForSession() {
-    if (preferencesDataSource.isLockScreenSessionEnabled.value)
+internal fun SHFActivity.startUserInteractionForSession(isBackgroundSession: Boolean) {
+    if (isBackgroundSession)
         startBackgroundUserInteractionForSession()
     else
         startForegroundUserInteractionForSession()

@@ -30,7 +30,7 @@ fun NavGraphBuilder.settingsScreen(
         val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
 
         val preferenceViewModel: PreferenceViewModel = hiltViewModel()
-        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState()
+        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState(initial = false)
 
         val scope = rememberCoroutineScope()
 

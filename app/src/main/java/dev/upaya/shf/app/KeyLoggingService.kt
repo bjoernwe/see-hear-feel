@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.data.KeyPressRepository
+import dev.upaya.shf.data.sources.SessionStateRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,12 +20,18 @@ class KeyLoggingService : AccessibilityService() {
     @Inject
     lateinit var keyPressRepository: KeyPressRepository
 
+    @Inject
+    lateinit var sessionStateRepository: SessionStateRepository
+
     override fun onKeyEvent(keyEvent: KeyEvent?): Boolean {
 
         if (keyEvent == null)
             return false
 
         Timber.d("Key pressed via accessibility is: $keyEvent")
+
+        if (sessionStateRepository.isBackgroundSession.value)
+            return false
 
         when (keyEvent.action) {
             KeyEvent.ACTION_DOWN -> {

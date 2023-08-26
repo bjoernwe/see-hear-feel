@@ -7,7 +7,6 @@ import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.sources.InputKeyMapping
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
-import dev.upaya.shf.data.sources.PreferencesDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +21,6 @@ class KeyPressRepository @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
     keyEventDataSource: InputEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
-    private val preferencesDataSource: PreferencesDataSource,
 ) {
 
     private val _keyCapturingIsEnabled = MutableStateFlow(false)
@@ -41,18 +39,12 @@ class KeyPressRepository @Inject constructor(
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (preferencesDataSource.isLockScreenSessionEnabled.value)
-            return false
-
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
-            return false
-
-        if (preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
@@ -63,18 +55,12 @@ class KeyPressRepository @Inject constructor(
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (!preferencesDataSource.isLockScreenSessionEnabled.value)
-            return false
-
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
-            return false
-
-        if (!preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)

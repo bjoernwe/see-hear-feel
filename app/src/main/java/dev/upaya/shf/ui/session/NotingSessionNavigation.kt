@@ -15,7 +15,7 @@ internal const val routeNotingSession = "noting_session"
 internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
     onStopButtonClick: () -> Unit,
-    startUserInteractionForSession: () -> Unit = {},
+    startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
 
@@ -29,12 +29,13 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
+        val isBackgroundSession by sessionViewModel.isBackgroundSession.collectAsState()
 
         DisposableEffect(sessionViewModel) {
 
             // session starts
             sessionViewModel.startSession()
-            startUserInteractionForSession()
+            startUserInteractionForSession(isBackgroundSession)
 
             // session ends
             onDispose {
