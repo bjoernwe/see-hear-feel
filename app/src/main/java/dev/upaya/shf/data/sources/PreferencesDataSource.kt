@@ -23,7 +23,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 
 @Singleton
-class PreferenceSource @Inject constructor(
+class PreferencesDataSource @Inject constructor(
     @ApplicationContext private val appContext: Context,
     accessibilityPermissionSource: AccessibilityPermissionSource,
 ) {

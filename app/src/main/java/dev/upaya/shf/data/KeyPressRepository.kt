@@ -7,7 +7,7 @@ import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.sources.InputKeyMapping
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
-import dev.upaya.shf.data.sources.PreferenceSource
+import dev.upaya.shf.data.sources.PreferencesDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,59 +22,59 @@ class KeyPressRepository @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
     keyEventDataSource: InputEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
-    private val preferenceSource: PreferenceSource,
+    private val preferencesDataSource: PreferencesDataSource,
 ) {
 
     private val _keyCapturingIsEnabled = MutableStateFlow(false)
     private val keyCapturingIsEnabled: StateFlow<Boolean> = _keyCapturingIsEnabled
 
     val keyDown: SharedFlow<InputKey> = keyPressDataSource.inputKeyDown
-    val keyUp: SharedFlow<InputKey> = keyPressDataSource.inputKeyUp
+    //val keyUp: SharedFlow<InputKey> = keyPressDataSource.inputKeyUp
     val inputEvent: Flow<InputEvent> = keyEventDataSource.keyDownEvent
 
     internal fun enableKeyCapturing(keyCapturingIsEnabled: Boolean) {
         _keyCapturingIsEnabled.value = keyCapturingIsEnabled
     }
 
-    public fun registerKeyDownFromForeground(keyCode: Int): Boolean {
+    fun registerKeyDownFromForeground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (preferenceSource.isLockScreenSessionEnabled.value)
+        if (preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
-    public fun registerKeyUpFromForeground(keyCode: Int): Boolean {
+    fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (preferenceSource.isLockScreenSessionEnabled.value)
+        if (preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
     }
 
-    public fun registerKeyDownFromBackground(keyCode: Int): Boolean {
+    fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (!preferenceSource.isLockScreenSessionEnabled.value)
+        if (!preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
-    public fun registerKeyUpFromBackground(keyCode: Int): Boolean {
+    fun registerKeyUpFromBackground(keyCode: Int): Boolean {
 
         if (!keyCapturingIsEnabled.value)
             return false
 
-        if (!preferenceSource.isLockScreenSessionEnabled.value)
+        if (!preferencesDataSource.isLockScreenSessionEnabled.value)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
@@ -90,7 +90,7 @@ private fun KeyPressDataSource.registerKeyDown(keyCode: Int): Boolean {
 
     val inputKey = InputKeyMapping.getInputKey(keyCode)
 
-    if (inputKey == dev.upaya.shf.data.sources.InputKey.UNMAPPED)
+    if (inputKey == InputKey.UNMAPPED)
         return false
 
     registerKeyDown(inputKey)
@@ -103,7 +103,7 @@ private fun KeyPressDataSource.registerKeyUp(keyCode: Int): Boolean {
 
     val inputKey = InputKeyMapping.getInputKey(keyCode)
 
-    if (inputKey == dev.upaya.shf.data.sources.InputKey.UNMAPPED)
+    if (inputKey == InputKey.UNMAPPED)
         return false
 
     registerKeyUp(inputKey)

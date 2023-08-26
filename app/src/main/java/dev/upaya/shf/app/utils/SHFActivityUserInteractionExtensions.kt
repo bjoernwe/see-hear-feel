@@ -11,7 +11,7 @@ import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
  * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
  */
 internal fun SHFActivity.startUserInteractionForSession() {
-    if (preferenceSource.isLockScreenSessionEnabled.value)
+    if (preferencesDataSource.isLockScreenSessionEnabled.value)
         startBackgroundUserInteractionForSession()
     else
         startForegroundUserInteractionForSession()
