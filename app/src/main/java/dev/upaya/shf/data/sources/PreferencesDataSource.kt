@@ -8,8 +8,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.data.accessibility.AccessibilityPermissionSource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -26,9 +26,9 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class PreferencesDataSource @Inject constructor(
     @ApplicationContext private val appContext: Context,
     accessibilityPermissionSource: AccessibilityPermissionSource,
+    @ApplicationCoroutineScope private val externalScope: CoroutineScope,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-
-    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val prefKeyLockScreenSession = booleanPreferencesKey("lock_screen_session")
 
@@ -40,13 +40,13 @@ class PreferencesDataSource @Inject constructor(
 
     init {
 
-        scope.launch {
+        externalScope.launch(ioDispatcher) {
             appContext.dataStore.data
                 .map { prefs -> prefs[prefKeyLockScreenSession] ?: false }
                 .collect { pref -> _isLockScreenPreferred.value = pref }
         }
 
-        scope.launch {
+        externalScope.launch(ioDispatcher) {
             accessibilityPermissionSource.isEnabled
                 .combine(isLockScreenPreferred) { x, y -> x && y }
                 .collect { pref -> _isLockScreenSessionEnabled.value = pref }
