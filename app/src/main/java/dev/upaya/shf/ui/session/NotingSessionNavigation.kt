@@ -29,13 +29,14 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
-        val isBackgroundSession by sessionViewModel.isBackgroundSession.collectAsState()
+
+        val isLockScreenSessionEnabled by sessionViewModel.isLockScreenSessionEnabled.collectAsState(initial = false)
 
         DisposableEffect(sessionViewModel) {
 
             // session starts
-            sessionViewModel.startSession()
-            startUserInteractionForSession(isBackgroundSession)
+            sessionViewModel.startSession(background = isLockScreenSessionEnabled)
+            startUserInteractionForSession(isLockScreenSessionEnabled)
 
             // session ends
             onDispose {

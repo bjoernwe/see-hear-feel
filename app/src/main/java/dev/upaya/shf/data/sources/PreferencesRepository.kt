@@ -7,6 +7,7 @@ class PreferencesRepository @Inject constructor(
     private val preferencesDataSource: PreferencesDataSource,
 ) {
     val isLockScreenPreferred = preferencesDataSource.isLockScreenPreferred
+    val isLockScreenSessionEnabled = preferencesDataSource.isLockScreenSessionEnabled
     val isPacingEnabled = preferencesDataSource.isPacingEnabled
 
     fun setLockScreenSessionPreference(enabled: Boolean) {
