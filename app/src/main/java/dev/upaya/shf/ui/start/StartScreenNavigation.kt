@@ -22,7 +22,7 @@ fun NavGraphBuilder.startScreen(
     composable(route = routeStartScreen) {
         
         StartScreen(
-            onStartButtonClick = { navController.navigateToNoting() },
+            onStartButtonClick = navController::navigateToNoting,
             onSettingsButtonClick = navController::navigateToSettings,
         )
         
