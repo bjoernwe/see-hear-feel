@@ -31,11 +31,11 @@ class PreferencesDataSource @Inject constructor(
     accessibilityPermissionSource: AccessibilityPermissionSource,
 ) {
 
-    val isLockScreenPreferred: Flow<Boolean> = appContext
+    val isLockScreenSessionPreferred: Flow<Boolean> = appContext
         .dataStore.data.map { prefs -> prefs[prefKeyLockScreenSession] ?: false }
 
     val isLockScreenSessionEnabled: Flow<Boolean> = accessibilityPermissionSource
-        .isEnabled.combine(isLockScreenPreferred) { x, y -> x && y }
+        .isEnabled.combine(isLockScreenSessionPreferred) { x, y -> x && y }
 
     val isPacingEnabled: Flow<Boolean> = appContext
         .dataStore.data.map { prefs -> prefs[prefKeyPacingEnabled] ?: false }

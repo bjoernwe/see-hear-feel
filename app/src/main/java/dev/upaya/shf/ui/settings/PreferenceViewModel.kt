@@ -12,7 +12,7 @@ class PreferenceViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    val isLockScreenPreferred: Flow<Boolean> = preferencesRepository.isLockScreenPreferred
+    val isLockScreenPreferred: Flow<Boolean> = preferencesRepository.isLockScreenSessionPreferred
     val isPacingEnabled: Flow<Boolean> = preferencesRepository.isPacingEnabled
 
     fun setLockScreenPreference(enableLockScreenSession: Boolean) {

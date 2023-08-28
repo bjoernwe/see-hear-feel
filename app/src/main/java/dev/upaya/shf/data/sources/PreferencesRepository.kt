@@ -6,7 +6,7 @@ import javax.inject.Inject
 class PreferencesRepository @Inject constructor(
     private val preferencesDataSource: PreferencesDataSource,
 ) {
-    val isLockScreenPreferred = preferencesDataSource.isLockScreenPreferred
+    val isLockScreenSessionPreferred = preferencesDataSource.isLockScreenSessionPreferred
     val isLockScreenSessionEnabled = preferencesDataSource.isLockScreenSessionEnabled
     val isPacingEnabled = preferencesDataSource.isPacingEnabled
 
