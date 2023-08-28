@@ -17,7 +17,6 @@ import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
 import dev.upaya.shf.app.utils.startUserInteractionForSession
 import dev.upaya.shf.app.utils.stopUserInteractionForSession
-import dev.upaya.shf.data.sources.SessionStateRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,9 +26,6 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     lateinit var keyPressRepository: KeyPressRepository
-
-    @Inject
-    lateinit var sessionStateRepository: SessionStateRepository
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
@@ -72,9 +68,6 @@ class SHFActivity : ComponentActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return super.onKeyDown(keyCode, event)
 
-        if (sessionStateRepository.isBackgroundSession.value)
-            return false
-
         if (keyPressRepository.registerKeyDownFromForeground(keyCode = keyCode))
             return true
 
@@ -84,9 +77,6 @@ class SHFActivity : ComponentActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
 
         Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
-
-        if (sessionStateRepository.isBackgroundSession.value)
-            return false
 
         if (keyPressRepository.registerKeyUpFromForeground(keyCode = keyCode))
             return true
