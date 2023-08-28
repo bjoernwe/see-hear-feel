@@ -7,11 +7,13 @@ import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.sources.InputKeyMapping
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
+import dev.upaya.shf.data.sources.PreferencesDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combineTransform
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,6 +23,7 @@ class KeyPressRepository @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
     keyEventDataSource: InputEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
+    private val preferencesDataSource: PreferencesDataSource,
 ) {
 
     private val _keyCapturingIsEnabled = MutableStateFlow(false)
@@ -66,8 +69,15 @@ class KeyPressRepository @Inject constructor(
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
     }
 
-    fun getDelayedInputEvent(scope: CoroutineScope): StateFlow<IntEvent> {
-        return delayedInputEventDataSource.getDelayedInputEvent(externalScope = scope)
+    /**
+     * Return a flow of delayed input events conditioned on pacing being enabled in settings.
+     */
+    fun getDelayedInputEvent(scope: CoroutineScope): Flow<IntEvent> {
+        val delayedInputs = delayedInputEventDataSource.getDelayedInputEvent(externalScope = scope)
+        val pacingEnabled = preferencesDataSource.isPacingEnabled
+        return delayedInputs.combineTransform(pacingEnabled) { delayEvent, pacing ->
+            if (pacing) emit(delayEvent)
+        }
     }
 }
 

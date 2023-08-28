@@ -19,6 +19,7 @@ import dev.upaya.shf.R
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
 import dev.upaya.shf.ui.settings.composables.LockScreenSettingsEntry
+import dev.upaya.shf.ui.settings.composables.PacingSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -30,6 +31,8 @@ fun SettingsScreen(
     onSwitchLockScreenSession: (Boolean) -> Unit,
     onRequestAccessibilitySettings: () -> Unit,
     onControllerSetupEntryClick: () -> Unit,
+    isPacingEnabled: Boolean,
+    onSwitchPacing: (Boolean) -> Unit,
 ) {
 
     SetStatusBarColor(
@@ -76,6 +79,13 @@ fun SettingsScreen(
 
             Divider()
 
+            PacingSettingsEntry(
+                isPacingEnabled = isPacingEnabled,
+                onSwitchPacing = onSwitchPacing,
+            )
+
+            Divider()
+
         }
 
     }
@@ -94,6 +104,8 @@ fun SettingsScreenPreview() {
             onSwitchLockScreenSession = {},
             onRequestAccessibilitySettings = {},
             onControllerSetupEntryClick = {},
+            isPacingEnabled = true,
+            onSwitchPacing = {},
         )
     }
 }

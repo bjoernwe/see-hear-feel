@@ -2,8 +2,8 @@ package dev.upaya.shf.data.sources
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -19,7 +19,7 @@ class DelayedInputEventDataSource @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    fun getDelayedInputEvent(externalScope: CoroutineScope): StateFlow<IntEvent> {
+    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
 
         val delayedInputEvent = MutableStateFlow(IntEvent(0))
 

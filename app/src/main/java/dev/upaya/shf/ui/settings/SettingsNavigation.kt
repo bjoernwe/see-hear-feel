@@ -31,16 +31,17 @@ fun NavGraphBuilder.settingsScreen(
 
         val preferenceViewModel: PreferenceViewModel = hiltViewModel()
         val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState(initial = false)
-
-        val scope = rememberCoroutineScope()
+        val isPacingEnabled by preferenceViewModel.isPacingEnabled.collectAsState(initial = false)
 
         SettingsScreen(
             onBackButtonClick = navController::popBackStack,
             isLockScreenPreferred = isLockScreenPreferred,
             hasAccessibilityPermission = hasAccessibilityPermission,
-            onSwitchLockScreenSession = { newValue -> scope.launch { preferenceViewModel.setLockScreenPreference(newValue) } },
+            onSwitchLockScreenSession = preferenceViewModel::setLockScreenPreference,
             onRequestAccessibilitySettings = showAccessibilitySettings,
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
+            isPacingEnabled = isPacingEnabled,
+            onSwitchPacing = preferenceViewModel::setPacingPreference,
         )
     }
 
