@@ -28,6 +28,7 @@ class KeyPressRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
+    // TODO: Is this really necessary? The global session state should be enough info!
     private val _keyCapturingIsEnabled = MutableStateFlow(false)
     private val keyCapturingIsEnabled: StateFlow<Boolean> = _keyCapturingIsEnabled
 

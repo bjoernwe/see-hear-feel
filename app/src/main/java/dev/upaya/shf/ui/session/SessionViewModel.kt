@@ -31,6 +31,9 @@ class SessionViewModel @Inject constructor(
     val isLockScreenSessionEnabled = preferencesRepository.isLockScreenSessionEnabled
 
     private val labelMap = LabelMapSHF
+    // TODO: Move to a data layer
+    // Here, the view model handles the session state including stats. Instead, the session's state
+    // should be handled in a central place like the data source.
     private val inputEventStats = InputEventStats(
         inputEventFlow = inputEventFlow,
         labelMap = labelMap,
