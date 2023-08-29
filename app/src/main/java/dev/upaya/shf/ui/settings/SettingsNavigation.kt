@@ -2,13 +2,11 @@ package dev.upaya.shf.ui.settings
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.settings.controller.navigateToControllerSetup
-import kotlinx.coroutines.launch
 
 
 private const val routeSettings = "settings"
