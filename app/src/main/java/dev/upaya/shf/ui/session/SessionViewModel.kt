@@ -10,11 +10,14 @@ import dev.upaya.shf.data.sources.LabelFreqs
 import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.KeyPressRepository
 import dev.upaya.shf.data.sources.InputEventStats
+import dev.upaya.shf.data.sources.IoDispatcher
 import dev.upaya.shf.data.sources.PreferencesRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -23,6 +26,7 @@ class SessionViewModel @Inject constructor(
     private val keyPressRepository: KeyPressRepository,
     private val sessionStateRepository: SessionStateRepository,
     private val preferencesRepository: PreferencesRepository,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = keyPressRepository.inputEvent.asSharedFlow(viewModelScope)
@@ -53,7 +57,9 @@ class SessionViewModel @Inject constructor(
     }
 
     suspend fun startSession(onStartSession: (Boolean) -> Unit) {
-        val background = preferencesRepository.isLockScreenSessionEnabled.first()
+        val background = withContext(ioDispatcher) {
+            preferencesRepository.isLockScreenSessionEnabled.first()
+        }
         sessionStateRepository.startSession(background = background)
         onStartSession(background)
         inputEventStats.start()
