@@ -4,7 +4,6 @@ import dev.upaya.shf.data.sources.DelayedInputEventDataSource
 import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.data.sources.InputEventDataSource
 import dev.upaya.shf.data.sources.InputKey
-import dev.upaya.shf.data.sources.InputKeyMapping
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
 import dev.upaya.shf.data.sources.PreferencesDataSource
@@ -94,30 +93,4 @@ class KeyPressRepository @Inject constructor(
             if (pacing) emit(delayEvent)
         }
     }
-}
-
-
-private fun KeyPressDataSource.registerKeyDown(keyCode: Int): Boolean {
-
-    val inputKey = InputKeyMapping.getInputKey(keyCode)
-
-    if (inputKey == InputKey.UNMAPPED)
-        return false
-
-    registerKeyDown(inputKey)
-
-    return true
-}
-
-
-private fun KeyPressDataSource.registerKeyUp(keyCode: Int): Boolean {
-
-    val inputKey = InputKeyMapping.getInputKey(keyCode)
-
-    if (inputKey == InputKey.UNMAPPED)
-        return false
-
-    registerKeyUp(inputKey)
-
-    return true
 }
