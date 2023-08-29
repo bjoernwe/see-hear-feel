@@ -9,11 +9,11 @@ import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.settings.controller.navigateToControllerSetup
 
 
-private const val routeSettings = "settings"
+private const val ROUTE_SETTINGS = "settings"
 
 
 fun NavController.navigateToSettings() {
-    this.navigate(routeSettings)
+    this.navigate(ROUTE_SETTINGS)
 }
 
 
@@ -22,7 +22,7 @@ fun NavGraphBuilder.settingsScreen(
     showAccessibilitySettings: () -> Unit,
 ) {
 
-    composable(route = routeSettings) {
+    composable(route = ROUTE_SETTINGS) {
 
         val permissionViewModel: PermissionViewModel = hiltViewModel()
         val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
