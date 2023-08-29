@@ -31,7 +31,7 @@ fun NavGraphBuilder.notingGraph(
 
         notingSessionScreen(
             navController = navController,
-            onStopButtonClick = navController::navigateToNotingStats,
+            navigateToNotingStats = navController::navigateToNotingStats,
             startUserInteractionForSession = startUserInteractionForSession,
             stopUserInteractionForSession = stopUserInteractionForSession,
         )

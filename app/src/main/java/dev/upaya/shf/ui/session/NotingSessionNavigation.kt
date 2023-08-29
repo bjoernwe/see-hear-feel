@@ -14,7 +14,7 @@ internal const val routeNotingSession = "noting_session"
 
 internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
-    onStopButtonClick: () -> Unit,
+    navigateToNotingStats: () -> Unit,
     startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
@@ -45,9 +45,9 @@ internal fun NavGraphBuilder.notingSessionScreen(
             }
         }
 
-        val onStopButtonClickConditional: () -> Unit = {
+        val onStopButtonClick: () -> Unit = {
             if (sessionViewModel.getNumEvents() > 0)
-                onStopButtonClick()
+                navigateToNotingStats()
             else
                 navController.popBackStack()
         }
@@ -55,9 +55,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         NotingScreen(
             label = label,
             inputEvent = inputEvent,
-            onStopButtonClick = onStopButtonClickConditional,
+            onStopButtonClick = onStopButtonClick,
         )
-
     }
-
 }
