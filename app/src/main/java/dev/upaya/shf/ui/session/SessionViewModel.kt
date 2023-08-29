@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.ui.LabelMapSHF
 import dev.upaya.shf.ui.Label
 import dev.upaya.shf.data.sources.InputEvent
-import dev.upaya.shf.data.sources.InputEventStats
 import dev.upaya.shf.data.sources.LabelFreqs
 import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.KeyPressRepository
+import dev.upaya.shf.data.sources.InputEventStats
 import dev.upaya.shf.data.sources.PreferencesRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.ui.asSharedFlow
@@ -22,13 +22,11 @@ import javax.inject.Inject
 class SessionViewModel @Inject constructor(
     private val keyPressRepository: KeyPressRepository,
     private val sessionStateRepository: SessionStateRepository,
-    preferencesRepository: PreferencesRepository,
+    private val preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
     internal var inputEventFlow: SharedFlow<InputEvent> = keyPressRepository.inputEvent.asSharedFlow(viewModelScope)
     private var inputKeyFlow: SharedFlow<InputKey> = keyPressRepository.keyDown.asSharedFlow(viewModelScope)
-
-    val isLockScreenSessionEnabled = preferencesRepository.isLockScreenSessionEnabled
 
     private val labelMap = LabelMapSHF
     // TODO: Move to a data layer
@@ -54,15 +52,18 @@ class SessionViewModel @Inject constructor(
         return inputEventStats.labelFreqs
     }
 
-    internal fun startSession(background: Boolean) {
+    suspend fun startSession(onStartSession: (Boolean) -> Unit) {
+        val background = preferencesRepository.isLockScreenSessionEnabled.first()
         sessionStateRepository.startSession(background = background)
+        onStartSession(background)
         inputEventStats.start()
         keyPressRepository.enableKeyCapturing(true)
     }
 
-    internal fun stopSession() {
+    internal fun stopSession(onStopSession: () -> Unit) {
         keyPressRepository.enableKeyCapturing(false)
         inputEventStats.stop()
+        onStopSession()
         sessionStateRepository.stopSession()
     }
 

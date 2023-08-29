@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.session
 
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
@@ -30,18 +31,15 @@ internal fun NavGraphBuilder.notingSessionScreen(
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
 
-        val isLockScreenSessionEnabled by sessionViewModel.isLockScreenSessionEnabled.collectAsState(initial = false)
+        // session starts
+        LaunchedEffect(sessionViewModel) {
+            sessionViewModel.startSession(onStartSession = startUserInteractionForSession)
+        }
 
+        // session ends
         DisposableEffect(sessionViewModel) {
-
-            // session starts
-            sessionViewModel.startSession(background = isLockScreenSessionEnabled)
-            startUserInteractionForSession(isLockScreenSessionEnabled)
-
-            // session ends
             onDispose {
-                stopUserInteractionForSession()
-                sessionViewModel.stopSession()
+                sessionViewModel.stopSession(onStopSession = stopUserInteractionForSession)
             }
         }
 
