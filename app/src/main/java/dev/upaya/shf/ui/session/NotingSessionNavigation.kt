@@ -4,6 +4,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -22,11 +23,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
     composable(routeNotingSession) { backStackEntry ->
 
-        val sessionViewModel: SessionViewModel = getScopedSessionViewModel(
-            routeForScope = routeNotingGraph,
-            backStackEntry = backStackEntry,
-            navController = navController
-        )
+        val sessionViewModel: SessionViewModel = hiltViewModel()
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)

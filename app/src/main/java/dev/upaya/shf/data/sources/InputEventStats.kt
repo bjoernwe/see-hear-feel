@@ -12,7 +12,7 @@ class InputEventStats(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
-    private val _inputEvents = mutableListOf<InputEvent>()
+    private var _inputEvents = mutableListOf<InputEvent>()
     internal val inputEvents: List<InputEvent> = _inputEvents
 
     private var inputEventCollectionJob: Job? = null
@@ -29,6 +29,7 @@ class InputEventStats(
         inputEventFlow: Flow<InputEvent>,
         coroutineScope: CoroutineScope,
     ) {
+        _inputEvents.clear()
         inputEventCollectionJob = coroutineScope
             .launch(ioDispatcher) {
                 inputEventFlow.collect { inputEvent ->
