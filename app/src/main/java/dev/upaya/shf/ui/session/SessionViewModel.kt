@@ -16,6 +16,7 @@ import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -37,9 +38,7 @@ class SessionViewModel @Inject constructor(
     // Here, the view model handles the session state including stats. Instead, the session's state
     // should be handled in a central place like the data source.
     private val inputEventStats = InputEventStats(
-        inputEventFlow = inputEventFlow,
-        labelMap = labelMap,
-        coroutineScope = viewModelScope,
+        ioDispatcher = Dispatchers.IO,
     )
 
     internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = labelMap, scope = viewModelScope)
@@ -62,13 +61,13 @@ class SessionViewModel @Inject constructor(
         }
         sessionStateRepository.startSession(background = background)
         onStartSession(background)
-        inputEventStats.start()
+        inputEventStats.startStatsCollection(coroutineScope = viewModelScope, inputEventFlow = inputEventFlow)
         keyPressRepository.enableKeyCapturing(true)
     }
 
     internal fun stopSession(onStopSession: () -> Unit) {
         keyPressRepository.enableKeyCapturing(false)
-        inputEventStats.stop()
+        inputEventStats.stopStatsCollection()
         onStopSession()
         sessionStateRepository.stopSession()
     }

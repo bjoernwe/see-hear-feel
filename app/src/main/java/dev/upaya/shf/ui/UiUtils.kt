@@ -35,7 +35,7 @@ fun <T> Flow<T>.asSharedFlow(scope: CoroutineScope): SharedFlow<T> {
 }
 
 
-fun SharedFlow<InputKey>.transformToLabel(
+fun Flow<InputKey>.transformToLabel(
     labelMap: LabelMap,
     scope: CoroutineScope
 ): SharedFlow<Label> {
