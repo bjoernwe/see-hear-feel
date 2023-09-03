@@ -7,12 +7,16 @@ import javax.inject.Singleton
 
 
 @Singleton
-class SessionStateSource @Inject constructor() {
+class SessionStateDataSource @Inject constructor() {
 
     private val _isSessionRunning = MutableStateFlow(false)
     val isSessionRunning: StateFlow<Boolean> = _isSessionRunning
 
-    fun startSession() {
+    private val _isBackgroundSession = MutableStateFlow(false)
+    val isBackgroundSession: StateFlow<Boolean> = _isBackgroundSession
+
+    fun startSession(background: Boolean) {
+        _isBackgroundSession.value = background
         _isSessionRunning.value = true
     }
 

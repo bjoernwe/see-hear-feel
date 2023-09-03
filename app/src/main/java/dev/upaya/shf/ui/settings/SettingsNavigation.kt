@@ -2,20 +2,18 @@ package dev.upaya.shf.ui.settings
 
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.settings.controller.navigateToControllerSetup
-import kotlinx.coroutines.launch
 
 
-private const val routeSettings = "settings"
+private const val ROUTE_SETTINGS = "settings"
 
 
 fun NavController.navigateToSettings() {
-    this.navigate(routeSettings)
+    this.navigate(ROUTE_SETTINGS)
 }
 
 
@@ -24,23 +22,24 @@ fun NavGraphBuilder.settingsScreen(
     showAccessibilitySettings: () -> Unit,
 ) {
 
-    composable(route = routeSettings) {
+    composable(route = ROUTE_SETTINGS) {
 
         val permissionViewModel: PermissionViewModel = hiltViewModel()
         val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
 
         val preferenceViewModel: PreferenceViewModel = hiltViewModel()
-        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState()
-
-        val scope = rememberCoroutineScope()
+        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState(initial = false)
+        val isPacingEnabled by preferenceViewModel.isPacingEnabled.collectAsState(initial = false)
 
         SettingsScreen(
             onBackButtonClick = navController::popBackStack,
             isLockScreenPreferred = isLockScreenPreferred,
             hasAccessibilityPermission = hasAccessibilityPermission,
-            onSwitchLockScreenSession = { newValue -> scope.launch { preferenceViewModel.setLockScreenPreference(newValue) } },
+            onSwitchLockScreenSession = preferenceViewModel::setLockScreenPreference,
             onRequestAccessibilitySettings = showAccessibilitySettings,
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
+            isPacingEnabled = isPacingEnabled,
+            onSwitchPacing = preferenceViewModel::setPacingPreference,
         )
     }
 

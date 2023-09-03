@@ -1,8 +1,5 @@
 package dev.upaya.shf.ui.session
 
-import androidx.compose.runtime.*
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navigation
@@ -20,7 +17,7 @@ fun NavController.navigateToNoting() {
 
 fun NavGraphBuilder.notingGraph(
     navController: NavController,
-    startUserInteractionForSession: () -> Unit = {},
+    startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
     
@@ -31,7 +28,7 @@ fun NavGraphBuilder.notingGraph(
 
         notingSessionScreen(
             navController = navController,
-            onStopButtonClick = navController::navigateToNotingStats,
+            navigateToNotingStats = navController::navigateToNotingStats,
             startUserInteractionForSession = startUserInteractionForSession,
             stopUserInteractionForSession = stopUserInteractionForSession,
         )
@@ -42,19 +39,4 @@ fun NavGraphBuilder.notingGraph(
 
     }
     
-}
-
-
-@Composable
-internal fun getScopedSessionViewModel(
-    routeForScope: String,
-    backStackEntry: NavBackStackEntry,
-    navController: NavController,
-): SessionViewModel {
-
-    val sessionScope = remember(backStackEntry) {
-        navController.getBackStackEntry(routeForScope)
-    }
-
-    return hiltViewModel(viewModelStoreOwner = sessionScope)
 }

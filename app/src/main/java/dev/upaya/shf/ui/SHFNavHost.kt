@@ -14,7 +14,7 @@ import dev.upaya.shf.ui.start.startScreen
 @Composable
 fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
-    startUserInteractionForSession: () -> Unit = {},
+    startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
     showAccessibilitySettings: () -> Unit,
 ) {

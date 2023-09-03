@@ -9,13 +9,13 @@ import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 
 class EventVibrator(
-    private val events: SharedFlow<IntEvent>,
+    private val events: Flow<IntEvent>,
     context: Context,
     private val scope: CoroutineScope,
 ) {

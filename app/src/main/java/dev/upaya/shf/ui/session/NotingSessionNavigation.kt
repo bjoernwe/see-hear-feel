@@ -1,8 +1,10 @@
 package dev.upaya.shf.ui.session
 
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -14,38 +16,33 @@ internal const val routeNotingSession = "noting_session"
 
 internal fun NavGraphBuilder.notingSessionScreen(
     navController: NavController,
-    onStopButtonClick: () -> Unit,
-    startUserInteractionForSession: () -> Unit = {},
+    navigateToNotingStats: () -> Unit,
+    startUserInteractionForSession: (Boolean) -> Unit = {},
     stopUserInteractionForSession: () -> Unit = {},
 ) {
 
     composable(routeNotingSession) { backStackEntry ->
 
-        val sessionViewModel: SessionViewModel = getScopedSessionViewModel(
-            routeForScope = routeNotingGraph,
-            backStackEntry = backStackEntry,
-            navController = navController
-        )
+        val sessionViewModel: SessionViewModel = hiltViewModel()
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
 
+        // session starts
+        LaunchedEffect(sessionViewModel) {
+            sessionViewModel.startSession(onStartSession = startUserInteractionForSession)
+        }
+
+        // session ends
         DisposableEffect(sessionViewModel) {
-
-            // session starts
-            sessionViewModel.startSession()
-            startUserInteractionForSession()
-
-            // session ends
             onDispose {
-                stopUserInteractionForSession()
-                sessionViewModel.stopSession()
+                sessionViewModel.stopSession(onStopSession = stopUserInteractionForSession)
             }
         }
 
-        val onStopButtonClickConditional: () -> Unit = {
+        val onStopButtonClick: () -> Unit = {
             if (sessionViewModel.getNumEvents() > 0)
-                onStopButtonClick()
+                navigateToNotingStats()
             else
                 navController.popBackStack()
         }
@@ -53,9 +50,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         NotingScreen(
             label = label,
             inputEvent = inputEvent,
-            onStopButtonClick = onStopButtonClickConditional,
+            onStopButtonClick = onStopButtonClick,
         )
-
     }
-
 }

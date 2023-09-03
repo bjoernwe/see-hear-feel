@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.data.KeyPressRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
-import dev.upaya.shf.data.sources.PreferenceSource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.app.utils.NotificationPermission
@@ -27,9 +26,6 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     lateinit var keyPressRepository: KeyPressRepository
-
-    @Inject
-    lateinit var preferenceSource: PreferenceSource
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
@@ -93,7 +89,7 @@ class SHFActivity : ComponentActivity() {
 
 @Composable
 fun SHFApp(
-    startUserInteractionForSession: () -> Unit,
+    startUserInteractionForSession: (Boolean) -> Unit,
     stopUserInteractionForSession: () -> Unit,
     showAccessibilitySettings: () -> Unit,
 ) {

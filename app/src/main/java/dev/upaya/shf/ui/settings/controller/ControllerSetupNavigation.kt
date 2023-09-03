@@ -11,11 +11,11 @@ import dev.upaya.shf.ui.KeyPressStateViewModel
 import dev.upaya.shf.ui.KeyPressViewModel
 
 
-private const val routeControllerSetup = "controller"
+private const val ROUTE_CONTROLLER_SETUP = "controller"
 
 
 fun NavController.navigateToControllerSetup() {
-    this.navigate(routeControllerSetup)
+    this.navigate(ROUTE_CONTROLLER_SETUP)
 }
 
 
@@ -23,7 +23,7 @@ fun NavGraphBuilder.controllerSetupScreen(
     navController: NavController,
 ) {
 
-    composable(route = routeControllerSetup) {
+    composable(route = ROUTE_CONTROLLER_SETUP) {
 
         val keyPressViewModel: KeyPressViewModel = hiltViewModel()
         val keyPressStateViewModel: KeyPressStateViewModel = hiltViewModel()

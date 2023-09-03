@@ -24,11 +24,35 @@ class KeyPressDataSource @Inject constructor() {
     val inputKeyDown: SharedFlow<InputKey> = _inputKeyDown
     val inputKeyUp: SharedFlow<InputKey> = _inputKeyUp
 
-    internal fun registerKeyDown(inputKey: InputKey) {
+    fun registerKeyDown(keyCode: Int): Boolean {
+
+        val inputKey = InputKeyMapping.getInputKey(keyCode)
+
+        if (inputKey == InputKey.UNMAPPED)
+            return false
+
+        registerKeyDown(inputKey)
+
+        return true
+    }
+
+    fun registerKeyUp(keyCode: Int): Boolean {
+
+        val inputKey = InputKeyMapping.getInputKey(keyCode)
+
+        if (inputKey == InputKey.UNMAPPED)
+            return false
+
+        registerKeyUp(inputKey)
+
+        return true
+    }
+
+    private fun registerKeyDown(inputKey: InputKey) {
         _inputKeyDown.tryEmit(inputKey)
     }
 
-    internal fun registerKeyUp(inputKey: InputKey) {
+    private fun registerKeyUp(inputKey: InputKey) {
         _inputKeyUp.tryEmit(inputKey)
     }
 }

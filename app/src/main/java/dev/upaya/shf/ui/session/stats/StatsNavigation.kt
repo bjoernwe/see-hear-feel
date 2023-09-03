@@ -1,10 +1,10 @@
 package dev.upaya.shf.ui.session.stats
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.getScopedSessionViewModel
-import dev.upaya.shf.ui.session.routeNotingGraph
+import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.session.routeNotingSession
 import dev.upaya.shf.ui.start.routeStartScreen
 
@@ -16,13 +16,9 @@ internal fun NavGraphBuilder.notingStatsScreen(
     navController: NavController,
 ) {
 
-    composable(route = ROUTE_NOTING_STATS) { backStackEntry ->
+    composable(route = ROUTE_NOTING_STATS) {
 
-        val sessionViewModel = getScopedSessionViewModel(
-            routeForScope = routeNotingGraph,
-            backStackEntry = backStackEntry,
-            navController = navController,
-        )
+        val sessionViewModel: SessionViewModel = hiltViewModel()
 
         StatsScreen(
             sessionLength = sessionViewModel.getSessionLength(),

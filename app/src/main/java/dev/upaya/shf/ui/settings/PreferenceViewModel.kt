@@ -2,21 +2,25 @@ package dev.upaya.shf.ui.settings
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.data.sources.PreferenceSource
-import kotlinx.coroutines.flow.StateFlow
+import dev.upaya.shf.data.sources.PreferencesRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
 @HiltViewModel
 class PreferenceViewModel @Inject constructor(
-    private val preferenceSource: PreferenceSource,
+    private val preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    val isLockScreenPreferred: StateFlow<Boolean> = preferenceSource.isLockScreenPreferred
-    //val isLockScreenSessionEnabled: StateFlow<Boolean> = preferenceSource.isLockScreenSessionEnabled
+    val isLockScreenPreferred: Flow<Boolean> = preferencesRepository.isLockScreenSessionPreferred
+    val isPacingEnabled: Flow<Boolean> = preferencesRepository.isPacingEnabled
 
-    suspend fun setLockScreenPreference(enableLockScreenSession: Boolean) {
-        preferenceSource.setLockScreenSessionPreference(enabled = enableLockScreenSession)
+    fun setLockScreenPreference(enableLockScreenSession: Boolean) {
+        preferencesRepository.setLockScreenSessionPreference(enabled = enableLockScreenSession)
+    }
+
+    fun setPacingPreference(enabled: Boolean) {
+        preferencesRepository.setPacingPreference(enabled = enabled)
     }
 
 }

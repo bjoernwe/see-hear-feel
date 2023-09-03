@@ -15,13 +15,13 @@ fun NotingSummaryCard(
 ) {
 
     StatsCard(
-        title = "Noting",
+        title = "Session",
     ) {
 
         Column {
 
             StatsEntryText(
-                textLabel = "Session",
+                textLabel = "Duration",
                 textValue = DateUtils.formatElapsedTime(sessionTimeSeconds.toLong()),
             )
 

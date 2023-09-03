@@ -2,8 +2,8 @@ package dev.upaya.shf.data.sources
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -16,10 +16,10 @@ import kotlin.math.min
 @Singleton
 class DelayedInputEventDataSource @Inject constructor(
     private val inputEventDataSource: InputEventDataSource,
-    private val sessionStateSource: SessionStateSource,
+    private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    fun getDelayedInputEvent(externalScope: CoroutineScope): StateFlow<IntEvent> {
+    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
 
         val delayedInputEvent = MutableStateFlow(IntEvent(0))
 
@@ -27,7 +27,7 @@ class DelayedInputEventDataSource @Inject constructor(
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
             while (isActive) {
                 val lastCount = delayedInputEvent.value.value
-                if (sessionStateSource.isSessionRunning.value) {
+                if (sessionStateDataSource.isSessionRunning.value) {
                     val now = Date()
                     val timeSinceLastInput = now.time - inputEvent.value.date.time
                     val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
