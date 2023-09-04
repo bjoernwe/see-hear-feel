@@ -14,8 +14,8 @@ android {
         applicationId "dev.upaya.shf"
         minSdk 33
         targetSdk 34
-        versionCode 7
-        versionName '0.2.0'
+        versionCode 9
+        versionName '0.2.1'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
