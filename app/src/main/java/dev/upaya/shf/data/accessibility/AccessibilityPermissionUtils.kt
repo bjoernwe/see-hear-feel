@@ -33,7 +33,7 @@ private fun getEnabledAccessibilityServiceComponents(context: Context): List<Com
  */
 private fun getEnabledAccessibilityServices(context: Context): String {
     try {
-        return Settings.Secure.getString(context.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+        return Settings.Secure.getString(context.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES) ?: ""
     } catch (e: Settings.SettingNotFoundException) {
         Timber.e(e)
     }
