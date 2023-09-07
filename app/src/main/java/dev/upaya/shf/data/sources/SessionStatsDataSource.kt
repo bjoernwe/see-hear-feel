@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class SessionStatsDataSource @Inject constructor() {
 
-    private val stats = InputEventStats(ioDispatcher = Dispatchers.IO)
+    private val stats = InputEventCollection(ioDispatcher = Dispatchers.IO)
 
     fun startStatsCollection(
         inputEventFlow: Flow<InputEvent>,

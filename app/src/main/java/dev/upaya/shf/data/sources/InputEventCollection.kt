@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
-class InputEventStats(
+class InputEventCollection(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
 
