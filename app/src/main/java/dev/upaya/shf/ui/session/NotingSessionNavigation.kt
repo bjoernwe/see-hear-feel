@@ -21,7 +21,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
     stopUserInteractionForSession: () -> Unit = {},
 ) {
 
-    composable(routeNotingSession) { backStackEntry ->
+    composable(routeNotingSession) {
 
         val sessionViewModel: SessionViewModel = hiltViewModel()
 
