@@ -9,11 +9,16 @@ class SessionStatsRepository @Inject constructor(
     private val sessionStatsDataSource: SessionStatsDataSource,
 ) {
 
+    val numEvents = sessionStatsDataSource.numEvents
+
     fun startStatsCollection(
         inputEventFlow: Flow<InputEvent>,
         coroutineScope: CoroutineScope,
     ) {
-        sessionStatsDataSource.startStatsCollection(inputEventFlow = inputEventFlow, coroutineScope = coroutineScope)
+        sessionStatsDataSource.startStatsCollection(
+            inputEventFlow = inputEventFlow,
+            coroutineScope = coroutineScope
+        )
     }
 
     fun stopStatsCollection() {

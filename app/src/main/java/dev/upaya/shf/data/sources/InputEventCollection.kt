@@ -28,12 +28,15 @@ class InputEventCollection(
     internal fun startStatsCollection(
         inputEventFlow: Flow<InputEvent>,
         coroutineScope: CoroutineScope,
+        onEventCollected: (List<InputEvent>) -> Unit,
     ) {
         _inputEvents.clear()
+        onEventCollected(inputEvents)
         inputEventCollectionJob = coroutineScope
             .launch(ioDispatcher) {
                 inputEventFlow.collect { inputEvent ->
                     _inputEvents.add(inputEvent)
+                    onEventCollected(inputEvents)
                 }
             }
     }

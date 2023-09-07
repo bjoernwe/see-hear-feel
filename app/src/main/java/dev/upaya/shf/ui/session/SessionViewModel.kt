@@ -30,9 +30,10 @@ class SessionViewModel @Inject constructor(
     private val sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
 
-    private var inputKeyFlow: SharedFlow<InputKey> = keyPressRepository.keyDown
-    internal var inputEventFlow: SharedFlow<InputEvent> = keyPressRepository.inputEvent.asSharedFlow(viewModelScope)
-    internal var labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
+    private val inputKeyFlow: SharedFlow<InputKey> = keyPressRepository.keyDown
+    internal val inputEventFlow: SharedFlow<InputEvent> = keyPressRepository.inputEvent.asSharedFlow(viewModelScope)
+    internal val labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
+    internal val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
     fun getNumEvents(): Int {
         return sessionStatsRepository.getNumEvents()
