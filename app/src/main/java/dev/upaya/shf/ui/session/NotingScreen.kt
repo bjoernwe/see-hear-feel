@@ -15,6 +15,7 @@ import dev.upaya.shf.ui.Label
 import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.composables.LabelText
+import dev.upaya.shf.ui.session.composables.SessionStartHint
 import dev.upaya.shf.ui.session.composables.StopButton
 import dev.upaya.shf.ui.simulatePress
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -25,6 +26,7 @@ fun NotingScreen(
     label: Label,
     inputEvent: InputEvent?,
     onStopButtonClick: () -> Unit,
+    numInputEvents: Int,
 ) {
 
     SetStatusBarColor()
@@ -54,14 +56,25 @@ fun NotingScreen(
                 .padding(24.dp)
         ) {
 
-            LabelText(
-                label = label,
-                primaryColor = MaterialTheme.colors.secondary,
-                secondaryColor = MaterialTheme.colors.secondaryVariant,
-                key = inputEvent,
-                modifier = Modifier
-                    .align(Alignment.Center)
-            )
+            if (numInputEvents > 0) {
+
+                LabelText(
+                    label = label,
+                    primaryColor = MaterialTheme.colors.secondary,
+                    secondaryColor = MaterialTheme.colors.secondaryVariant,
+                    key = inputEvent,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+
+            } else {
+
+                SessionStartHint(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+
+            }
 
             StopButton(
                 onClick = onStopButtonClick,
@@ -84,6 +97,7 @@ fun MainContentPreview() {
             label = Label("label"),
             inputEvent = null,
             onStopButtonClick = {},
+            numInputEvents = 0,
         )
     }
 }
