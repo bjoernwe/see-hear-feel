@@ -27,6 +27,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
+        val numInputEvents by sessionViewModel.numEvents.collectAsState(initial = 0)
 
         // session starts
         LaunchedEffect(sessionViewModel) {
@@ -51,6 +52,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
             label = label,
             inputEvent = inputEvent,
             onStopButtonClick = onStopButtonClick,
+            numInputEvents = numInputEvents,
         )
     }
 }
