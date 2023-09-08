@@ -18,14 +18,14 @@ internal fun SHFActivity.startUserInteractionForSession(isBackgroundSession: Boo
 }
 
 internal fun SHFActivity.stopUserInteractionForSession() {
-    keyPressRepository.enableKeyCapturing(false)
+    userInteractionRepository.enableKeyLogging(false)
     eventVibrator.stopVibrator()
     stopBackgroundNotificationService()
 }
 
 private fun SHFActivity.startBackgroundUserInteractionForSession() {
     startBackgroundNotificationService()
-    keyPressRepository.enableKeyCapturing(true)
+    userInteractionRepository.enableKeyLogging(true)
 }
 
 private fun SHFActivity.startForegroundUserInteractionForSession() {

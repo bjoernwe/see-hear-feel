@@ -8,7 +8,7 @@ import dev.upaya.shf.ui.Label
 import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.data.sources.LabelFreqs
 import dev.upaya.shf.data.sources.InputKey
-import dev.upaya.shf.data.KeyPressRepository
+import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.IoDispatcher
 import dev.upaya.shf.data.sources.PreferencesRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
@@ -23,15 +23,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    private val keyPressRepository: KeyPressRepository,
+    private val userInteractionRepository: UserInteractionRepository,
     private val sessionStateRepository: SessionStateRepository,
     private val preferencesRepository: PreferencesRepository,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
 
-    private val inputKeyFlow: SharedFlow<InputKey> = keyPressRepository.keyDown
-    internal val inputEventFlow: SharedFlow<InputEvent> = keyPressRepository.inputEvent.asSharedFlow(viewModelScope)
+    private val inputKeyFlow: SharedFlow<InputKey> = userInteractionRepository.keyDown
+    internal val inputEventFlow: SharedFlow<InputEvent> = userInteractionRepository.inputEvent.asSharedFlow(viewModelScope)
     internal val labelFlow: SharedFlow<Label> = inputKeyFlow.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
     internal val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
@@ -54,11 +54,11 @@ class SessionViewModel @Inject constructor(
         sessionStateRepository.startSession(background = background)
         onStartSession(background)
         sessionStatsRepository.startStatsCollection(coroutineScope = viewModelScope, inputEventFlow = inputEventFlow)
-        keyPressRepository.enableKeyCapturing(true)
+        userInteractionRepository.enableKeyLogging(true)
     }
 
     internal fun stopSession(onStopSession: () -> Unit) {
-        keyPressRepository.enableKeyCapturing(false)
+        userInteractionRepository.enableKeyLogging(false)
         sessionStatsRepository.stopStatsCollection()
         onStopSession()
         sessionStateRepository.stopSession()

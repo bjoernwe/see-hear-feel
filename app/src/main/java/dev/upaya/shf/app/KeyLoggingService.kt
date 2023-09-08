@@ -4,7 +4,7 @@ import android.accessibilityservice.AccessibilityService
 import android.view.KeyEvent
 import android.view.accessibility.AccessibilityEvent
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.data.KeyPressRepository
+import dev.upaya.shf.data.UserInteractionRepository
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class KeyLoggingService : AccessibilityService() {
 
     @Inject
-    lateinit var keyPressRepository: KeyPressRepository
+    lateinit var userInteractionRepository: UserInteractionRepository
 
     override fun onKeyEvent(keyEvent: KeyEvent?): Boolean {
 
@@ -28,10 +28,10 @@ class KeyLoggingService : AccessibilityService() {
 
         when (keyEvent.action) {
             KeyEvent.ACTION_DOWN -> {
-                return keyPressRepository.registerKeyDownFromBackground(keyCode = keyEvent.keyCode)
+                return userInteractionRepository.registerKeyDownFromBackground(keyCode = keyEvent.keyCode)
             }
             KeyEvent.ACTION_UP -> {
-                return keyPressRepository.registerKeyUpFromBackground(keyCode = keyEvent.keyCode)
+                return userInteractionRepository.registerKeyUpFromBackground(keyCode = keyEvent.keyCode)
             }
             else -> {}
         }

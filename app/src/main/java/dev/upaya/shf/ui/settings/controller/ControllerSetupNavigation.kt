@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import dev.upaya.shf.ui.KeyPressStateViewModel
-import dev.upaya.shf.ui.KeyPressViewModel
+import dev.upaya.shf.ui.UserInteractionViewModel
 
 
 private const val ROUTE_CONTROLLER_SETUP = "controller"
@@ -25,13 +25,13 @@ fun NavGraphBuilder.controllerSetupScreen(
 
     composable(route = ROUTE_CONTROLLER_SETUP) {
 
-        val keyPressViewModel: KeyPressViewModel = hiltViewModel()
+        val userInteractionViewModel: UserInteractionViewModel = hiltViewModel()
         val keyPressStateViewModel: KeyPressStateViewModel = hiltViewModel()
         val keyPressStates by keyPressStateViewModel.keyPressStates.collectAsState()
 
-        DisposableEffect(keyPressViewModel) {
-            keyPressViewModel.enableKeyCapturing()
-            onDispose { keyPressViewModel.disableKeyCapturing() }
+        DisposableEffect(userInteractionViewModel) {
+            userInteractionViewModel.enableKeyCapturing()
+            onDispose { userInteractionViewModel.disableKeyCapturing() }
         }
 
         ControllerSetupScreen(

@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.R
 import dev.upaya.shf.app.SHFActivity
 import dev.upaya.shf.app.EventVibrator
-import dev.upaya.shf.data.KeyPressRepository
+import dev.upaya.shf.data.UserInteractionRepository
 import javax.inject.Inject
 
 
@@ -31,7 +31,7 @@ class BackgroundNotificationService : LifecycleService() {
     }
 
     @Inject
-    lateinit var keyPressRepository: KeyPressRepository
+    lateinit var userInteractionRepository: UserInteractionRepository
 
     private lateinit var eventVibrator: EventVibrator
 
@@ -49,7 +49,7 @@ class BackgroundNotificationService : LifecycleService() {
 
     private fun createVibrator(): EventVibrator {
         return EventVibrator(
-            events = keyPressRepository.getDelayedInputEvent(lifecycleScope),
+            events = userInteractionRepository.getDelayedInputEvent(lifecycleScope),
             context = this,
             scope = lifecycleScope,
         ).apply { startVibrator() }

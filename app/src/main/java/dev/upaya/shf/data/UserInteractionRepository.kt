@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class KeyPressRepository @Inject constructor(
+class UserInteractionRepository @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
     keyEventDataSource: InputEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
@@ -27,21 +27,20 @@ class KeyPressRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    // TODO: Is this really necessary? The global session state should be enough info!
-    private val _keyCapturingIsEnabled = MutableStateFlow(false)
-    private val keyCapturingIsEnabled: StateFlow<Boolean> = _keyCapturingIsEnabled
+    private val _keyLoggingIsEnabled = MutableStateFlow(false)
+    private val keyLoggingIsEnabled: StateFlow<Boolean> = _keyLoggingIsEnabled
 
     val keyDown: SharedFlow<InputKey> = keyPressDataSource.inputKeyDown
     //val keyUp: SharedFlow<InputKey> = keyPressDataSource.inputKeyUp
     val inputEvent: Flow<InputEvent> = keyEventDataSource.keyDownEvent
 
-    internal fun enableKeyCapturing(keyCapturingIsEnabled: Boolean) {
-        _keyCapturingIsEnabled.value = keyCapturingIsEnabled
+    internal fun enableKeyLogging(keyLoggingIsEnabled: Boolean) {
+        _keyLoggingIsEnabled.value = keyLoggingIsEnabled
     }
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
+        if (!keyLoggingIsEnabled.value)
             return false
 
         if (sessionStateDataSource.isBackgroundSession.value)
@@ -52,7 +51,7 @@ class KeyPressRepository @Inject constructor(
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
+        if (!keyLoggingIsEnabled.value)
             return false
 
         if (sessionStateDataSource.isBackgroundSession.value)
@@ -63,7 +62,7 @@ class KeyPressRepository @Inject constructor(
 
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
+        if (!keyLoggingIsEnabled.value)
             return false
 
         if (!sessionStateDataSource.isBackgroundSession.value)
@@ -74,7 +73,7 @@ class KeyPressRepository @Inject constructor(
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
+        if (!keyLoggingIsEnabled.value)
             return false
 
         if (!sessionStateDataSource.isBackgroundSession.value)
