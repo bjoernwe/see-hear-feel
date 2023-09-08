@@ -40,11 +40,11 @@ class KeyLoggingService : AccessibilityService() {
     }
 
     override fun onServiceConnected() {
-        Timber.i("BackgroundKeyEventService connected")
+        Timber.d("${this.javaClass.simpleName} connected")
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        Timber.i("Received event: $event")
+        Timber.d("${this.javaClass.simpleName} received event: $event")
     }
 
     override fun onInterrupt() {}
