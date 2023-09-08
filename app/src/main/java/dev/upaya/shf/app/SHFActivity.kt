@@ -10,10 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.app.notifications.startBackgroundNotificationService
+import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
-import dev.upaya.shf.app.utils.startUserInteractionForSession
-import dev.upaya.shf.app.utils.stopUserInteractionForSession
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
 import dev.upaya.shf.data.sources.SessionStateRepository
@@ -133,6 +133,32 @@ class SHFActivity : ComponentActivity() {
         return false
     }
 
+    /**
+     * Start the user interaction that's happening during a session. In particular the parts that
+     * are kept out of other parts of the architecture because they depend on Android libraries
+     * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
+     */
+    private fun startUserInteractionForSession(isBackgroundSession: Boolean) {
+        if (isBackgroundSession)
+            startBackgroundUserInteractionForSession()
+        else
+            startForegroundUserInteractionForSession()
+    }
+
+    private fun stopUserInteractionForSession() {
+        userInteractionRepository.enableKeyLogging(false)
+        eventVibrator.stopVibrator()
+        stopBackgroundNotificationService()
+    }
+
+    private fun startBackgroundUserInteractionForSession() {
+        startBackgroundNotificationService()
+        userInteractionRepository.enableKeyLogging(true)
+    }
+
+    private fun startForegroundUserInteractionForSession() {
+        eventVibrator.startVibrator()
+    }
 }
 
 
