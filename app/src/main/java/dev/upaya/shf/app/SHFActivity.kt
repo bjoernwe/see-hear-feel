@@ -57,8 +57,6 @@ class SHFActivity : ComponentActivity() {
             )
         }
 
-        Settings.Secure.getString(this.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
