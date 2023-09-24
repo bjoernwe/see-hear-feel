@@ -1,8 +1,6 @@
 package dev.upaya.shf.app
 
-import android.app.KeyguardManager
 import android.os.Bundle
-import android.os.PowerManager
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,13 +8,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.app.notifications.startBackgroundNotificationService
-import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
+import dev.upaya.shf.app.utils.startUserInteractionForSession
+import dev.upaya.shf.app.utils.stopUserInteractionForSession
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
-import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
@@ -32,10 +29,7 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
 
-    @Inject
-    lateinit var sessionStateRepository: SessionStateRepository
-
-    private lateinit var eventVibrator: EventVibrator
+    internal lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -87,76 +81,6 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        if (!sessionStateRepository.isSessionRunning.value)
-            return
-
-        startUserInteractionForSession(isBackgroundSession = sessionStateRepository.isBackgroundSession.value)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        stopKeyLoggingWhenAppIsInBackground()
-    }
-
-    private fun stopKeyLoggingWhenAppIsInBackground() {
-
-        if (!sessionStateRepository.isSessionRunning.value)
-            // no session -> no key logging to stop
-            return
-
-        if (!sessionStateRepository.isBackgroundSession.value)
-            // foreground session -> key logging through app -> nothing to stop
-            return
-
-        if (isDeviceLocked())
-            // background session & device locked -> keep running on locked screen
-            return
-
-        stopUserInteractionForSession()
-    }
-
-    private fun isDeviceLocked(): Boolean {
-
-        val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
-
-        if (keyguardManager.isDeviceLocked)
-            return true
-
-        val powerManager = getSystemService(POWER_SERVICE) as PowerManager
-
-        if (!powerManager.isInteractive)
-            return true
-
-        return false
-    }
-
-    /**
-     * Start the user interaction that's happening during a session. In particular the parts that
-     * are kept out of other parts of the architecture because they depend on Android libraries
-     * and/or lifecycle-dependent context. Like foreground-service notifications and vibrations.
-     */
-    private fun startUserInteractionForSession(isBackgroundSession: Boolean) {
-        if (isBackgroundSession)
-            startBackgroundUserInteractionForSession()
-        else
-            startForegroundUserInteractionForSession()
-    }
-
-    private fun stopUserInteractionForSession() {
-        eventVibrator.stopVibrator()
-        stopBackgroundNotificationService()
-    }
-
-    private fun startBackgroundUserInteractionForSession() {
-        startBackgroundNotificationService()
-    }
-
-    private fun startForegroundUserInteractionForSession() {
-        eventVibrator.startVibrator()
-    }
 }
 
 
