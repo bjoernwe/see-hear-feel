@@ -10,16 +10,14 @@ import dev.upaya.shf.data.sources.PreferencesDataSource
 import dev.upaya.shf.data.sources.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combineTransform
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class KeyPressRepository @Inject constructor(
+class UserInteractionRepository @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
     keyEventDataSource: InputEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
@@ -27,22 +25,11 @@ class KeyPressRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    // TODO: Is this really necessary? The global session state should be enough info!
-    private val _keyCapturingIsEnabled = MutableStateFlow(false)
-    private val keyCapturingIsEnabled: StateFlow<Boolean> = _keyCapturingIsEnabled
-
     val keyDown: SharedFlow<InputKey> = keyPressDataSource.inputKeyDown
     //val keyUp: SharedFlow<InputKey> = keyPressDataSource.inputKeyUp
     val inputEvent: Flow<InputEvent> = keyEventDataSource.keyDownEvent
 
-    internal fun enableKeyCapturing(keyCapturingIsEnabled: Boolean) {
-        _keyCapturingIsEnabled.value = keyCapturingIsEnabled
-    }
-
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
-
-        if (!keyCapturingIsEnabled.value)
-            return false
 
         if (sessionStateDataSource.isBackgroundSession.value)
             return false
@@ -52,9 +39,6 @@ class KeyPressRepository @Inject constructor(
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
-            return false
-
         if (sessionStateDataSource.isBackgroundSession.value)
             return false
 
@@ -63,9 +47,6 @@ class KeyPressRepository @Inject constructor(
 
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
-        if (!keyCapturingIsEnabled.value)
-            return false
-
         if (!sessionStateDataSource.isBackgroundSession.value)
             return false
 
@@ -73,9 +54,6 @@ class KeyPressRepository @Inject constructor(
     }
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
-
-        if (!keyCapturingIsEnabled.value)
-            return false
 
         if (!sessionStateDataSource.isBackgroundSession.value)
             return false

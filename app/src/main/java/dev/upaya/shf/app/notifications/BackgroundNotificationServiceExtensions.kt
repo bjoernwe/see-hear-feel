@@ -1,16 +1,16 @@
 package dev.upaya.shf.app.notifications
 
-import android.app.Activity
 import android.content.Intent
+import dev.upaya.shf.app.SHFActivity
 
 
-fun Activity.startBackgroundNotificationService() {
+fun SHFActivity.startBackgroundNotificationService() {
     val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
     startForegroundService(notificationServiceIntent)
 }
 
 
-fun Activity.stopBackgroundNotificationService() {
+fun SHFActivity.stopBackgroundNotificationService() {
     val notificationServiceIntent = Intent(this, BackgroundNotificationService::class.java)
     stopService(notificationServiceIntent)
 }

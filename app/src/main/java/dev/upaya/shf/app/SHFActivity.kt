@@ -1,7 +1,6 @@
 package dev.upaya.shf.app
 
 import android.os.Bundle
-import android.provider.Settings
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,14 +8,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.data.KeyPressRepository
-import dev.upaya.shf.data.sources.NotificationPermissionSource
-import dev.upaya.shf.ui.SHFNavHost
-import dev.upaya.shf.ui.theme.SHFTheme
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
 import dev.upaya.shf.app.utils.startUserInteractionForSession
 import dev.upaya.shf.app.utils.stopUserInteractionForSession
+import dev.upaya.shf.data.UserInteractionRepository
+import dev.upaya.shf.data.sources.NotificationPermissionSource
+import dev.upaya.shf.ui.SHFNavHost
+import dev.upaya.shf.ui.theme.SHFTheme
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -25,7 +24,7 @@ import javax.inject.Inject
 class SHFActivity : ComponentActivity() {
 
     @Inject
-    lateinit var keyPressRepository: KeyPressRepository
+    lateinit var userInteractionRepository: UserInteractionRepository
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
@@ -44,9 +43,9 @@ class SHFActivity : ComponentActivity() {
         NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
 
         eventVibrator = EventVibrator(
-            events = keyPressRepository.getDelayedInputEvent(scope = lifecycleScope),
             context = this,
             scope = lifecycleScope,
+            eventFactory = userInteractionRepository::getDelayedInputEvent,
         )
 
         setContent {
@@ -57,8 +56,6 @@ class SHFActivity : ComponentActivity() {
             )
         }
 
-        Settings.Secure.getString(this.contentResolver,  Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -68,7 +65,7 @@ class SHFActivity : ComponentActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK)
             return super.onKeyDown(keyCode, event)
 
-        if (keyPressRepository.registerKeyDownFromForeground(keyCode = keyCode))
+        if (userInteractionRepository.registerKeyDownFromForeground(keyCode = keyCode))
             return true
 
         return super.onKeyDown(keyCode, event)
@@ -78,7 +75,7 @@ class SHFActivity : ComponentActivity() {
 
         Timber.tag("foo").i("Key released: %s", KeyEvent.keyCodeToString(keyCode))
 
-        if (keyPressRepository.registerKeyUpFromForeground(keyCode = keyCode))
+        if (userInteractionRepository.registerKeyUpFromForeground(keyCode = keyCode))
             return true
 
         return super.onKeyUp(keyCode, event)
