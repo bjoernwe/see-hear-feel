@@ -10,9 +10,7 @@ import dev.upaya.shf.data.sources.PreferencesDataSource
 import dev.upaya.shf.data.sources.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combineTransform
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,21 +25,11 @@ class UserInteractionRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    private val _keyLoggingIsEnabled = MutableStateFlow(false)
-    private val keyLoggingIsEnabled: StateFlow<Boolean> = _keyLoggingIsEnabled
-
     val keyDown: SharedFlow<InputKey> = keyPressDataSource.inputKeyDown
     //val keyUp: SharedFlow<InputKey> = keyPressDataSource.inputKeyUp
     val inputEvent: Flow<InputEvent> = keyEventDataSource.keyDownEvent
 
-    internal fun enableKeyLogging(keyLoggingIsEnabled: Boolean) {
-        _keyLoggingIsEnabled.value = keyLoggingIsEnabled
-    }
-
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
-
-        if (!keyLoggingIsEnabled.value)
-            return false
 
         if (sessionStateDataSource.isBackgroundSession.value)
             return false
@@ -51,9 +39,6 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
-        if (!keyLoggingIsEnabled.value)
-            return false
-
         if (sessionStateDataSource.isBackgroundSession.value)
             return false
 
@@ -62,9 +47,6 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
-        if (!keyLoggingIsEnabled.value)
-            return false
-
         if (!sessionStateDataSource.isBackgroundSession.value)
             return false
 
@@ -72,9 +54,6 @@ class UserInteractionRepository @Inject constructor(
     }
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
-
-        if (!keyLoggingIsEnabled.value)
-            return false
 
         if (!sessionStateDataSource.isBackgroundSession.value)
             return false

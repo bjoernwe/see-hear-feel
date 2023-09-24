@@ -35,7 +35,7 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var sessionStateRepository: SessionStateRepository
 
-    internal lateinit var eventVibrator: EventVibrator
+    private lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,9 +49,9 @@ class SHFActivity : ComponentActivity() {
         NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
 
         eventVibrator = EventVibrator(
-            events = userInteractionRepository.getDelayedInputEvent(scope = lifecycleScope),
             context = this,
             scope = lifecycleScope,
+            eventFactory = userInteractionRepository::getDelayedInputEvent,
         )
 
         setContent {
@@ -146,14 +146,12 @@ class SHFActivity : ComponentActivity() {
     }
 
     private fun stopUserInteractionForSession() {
-        userInteractionRepository.enableKeyLogging(false)
         eventVibrator.stopVibrator()
         stopBackgroundNotificationService()
     }
 
     private fun startBackgroundUserInteractionForSession() {
         startBackgroundNotificationService()
-        userInteractionRepository.enableKeyLogging(true)
     }
 
     private fun startForegroundUserInteractionForSession() {

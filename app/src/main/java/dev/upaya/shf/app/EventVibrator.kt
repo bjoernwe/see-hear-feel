@@ -14,10 +14,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
 
+/**
+ * @param context Context for querying the vibrator from
+ * @param scope Scope for the vibration job to run in
+ * @param eventFactory Creates the events on which a vibration happens. Why not pass the flow
+ * directly? Because the flow for delayed input events will always be running when its created. But
+ * we don't want it running unnecessarily.
+ */
 class EventVibrator(
-    private val events: Flow<IntEvent>,
     context: Context,
     private val scope: CoroutineScope,
+    private val eventFactory: (CoroutineScope) -> Flow<IntEvent>,
 ) {
 
     private val vibrator = getVibrator(context)
@@ -34,8 +41,9 @@ class EventVibrator(
 
     fun startVibrator() {
         vibrationJob = SupervisorJob().also { job ->
-            (scope + job).launch {
-                events.collect {
+            val vibrationScope = scope + job
+            vibrationScope.launch {
+                eventFactory(vibrationScope).collect {
                     if (it.value == 0)  // initial event, no actual delay
                         return@collect
                     vibrate()

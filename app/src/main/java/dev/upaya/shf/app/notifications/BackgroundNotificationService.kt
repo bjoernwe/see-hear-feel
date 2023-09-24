@@ -49,9 +49,9 @@ class BackgroundNotificationService : LifecycleService() {
 
     private fun createVibrator(): EventVibrator {
         return EventVibrator(
-            events = userInteractionRepository.getDelayedInputEvent(lifecycleScope),
             context = this,
             scope = lifecycleScope,
+            eventFactory = userInteractionRepository::getDelayedInputEvent,
         ).apply { startVibrator() }
     }
 

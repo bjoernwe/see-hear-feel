@@ -28,10 +28,13 @@ class KeyPressDataSource @Inject constructor() {
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
+        if (_inputKeyDown.subscriptionCount.value == 0)
+            return false
+
         if (inputKey == InputKey.UNMAPPED)
             return false
 
-        registerKeyDown(inputKey)
+        _inputKeyDown.tryEmit(inputKey)
 
         return true
     }
@@ -40,19 +43,14 @@ class KeyPressDataSource @Inject constructor() {
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
+        if (_inputKeyUp.subscriptionCount.value == 0)
+            return false
+
         if (inputKey == InputKey.UNMAPPED)
             return false
 
-        registerKeyUp(inputKey)
+        _inputKeyUp.tryEmit(inputKey)
 
         return true
-    }
-
-    private fun registerKeyDown(inputKey: InputKey) {
-        _inputKeyDown.tryEmit(inputKey)
-    }
-
-    private fun registerKeyUp(inputKey: InputKey) {
-        _inputKeyUp.tryEmit(inputKey)
     }
 }
