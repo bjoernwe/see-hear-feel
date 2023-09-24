@@ -13,19 +13,12 @@ import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
 internal fun SHFActivity.startUserInteractionForSession(isBackgroundSession: Boolean) {
     if (isBackgroundSession)
         startBackgroundUserInteractionForSession()
-    else
-        startForegroundUserInteractionForSession()
 }
 
 internal fun SHFActivity.stopUserInteractionForSession() {
     stopBackgroundNotificationService()
-    eventVibrator.stopVibrator()
 }
 
 private fun SHFActivity.startBackgroundUserInteractionForSession() {
     startBackgroundNotificationService()
-}
-
-private fun SHFActivity.startForegroundUserInteractionForSession() {
-    eventVibrator.startVibrator()
 }
