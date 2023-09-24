@@ -23,6 +23,7 @@ class DelayedInputEventDataSource @Inject constructor(
 
         val delayedInputEvent = MutableStateFlow(IntEvent(0))
 
+        // TODO: Should launch off the main thread!
         externalScope.launch {
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
             while (isActive) {
