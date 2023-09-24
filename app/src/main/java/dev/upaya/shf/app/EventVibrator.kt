@@ -1,14 +1,15 @@
 package dev.upaya.shf.app
 
 import android.content.Context
+import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import androidx.annotation.RequiresApi
 import dev.upaya.shf.data.sources.IntEvent
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
@@ -28,14 +29,42 @@ class EventVibrator(
 ) {
 
     private val vibrator = getVibrator(context)
-    private val vibrationEffect: VibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK)
+    private val vibrationEffect: VibrationEffect = VibrationEffect.createWaveform(nudgeVibrationPattern, nudgeVibrationAmplitude, -1)
     private var vibrationJob: CompletableJob? = null
 
     companion object {
 
-        private fun getVibrator(context: Context): Vibrator {
-            val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val nudgeVibrationPattern = longArrayOf(0, 10, 160, 10)
+        val nudgeVibrationAmplitude = intArrayOf(0, 255, 0, 255)
+
+        private fun getVibrator(context: Context): Vibrator? {
+            return if (Build.VERSION.SDK_INT >= 31) {
+                getVibratorNew(context)
+            } else {
+                getVibratorOld(context)
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.S)
+        private fun getVibratorNew(context: Context): Vibrator? {
+            val vibratorManager: VibratorManager
+            try {
+                vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            } catch (e: NullPointerException) {
+                return null
+            }
             return vibratorManager.defaultVibrator
+        }
+
+        private fun getVibratorOld(context: Context): Vibrator? {
+            val vibrator: Vibrator
+            try {
+                @Suppress("DEPRECATION")
+                vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            } catch (e: NullPointerException) {
+                return null
+            }
+            return vibrator
         }
     }
 
@@ -46,10 +75,6 @@ class EventVibrator(
                 eventFactory(vibrationScope).collect {
                     if (it.value == 0)  // initial event, no actual delay
                         return@collect
-                    vibrate()
-                    delay(100)
-                    vibrate()
-                    delay(100)
                     vibrate()
                 }
             }
@@ -62,7 +87,7 @@ class EventVibrator(
     }
 
     private fun vibrate() {
-        vibrator.vibrate(vibrationEffect)
+        vibrator?.vibrate(vibrationEffect)
     }
 
 }
