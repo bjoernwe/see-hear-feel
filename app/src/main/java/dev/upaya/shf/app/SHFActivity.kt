@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
+import dev.upaya.shf.app.utils.startUserInteractionForSession
+import dev.upaya.shf.app.utils.stopUserInteractionForSession
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
 import dev.upaya.shf.ui.SHFNavHost
