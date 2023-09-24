@@ -7,6 +7,7 @@ import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
 import dev.upaya.shf.data.sources.PreferencesDataSource
+import dev.upaya.shf.data.sources.SessionState
 import dev.upaya.shf.data.sources.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +32,7 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
 
-        if (sessionStateDataSource.isBackgroundSession.value)
+        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_FOREGROUND)
             return false
 
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
@@ -39,7 +40,7 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
 
-        if (sessionStateDataSource.isBackgroundSession.value)
+        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_FOREGROUND)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
@@ -47,7 +48,7 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
-        if (!sessionStateDataSource.isBackgroundSession.value)
+        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_BACKGROUND)
             return false
 
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
@@ -55,7 +56,7 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
 
-        if (!sessionStateDataSource.isBackgroundSession.value)
+        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_BACKGROUND)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
