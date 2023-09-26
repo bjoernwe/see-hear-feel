@@ -8,10 +8,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.app.notifications.startBackgroundNotificationService
+import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
-import dev.upaya.shf.app.utils.startUserInteractionForSession
-import dev.upaya.shf.app.utils.stopUserInteractionForSession
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
 import dev.upaya.shf.data.sources.SessionStateRepository
@@ -34,7 +34,7 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var sessionStateRepository: SessionStateRepository
 
-    internal lateinit var eventVibrator: EventVibrator
+    private lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,8 +55,8 @@ class SHFActivity : ComponentActivity() {
 
         setContent {
             SHFApp(
-                startUserInteractionForSession = ::startUserInteractionForSession,
-                stopUserInteractionForSession = ::stopUserInteractionForSession,
+                startUserInteractionForSession = { },
+                stopUserInteractionForSession = { },
                 showAccessibilitySettings = ::showAccessibilitySettings
             )
         }
@@ -67,6 +67,15 @@ class SHFActivity : ComponentActivity() {
                     eventVibrator.startVibrator()
                 else
                     eventVibrator.stopVibrator()
+            }
+        }
+
+        lifecycleScope.launch {
+            userInteractionRepository.backgroundNotificationServiceEnabled.collect { enabled ->
+                if (enabled)
+                    startBackgroundNotificationService()
+                else
+                    stopBackgroundNotificationService()
             }
         }
 

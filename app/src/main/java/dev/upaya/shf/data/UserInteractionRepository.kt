@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,6 +38,11 @@ class UserInteractionRepository @Inject constructor(
     val vibrationFromForeground: Flow<Boolean> = sessionStateDataSource.sessionState
         .combine(appStateDataSource.appState) { sessionState, appState ->
             sessionState == SessionState.RUNNING_IN_FOREGROUND && appState == AppState.RUNNING
+        }
+
+    val backgroundNotificationServiceEnabled: Flow<Boolean> = sessionStateDataSource.sessionState
+        .transform { sessionState ->
+            emit(sessionState == SessionState.RUNNING_IN_BACKGROUND)
         }
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
