@@ -30,6 +30,9 @@ class SessionViewModel @Inject constructor(
 ) : ViewModel() {
 
     internal val inputEventFlow: SharedFlow<InputEvent> = userInteractionRepository.inputEvent.asSharedFlow(viewModelScope)
+    
+    // TODO: Move labels to repository. Initially they've been kept out they could be seen as part of the presentation layer. But...
+
     internal val labelFlow: SharedFlow<Label> = userInteractionRepository.keyDown.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
     internal val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 

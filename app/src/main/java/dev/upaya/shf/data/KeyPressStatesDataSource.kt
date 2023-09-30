@@ -23,6 +23,7 @@ class KeyPressStatesDataSource @Inject constructor(
 
         val keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
 
+        // TODO: Launch off the main thread
         scope.launch {
             keyPressDataSource.inputKeyDown.collect { inputKey ->
                 keyPressStates.addStateFor(inputKey)
