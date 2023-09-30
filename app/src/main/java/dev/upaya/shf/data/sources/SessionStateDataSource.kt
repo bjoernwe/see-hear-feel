@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 /**
- * Not, a background session here does not necessarily mean that the session is actually running in
+ * Note, a background session here does not necessarily mean that the session is actually running in
  * background right now. It means that the setting for background sessions is enabled.
  */
 enum class SessionState {
