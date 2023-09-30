@@ -6,8 +6,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
+/**
+ * Not, a background session here does not necessarily mean that the session is actually running in
+ * background right now. It means that the setting for background sessions is enabled.
+ */
 enum class SessionState {
-    NOT_RUNNING, RUNNING_IN_FOREGROUND, RUNNING_IN_BACKGROUND
+    NOT_RUNNING, FOREGROUND_SESSION_RUNNING, BACKGROUND_SESSION_RUNNING
 }
 
 
@@ -18,7 +22,7 @@ class SessionStateDataSource @Inject constructor() {
     val sessionState: StateFlow<SessionState> = _sessionState
 
     fun startSession(background: Boolean) {
-        _sessionState.value = if (background) SessionState.RUNNING_IN_BACKGROUND else SessionState.RUNNING_IN_FOREGROUND
+        _sessionState.value = if (background) SessionState.BACKGROUND_SESSION_RUNNING else SessionState.FOREGROUND_SESSION_RUNNING
     }
 
     fun stopSession() {

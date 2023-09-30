@@ -37,12 +37,12 @@ class UserInteractionRepository @Inject constructor(
 
     val vibrationFromForeground: Flow<Boolean> = sessionStateDataSource.sessionState
         .combine(appStateDataSource.appState) { sessionState, appState ->
-            sessionState == SessionState.RUNNING_IN_FOREGROUND && appState == AppState.RUNNING
+            sessionState == SessionState.FOREGROUND_SESSION_RUNNING && appState == AppState.RUNNING
         }
 
     val backgroundNotificationServiceEnabled: Flow<Boolean> = sessionStateDataSource.sessionState
         .transform { sessionState ->
-            emit(sessionState == SessionState.RUNNING_IN_BACKGROUND)
+            emit(sessionState == SessionState.BACKGROUND_SESSION_RUNNING)
         }
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
@@ -56,7 +56,7 @@ class UserInteractionRepository @Inject constructor(
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
         // There's no legit reason to capture keys from background unless for a running session!
-        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_BACKGROUND)
+        if (sessionStateDataSource.sessionState.value != SessionState.BACKGROUND_SESSION_RUNNING)
             return false
 
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
@@ -64,7 +64,7 @@ class UserInteractionRepository @Inject constructor(
 
     fun registerKeyUpFromBackground(keyCode: Int): Boolean {
 
-        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_BACKGROUND)
+        if (sessionStateDataSource.sessionState.value != SessionState.BACKGROUND_SESSION_RUNNING)
             return false
 
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
