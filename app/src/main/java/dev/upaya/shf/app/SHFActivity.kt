@@ -14,7 +14,6 @@ import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
-import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
 import kotlinx.coroutines.launch
@@ -30,9 +29,6 @@ class SHFActivity : ComponentActivity() {
 
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
-
-    @Inject
-    lateinit var sessionStateRepository: SessionStateRepository
 
     private lateinit var eventVibrator: EventVibrator
 
