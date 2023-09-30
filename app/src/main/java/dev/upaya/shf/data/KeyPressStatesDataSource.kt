@@ -1,7 +1,9 @@
 package dev.upaya.shf.data
 
+import dev.upaya.shf.data.sources.DefaultDispatcher
 import dev.upaya.shf.data.sources.InputKey
 import dev.upaya.shf.data.sources.KeyPressDataSource
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,20 +19,20 @@ typealias KeyPressStates = Map<InputKey, Date>
 @Singleton
 class KeyPressStatesDataSource @Inject constructor(
     private val keyPressDataSource: KeyPressDataSource,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
     fun getKeyPressStates(scope: CoroutineScope): StateFlow<KeyPressStates> {
 
         val keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
 
-        // TODO: Launch off the main thread
-        scope.launch {
+        scope.launch(defaultDispatcher) {
             keyPressDataSource.inputKeyDown.collect { inputKey ->
                 keyPressStates.addStateFor(inputKey)
             }
         }
 
-        scope.launch {
+        scope.launch(defaultDispatcher) {
             keyPressDataSource.inputKeyUp.collect { inputKey ->
                 keyPressStates.removeStateFor(inputKey)
             }
