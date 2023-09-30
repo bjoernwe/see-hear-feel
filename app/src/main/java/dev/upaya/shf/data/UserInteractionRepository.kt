@@ -46,23 +46,16 @@ class UserInteractionRepository @Inject constructor(
         }
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
-
-        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_FOREGROUND)
-            return false
-
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
-
-        if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_FOREGROUND)
-            return false
-
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
     }
 
     fun registerKeyDownFromBackground(keyCode: Int): Boolean {
 
+        // There's no legit reason to capture keys from background unless for a running session!
         if (sessionStateDataSource.sessionState.value != SessionState.RUNNING_IN_BACKGROUND)
             return false
 
