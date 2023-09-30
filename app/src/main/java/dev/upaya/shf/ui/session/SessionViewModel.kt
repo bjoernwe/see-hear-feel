@@ -48,18 +48,16 @@ class SessionViewModel @Inject constructor(
         return sessionStatsRepository.getLabelFreqs()
     }
 
-    suspend fun startSession(onStartSession: (Boolean) -> Unit) {
+    suspend fun startSession() {
         val background = withContext(ioDispatcher) {
             preferencesRepository.isLockScreenSessionEnabled.first()
         }
         sessionStateRepository.startSession(background = background)
-        onStartSession(background)
         sessionStatsRepository.startStatsCollection(coroutineScope = viewModelScope, inputEventFlow = inputEventFlow)
     }
 
-    internal fun stopSession(onStopSession: () -> Unit) {
+    internal fun stopSession() {
         sessionStatsRepository.stopStatsCollection()
-        onStopSession()
         sessionStateRepository.stopSession()
     }
 }

@@ -54,11 +54,7 @@ class SHFActivity : ComponentActivity() {
         )
 
         setContent {
-            SHFApp(
-                startUserInteractionForSession = { },
-                stopUserInteractionForSession = { },
-                showAccessibilitySettings = ::showAccessibilitySettings
-            )
+            SHFApp(showAccessibilitySettings = ::showAccessibilitySettings)
         }
 
         lifecycleScope.launch {
@@ -128,14 +124,10 @@ class SHFActivity : ComponentActivity() {
 
 @Composable
 fun SHFApp(
-    startUserInteractionForSession: (Boolean) -> Unit,
-    stopUserInteractionForSession: () -> Unit,
     showAccessibilitySettings: () -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
-            startUserInteractionForSession = startUserInteractionForSession,
-            stopUserInteractionForSession = stopUserInteractionForSession,
             showAccessibilitySettings = showAccessibilitySettings,
         )
     }
