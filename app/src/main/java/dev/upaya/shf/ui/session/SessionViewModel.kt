@@ -6,13 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.ui.LabelMapSHF
 import dev.upaya.shf.ui.Label
 import dev.upaya.shf.data.sources.InputEvent
-import dev.upaya.shf.data.sources.LabelFreqs
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.data.sources.SessionStatsRepository
 import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -28,27 +28,16 @@ class SessionViewModel @Inject constructor(
     // TODO: Move labels to repository. Initially they've been kept out they could be seen as part of the presentation layer. But...
 
     internal val labelFlow: SharedFlow<Label> = userInteractionRepository.keyDown.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
-    internal val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
+    val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
-    fun getNumEvents(): Int {
-        return sessionStatsRepository.getNumEvents()
-    }
-
-    fun getSessionLength(): Int? {
-        return sessionStatsRepository.getSessionLength()
-    }
-
-    fun getLabelFreqs(): LabelFreqs {
-        return sessionStatsRepository.getLabelFreqs()
-    }
-
-    suspend fun startSession() {
-        sessionStateRepository.startSession()
-        sessionStatsRepository.startStatsCollection(coroutineScope = viewModelScope, inputEventFlow = inputEventFlow)
+    fun startSession() {
+        viewModelScope.launch {
+            sessionStateRepository.startSession()
+            sessionStatsRepository.startStatsCollection(inputEventFlow = inputEventFlow)
+        }
     }
 
     internal fun stopSession() {
-        sessionStatsRepository.stopStatsCollection()
         sessionStateRepository.stopSession()
     }
 }

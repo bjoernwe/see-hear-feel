@@ -25,7 +25,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
         val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
-        val numInputEvents by sessionViewModel.numEvents.collectAsState(initial = 0)
+        val numInputEvents by sessionViewModel.numEvents.collectAsState()
 
         // session starts
         LaunchedEffect(sessionViewModel) {
@@ -40,7 +40,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         }
 
         val onStopButtonClick: () -> Unit = {
-            if (sessionViewModel.getNumEvents() > 0)
+            if (numInputEvents > 0)
                 navigateToNotingStats()
             else
                 navController.popBackStack()

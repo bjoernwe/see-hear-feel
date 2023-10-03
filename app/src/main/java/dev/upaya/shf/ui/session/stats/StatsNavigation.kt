@@ -1,10 +1,11 @@
 package dev.upaya.shf.ui.session.stats
 
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.session.SessionViewModel
 import dev.upaya.shf.ui.session.routeNotingSession
 import dev.upaya.shf.ui.start.routeStartScreen
 
@@ -18,12 +19,16 @@ internal fun NavGraphBuilder.notingStatsScreen(
 
     composable(route = ROUTE_NOTING_STATS) {
 
-        val sessionViewModel: SessionViewModel = hiltViewModel()
+        val sessionStatsViewModel: SessionStatsViewModel = hiltViewModel()
+        val sessionStats by sessionStatsViewModel.sessionStats.collectAsState()
+
+        val numEvents by sessionStatsViewModel.numEvents.collectAsState()
+        val sessionLength by sessionStatsViewModel.sessionLength.collectAsState()
 
         StatsScreen(
-            sessionLength = sessionViewModel.getSessionLength(),
-            numEvents = sessionViewModel.getNumEvents(),
-            labelFreqs = sessionViewModel.getLabelFreqs(),
+            numEvents = numEvents,
+            sessionLength = sessionLength,
+            sessionStats = sessionStats,
             onBackButtonClick = { navController.popBackStack(route = routeStartScreen, inclusive = false) },
         )
 

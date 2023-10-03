@@ -1,48 +1,40 @@
 package dev.upaya.shf.data.sources
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 @Singleton
-class SessionStatsDataSource @Inject constructor() {
+class SessionStatsDataSource @Inject constructor(
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
+) {
 
-    private val stats = InputEventCollection(ioDispatcher = Dispatchers.IO)
+    private val inputEvents: MutableList<InputEvent> = mutableListOf()
 
     private val _numEvents = MutableStateFlow(0)
     val numEvents: StateFlow<Int> = _numEvents
 
-    fun startStatsCollection(
-        inputEventFlow: Flow<InputEvent>,
-        coroutineScope: CoroutineScope,
-    ) {
-        stats.startStatsCollection(
-            inputEventFlow = inputEventFlow,
-            coroutineScope = coroutineScope,
-            onEventCollected = { allEvents ->
-                _numEvents.value = allEvents.size
-            }
-        )
+    private val _sessionLength = MutableStateFlow(0)
+    val sessionLength: StateFlow<Int> = _sessionLength
+
+    fun reset() {
+        inputEvents.clear()
     }
 
-    fun stopStatsCollection() {
-        stats.stopStatsCollection()
+    fun addInputEvent(inputEvent: InputEvent) {
+        inputEvents.add(inputEvent)
+        _numEvents.value = inputEvents.size
+        _sessionLength.value = inputEvents.calcSessionLength()
     }
 
-    fun getNumEvents(): Int {
-        return stats.inputEvents.size
+    suspend fun calcStats(): SessionStats {
+        return withContext(defaultDispatcher) {
+            SessionStats.fromInputEvents(inputEvents)
+        }
     }
 
-    fun getSessionLength(): Int? {
-        return stats.sessionTime
-    }
-
-    fun getLabelFreqs(): LabelFreqs {
-        return stats.labelFreqs
-    }
 }
