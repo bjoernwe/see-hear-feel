@@ -1,17 +1,17 @@
 package dev.upaya.shf.data.sources
 
-import dev.upaya.shf.ui.LabelMap
 import dev.upaya.shf.ui.Label
+import dev.upaya.shf.ui.LabelMapSHF
 import kotlin.math.roundToInt
 
 
 typealias LabelFreqs = Map<Label, Int>
 
 
-internal fun List<InputEvent>.calcSessionLength(): Int? {
+internal fun List<InputEvent>.calcSessionLength(): Int {
 
     if (this.size < 2)
-        return null
+        return 0
 
     val firstDate = this.first()
     val lastDate = this.last()
@@ -20,9 +20,9 @@ internal fun List<InputEvent>.calcSessionLength(): Int? {
 }
 
 
-internal fun List<InputEvent>.toLabelFreqs(labelMap: LabelMap): Map<Label, Int> {
+internal fun List<InputEvent>.toLabelFreqs(): Map<Label, Int> {
     return this.groupBy { inputEvent ->
-        labelMap.getLabel(inputEvent.inputKey)
+        LabelMapSHF.getLabel(inputEvent.inputKey)
     } .mapValues { (_, dates) ->
         dates.size
     }
