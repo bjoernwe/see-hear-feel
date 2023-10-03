@@ -1,5 +1,6 @@
 package dev.upaya.shf.data.sources
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,30 +18,41 @@ import kotlin.math.min
 class DelayedInputEventDataSource @Inject constructor(
     private val inputEventDataSource: InputEventDataSource,
     private val sessionStateDataSource: SessionStateDataSource,
+    private val sessionStatsDataSource: SessionStatsDataSource,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
     fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
 
         val delayedInputEvent = MutableStateFlow(IntEvent(0))
 
-        // TODO: Should launch off the main thread!
-        externalScope.launch {
+        externalScope.launch(defaultDispatcher) {
+
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
+
             while (isActive) {
-                val lastCount = delayedInputEvent.value.value
-                if (sessionStateDataSource.sessionState.value == SessionState.NOT_RUNNING) {
-                    if (lastCount > 0)
-                        delayedInputEvent.value = IntEvent(0)
-                } else {
-                    val now = Date()
-                    val timeSinceLastInput = now.time - inputEvent.value.date.time
-                    val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
-                    val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
-                    if (timeSinceLastInteraction >= 5000) {
-                        delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
-                    }
+
+                delay(10)
+
+                if (sessionStateDataSource.sessionState.value == SessionState.NOT_RUNNING)
+                    continue  // no session -> no vibration
+
+                if (sessionStatsDataSource.numEvents.value == 0) {
+                    // session started but without initial input
+                    if (delayedInputEvent.value.value > 0)
+                        delayedInputEvent.value = IntEvent(0)  // reset counter
+                    continue
                 }
-                delay(100)
+
+                val now = Date()
+                val timeSinceLastInput = now.time - inputEvent.value.date.time
+                val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
+                val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
+
+                if (timeSinceLastInteraction >= 5000) {
+                    val lastCount = delayedInputEvent.value.value
+                    delayedInputEvent.value = IntEvent(value = lastCount + 1)
+                }
             }
         }
 
