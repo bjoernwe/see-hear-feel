@@ -23,10 +23,15 @@ class SessionStatsDataSource @Inject constructor(
 
     fun reset() {
         inputEvents.clear()
+        updateFlows()
     }
 
     fun addInputEvent(inputEvent: InputEvent) {
         inputEvents.add(inputEvent)
+        updateFlows()
+    }
+
+    private fun updateFlows() {
         _numEvents.value = inputEvents.size
         _sessionLength.value = inputEvents.calcSessionLength()
     }
