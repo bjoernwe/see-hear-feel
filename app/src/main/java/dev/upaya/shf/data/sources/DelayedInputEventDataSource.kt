@@ -1,5 +1,6 @@
 package dev.upaya.shf.data.sources
 
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -17,14 +18,14 @@ import kotlin.math.min
 class DelayedInputEventDataSource @Inject constructor(
     private val inputEventDataSource: InputEventDataSource,
     private val sessionStateDataSource: SessionStateDataSource,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
     fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
 
         val delayedInputEvent = MutableStateFlow(IntEvent(0))
 
-        // TODO: Should launch off the main thread!
-        externalScope.launch {
+        externalScope.launch(defaultDispatcher) {
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
             while (isActive) {
                 val lastCount = delayedInputEvent.value.value
