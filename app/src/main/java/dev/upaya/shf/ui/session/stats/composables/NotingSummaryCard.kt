@@ -10,8 +10,8 @@ import java.util.*
 
 @Composable
 fun NotingSummaryCard(
-    sessionTimeSeconds: Int,
-    numNotings: Int,
+    sessionTimeSeconds: Int?,
+    numNotings: Int?,
 ) {
 
     StatsCard(
@@ -22,7 +22,10 @@ fun NotingSummaryCard(
 
             StatsEntryText(
                 textLabel = "Duration",
-                textValue = DateUtils.formatElapsedTime(sessionTimeSeconds.toLong()),
+                textValue = if (sessionTimeSeconds != null)
+                    DateUtils.formatElapsedTime(sessionTimeSeconds.toLong())
+                else
+                    "N/A",
             )
 
             StatsEntryText(
@@ -30,7 +33,10 @@ fun NotingSummaryCard(
                 textValue = numNotings.toString(),
             )
 
-            val notingsPerSecond = numNotings.toFloat().div(sessionTimeSeconds.toFloat())
+            val notingsPerSecond: Float = if (numNotings != null && sessionTimeSeconds != null)
+                numNotings.toFloat().div(sessionTimeSeconds.toFloat())
+            else
+                Float.NaN
 
             StatsEntryText(
                 textLabel = "Speed",

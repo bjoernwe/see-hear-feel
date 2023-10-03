@@ -28,7 +28,10 @@ class DelayedInputEventDataSource @Inject constructor(
             val inputEvent = inputEventDataSource.keyDownEvent.stateIn(scope = this)
             while (isActive) {
                 val lastCount = delayedInputEvent.value.value
-                if (sessionStateDataSource.isSessionRunning.value) {
+                if (sessionStateDataSource.sessionState.value == SessionState.NOT_RUNNING) {
+                    if (lastCount > 0)
+                        delayedInputEvent.value = IntEvent(0)
+                } else {
                     val now = Date()
                     val timeSinceLastInput = now.time - inputEvent.value.date.time
                     val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
@@ -36,9 +39,6 @@ class DelayedInputEventDataSource @Inject constructor(
                     if (timeSinceLastInteraction >= 5000) {
                         delayedInputEvent.value = IntEvent(value = lastCount + 1, date = now)
                     }
-                } else {
-                    if (lastCount > 0)
-                        delayedInputEvent.value = IntEvent(0)
                 }
                 delay(100)
             }

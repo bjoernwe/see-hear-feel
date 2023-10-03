@@ -7,8 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
-import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.sources.LabelFreqs
+import dev.upaya.shf.data.sources.SessionStats
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
 import dev.upaya.shf.ui.session.stats.composables.NotingSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -16,9 +15,9 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun StatsScreen(
-    sessionLength: Int?,
     numEvents: Int,
-    labelFreqs: LabelFreqs,
+    sessionLength: Int,
+    sessionStats: SessionStats?,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -45,12 +44,12 @@ fun StatsScreen(
         ) {
 
             NotingSummaryCard(
-                sessionTimeSeconds = sessionLength ?: 0,
+                sessionTimeSeconds = sessionLength,
                 numNotings = numEvents,
             )
 
             LabelStatsCard(
-                labelFreqs = labelFreqs,
+                labelFreqs = sessionStats?.labelFreqs,
             )
 
         }
@@ -67,7 +66,9 @@ fun StatsScreenPreview() {
         StatsScreen(
             sessionLength = 123,
             numEvents = 42,
-            labelFreqs = mapOf(Label("foo") to 1, Label("bar") to 2),
+            sessionStats = SessionStats(
+                labelFreqs = mapOf(),
+            ),
             onBackButtonClick = {},
         )
     }

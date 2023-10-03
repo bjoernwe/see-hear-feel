@@ -8,14 +8,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.app.notifications.startBackgroundNotificationService
+import dev.upaya.shf.app.notifications.stopBackgroundNotificationService
 import dev.upaya.shf.app.utils.NotificationPermission
 import dev.upaya.shf.app.utils.showAccessibilitySettings
-import dev.upaya.shf.app.utils.startUserInteractionForSession
-import dev.upaya.shf.app.utils.stopUserInteractionForSession
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.NotificationPermissionSource
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var notificationPermissionSource: NotificationPermissionSource
 
-    internal lateinit var eventVibrator: EventVibrator
+    private lateinit var eventVibrator: EventVibrator
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -49,11 +50,25 @@ class SHFActivity : ComponentActivity() {
         )
 
         setContent {
-            SHFApp(
-                startUserInteractionForSession = ::startUserInteractionForSession,
-                stopUserInteractionForSession = ::stopUserInteractionForSession,
-                showAccessibilitySettings = ::showAccessibilitySettings
-            )
+            SHFApp(showAccessibilitySettings = ::showAccessibilitySettings)
+        }
+
+        lifecycleScope.launch {
+            userInteractionRepository.vibrationFromForeground.collect { enabled ->
+                if (enabled)
+                    eventVibrator.startVibrator()
+                else
+                    eventVibrator.stopVibrator()
+            }
+        }
+
+        lifecycleScope.launch {
+            userInteractionRepository.backgroundNotificationServiceEnabled.collect { enabled ->
+                if (enabled)
+                    startBackgroundNotificationService()
+                else
+                    stopBackgroundNotificationService()
+            }
         }
 
     }
@@ -81,19 +96,34 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
+    override fun onStart() {
+        super.onStart()
+        userInteractionRepository.registerAppStartEvent()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userInteractionRepository.registerAppResumeEvent()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        userInteractionRepository.registerAppPauseEvent()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        userInteractionRepository.registerAppStopEvent()
+    }
 }
 
 
 @Composable
 fun SHFApp(
-    startUserInteractionForSession: (Boolean) -> Unit,
-    stopUserInteractionForSession: () -> Unit,
     showAccessibilitySettings: () -> Unit,
 ) {
     SHFTheme(darkTheme = true) {
         SHFNavHost(
-            startUserInteractionForSession = startUserInteractionForSession,
-            stopUserInteractionForSession = stopUserInteractionForSession,
             showAccessibilitySettings = showAccessibilitySettings,
         )
     }

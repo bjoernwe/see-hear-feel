@@ -17,8 +17,6 @@ fun NavController.navigateToNoting() {
 
 fun NavGraphBuilder.notingGraph(
     navController: NavController,
-    startUserInteractionForSession: (Boolean) -> Unit = {},
-    stopUserInteractionForSession: () -> Unit = {},
 ) {
     
     navigation(
@@ -29,8 +27,6 @@ fun NavGraphBuilder.notingGraph(
         notingSessionScreen(
             navController = navController,
             navigateToNotingStats = navController::navigateToNotingStats,
-            startUserInteractionForSession = startUserInteractionForSession,
-            stopUserInteractionForSession = stopUserInteractionForSession,
         )
 
         notingStatsScreen(

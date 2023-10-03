@@ -7,11 +7,8 @@ class SessionStateRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    val isSessionRunning = sessionStateDataSource.isSessionRunning
-    val isBackgroundSession = sessionStateDataSource.isBackgroundSession
-
-    fun startSession(background: Boolean) {
-        sessionStateDataSource.startSession(background = background)
+    suspend fun startSession() {
+        sessionStateDataSource.startSession()
     }
 
     fun stopSession() {

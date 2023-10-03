@@ -1,39 +1,31 @@
 package dev.upaya.shf.data.sources
 
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 class SessionStatsRepository @Inject constructor(
     private val sessionStatsDataSource: SessionStatsDataSource,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
-    val numEvents = sessionStatsDataSource.numEvents
+    val numEvents: StateFlow<Int> = sessionStatsDataSource.numEvents
+    val sessionLength: StateFlow<Int> = sessionStatsDataSource.sessionLength
 
-    fun startStatsCollection(
-        inputEventFlow: Flow<InputEvent>,
-        coroutineScope: CoroutineScope,
-    ) {
-        sessionStatsDataSource.startStatsCollection(
-            inputEventFlow = inputEventFlow,
-            coroutineScope = coroutineScope
-        )
+    suspend fun calcStats(): SessionStats {
+        return sessionStatsDataSource.calcStats()
     }
 
-    fun stopStatsCollection() {
-        sessionStatsDataSource.stopStatsCollection()
+    suspend fun startStatsCollection(inputEventFlow: Flow<InputEvent>) {
+        withContext(defaultDispatcher) {
+            sessionStatsDataSource.reset()
+            inputEventFlow.collect { inputEvent ->
+                sessionStatsDataSource.addInputEvent(inputEvent)
+            }
+        }
     }
 
-    fun getNumEvents(): Int {
-        return sessionStatsDataSource.getNumEvents()
-    }
-
-    fun getSessionLength(): Int? {
-        return sessionStatsDataSource.getSessionLength()
-    }
-
-    fun getLabelFreqs(): LabelFreqs {
-        return sessionStatsDataSource.getLabelFreqs()
-    }
 }

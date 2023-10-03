@@ -15,7 +15,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun LabelStatsCard(
-    labelFreqs: LabelFreqs,
+    labelFreqs: LabelFreqs?,
     modifier: Modifier = Modifier,
 ) {
 
@@ -29,9 +29,11 @@ fun LabelStatsCard(
             title = "Labels",
         ) {
 
-            LabelFreqTable(
-                labelFreqs = labelFreqs,
-            )
+            if (labelFreqs != null) {
+                LabelFreqTable(
+                    labelFreqs = labelFreqs,
+                )
+            }
 
         }
 
