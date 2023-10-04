@@ -9,7 +9,6 @@ import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.data.sources.SessionStatsRepository
-import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ class SessionViewModel @Inject constructor(
     private val sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
 
-    internal val inputEventFlow: SharedFlow<InputEvent> = userInteractionRepository.inputEvent.asSharedFlow(viewModelScope)
+    internal val inputEventFlow: StateFlow<InputEvent> = userInteractionRepository.keyDown
     
     // TODO: Move labels to repository. Initially they've been kept out they could be seen as part of the presentation layer. But...
 

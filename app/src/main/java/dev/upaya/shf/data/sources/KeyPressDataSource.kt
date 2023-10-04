@@ -1,8 +1,7 @@
 package dev.upaya.shf.data.sources
 
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,31 +9,27 @@ import javax.inject.Singleton
 @Singleton
 class KeyPressDataSource @Inject constructor() {
 
-    // We are using SharedFlow here instead of StateFlow because the same key in a row should
-    // re-emit from the flow (doesn't work with StateFlow)
-    private val _inputKeyDown = MutableSharedFlow<InputKey>(
-        replay = 1, // behavior similar to StateFlow
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    private val _inputKeyUp = MutableSharedFlow<InputKey>(
-        replay = 1, // behavior similar to StateFlow
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-
-    val inputKeyDown: SharedFlow<InputKey> = _inputKeyDown
-    val inputKeyUp: SharedFlow<InputKey> = _inputKeyUp
+    private val _inputKeyDown = MutableStateFlow(InputEvent(InputKey.UNMAPPED))
+    private val _inputKeyUp = MutableStateFlow(InputEvent(InputKey.UNMAPPED))
+    val inputKeyDown: StateFlow<InputEvent> = _inputKeyDown
+    val inputKeyUp: StateFlow<InputEvent> = _inputKeyUp
 
     fun registerKeyDown(keyCode: Int): Boolean {
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
-        if (_inputKeyDown.subscriptionCount.value == 0)
+        if (!isSubscribedTo())
             return false
 
         if (inputKey == InputKey.UNMAPPED)
             return false
 
-        _inputKeyDown.tryEmit(inputKey)
+        val keyNotReleasedYet = inputKeyUp.value.date.before(inputKeyDown.value.date)
+
+        if (keyNotReleasedYet)
+            return true
+
+        _inputKeyDown.tryEmit(InputEvent(inputKey))
 
         return true
     }
@@ -43,14 +38,20 @@ class KeyPressDataSource @Inject constructor() {
 
         val inputKey = InputKeyMapping.getInputKey(keyCode)
 
-        if (_inputKeyUp.subscriptionCount.value == 0)
+        if (!isSubscribedTo())
             return false
 
         if (inputKey == InputKey.UNMAPPED)
             return false
 
-        _inputKeyUp.tryEmit(inputKey)
+        _inputKeyUp.tryEmit(InputEvent(inputKey))
 
         return true
+    }
+
+    private fun isSubscribedTo(): Boolean {
+        val subscribersToKeyDown = _inputKeyDown.subscriptionCount.value != 0
+        val subscribersToKeyUp = _inputKeyUp.subscriptionCount.value != 0
+        return subscribersToKeyDown || subscribersToKeyUp
     }
 }
