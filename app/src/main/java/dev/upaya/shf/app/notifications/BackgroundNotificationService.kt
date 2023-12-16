@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
@@ -44,7 +46,11 @@ class BackgroundNotificationService : LifecycleService() {
     private fun showForegroundNotification() {
         registerNotificationChannel()
         val notification = createNotification()
-        startForeground(ONGOING_NOTIFICATION_ID, notification)
+        if (Build.VERSION.SDK_INT >= 34) {
+            startForeground(ONGOING_NOTIFICATION_ID, notification, FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        } else {
+            startForeground(ONGOING_NOTIFICATION_ID, notification)
+        }
     }
 
     private fun createVibrator(): EventVibrator {
