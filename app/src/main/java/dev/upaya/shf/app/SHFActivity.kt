@@ -32,13 +32,15 @@ class SHFActivity : ComponentActivity() {
 
     private lateinit var eventVibrator: EventVibrator
 
+    // this is the common place to call registerForActivityResult
+    // see: https://developer.android.com/training/basics/intents/result
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        isGranted: Boolean -> notificationPermissionSource.updatePermission(hasNotificationPermission = isGranted)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
-        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                isGranted: Boolean -> notificationPermissionSource.updatePermission(hasNotificationPermission = isGranted)
-        }
 
         // TODO: Necessary? Only when system dialog is actually used.
         NotificationPermission.requestNotificationPermissionIfNecessary(this, requestPermissionLauncher)
