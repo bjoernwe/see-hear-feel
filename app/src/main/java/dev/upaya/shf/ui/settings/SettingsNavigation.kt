@@ -19,24 +19,15 @@ fun NavController.navigateToSettings() {
 
 fun NavGraphBuilder.settingsScreen(
     navController: NavController,
-    showAccessibilitySettings: () -> Unit,
 ) {
 
     composable(route = ROUTE_SETTINGS) {
 
-        val permissionViewModel: PermissionViewModel = hiltViewModel()
-        val hasAccessibilityPermission by permissionViewModel.hasAccessibilityPermission.collectAsState()
-
         val preferenceViewModel: PreferenceViewModel = hiltViewModel()
-        val isLockScreenPreferred by preferenceViewModel.isLockScreenPreferred.collectAsState(initial = false)
         val isPacingEnabled by preferenceViewModel.isPacingEnabled.collectAsState(initial = false)
 
         SettingsScreen(
             onBackButtonClick = navController::popBackStack,
-            isLockScreenPreferred = isLockScreenPreferred,
-            hasAccessibilityPermission = hasAccessibilityPermission,
-            onSwitchLockScreenSession = preferenceViewModel::setLockScreenPreference,
-            onRequestAccessibilitySettings = showAccessibilitySettings,
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
             isPacingEnabled = isPacingEnabled,
             onSwitchPacing = preferenceViewModel::setPacingPreference,

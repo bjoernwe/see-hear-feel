@@ -14,7 +14,6 @@ import dev.upaya.shf.ui.start.startScreen
 @Composable
 fun SHFNavHost(
     navController: NavHostController = rememberNavController(),
-    showAccessibilitySettings: () -> Unit,
 ) {
 
     NavHost(
@@ -36,7 +35,6 @@ fun SHFNavHost(
 
         settingsScreen(
             navController = navController,
-            showAccessibilitySettings = showAccessibilitySettings,
         )
 
     }

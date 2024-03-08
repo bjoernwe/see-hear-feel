@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
-import dev.upaya.shf.ui.settings.composables.LockScreenSettingsEntry
 import dev.upaya.shf.ui.settings.composables.PacingSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -26,10 +25,6 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun SettingsScreen(
     onBackButtonClick: () -> Unit,
-    isLockScreenPreferred: Boolean,
-    hasAccessibilityPermission: Boolean,
-    onSwitchLockScreenSession: (Boolean) -> Unit,
-    onRequestAccessibilitySettings: () -> Unit,
     onControllerSetupEntryClick: () -> Unit,
     isPacingEnabled: Boolean,
     onSwitchPacing: (Boolean) -> Unit,
@@ -70,15 +65,6 @@ fun SettingsScreen(
 
             Divider()
 
-            LockScreenSettingsEntry(
-                onRequestAccessibilitySettings,
-                hasAccessibilityPermission,
-                isLockScreenPreferred,
-                onSwitchLockScreenSession
-            )
-
-            Divider()
-
             PacingSettingsEntry(
                 isPacingEnabled = isPacingEnabled,
                 onSwitchPacing = onSwitchPacing,
@@ -99,10 +85,6 @@ fun SettingsScreenPreview() {
     SHFTheme(darkTheme = true) {
         SettingsScreen(
             onBackButtonClick = {},
-            isLockScreenPreferred = true,
-            hasAccessibilityPermission = true,
-            onSwitchLockScreenSession = {},
-            onRequestAccessibilitySettings = {},
             onControllerSetupEntryClick = {},
             isPacingEnabled = true,
             onSwitchPacing = {},
