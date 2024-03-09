@@ -27,12 +27,11 @@ internal suspend fun MutableInteractionSource.simulatePress() {
 
 
 fun Flow<InputEvent>.transformToLabel(
-    labelMap: LabelMap,
     scope: CoroutineScope
 ): SharedFlow<Label> {
 
     return this.transform { inputKey ->
-        emit(labelMap.getLabel(inputKey.inputKey))
+        emit(LabelMapSHF.getLabel(inputKey.inputKey))
     }.shareIn(
         scope = scope,
         started = SharingStarted.Eagerly,
