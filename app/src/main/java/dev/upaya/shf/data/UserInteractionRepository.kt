@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
-import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,33 +39,11 @@ class UserInteractionRepository @Inject constructor(
             sessionState == SessionState.FOREGROUND_SESSION_RUNNING && appState == AppState.RUNNING
         }
 
-    val backgroundNotificationServiceEnabled: Flow<Boolean> = sessionStateDataSource.sessionState
-        .transform { sessionState ->
-            emit(sessionState == SessionState.BACKGROUND_SESSION_RUNNING)
-        }
-
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
         return keyPressDataSource.registerKeyDown(keyCode = keyCode)
     }
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
-        return keyPressDataSource.registerKeyUp(keyCode = keyCode)
-    }
-
-    fun registerKeyDownFromBackground(keyCode: Int): Boolean {
-
-        // There's no legit reason to capture keys from background unless for a running session!
-        if (sessionStateDataSource.sessionState.value != SessionState.BACKGROUND_SESSION_RUNNING)
-            return false
-
-        return keyPressDataSource.registerKeyDown(keyCode = keyCode)
-    }
-
-    fun registerKeyUpFromBackground(keyCode: Int): Boolean {
-
-        if (sessionStateDataSource.sessionState.value != SessionState.BACKGROUND_SESSION_RUNNING)
-            return false
-
         return keyPressDataSource.registerKeyUp(keyCode = keyCode)
     }
 

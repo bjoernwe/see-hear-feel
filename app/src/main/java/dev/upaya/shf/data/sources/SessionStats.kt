@@ -1,7 +1,7 @@
 package dev.upaya.shf.data.sources
 
 
-data class SessionStats constructor(
+data class SessionStats (
     val labelFreqs: LabelFreqs,
 ) {
 

@@ -7,7 +7,7 @@ class SessionStateRepository @Inject constructor(
     private val sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    suspend fun startSession() {
+    fun startSession() {
         sessionStateDataSource.startSession()
     }
 
