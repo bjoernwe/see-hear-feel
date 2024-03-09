@@ -22,7 +22,7 @@ class SessionViewModel @Inject constructor(
     private val sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
 
-    internal val inputEventFlow: StateFlow<InputEvent> = userInteractionRepository.keyDown
+    internal val inputEventFlow: Flow<InputEvent> = userInteractionRepository.keyDown.drop(1)
     
     // TODO: Move labels to repository. Initially they've been kept out they could be seen as part of the presentation layer. But...
 
