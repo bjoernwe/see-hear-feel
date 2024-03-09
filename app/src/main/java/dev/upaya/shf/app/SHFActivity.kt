@@ -71,25 +71,6 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
-    override fun onStart() {
-        super.onStart()
-        userInteractionRepository.registerAppStartEvent()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        userInteractionRepository.registerAppResumeEvent()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        userInteractionRepository.registerAppPauseEvent()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        userInteractionRepository.registerAppStopEvent()
-    }
 }
 
 
