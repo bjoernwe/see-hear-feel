@@ -27,14 +27,14 @@ class KeyPressStatesDataSource @Inject constructor(
         val keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
 
         scope.launch(defaultDispatcher) {
-            keyPressDataSource.inputKeyDown.collect { inputKey ->
-                keyPressStates.addStateFor(inputKey)
+            keyPressDataSource.inputKeyDown.collect { inputEvent ->
+                keyPressStates.addStateFor(inputEvent.inputKey)
             }
         }
 
         scope.launch(defaultDispatcher) {
-            keyPressDataSource.inputKeyUp.collect { inputKey ->
-                keyPressStates.removeStateFor(inputKey)
+            keyPressDataSource.inputKeyUp.collect { inputEvent ->
+                keyPressStates.removeStateFor(inputEvent.inputKey)
             }
         }
 

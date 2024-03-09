@@ -9,7 +9,6 @@ import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.data.UserInteractionRepository
 import dev.upaya.shf.data.sources.SessionStateRepository
 import dev.upaya.shf.data.sources.SessionStatsRepository
-import dev.upaya.shf.ui.asSharedFlow
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -23,9 +22,11 @@ class SessionViewModel @Inject constructor(
     private val sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
 
-    internal val inputEventFlow: SharedFlow<InputEvent> = userInteractionRepository.inputEvent.asSharedFlow(viewModelScope)
+    // Drop current state of StateFlow
+    internal val inputEventFlow: Flow<InputEvent> = userInteractionRepository.keyDown.drop(1)
     
-    // TODO: Move labels to repository. Initially they've been kept out they could be seen as part of the presentation layer. But...
+    // TODO: Move labels to repository. Initially they've been kept out because they could be seen
+    //  as part of the presentation layer. But now they seem to be core business logic.
 
     internal val labelFlow: SharedFlow<Label> = userInteractionRepository.keyDown.transformToLabel(labelMap = LabelMapSHF, scope = viewModelScope)
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
@@ -33,7 +34,7 @@ class SessionViewModel @Inject constructor(
     fun startSession() {
         viewModelScope.launch {
             sessionStateRepository.startSession()
-            sessionStatsRepository.startStatsCollection(inputEventFlow = inputEventFlow)
+            sessionStatsRepository.startStatsCollection()
         }
     }
 
