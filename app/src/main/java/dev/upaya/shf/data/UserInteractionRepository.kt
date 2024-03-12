@@ -5,8 +5,8 @@ import dev.upaya.shf.data.sources.InputEvent
 import dev.upaya.shf.data.sources.IntEvent
 import dev.upaya.shf.data.sources.KeyPressDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
-import dev.upaya.shf.data.sources.SessionState
-import dev.upaya.shf.data.sources.SessionStateDataSource
+import dev.upaya.shf.data.sessionstate.SessionState
+import dev.upaya.shf.data.sessionstate.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
