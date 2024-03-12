@@ -3,8 +3,8 @@ package dev.upaya.shf.ui.session.stats
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.data.sources.SessionStats
-import dev.upaya.shf.data.sources.SessionStatsRepository
+import dev.upaya.shf.data.stats.SessionStats
+import dev.upaya.shf.data.stats.SessionStatsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
