@@ -1,6 +1,6 @@
 package dev.upaya.shf.data.input
 
-import dev.upaya.shf.data.sources.DefaultDispatcher
+import dev.upaya.shf.data.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
