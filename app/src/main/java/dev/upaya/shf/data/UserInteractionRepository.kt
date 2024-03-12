@@ -1,8 +1,8 @@
 package dev.upaya.shf.data
 
-import dev.upaya.shf.data.sources.DelayedInputEventDataSource
+import dev.upaya.shf.data.delay.DelayedInputEventDataSource
 import dev.upaya.shf.data.input.InputEvent
-import dev.upaya.shf.data.sources.IntEvent
+import dev.upaya.shf.data.delay.IntEvent
 import dev.upaya.shf.data.input.KeyPressDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
 import dev.upaya.shf.data.sessionstate.SessionState
