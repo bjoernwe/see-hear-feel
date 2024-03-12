@@ -29,13 +29,13 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         // session starts
         LaunchedEffect(sessionViewModel) {
-            sessionViewModel.startSession()
+            sessionViewModel.onSessionStart()
         }
 
         // session ends
         DisposableEffect(sessionViewModel) {
             onDispose {
-                sessionViewModel.stopSession()
+                sessionViewModel.onSessionStop()
             }
         }
 

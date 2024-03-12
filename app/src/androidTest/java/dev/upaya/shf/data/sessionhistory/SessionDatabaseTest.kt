@@ -3,6 +3,7 @@ package dev.upaya.shf.data.sessionhistory
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import dev.upaya.shf.data.input.InputKey
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -34,7 +35,7 @@ class SessionDatabaseTest {
     fun sessionDatabase_eventIsStored_andLoadedAgain() = runTest {
 
         // GIVEN a noting event
-        val storedEvent = NotingEvent(id = 1)
+        val storedEvent = NotingEvent(id = 1, label = SHFLabel.GONE)
 
         // WHEN the event is stored in DB and loaded again
         notingEventDao.insert(storedEvent)

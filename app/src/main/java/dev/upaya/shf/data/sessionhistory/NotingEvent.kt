@@ -13,4 +13,5 @@ data class NotingEvent(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val date: Instant? = Instant.now(),
+    val label: SHFLabel,
 )
