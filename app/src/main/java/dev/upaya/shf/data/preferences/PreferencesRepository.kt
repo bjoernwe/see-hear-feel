@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sources
+package dev.upaya.shf.data.preferences
 
 import javax.inject.Inject
 

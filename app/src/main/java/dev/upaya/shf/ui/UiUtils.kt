@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.upaya.shf.data.sources.InputEvent
+import dev.upaya.shf.data.input.InputEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 
@@ -27,12 +27,11 @@ internal suspend fun MutableInteractionSource.simulatePress() {
 
 
 fun Flow<InputEvent>.transformToLabel(
-    labelMap: LabelMap,
     scope: CoroutineScope
 ): SharedFlow<Label> {
 
     return this.transform { inputKey ->
-        emit(labelMap.getLabel(inputKey.inputKey))
+        emit(LabelMapSHF.getLabel(inputKey.inputKey))
     }.shareIn(
         scope = scope,
         started = SharingStarted.Eagerly,
