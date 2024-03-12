@@ -1,6 +1,5 @@
-package dev.upaya.shf.data
+package dev.upaya.shf.data.input
 
-import dev.upaya.shf.data.sources.InputKey
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date
 

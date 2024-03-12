@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sources
+package dev.upaya.shf.data.input
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

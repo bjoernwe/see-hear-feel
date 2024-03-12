@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.stats
 
-import dev.upaya.shf.data.sources.InputEvent
-import dev.upaya.shf.data.sources.LabelFreqs
-import dev.upaya.shf.data.sources.toLabelFreqs
+import dev.upaya.shf.data.input.InputEvent
+import dev.upaya.shf.data.input.LabelFreqs
+import dev.upaya.shf.data.input.toLabelFreqs
 
 
 data class SessionStats (

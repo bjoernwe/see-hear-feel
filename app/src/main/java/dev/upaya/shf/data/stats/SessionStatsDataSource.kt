@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.stats
 
 import dev.upaya.shf.data.sources.DefaultDispatcher
-import dev.upaya.shf.data.sources.InputEvent
-import dev.upaya.shf.data.sources.calcSessionLength
+import dev.upaya.shf.data.input.InputEvent
+import dev.upaya.shf.data.input.calcSessionLength
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

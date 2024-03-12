@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sources
+package dev.upaya.shf.data.input
 
 import dev.upaya.shf.ui.Label
 import dev.upaya.shf.ui.LabelMapSHF

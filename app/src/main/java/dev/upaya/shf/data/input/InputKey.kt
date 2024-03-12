@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sources
+package dev.upaya.shf.data.input
 
 enum class InputKey {
     UNMAPPED,

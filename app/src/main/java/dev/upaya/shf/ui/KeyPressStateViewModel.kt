@@ -3,8 +3,8 @@ package dev.upaya.shf.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.data.KeyPressStates
-import dev.upaya.shf.data.KeyPressStatesDataSource
+import dev.upaya.shf.data.input.KeyPressStates
+import dev.upaya.shf.data.input.KeyPressStatesDataSource
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
