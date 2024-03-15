@@ -1,8 +1,8 @@
-package dev.upaya.shf.data.stats
+package dev.upaya.shf.data.session_stats
 
 import dev.upaya.shf.data.DefaultDispatcher
-import dev.upaya.shf.data.input.GamepadKeyEvent
-import dev.upaya.shf.data.input.calcSessionLength
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.calcSessionLength
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

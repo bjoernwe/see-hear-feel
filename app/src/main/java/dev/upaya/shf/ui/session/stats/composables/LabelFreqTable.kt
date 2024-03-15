@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.ui.labelFeel
 import dev.upaya.shf.ui.labelHear
 import dev.upaya.shf.ui.labelSee
-import dev.upaya.shf.data.input.LabelFreqs
+import dev.upaya.shf.data.gamepad_input.LabelFreqs
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

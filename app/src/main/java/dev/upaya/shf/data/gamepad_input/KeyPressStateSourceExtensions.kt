@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.input
+package dev.upaya.shf.data.gamepad_input
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date

@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.input
+package dev.upaya.shf.data.gamepad_input
 
 import java.time.Instant
 

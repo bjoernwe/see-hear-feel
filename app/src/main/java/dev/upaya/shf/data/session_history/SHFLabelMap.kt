@@ -1,6 +1,6 @@
-package dev.upaya.shf.data.sessionhistory
+package dev.upaya.shf.data.session_history
 
-import dev.upaya.shf.data.input.GamepadKey
+import dev.upaya.shf.data.gamepad_input.GamepadKey
 
 
 class SHFLabelMap {

@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.sources
 
 import android.view.KeyEvent
-import dev.upaya.shf.data.input.GamepadKeyEvent
-import dev.upaya.shf.data.input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.toList

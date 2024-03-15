@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.upaya.shf.data.input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 

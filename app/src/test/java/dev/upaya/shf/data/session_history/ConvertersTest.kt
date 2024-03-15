@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sessionhistory
+package dev.upaya.shf.data.session_history
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull

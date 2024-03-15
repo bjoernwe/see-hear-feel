@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sessionstate
+package dev.upaya.shf.data.session_state
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

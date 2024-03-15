@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sessionstate
+package dev.upaya.shf.data.session_state
 
 import javax.inject.Inject
 

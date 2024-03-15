@@ -1,8 +1,8 @@
-package dev.upaya.shf.data.stats
+package dev.upaya.shf.data.session_stats
 
-import dev.upaya.shf.data.input.GamepadKeyEvent
-import dev.upaya.shf.data.input.LabelFreqs
-import dev.upaya.shf.data.input.toLabelFreqs
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.LabelFreqs
+import dev.upaya.shf.data.gamepad_input.toLabelFreqs
 
 
 data class SessionStats (

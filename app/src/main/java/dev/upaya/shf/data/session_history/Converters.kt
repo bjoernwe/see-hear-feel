@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.sessionhistory
+package dev.upaya.shf.data.session_history
 
 import androidx.room.TypeConverter
 import java.time.Instant

@@ -1,10 +1,10 @@
-package dev.upaya.shf.data.sessionhistory
+package dev.upaya.shf.data.session_history
 
 import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.input.GamepadKey
-import dev.upaya.shf.data.input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad_input.GamepadKey
+import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch

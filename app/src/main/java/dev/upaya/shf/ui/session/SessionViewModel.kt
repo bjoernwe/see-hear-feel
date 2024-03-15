@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
 import dev.upaya.shf.data.UserInteractionRepository
-import dev.upaya.shf.data.sessionhistory.SessionHistoryRepository
-import dev.upaya.shf.data.sessionstate.SessionStateRepository
-import dev.upaya.shf.data.stats.SessionStatsRepository
+import dev.upaya.shf.data.session_history.SessionHistoryRepository
+import dev.upaya.shf.data.session_state.SessionStateRepository
+import dev.upaya.shf.data.session_stats.SessionStatsRepository
 import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

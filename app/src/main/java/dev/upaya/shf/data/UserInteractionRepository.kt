@@ -1,12 +1,12 @@
 package dev.upaya.shf.data
 
 import dev.upaya.shf.data.delay.DelayedInputEventDataSource
-import dev.upaya.shf.data.input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
 import dev.upaya.shf.data.delay.IntEvent
-import dev.upaya.shf.data.input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
-import dev.upaya.shf.data.sessionstate.SessionState
-import dev.upaya.shf.data.sessionstate.SessionStateDataSource
+import dev.upaya.shf.data.session_state.SessionState
+import dev.upaya.shf.data.session_state.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow

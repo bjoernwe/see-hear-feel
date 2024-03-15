@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.input
+package dev.upaya.shf.data.gamepad_input
 
 import dev.upaya.shf.ui.Label
 import dev.upaya.shf.ui.LabelMapSHF
