@@ -1,8 +1,8 @@
 package dev.upaya.shf.ui
 
-import dev.upaya.shf.data.input.InputKey
+import dev.upaya.shf.data.input.GamepadKey
 
 
 fun interface LabelMap {
-    fun getLabel(key: InputKey): Label
+    fun getLabel(key: GamepadKey): Label
 }

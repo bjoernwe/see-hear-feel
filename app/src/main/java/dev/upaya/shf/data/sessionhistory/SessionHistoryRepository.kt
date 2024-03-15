@@ -3,8 +3,7 @@ package dev.upaya.shf.data.sessionhistory
 import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.IoDispatcher
-import dev.upaya.shf.data.input.InputKey
+import dev.upaya.shf.data.input.GamepadKey
 import dev.upaya.shf.data.input.KeyPressDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.drop
@@ -37,15 +36,15 @@ class SessionHistoryRepository @Inject constructor(
 
         scope.launch {
             eventFlow.collect { event ->
-                storeNotingEvent(inputKey = event.inputKey)
+                storeNotingEvent(gamepadKey = event.gamepadKey)
             }
         }
     }
 
-    private suspend fun storeNotingEvent(inputKey: InputKey) {
-        if (inputKey == InputKey.UNMAPPED)
+    private suspend fun storeNotingEvent(gamepadKey: GamepadKey) {
+        if (gamepadKey == GamepadKey.UNMAPPED)
             return
-        val label = SHFLabelMap.getLabel(inputKey) ?: return
+        val label = SHFLabelMap.getLabel(gamepadKey) ?: return
         notingEventDao.insert(NotingEvent(label = label))
     }
 

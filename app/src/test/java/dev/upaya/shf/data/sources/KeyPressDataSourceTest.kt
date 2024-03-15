@@ -1,7 +1,7 @@
 package dev.upaya.shf.data.sources
 
 import android.view.KeyEvent
-import dev.upaya.shf.data.input.InputEvent
+import dev.upaya.shf.data.input.GamepadKeyEvent
 import dev.upaya.shf.data.input.KeyPressDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -12,7 +12,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import java.util.Date
+import java.time.Instant
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -30,8 +30,8 @@ class KeyPressDataSourceTest {
 
         // GIVEN an KeyPressDataSource
         // AND GIVEN two consumers (reading into lists)
-        val consumedValues1 = mutableListOf<InputEvent>()
-        val consumedValues2 = mutableListOf<InputEvent>()
+        val consumedValues1 = mutableListOf<GamepadKeyEvent>()
+        val consumedValues2 = mutableListOf<GamepadKeyEvent>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) { unitUnderTest.inputKeyDown.toList(consumedValues1) }
         backgroundScope.launch(dispatcher) { unitUnderTest.inputKeyDown.toList(consumedValues2) }
@@ -50,7 +50,7 @@ class KeyPressDataSourceTest {
 
         // GIVEN an InputEventDataSource
         // AND GIVEN a consumer (reading into a list)
-        val consumedValues = mutableListOf<InputEvent>()
+        val consumedValues = mutableListOf<GamepadKeyEvent>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
             unitUnderTest.inputKeyDown.toList(consumedValues)
@@ -71,7 +71,7 @@ class KeyPressDataSourceTest {
 
         // GIVEN an InputEventDataSource
         // AND GIVEN a consumer (reading into a list)
-        val consumedValues = mutableListOf<InputEvent>()
+        val consumedValues = mutableListOf<GamepadKeyEvent>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
             unitUnderTest.inputKeyDown.toList(consumedValues)
@@ -91,7 +91,7 @@ class KeyPressDataSourceTest {
 
         // GIVEN an InputEventDataSource
         // AND GIVEN a consumer (reading into a list)
-        val emittedValues = mutableListOf<InputEvent>()
+        val emittedValues = mutableListOf<GamepadKeyEvent>()
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         backgroundScope.launch(dispatcher) {
             unitUnderTest.inputKeyDown.toList(emittedValues)
@@ -103,9 +103,9 @@ class KeyPressDataSourceTest {
         // THEN it contains the pressed key plus a current time stamp
         // (there's one more event because the flow starts with UNMAPPED)
         assertEquals(2, emittedValues.size)
-        val eventTimeInSeconds = emittedValues[1].date.time.div(1000.0)
-        val nowInSeconds = Date().time.div(1000.0)
-        assertEquals(nowInSeconds, eventTimeInSeconds, 0.05)
+        val eventTimeInSeconds = emittedValues[1].date.epochSecond
+        val nowInSeconds = Instant.now().epochSecond
+        assertEquals(nowInSeconds, eventTimeInSeconds)
     }
 
 }

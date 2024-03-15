@@ -1,7 +1,7 @@
 package dev.upaya.shf.data
 
 import dev.upaya.shf.data.delay.DelayedInputEventDataSource
-import dev.upaya.shf.data.input.InputEvent
+import dev.upaya.shf.data.input.GamepadKeyEvent
 import dev.upaya.shf.data.delay.IntEvent
 import dev.upaya.shf.data.input.KeyPressDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
@@ -24,7 +24,7 @@ class UserInteractionRepository @Inject constructor(
     sessionStateDataSource: SessionStateDataSource,
 ) {
 
-    val keyDown: StateFlow<InputEvent> = keyPressDataSource.inputKeyDown
+    val keyDown: StateFlow<GamepadKeyEvent> = keyPressDataSource.inputKeyDown
     //val keyUp: StateFlow<InputEvent> = keyPressDataSource.inputKeyUp
 
     val vibrationFromForeground: Flow<Boolean> = sessionStateDataSource.sessionState

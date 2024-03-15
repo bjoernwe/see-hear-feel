@@ -9,10 +9,10 @@ import javax.inject.Singleton
 @Singleton
 class KeyPressDataSource @Inject constructor() {
 
-    private val _inputKeyDown = MutableStateFlow(InputEvent(InputKey.UNMAPPED))
-    private val _inputKeyUp = MutableStateFlow(InputEvent(InputKey.UNMAPPED))
-    val inputKeyDown: StateFlow<InputEvent> = _inputKeyDown
-    val inputKeyUp: StateFlow<InputEvent> = _inputKeyUp
+    private val _gamepadKeyDown = MutableStateFlow(GamepadKeyEvent.ZERO)
+    private val _gamepadKeyUp = MutableStateFlow(GamepadKeyEvent.ZERO)
+    val inputKeyDown: StateFlow<GamepadKeyEvent> = _gamepadKeyDown
+    val inputKeyUp: StateFlow<GamepadKeyEvent> = _gamepadKeyUp
 
     fun registerKeyDown(keyCode: Int): Boolean {
 
@@ -21,15 +21,15 @@ class KeyPressDataSource @Inject constructor() {
         if (!isSubscribedTo())
             return false
 
-        if (inputKey == InputKey.UNMAPPED)
+        if (inputKey == GamepadKey.UNMAPPED)
             return false
 
-        val keyNotReleasedYet = inputKeyUp.value.date.before(inputKeyDown.value.date)
+        val keyNotReleasedYet = inputKeyUp.value.date.epochSecond < inputKeyDown.value.date.epochSecond
 
         if (keyNotReleasedYet)
             return true
 
-        _inputKeyDown.tryEmit(InputEvent(inputKey))
+        _gamepadKeyDown.tryEmit(GamepadKeyEvent(inputKey))
 
         return true
     }
@@ -41,17 +41,17 @@ class KeyPressDataSource @Inject constructor() {
         if (!isSubscribedTo())
             return false
 
-        if (inputKey == InputKey.UNMAPPED)
+        if (inputKey == GamepadKey.UNMAPPED)
             return false
 
-        _inputKeyUp.tryEmit(InputEvent(inputKey))
+        _gamepadKeyUp.tryEmit(GamepadKeyEvent(inputKey))
 
         return true
     }
 
     private fun isSubscribedTo(): Boolean {
-        val subscribersToKeyDown = _inputKeyDown.subscriptionCount.value != 0
-        val subscribersToKeyUp = _inputKeyUp.subscriptionCount.value != 0
+        val subscribersToKeyDown = _gamepadKeyDown.subscriptionCount.value != 0
+        val subscribersToKeyUp = _gamepadKeyUp.subscriptionCount.value != 0
         return subscribersToKeyDown || subscribersToKeyUp
     }
 }

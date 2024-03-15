@@ -3,7 +3,6 @@ package dev.upaya.shf.data.sessionhistory
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dev.upaya.shf.data.input.InputKey
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before

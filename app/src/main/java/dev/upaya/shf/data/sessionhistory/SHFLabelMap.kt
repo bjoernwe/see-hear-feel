@@ -1,19 +1,19 @@
 package dev.upaya.shf.data.sessionhistory
 
-import dev.upaya.shf.data.input.InputKey
+import dev.upaya.shf.data.input.GamepadKey
 
 
 class SHFLabelMap {
     companion object {
-        fun getLabel(key: InputKey): SHFLabel? = when(key) {
-            InputKey.KEY_LEFT -> SHFLabel.SEE
-            InputKey.KEY_RIGHT -> SHFLabel.HEAR
-            InputKey.KEY_DOWN -> SHFLabel.FEEL
-            InputKey.KEY_UP -> SHFLabel.GONE
-            InputKey.KEY_A -> SHFLabel.SEE
-            InputKey.KEY_B -> SHFLabel.HEAR
-            InputKey.KEY_X -> SHFLabel.GONE
-            InputKey.KEY_Y -> SHFLabel.FEEL
+        fun getLabel(key: GamepadKey): SHFLabel? = when(key) {
+            GamepadKey.KEY_LEFT -> SHFLabel.SEE
+            GamepadKey.KEY_RIGHT -> SHFLabel.HEAR
+            GamepadKey.KEY_DOWN -> SHFLabel.FEEL
+            GamepadKey.KEY_UP -> SHFLabel.GONE
+            GamepadKey.KEY_A -> SHFLabel.SEE
+            GamepadKey.KEY_B -> SHFLabel.HEAR
+            GamepadKey.KEY_X -> SHFLabel.GONE
+            GamepadKey.KEY_Y -> SHFLabel.FEEL
             else -> null
         }
     }
