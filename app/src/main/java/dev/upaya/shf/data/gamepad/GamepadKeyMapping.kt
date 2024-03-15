@@ -1,9 +1,9 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.gamepad
 
 import android.view.KeyEvent.*
 
 
-class InputKeyMapping {
+class GamepadKeyMapping {
 
     companion object  {
 

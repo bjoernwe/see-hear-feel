@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.gamepad
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 
 @Singleton
-class KeyPressDataSource @Inject constructor() {
+class GamepadKeyEventDataSource @Inject constructor() {
 
     private val _gamepadKeyDown = MutableStateFlow(GamepadKeyEvent.ZERO)
     private val _gamepadKeyUp = MutableStateFlow(GamepadKeyEvent.ZERO)
@@ -19,9 +19,9 @@ class KeyPressDataSource @Inject constructor() {
         if (!isSubscribedTo())
             return false
 
-        val inputKey = InputKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
+        val inputKey = GamepadKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
 
-        val keyNotReleasedYet = inputKeyUp.value.date.epochSecond < inputKeyDown.value.date.epochSecond
+        val keyNotReleasedYet = inputKeyUp.value.timestamp.epochSecond < inputKeyDown.value.timestamp.epochSecond
 
         if (keyNotReleasedYet)
             return true
@@ -36,7 +36,7 @@ class KeyPressDataSource @Inject constructor() {
         if (!isSubscribedTo())
             return false
 
-        val inputKey = InputKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
+        val inputKey = GamepadKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
 
         _gamepadKeyUp.tryEmit(GamepadKeyEvent(inputKey))
 

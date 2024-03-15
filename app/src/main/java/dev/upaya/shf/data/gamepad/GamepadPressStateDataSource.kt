@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.gamepad
 
 import dev.upaya.shf.data.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,8 +15,8 @@ typealias KeyPressStates = Map<GamepadKey, Date>
 
 
 @Singleton
-class KeyPressStatesDataSource @Inject constructor(
-    private val keyPressDataSource: KeyPressDataSource,
+class GamepadPressStateDataSource @Inject constructor(
+    private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
@@ -25,13 +25,13 @@ class KeyPressStatesDataSource @Inject constructor(
         val keyPressStates: MutableStateFlow<KeyPressStates> = MutableStateFlow(mapOf())
 
         scope.launch(defaultDispatcher) {
-            keyPressDataSource.inputKeyDown.collect { inputEvent ->
+            gamepadKeyEventDataSource.inputKeyDown.collect { inputEvent ->
                 keyPressStates.addStateFor(inputEvent.gamepadKey)
             }
         }
 
         scope.launch(defaultDispatcher) {
-            keyPressDataSource.inputKeyUp.collect { inputEvent ->
+            gamepadKeyEventDataSource.inputKeyUp.collect { inputEvent ->
                 keyPressStates.removeStateFor(inputEvent.gamepadKey)
             }
         }

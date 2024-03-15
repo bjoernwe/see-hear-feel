@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
+import dev.upaya.shf.data.labels.SHFLabelEvent
 
 
 internal const val routeNotingSession = "noting_session"

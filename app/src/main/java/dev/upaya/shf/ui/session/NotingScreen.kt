@@ -11,9 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.upaya.shf.data.gamepad_input.SHFLabel
+import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
+import dev.upaya.shf.data.labels.SHFLabelEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.composables.LabelText
 import dev.upaya.shf.ui.session.composables.SessionStartHint

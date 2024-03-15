@@ -1,16 +1,16 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.gamepad
 
 import java.time.Instant
 
 
 data class GamepadKeyEvent(
     val gamepadKey: GamepadKey,
-    val date: Instant = Instant.now(),
+    val timestamp: Instant = Instant.now(),
 ) {
     companion object {
         val ZERO = GamepadKeyEvent(
             gamepadKey = GamepadKey.UNMAPPED,
-            date = Instant.ofEpochSecond(0)
+            timestamp = Instant.ofEpochSecond(0)
         )
     }
 }

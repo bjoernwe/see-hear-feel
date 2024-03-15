@@ -1,6 +1,6 @@
 package dev.upaya.shf.ui
 
-import dev.upaya.shf.data.gamepad_input.GamepadKey
+import dev.upaya.shf.data.gamepad.GamepadKey
 
 
 fun interface LabelMap {

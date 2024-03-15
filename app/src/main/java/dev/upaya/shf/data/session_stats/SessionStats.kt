@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.session_stats
 
-import dev.upaya.shf.data.gamepad_input.SHFLabel
-import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
-import dev.upaya.shf.data.gamepad_input.toLabelFreqs
+import dev.upaya.shf.data.labels.SHFLabel
+import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.gamepad.toLabelFreqs
 
 
 data class SessionStats (

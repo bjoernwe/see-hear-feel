@@ -4,6 +4,6 @@ import java.time.Instant
 
 
 data class IntEvent(
-    override val value: Int,
-    override val date: Instant = Instant.now(),
-) : Event<Int>
+    val value: Int,
+    val timestamp: Instant = Instant.now(),
+)

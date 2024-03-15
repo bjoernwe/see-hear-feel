@@ -3,7 +3,7 @@ package dev.upaya.shf.data.session_history
 import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.gamepad_input.SHFLabelDataSource
+import dev.upaya.shf.data.labels.SHFLabelDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

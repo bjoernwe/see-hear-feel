@@ -1,6 +1,6 @@
 package dev.upaya.shf.data.delay
 
-import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.session_state.SessionState
 import dev.upaya.shf.data.session_state.SessionStateDataSource
 import dev.upaya.shf.data.DefaultDispatcher
@@ -20,7 +20,7 @@ import kotlin.math.min
 
 @Singleton
 class DelayedInputEventDataSource @Inject constructor(
-    private val keyPressDataSource: KeyPressDataSource,
+    private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
     private val sessionStateDataSource: SessionStateDataSource,
     private val sessionStatsDataSource: SessionStatsDataSource,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
@@ -47,8 +47,8 @@ class DelayedInputEventDataSource @Inject constructor(
                 }
 
                 val now = Instant.now()
-                val timeSinceLastInput = now.epochSecond - keyPressDataSource.inputKeyDown.value.date.epochSecond
-                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.date.epochSecond
+                val timeSinceLastInput = now.epochSecond - gamepadKeyEventDataSource.inputKeyDown.value.timestamp.epochSecond
+                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.timestamp.epochSecond
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= 5000) {

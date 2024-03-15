@@ -1,4 +1,6 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.labels
+
+import dev.upaya.shf.data.gamepad.GamepadKey
 
 
 class SHFLabelMap {

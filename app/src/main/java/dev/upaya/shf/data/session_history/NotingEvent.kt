@@ -2,7 +2,7 @@ package dev.upaya.shf.data.session_history
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.upaya.shf.data.gamepad_input.SHFLabel
+import dev.upaya.shf.data.labels.SHFLabel
 import java.time.Instant
 
 

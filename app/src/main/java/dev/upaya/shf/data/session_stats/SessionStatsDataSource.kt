@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.session_stats
 
 import dev.upaya.shf.data.DefaultDispatcher
-import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
-import dev.upaya.shf.data.gamepad_input.calcDuration
+import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.gamepad.calcDuration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.gamepad_input
+package dev.upaya.shf.data.labels
 
 enum class SHFLabel {
     SEE, HEAR, FEEL, GONE

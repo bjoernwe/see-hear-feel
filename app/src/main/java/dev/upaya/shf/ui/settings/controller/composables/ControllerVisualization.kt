@@ -15,8 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import dev.upaya.shf.R
-import dev.upaya.shf.data.gamepad_input.GamepadKey
-import dev.upaya.shf.data.gamepad_input.KeyPressStates
+import dev.upaya.shf.data.gamepad.GamepadKey
+import dev.upaya.shf.data.gamepad.KeyPressStates
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

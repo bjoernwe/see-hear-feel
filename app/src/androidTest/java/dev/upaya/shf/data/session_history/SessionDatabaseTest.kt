@@ -3,7 +3,7 @@ package dev.upaya.shf.data.session_history
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dev.upaya.shf.data.gamepad_input.SHFLabel
+import dev.upaya.shf.data.labels.SHFLabel
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before

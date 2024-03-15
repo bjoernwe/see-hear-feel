@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.data.gamepad_input.SHFLabel
+import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
