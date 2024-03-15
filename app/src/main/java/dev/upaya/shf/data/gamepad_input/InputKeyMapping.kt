@@ -7,7 +7,7 @@ class InputKeyMapping {
 
     companion object  {
 
-        fun getInputKey(keyCode: Int): GamepadKey {
+        fun getInputKey(keyCode: Int, allowUnmapped: Boolean = true): GamepadKey? {
             return when (keyCode) {
                 KEYCODE_DPAD_UP -> GamepadKey.KEY_UP
                 KEYCODE_DPAD_DOWN -> GamepadKey.KEY_DOWN
@@ -24,7 +24,7 @@ class InputKeyMapping {
                 KEYCODE_VOLUME_UP -> GamepadKey.KEY_RIGHT
                 KEYCODE_VOLUME_DOWN -> GamepadKey.KEY_LEFT
                 KEYCODE_HEADSETHOOK -> GamepadKey.KEY_DOWN
-                else -> GamepadKey.UNMAPPED
+                else -> if (allowUnmapped) GamepadKey.UNMAPPED else null
             }
         }
 

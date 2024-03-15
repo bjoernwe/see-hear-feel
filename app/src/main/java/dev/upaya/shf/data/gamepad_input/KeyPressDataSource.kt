@@ -16,13 +16,10 @@ class KeyPressDataSource @Inject constructor() {
 
     fun registerKeyDown(keyCode: Int): Boolean {
 
-        val inputKey = InputKeyMapping.getInputKey(keyCode)
-
         if (!isSubscribedTo())
             return false
 
-        if (inputKey == GamepadKey.UNMAPPED)
-            return false
+        val inputKey = InputKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
 
         val keyNotReleasedYet = inputKeyUp.value.date.epochSecond < inputKeyDown.value.date.epochSecond
 
@@ -36,13 +33,10 @@ class KeyPressDataSource @Inject constructor() {
 
     fun registerKeyUp(keyCode: Int): Boolean {
 
-        val inputKey = InputKeyMapping.getInputKey(keyCode)
-
         if (!isSubscribedTo())
             return false
 
-        if (inputKey == GamepadKey.UNMAPPED)
-            return false
+        val inputKey = InputKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
 
         _gamepadKeyUp.tryEmit(GamepadKeyEvent(inputKey))
 
