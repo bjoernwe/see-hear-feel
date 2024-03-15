@@ -7,7 +7,7 @@ import dev.upaya.shf.ui.LabelMapSHF
 typealias LabelFreqs = Map<Label, Int>
 
 
-internal fun List<GamepadKeyEvent>.calcSessionLength(): Int {
+internal fun List<GamepadKeyEvent>.calcDuration(): Int {
 
     if (this.size < 2)
         return 0

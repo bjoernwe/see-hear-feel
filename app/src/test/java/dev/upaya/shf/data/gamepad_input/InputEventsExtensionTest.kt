@@ -18,7 +18,7 @@ class InputEventsExtensionTest {
         )
 
         // WHEN their duration (first to last) is calculated
-        val sessionLength = events.calcSessionLength()
+        val sessionLength = events.calcDuration()
 
         // THEN it is calculated correctly
         assertEquals(2, sessionLength)
