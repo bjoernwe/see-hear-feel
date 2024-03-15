@@ -1,18 +1,17 @@
 package dev.upaya.shf.data.session_stats
 
 import dev.upaya.shf.data.DefaultDispatcher
-import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad_input.SHFLabelDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 class SessionStatsRepository @Inject constructor(
     private val sessionStatsDataSource: SessionStatsDataSource,
-    private val keyPressDataSource: KeyPressDataSource,
+    private val shfLabelDataSource: SHFLabelDataSource,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
@@ -25,14 +24,11 @@ class SessionStatsRepository @Inject constructor(
 
     fun startStatsCollection(scope: CoroutineScope) {
 
-        // Drop current state of StateFlow
-        val eventFlow = keyPressDataSource.inputKeyDown.drop(1)
-
         sessionStatsDataSource.reset()
 
         scope.launch(defaultDispatcher) {
-            eventFlow.collect { inputEvent ->
-                sessionStatsDataSource.addInputEvent(inputEvent)
+            shfLabelDataSource.labelFlow.collect { labelEvent ->
+                sessionStatsDataSource.addInputEvent(labelEvent)
             }
         }
     }

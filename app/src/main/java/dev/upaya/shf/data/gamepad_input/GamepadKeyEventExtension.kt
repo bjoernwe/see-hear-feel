@@ -1,13 +1,7 @@
 package dev.upaya.shf.data.gamepad_input
 
-import dev.upaya.shf.ui.Label
-import dev.upaya.shf.ui.LabelMapSHF
 
-
-typealias LabelFreqs = Map<Label, Int>
-
-
-internal fun List<GamepadKeyEvent>.calcDuration(): Int {
+internal fun List<SHFLabelEvent>.calcDuration(): Int {
 
     if (this.size < 2)
         return 0
@@ -15,14 +9,12 @@ internal fun List<GamepadKeyEvent>.calcDuration(): Int {
     val firstDate = this.first()
     val lastDate = this.last()
 
-    return (lastDate.date.epochSecond - firstDate.date.epochSecond).toInt()
+    return (lastDate.timestamp.epochSecond - firstDate.timestamp.epochSecond).toInt()
 }
 
 
-internal fun List<GamepadKeyEvent>.toLabelFreqs(): Map<Label, Int> {
-    return this.groupBy { inputEvent ->
-        LabelMapSHF.getLabel(inputEvent.gamepadKey)
-    } .mapValues { (_, dates) ->
-        dates.size
+internal fun List<SHFLabelEvent>.toLabelFreqs(): Map<SHFLabel, Int> {
+    return this.groupBy { it.label } .mapValues { (_, labels) ->
+        labels.size
     }
 }

@@ -1,15 +1,13 @@
 package dev.upaya.shf.data
 
 import dev.upaya.shf.data.delay.DelayedInputEventDataSource
-import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
 import dev.upaya.shf.data.delay.IntEvent
-import dev.upaya.shf.data.gamepad_input.KeyPressDataSource
+import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
 import dev.upaya.shf.data.session_state.SessionState
 import dev.upaya.shf.data.session_state.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
@@ -18,14 +16,11 @@ import javax.inject.Singleton
 
 @Singleton
 class UserInteractionRepository @Inject constructor(
-    private val keyPressDataSource: KeyPressDataSource,
+    private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
     private val preferencesDataSource: PreferencesDataSource,
     sessionStateDataSource: SessionStateDataSource,
 ) {
-
-    val keyDown: StateFlow<GamepadKeyEvent> = keyPressDataSource.inputKeyDown
-    //val keyUp: StateFlow<InputEvent> = keyPressDataSource.inputKeyUp
 
     val vibrationFromForeground: Flow<Boolean> = sessionStateDataSource.sessionState
         .transform { sessionState ->
@@ -33,11 +28,11 @@ class UserInteractionRepository @Inject constructor(
         }
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
-        return keyPressDataSource.registerKeyDown(keyCode = keyCode)
+        return gamepadKeyEventDataSource.registerKeyDown(keyCode = keyCode)
     }
 
     fun registerKeyUpFromForeground(keyCode: Int): Boolean {
-        return keyPressDataSource.registerKeyUp(keyCode = keyCode)
+        return gamepadKeyEventDataSource.registerKeyUp(keyCode = keyCode)
     }
 
     /**

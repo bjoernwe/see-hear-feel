@@ -1,18 +1,18 @@
 package dev.upaya.shf.data.session_stats
 
-import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
-import dev.upaya.shf.data.gamepad_input.LabelFreqs
+import dev.upaya.shf.data.gamepad_input.SHFLabel
+import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
 import dev.upaya.shf.data.gamepad_input.toLabelFreqs
 
 
 data class SessionStats (
-    val labelFreqs: LabelFreqs,
+    val labelFreqs: Map<SHFLabel, Int>,
 ) {
 
     companion object {
-        fun fromInputEvents(gamepadKeyEvents: List<GamepadKeyEvent>): SessionStats {
+        fun fromLabelEvents(labelEvents: List<SHFLabelEvent>): SessionStats {
             return SessionStats(
-                labelFreqs = gamepadKeyEvents.toLabelFreqs(),
+                labelFreqs = labelEvents.toLabelFreqs(),
             )
         }
     }

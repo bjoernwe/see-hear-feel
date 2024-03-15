@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import dev.upaya.shf.ui.Label
+import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
 
 
 internal const val routeNotingSession = "noting_session"
@@ -23,8 +23,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val sessionViewModel: SessionViewModel = hiltViewModel()
 
-        val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
-        val inputEvent by sessionViewModel.gamepadKeyEventFlow.collectAsState(initial = null)
+        val label: SHFLabelEvent? by sessionViewModel.labelFlow.collectAsState(initial = null)
         val numInputEvents by sessionViewModel.numEvents.collectAsState()
 
         // session starts
@@ -47,8 +46,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         }
 
         NotingScreen(
-            label = label,
-            gamepadKeyEvent = inputEvent,
+            labelEvent = label,
             onStopButtonClick = onStopButtonClick,
             numInputEvents = numInputEvents,
         )

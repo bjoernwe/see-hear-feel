@@ -1,7 +1,7 @@
 package dev.upaya.shf.data.session_stats
 
 import dev.upaya.shf.data.DefaultDispatcher
-import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
+import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
 import dev.upaya.shf.data.gamepad_input.calcDuration
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ class SessionStatsDataSource @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
-    private val gamepadKeyEvents: MutableList<GamepadKeyEvent> = mutableListOf()
+    private val labelEvents: MutableList<SHFLabelEvent> = mutableListOf()
 
     private val _numEvents = MutableStateFlow(0)
     val numEvents: StateFlow<Int> = _numEvents
@@ -25,23 +25,23 @@ class SessionStatsDataSource @Inject constructor(
     val sessionLength: StateFlow<Int> = _sessionLength
 
     fun reset() {
-        gamepadKeyEvents.clear()
+        labelEvents.clear()
         updateFlows()
     }
 
-    fun addInputEvent(gamepadKeyEvent: GamepadKeyEvent) {
-        gamepadKeyEvents.add(gamepadKeyEvent)
+    fun addInputEvent(shfLabelEvent: SHFLabelEvent) {
+        labelEvents.add(shfLabelEvent)
         updateFlows()
     }
 
     private fun updateFlows() {
-        _numEvents.value = gamepadKeyEvents.size
-        _sessionLength.value = gamepadKeyEvents.calcDuration()
+        _numEvents.value = labelEvents.size
+        _sessionLength.value = labelEvents.calcDuration()
     }
 
     suspend fun calcStats(): SessionStats {
         return withContext(defaultDispatcher) {
-            SessionStats.fromInputEvents(gamepadKeyEvents)
+            SessionStats.fromLabelEvents(labelEvents)
         }
     }
 

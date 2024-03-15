@@ -4,15 +4,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.ui.labelFeel
-import dev.upaya.shf.ui.labelHear
-import dev.upaya.shf.ui.labelSee
-import dev.upaya.shf.data.gamepad_input.LabelFreqs
+import dev.upaya.shf.data.gamepad_input.SHFLabel
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun LabelFreqTable(labelFreqs: LabelFreqs) {
+fun LabelFreqTable(labelFreqs: Map<SHFLabel, Int>) {
 
     val maxLabelCount = labelFreqs.values.maxOrNull()?.toFloat() ?: 1f
 
@@ -21,7 +18,7 @@ fun LabelFreqTable(labelFreqs: LabelFreqs) {
         items(labelFreqs.entries.toList()) { (label, count) ->
 
             StatsEntryBar(
-                text = label.primary.uppercase(),
+                text = label.name.uppercase(),
                 barSize = count.toFloat() / maxLabelCount,
                 columnWeight = .5f,
             )
@@ -37,10 +34,10 @@ fun LabelFreqTable(labelFreqs: LabelFreqs) {
 @Composable
 fun LabelFreqTablePreview() {
 
-    val labelFreqs: LabelFreqs = mutableMapOf(
-        labelSee to 15,
-        labelHear to 5,
-        labelFeel to 1,
+    val labelFreqs: Map<SHFLabel, Int> = mutableMapOf(
+        SHFLabel.SEE to 15,
+        SHFLabel.HEAR to 5,
+        SHFLabel.FEEL to 1,
     )
 
     SHFTheme(darkTheme = true) {

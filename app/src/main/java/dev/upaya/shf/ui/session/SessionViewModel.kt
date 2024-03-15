@@ -3,28 +3,24 @@ package dev.upaya.shf.ui.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.gamepad_input.GamepadKeyEvent
-import dev.upaya.shf.data.UserInteractionRepository
+import dev.upaya.shf.data.gamepad_input.SHFLabelDataSource
+import dev.upaya.shf.data.gamepad_input.SHFLabelEvent
 import dev.upaya.shf.data.session_history.SessionHistoryRepository
 import dev.upaya.shf.data.session_state.SessionStateRepository
 import dev.upaya.shf.data.session_stats.SessionStatsRepository
-import dev.upaya.shf.ui.transformToLabel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    userInteractionRepository: UserInteractionRepository,
     private val sessionStateRepository: SessionStateRepository,
     private val sessionStatsRepository: SessionStatsRepository,
     private val sessionHistoryRepository: SessionHistoryRepository,
+    shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
-    // Drop current state of StateFlow
-    internal val gamepadKeyEventFlow: Flow<GamepadKeyEvent> = userInteractionRepository.keyDown.drop(1)
-    internal val labelFlow: SharedFlow<Label> = userInteractionRepository.keyDown.transformToLabel(scope = viewModelScope)
+    internal val labelFlow: Flow<SHFLabelEvent> = shfLabelDataSource.labelFlow
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
     fun onSessionStart() {

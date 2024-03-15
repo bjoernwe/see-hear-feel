@@ -6,16 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.ui.labelFeel
-import dev.upaya.shf.ui.labelHear
-import dev.upaya.shf.ui.labelSee
-import dev.upaya.shf.data.gamepad_input.LabelFreqs
+import dev.upaya.shf.data.gamepad_input.SHFLabel
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun LabelStatsCard(
-    labelFreqs: LabelFreqs?,
+    labelFreqs: Map<SHFLabel, Int>?,
     modifier: Modifier = Modifier,
 ) {
 
@@ -42,10 +39,10 @@ fun LabelStatsCard(
 }
 
 
-val exampleLabelFreqs: LabelFreqs = mutableMapOf(
-    labelSee to 15,
-    labelHear to 5,
-    labelFeel to 1,
+val exampleLabelFreqs: Map<SHFLabel, Int> = mutableMapOf(
+    SHFLabel.SEE to 15,
+    SHFLabel.HEAR to 5,
+    SHFLabel.FEEL to 1,
 )
 
 
