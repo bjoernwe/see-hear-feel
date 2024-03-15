@@ -1,6 +1,6 @@
 package dev.upaya.shf.data.delay
 
-import java.util.Date
+import java.time.Instant
 
 
 /**
@@ -8,5 +8,5 @@ import java.util.Date
  */
 interface Event<T> {
     val value: T
-    val date: Date
+    val date: Instant
 }

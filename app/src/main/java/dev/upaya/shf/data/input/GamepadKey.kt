@@ -1,6 +1,6 @@
 package dev.upaya.shf.data.input
 
-enum class InputKey {
+enum class GamepadKey {
     UNMAPPED,
     KEY_A, KEY_B,
     KEY_X, KEY_Y,

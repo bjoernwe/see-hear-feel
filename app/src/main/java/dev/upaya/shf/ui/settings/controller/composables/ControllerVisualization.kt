@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import dev.upaya.shf.R
-import dev.upaya.shf.data.input.InputKey
+import dev.upaya.shf.data.input.GamepadKey
 import dev.upaya.shf.data.input.KeyPressStates
 import dev.upaya.shf.ui.theme.SHFTheme
 
@@ -71,7 +71,7 @@ fun ConstraintLayoutScope.ControllerCross(
     ControllerButton(
         verticalCenterGuideline = guidelineHorizontalCross,
         horizontalCenterGuideline = createGuidelineFromStart(.3374f),
-        pressed = keyPressStates[InputKey.KEY_LEFT] != null,
+        pressed = keyPressStates[GamepadKey.KEY_LEFT] != null,
         buttonSizeRatio = .062f,
         aspectRatio = 2.7f,
         shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
@@ -80,7 +80,7 @@ fun ConstraintLayoutScope.ControllerCross(
     ControllerButton(
         verticalCenterGuideline = guidelineHorizontalCross,
         horizontalCenterGuideline = createGuidelineFromStart(.421f),
-        pressed = keyPressStates[InputKey.KEY_RIGHT] != null,
+        pressed = keyPressStates[GamepadKey.KEY_RIGHT] != null,
         buttonSizeRatio = .062f,
         aspectRatio = 2.7f,
         shape = RoundedCornerShape(topEndPercent = 50, bottomEndPercent = 50),
@@ -89,7 +89,7 @@ fun ConstraintLayoutScope.ControllerCross(
     ControllerButton(
         verticalCenterGuideline = createGuidelineFromTop(.3639f),
         horizontalCenterGuideline = guidelineVerticalCross,
-        pressed = keyPressStates[InputKey.KEY_UP] != null,
+        pressed = keyPressStates[GamepadKey.KEY_UP] != null,
         buttonSizeRatio = .022f,
         aspectRatio = .37f,
         shape = RoundedCornerShape(topStartPercent = 50, topEndPercent = 50),
@@ -98,7 +98,7 @@ fun ConstraintLayoutScope.ControllerCross(
     ControllerButton(
         verticalCenterGuideline = createGuidelineFromTop(.464f),
         horizontalCenterGuideline = guidelineVerticalCross,
-        pressed = keyPressStates[InputKey.KEY_DOWN] != null,
+        pressed = keyPressStates[GamepadKey.KEY_DOWN] != null,
         buttonSizeRatio = .022f,
         aspectRatio = .37f,
         shape = RoundedCornerShape(bottomStartPercent = 50, bottomEndPercent = 50),
@@ -118,25 +118,25 @@ fun ConstraintLayoutScope.ButtonsABXY(
     ControllerButton(
         verticalCenterGuideline = createGuidelineFromTop(.332f),
         horizontalCenterGuideline = guidelineAY,
-        pressed = keyPressStates[InputKey.KEY_Y] != null,
+        pressed = keyPressStates[GamepadKey.KEY_Y] != null,
     )
 
     ControllerButton(
         verticalCenterGuideline = guidelineBX,
         horizontalCenterGuideline = createGuidelineFromStart(.692f),
-        pressed = keyPressStates[InputKey.KEY_B] != null,
+        pressed = keyPressStates[GamepadKey.KEY_B] != null,
     )
 
     ControllerButton(
         verticalCenterGuideline = guidelineBX,
         horizontalCenterGuideline = createGuidelineFromStart(.553f),
-        pressed = keyPressStates[InputKey.KEY_X] != null,
+        pressed = keyPressStates[GamepadKey.KEY_X] != null,
     )
 
     ControllerButton(
         verticalCenterGuideline = createGuidelineFromTop(.499f),
         horizontalCenterGuideline = guidelineAY,
-        pressed = keyPressStates[InputKey.KEY_A] != null,
+        pressed = keyPressStates[GamepadKey.KEY_A] != null,
     )
 }
 
@@ -154,7 +154,7 @@ fun ConstraintLayoutScope.ButtonsLR(
     ControllerButton(
         verticalCenterGuideline = guidelineLR1,
         horizontalCenterGuideline = guidelineL,
-        pressed = keyPressStates[InputKey.KEY_L1] != null,
+        pressed = keyPressStates[GamepadKey.KEY_L1] != null,
         buttonSizeRatio = .1f,
         aspectRatio = 5f,
         shape = RoundedCornerShape(50),
@@ -163,7 +163,7 @@ fun ConstraintLayoutScope.ButtonsLR(
     ControllerButton(
         verticalCenterGuideline = guidelineLR2,
         horizontalCenterGuideline = guidelineL,
-        pressed = keyPressStates[InputKey.KEY_L2] != null,
+        pressed = keyPressStates[GamepadKey.KEY_L2] != null,
         buttonSizeRatio = .07f,
         aspectRatio = 3.5f,
         shape = RoundedCornerShape(50),
@@ -172,7 +172,7 @@ fun ConstraintLayoutScope.ButtonsLR(
     ControllerButton(
         verticalCenterGuideline = guidelineLR1,
         horizontalCenterGuideline = guidelineR,
-        pressed = keyPressStates[InputKey.KEY_R1] != null,
+        pressed = keyPressStates[GamepadKey.KEY_R1] != null,
         buttonSizeRatio = .1f,
         aspectRatio = 5f,
         shape = RoundedCornerShape(50),
@@ -181,7 +181,7 @@ fun ConstraintLayoutScope.ButtonsLR(
     ControllerButton(
         verticalCenterGuideline = guidelineLR2,
         horizontalCenterGuideline = guidelineR,
-        pressed = keyPressStates[InputKey.KEY_R2] != null,
+        pressed = keyPressStates[GamepadKey.KEY_R2] != null,
         buttonSizeRatio = .07f,
         aspectRatio = 3.5f,
         shape = RoundedCornerShape(50),

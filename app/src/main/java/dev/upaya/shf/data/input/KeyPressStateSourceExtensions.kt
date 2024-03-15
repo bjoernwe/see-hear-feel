@@ -4,27 +4,27 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Date
 
 
-internal fun MutableStateFlow<KeyPressStates>.addStateFor(inputKey: InputKey) {
-    this.value = this.value.addStateFor(inputKey = inputKey)
+internal fun MutableStateFlow<KeyPressStates>.addStateFor(gamepadKey: GamepadKey) {
+    this.value = this.value.addStateFor(gamepadKey = gamepadKey)
 }
 
 
-private fun KeyPressStates.addStateFor(inputKey: InputKey): KeyPressStates {
+private fun KeyPressStates.addStateFor(gamepadKey: GamepadKey): KeyPressStates {
     return this
         .toMutableMap()
-        .apply { this[inputKey] = Date() }
+        .apply { this[gamepadKey] = Date() }
         .toMap()
 }
 
 
-internal fun MutableStateFlow<KeyPressStates>.removeStateFor(inputKey: InputKey) {
-    this.value = this.value.removeStateFor(inputKey = inputKey)
+internal fun MutableStateFlow<KeyPressStates>.removeStateFor(gamepadKey: GamepadKey) {
+    this.value = this.value.removeStateFor(gamepadKey = gamepadKey)
 }
 
 
-private fun KeyPressStates.removeStateFor(inputKey: InputKey): KeyPressStates {
+private fun KeyPressStates.removeStateFor(gamepadKey: GamepadKey): KeyPressStates {
     return this
         .toMutableMap()
-        .apply { remove(inputKey) }
+        .apply { remove(gamepadKey) }
         .toMap()
 }

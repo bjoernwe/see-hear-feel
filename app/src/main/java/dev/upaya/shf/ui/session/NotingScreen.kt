@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.input.InputEvent
+import dev.upaya.shf.data.input.GamepadKeyEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.composables.LabelText
 import dev.upaya.shf.ui.session.composables.SessionStartHint
@@ -24,7 +24,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun NotingScreen(
     label: Label,
-    inputEvent: InputEvent?,
+    gamepadKeyEvent: GamepadKeyEvent?,
     onStopButtonClick: () -> Unit,
     numInputEvents: Int,
 ) {
@@ -34,7 +34,7 @@ fun NotingScreen(
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
-        LaunchedEffect(inputEvent) { simulatePress() }
+        LaunchedEffect(gamepadKeyEvent) { simulatePress() }
     }
 
     Column(
@@ -62,7 +62,7 @@ fun NotingScreen(
                     label = label,
                     primaryColor = MaterialTheme.colors.secondary,
                     secondaryColor = MaterialTheme.colors.secondaryVariant,
-                    key = inputEvent,
+                    key = gamepadKeyEvent,
                     modifier = Modifier
                         .align(Alignment.Center)
                 )
@@ -95,7 +95,7 @@ fun MainContentPreview() {
     SHFTheme(darkTheme = true) {
         NotingScreen(
             label = Label("label"),
-            inputEvent = null,
+            gamepadKeyEvent = null,
             onStopButtonClick = {},
             numInputEvents = 0,
         )

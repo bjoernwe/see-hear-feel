@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-typealias KeyPressStates = Map<InputKey, Date>
+typealias KeyPressStates = Map<GamepadKey, Date>
 
 
 @Singleton
@@ -26,13 +26,13 @@ class KeyPressStatesDataSource @Inject constructor(
 
         scope.launch(defaultDispatcher) {
             keyPressDataSource.inputKeyDown.collect { inputEvent ->
-                keyPressStates.addStateFor(inputEvent.inputKey)
+                keyPressStates.addStateFor(inputEvent.gamepadKey)
             }
         }
 
         scope.launch(defaultDispatcher) {
             keyPressDataSource.inputKeyUp.collect { inputEvent ->
-                keyPressStates.removeStateFor(inputEvent.inputKey)
+                keyPressStates.removeStateFor(inputEvent.gamepadKey)
             }
         }
 

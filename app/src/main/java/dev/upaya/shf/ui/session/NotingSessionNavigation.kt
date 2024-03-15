@@ -24,18 +24,18 @@ internal fun NavGraphBuilder.notingSessionScreen(
         val sessionViewModel: SessionViewModel = hiltViewModel()
 
         val label: Label by sessionViewModel.labelFlow.collectAsState(initial = Label(""))
-        val inputEvent by sessionViewModel.inputEventFlow.collectAsState(initial = null)
+        val inputEvent by sessionViewModel.gamepadKeyEventFlow.collectAsState(initial = null)
         val numInputEvents by sessionViewModel.numEvents.collectAsState()
 
         // session starts
         LaunchedEffect(sessionViewModel) {
-            sessionViewModel.startSession()
+            sessionViewModel.onSessionStart()
         }
 
         // session ends
         DisposableEffect(sessionViewModel) {
             onDispose {
-                sessionViewModel.stopSession()
+                sessionViewModel.onSessionStop()
             }
         }
 
@@ -48,7 +48,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         NotingScreen(
             label = label,
-            inputEvent = inputEvent,
+            gamepadKeyEvent = inputEvent,
             onStopButtonClick = onStopButtonClick,
             numInputEvents = numInputEvents,
         )

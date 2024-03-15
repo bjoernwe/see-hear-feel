@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import java.util.Date
+import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.min
@@ -46,9 +46,9 @@ class DelayedInputEventDataSource @Inject constructor(
                     continue
                 }
 
-                val now = Date()
-                val timeSinceLastInput = now.time - keyPressDataSource.inputKeyDown.value.date.time
-                val timeSinceLastDelayNotification = now.time - delayedInputEvent.value.date.time
+                val now = Instant.now()
+                val timeSinceLastInput = now.epochSecond - keyPressDataSource.inputKeyDown.value.date.epochSecond
+                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.date.epochSecond
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= 5000) {

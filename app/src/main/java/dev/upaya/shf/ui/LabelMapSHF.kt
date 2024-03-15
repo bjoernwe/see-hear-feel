@@ -1,19 +1,19 @@
 package dev.upaya.shf.ui
 
-import dev.upaya.shf.data.input.InputKey
+import dev.upaya.shf.data.input.GamepadKey
 
 
 class LabelMapSHF {
     companion object : LabelMap {
-        override fun getLabel(key: InputKey) = when(key) {
-            InputKey.KEY_LEFT -> labelSee
-            InputKey.KEY_RIGHT -> labelHear
-            InputKey.KEY_DOWN -> labelFeel
-            InputKey.KEY_UP -> labelGone
-            InputKey.KEY_A -> labelSee
-            InputKey.KEY_B -> labelHear
-            InputKey.KEY_X -> labelGone
-            InputKey.KEY_Y -> labelFeel
+        override fun getLabel(key: GamepadKey) = when(key) {
+            GamepadKey.KEY_LEFT -> labelSee
+            GamepadKey.KEY_RIGHT -> labelHear
+            GamepadKey.KEY_DOWN -> labelFeel
+            GamepadKey.KEY_UP -> labelGone
+            GamepadKey.KEY_A -> labelSee
+            GamepadKey.KEY_B -> labelHear
+            GamepadKey.KEY_X -> labelGone
+            GamepadKey.KEY_Y -> labelFeel
             else -> labelOther
         }
     }
