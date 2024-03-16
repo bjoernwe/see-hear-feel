@@ -111,31 +111,31 @@ fun ConstraintLayoutScope.ControllerCross(
 fun ConstraintLayoutScope.ButtonsABXY(
     keyPressStates: KeyPressStates,
 ) {
-    
-    val guidelineAY = createGuidelineFromStart(.622f)
-    val guidelineBX = createGuidelineFromTop(.416f)
+
+    val guidelineAY = createGuidelineFromTop(.416f)
+    val guidelineBX = createGuidelineFromStart(.622f)
 
     ControllerButton(
-        verticalCenterGuideline = createGuidelineFromTop(.332f),
-        horizontalCenterGuideline = guidelineAY,
+        verticalCenterGuideline = guidelineAY,
+        horizontalCenterGuideline = createGuidelineFromStart(.553f),
         pressed = keyPressStates[GamepadKey.KEY_Y] != null,
     )
 
     ControllerButton(
-        verticalCenterGuideline = guidelineBX,
-        horizontalCenterGuideline = createGuidelineFromStart(.692f),
-        pressed = keyPressStates[GamepadKey.KEY_B] != null,
-    )
-
-    ControllerButton(
-        verticalCenterGuideline = guidelineBX,
-        horizontalCenterGuideline = createGuidelineFromStart(.553f),
+        verticalCenterGuideline = createGuidelineFromTop(.332f),
+        horizontalCenterGuideline = guidelineBX,
         pressed = keyPressStates[GamepadKey.KEY_X] != null,
     )
 
     ControllerButton(
         verticalCenterGuideline = createGuidelineFromTop(.499f),
-        horizontalCenterGuideline = guidelineAY,
+        horizontalCenterGuideline = guidelineBX,
+        pressed = keyPressStates[GamepadKey.KEY_B] != null,
+    )
+
+    ControllerButton(
+        verticalCenterGuideline = guidelineAY,
+        horizontalCenterGuideline = createGuidelineFromStart(.692f),
         pressed = keyPressStates[GamepadKey.KEY_A] != null,
     )
 }
