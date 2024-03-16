@@ -9,6 +9,8 @@ import javax.inject.Singleton
 @Singleton
 class GamepadKeyEventDataSource @Inject constructor() {
 
+    // The key-press events need to be in a SharedFlow (like StateFlow). Otherwise one observer may
+    // consume the events and another will not be notified.
     private val _gamepadKeyDown = MutableStateFlow(GamepadKeyEvent.ZERO)
     private val _gamepadKeyUp = MutableStateFlow(GamepadKeyEvent.ZERO)
     val inputKeyDown: StateFlow<GamepadKeyEvent> = _gamepadKeyDown
