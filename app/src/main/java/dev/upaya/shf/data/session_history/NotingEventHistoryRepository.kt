@@ -14,20 +14,20 @@ private const val DB_NAME = "dev.upaya.shf.session_db"
 
 
 @Singleton
-class SessionHistoryRepository @Inject constructor(
+class NotingEventHistoryRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val shfLabelDataSource: SHFLabelDataSource,
 ) {
 
     private val db = Room.databaseBuilder(
         appContext,
-        SessionDatabase::class.java,
+        NotingEventDatabase::class.java,
         DB_NAME
     ).build()
 
     private val notingEventDao = db.getNotingEventDao()
 
-    fun startRecording(scope: CoroutineScope) {
+    fun startRecordingEvents(scope: CoroutineScope) {
 
         scope.launch {
             shfLabelDataSource.labelFlow.collect { labelEvent ->

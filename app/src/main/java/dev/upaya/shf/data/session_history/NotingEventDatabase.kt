@@ -7,6 +7,6 @@ import androidx.room.TypeConverters
 
 @Database(entities = [NotingEvent::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class SessionDatabase : RoomDatabase() {
+abstract class NotingEventDatabase : RoomDatabase() {
     abstract fun getNotingEventDao(): NotingEventDao
 }

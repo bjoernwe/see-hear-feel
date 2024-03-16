@@ -11,16 +11,16 @@ import org.junit.Test
 import java.io.IOException
 
 
-class SessionDatabaseTest {
+class NotingEventDatabaseTest {
 
     private lateinit var notingEventDao: NotingEventDao
-    private lateinit var db: SessionDatabase
+    private lateinit var db: NotingEventDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         db = Room.inMemoryDatabaseBuilder(
-            context, SessionDatabase::class.java).build()
+            context, NotingEventDatabase::class.java).build()
         notingEventDao = db.getNotingEventDao()
     }
 
