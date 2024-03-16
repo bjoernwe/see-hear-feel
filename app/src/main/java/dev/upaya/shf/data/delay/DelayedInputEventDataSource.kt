@@ -26,9 +26,9 @@ class DelayedInputEventDataSource @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
-    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
+    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<DelayedInputEvent> {
 
-        val delayedInputEvent = MutableStateFlow(IntEvent(0))
+        val delayedInputEvent = MutableStateFlow(DelayedInputEvent(0))
 
         externalScope.launch(defaultDispatcher) {
 
@@ -41,8 +41,8 @@ class DelayedInputEventDataSource @Inject constructor(
 
                 if (sessionStatsDataSource.numEvents.value == 0) {
                     // session started but without initial input
-                    if (delayedInputEvent.value.value > 0)
-                        delayedInputEvent.value = IntEvent(0)  // reset counter
+                    if (delayedInputEvent.value.delaysInARow > 0)
+                        delayedInputEvent.value = DelayedInputEvent(0)  // reset counter
                     continue
                 }
 
@@ -52,8 +52,8 @@ class DelayedInputEventDataSource @Inject constructor(
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= 5000) {
-                    val lastCount = delayedInputEvent.value.value
-                    delayedInputEvent.value = IntEvent(value = lastCount + 1)
+                    val lastCount = delayedInputEvent.value.delaysInARow
+                    delayedInputEvent.value = DelayedInputEvent(delaysInARow = lastCount + 1)
                 }
             }
         }

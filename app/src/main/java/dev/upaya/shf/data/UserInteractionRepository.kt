@@ -1,7 +1,7 @@
 package dev.upaya.shf.data
 
 import dev.upaya.shf.data.delay.DelayedInputEventDataSource
-import dev.upaya.shf.data.delay.IntEvent
+import dev.upaya.shf.data.delay.DelayedInputEvent
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.preferences.PreferencesDataSource
 import dev.upaya.shf.data.session_state.SessionState
@@ -38,7 +38,7 @@ class UserInteractionRepository @Inject constructor(
     /**
      * Return a flow of delayed input events conditioned on pacing being enabled in settings.
      */
-    fun getDelayedInputEvent(scope: CoroutineScope): Flow<IntEvent> {
+    fun getDelayedInputEvent(scope: CoroutineScope): Flow<DelayedInputEvent> {
         val delayedInputs = delayedInputEventDataSource.getDelayedInputEvent(externalScope = scope)
         val pacingEnabled = preferencesDataSource.isPacingEnabled
         return delayedInputs.combineTransform(pacingEnabled) { delayEvent, pacing ->

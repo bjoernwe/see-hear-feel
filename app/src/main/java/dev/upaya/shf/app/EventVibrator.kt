@@ -6,7 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.annotation.RequiresApi
-import dev.upaya.shf.data.delay.IntEvent
+import dev.upaya.shf.data.delay.DelayedInputEvent
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -25,7 +25,7 @@ import kotlinx.coroutines.plus
 class EventVibrator(
     context: Context,
     private val scope: CoroutineScope,
-    private val eventFactory: (CoroutineScope) -> Flow<IntEvent>,
+    private val eventFactory: (CoroutineScope) -> Flow<DelayedInputEvent>,
 ) {
 
     private val vibrator = getVibrator(context)
@@ -73,7 +73,7 @@ class EventVibrator(
             val vibrationScope = scope + job
             vibrationScope.launch {
                 eventFactory(vibrationScope).collect {
-                    if (it.value == 0)  // initial event, no actual delay
+                    if (it.delaysInARow == 0)  // initial event, no actual delay
                         return@collect
                     vibrate()
                 }
