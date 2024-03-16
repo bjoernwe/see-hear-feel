@@ -11,8 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.ui.Label
-import dev.upaya.shf.data.input.GamepadKeyEvent
+import dev.upaya.shf.data.labels.SHFLabelEvent
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.session.composables.LabelText
 import dev.upaya.shf.ui.session.composables.SessionStartHint
@@ -23,8 +24,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 @Composable
 fun NotingScreen(
-    label: Label,
-    gamepadKeyEvent: GamepadKeyEvent?,
+    labelEvent: SHFLabelEvent?,
     onStopButtonClick: () -> Unit,
     numInputEvents: Int,
 ) {
@@ -34,7 +34,7 @@ fun NotingScreen(
 
     // Simulate a key press on value change
     val interactionSource = remember { MutableInteractionSource() }.apply {
-        LaunchedEffect(gamepadKeyEvent) { simulatePress() }
+        LaunchedEffect(labelEvent) { simulatePress() }
     }
 
     Column(
@@ -56,13 +56,13 @@ fun NotingScreen(
                 .padding(24.dp)
         ) {
 
-            if (numInputEvents > 0) {
+            if (labelEvent != null && numInputEvents > 0) {
 
                 LabelText(
-                    label = label,
+                    label = Label(primary = labelEvent.label.name),
                     primaryColor = MaterialTheme.colors.secondary,
                     secondaryColor = MaterialTheme.colors.secondaryVariant,
-                    key = gamepadKeyEvent,
+                    key = labelEvent,
                     modifier = Modifier
                         .align(Alignment.Center)
                 )
@@ -94,8 +94,7 @@ fun NotingScreen(
 fun MainContentPreview() {
     SHFTheme(darkTheme = true) {
         NotingScreen(
-            label = Label("label"),
-            gamepadKeyEvent = null,
+            labelEvent = SHFLabelEvent(SHFLabel.GONE),
             onStopButtonClick = {},
             numInputEvents = 0,
         )

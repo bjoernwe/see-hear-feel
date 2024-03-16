@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
-import dev.upaya.shf.data.stats.SessionStats
+import dev.upaya.shf.data.session_stats.SessionStats
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
 import dev.upaya.shf.ui.session.stats.composables.NotingSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme

@@ -1,10 +1,10 @@
 package dev.upaya.shf.data.delay
 
-import dev.upaya.shf.data.input.KeyPressDataSource
-import dev.upaya.shf.data.sessionstate.SessionState
-import dev.upaya.shf.data.sessionstate.SessionStateDataSource
+import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
+import dev.upaya.shf.data.session_state.SessionState
+import dev.upaya.shf.data.session_state.SessionStateDataSource
 import dev.upaya.shf.data.DefaultDispatcher
-import dev.upaya.shf.data.stats.SessionStatsDataSource
+import dev.upaya.shf.data.session_stats.SessionStatsDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -20,15 +20,15 @@ import kotlin.math.min
 
 @Singleton
 class DelayedInputEventDataSource @Inject constructor(
-    private val keyPressDataSource: KeyPressDataSource,
+    private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
     private val sessionStateDataSource: SessionStateDataSource,
     private val sessionStatsDataSource: SessionStatsDataSource,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
-    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<IntEvent> {
+    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<DelayedInputEvent> {
 
-        val delayedInputEvent = MutableStateFlow(IntEvent(0))
+        val delayedInputEvent = MutableStateFlow(DelayedInputEvent(0))
 
         externalScope.launch(defaultDispatcher) {
 
@@ -41,19 +41,19 @@ class DelayedInputEventDataSource @Inject constructor(
 
                 if (sessionStatsDataSource.numEvents.value == 0) {
                     // session started but without initial input
-                    if (delayedInputEvent.value.value > 0)
-                        delayedInputEvent.value = IntEvent(0)  // reset counter
+                    if (delayedInputEvent.value.delaysInARow > 0)
+                        delayedInputEvent.value = DelayedInputEvent(0)  // reset counter
                     continue
                 }
 
                 val now = Instant.now()
-                val timeSinceLastInput = now.epochSecond - keyPressDataSource.inputKeyDown.value.date.epochSecond
-                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.date.epochSecond
+                val timeSinceLastInput = now.epochSecond - gamepadKeyEventDataSource.inputKeyDown.value.timestamp.epochSecond
+                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.timestamp.epochSecond
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= 5000) {
-                    val lastCount = delayedInputEvent.value.value
-                    delayedInputEvent.value = IntEvent(value = lastCount + 1)
+                    val lastCount = delayedInputEvent.value.delaysInARow
+                    delayedInputEvent.value = DelayedInputEvent(delaysInARow = lastCount + 1)
                 }
             }
         }
