@@ -26,6 +26,10 @@ class DelayedInputEventDataSource @Inject constructor(
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
+    companion object {
+        const val DELAY_SECONDS = 7;
+    }
+
     fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<DelayedInputEvent> {
 
         val delayedInputEvent = MutableStateFlow(DelayedInputEvent(0))
@@ -51,7 +55,7 @@ class DelayedInputEventDataSource @Inject constructor(
                 val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.timestamp.epochSecond
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
-                if (timeSinceLastInteraction >= 5000) {
+                if (timeSinceLastInteraction >= DELAY_SECONDS) {
                     val lastCount = delayedInputEvent.value.delaysInARow
                     delayedInputEvent.value = DelayedInputEvent(delaysInARow = lastCount + 1)
                 }
