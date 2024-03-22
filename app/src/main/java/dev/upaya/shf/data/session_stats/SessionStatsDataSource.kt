@@ -21,8 +21,8 @@ class SessionStatsDataSource @Inject constructor(
     private val _numEvents = MutableStateFlow(0)
     val numEvents: StateFlow<Int> = _numEvents
 
-    private val _sessionLength = MutableStateFlow(0)
-    val sessionLength: StateFlow<Int> = _sessionLength
+    private val _sessionDurationSeconds = MutableStateFlow(0)
+    val sessionDurationSeconds: StateFlow<Int> = _sessionDurationSeconds
 
     fun reset() {
         labelEvents.clear()
@@ -36,7 +36,7 @@ class SessionStatsDataSource @Inject constructor(
 
     private fun updateFlows() {
         _numEvents.value = labelEvents.size
-        _sessionLength.value = labelEvents.calcDuration()
+        _sessionDurationSeconds.value = labelEvents.calcDuration()
     }
 
     suspend fun calcStats(): SessionStats {
