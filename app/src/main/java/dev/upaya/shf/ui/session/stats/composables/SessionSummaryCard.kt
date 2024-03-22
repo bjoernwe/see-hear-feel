@@ -9,13 +9,13 @@ import java.util.*
 
 
 @Composable
-fun NotingSummaryCard(
+fun SessionSummaryCard(
     sessionDurationSeconds: Int?,
     numNotings: Int?,
 ) {
 
     StatsCard(
-        title = "Session",
+        title = "Session Summary",
     ) {
 
         Column {
@@ -52,9 +52,9 @@ fun NotingSummaryCard(
 
 @Preview
 @Composable
-fun NotingSummaryCardPreview() {
+fun SessionSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
-        NotingSummaryCard(
+        SessionSummaryCard(
             sessionDurationSeconds = 60,
             numNotings = 512,
         )

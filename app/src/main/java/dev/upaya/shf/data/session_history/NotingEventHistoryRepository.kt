@@ -5,6 +5,7 @@ import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,6 +27,8 @@ class NotingEventHistoryRepository @Inject constructor(
     ).build()
 
     private val notingEventDao = db.getNotingEventDao()
+
+    val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
 
     fun startRecordingEvents(scope: CoroutineScope) {
 

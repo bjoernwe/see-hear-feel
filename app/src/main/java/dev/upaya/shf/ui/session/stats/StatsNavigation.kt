@@ -23,10 +23,12 @@ internal fun NavGraphBuilder.notingStatsScreen(
         val sessionStats by sessionStatsViewModel.sessionStats.collectAsState()
 
         val numEvents by sessionStatsViewModel.numEvents.collectAsState()
+        val numEventsInDB by sessionStatsViewModel.numEventsInDB.collectAsState(initial = 0)
         val sessionDurationSeconds by sessionStatsViewModel.sessionDurationSeconds.collectAsState()
 
         StatsScreen(
             numEvents = numEvents,
+            numEventsInDB = numEventsInDB,
             sessionDurationSeconds = sessionDurationSeconds,
             sessionStats = sessionStats,
             onBackButtonClick = { navController.popBackStack(route = routeStartScreen, inclusive = false) },

@@ -8,14 +8,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
 import dev.upaya.shf.data.session_stats.SessionStats
+import dev.upaya.shf.ui.session.stats.composables.AllTimeSummaryCard
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
-import dev.upaya.shf.ui.session.stats.composables.NotingSummaryCard
+import dev.upaya.shf.ui.session.stats.composables.SessionSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun StatsScreen(
     numEvents: Int,
+    numEventsInDB: Int,
     sessionDurationSeconds: Int,
     sessionStats: SessionStats?,
     onBackButtonClick: () -> Unit,
@@ -43,15 +45,19 @@ fun StatsScreen(
                 .padding(scaffoldPadding)
         ) {
 
-            NotingSummaryCard(
-                sessionDurationSeconds = sessionDurationSeconds,
-                numNotings = numEvents,
-            )
-
             LabelStatsCard(
                 labelFreqs = sessionStats?.labelFreqs,
             )
 
+            SessionSummaryCard(
+                sessionDurationSeconds = sessionDurationSeconds,
+                numNotings = numEvents,
+            )
+
+            AllTimeSummaryCard(
+                numEventsInDB = numEventsInDB,
+            )
+            
         }
 
     }
@@ -66,6 +72,7 @@ fun StatsScreenPreview() {
         StatsScreen(
             sessionDurationSeconds = 123,
             numEvents = 42,
+            numEventsInDB = 999,
             sessionStats = SessionStats(
                 labelFreqs = mapOf(),
             ),
