@@ -23,13 +23,25 @@ class SessionViewModel @Inject constructor(
     internal val labelFlow: Flow<SHFLabelEvent> = shfLabelDataSource.labelFlow
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
-    fun onSessionStart() {
+    init {
+        onSessionStart()
+    }
+
+    private fun onSessionStart() {
         sessionStateRepository.startSession()
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
         notingEventHistoryRepository.startRecordingEvents(scope = viewModelScope)
     }
 
-    internal fun onSessionStop() {
+    private fun onSessionStop() {
         sessionStateRepository.stopSession()
     }
+
+    // Is this reliably called as soon as the session screen is closed? If not,
+    // NavController.OnDestinationChangedListener may be an alternative way to trigger the event.
+    override fun onCleared() {
+        super.onCleared()
+        onSessionStop()
+    }
+
 }
