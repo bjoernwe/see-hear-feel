@@ -1,7 +1,5 @@
 package dev.upaya.shf.ui.session
 
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,18 +23,6 @@ internal fun NavGraphBuilder.notingSessionScreen(
 
         val label: SHFLabelEvent? by sessionViewModel.labelFlow.collectAsState(initial = null)
         val numInputEvents by sessionViewModel.numEvents.collectAsState()
-
-        // session starts
-        LaunchedEffect(sessionViewModel) {
-            sessionViewModel.onSessionStart()
-        }
-
-        // session ends
-        DisposableEffect(sessionViewModel) {
-            onDispose {
-                sessionViewModel.onSessionStop()
-            }
-        }
 
         val onStopButtonClick: () -> Unit = {
             if (numInputEvents > 0)

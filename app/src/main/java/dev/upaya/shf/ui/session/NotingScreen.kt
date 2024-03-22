@@ -56,16 +56,20 @@ fun NotingScreen(
                 .padding(24.dp)
         ) {
 
-            if (labelEvent != null && numInputEvents > 0) {
+            if (numInputEvents > 0) {
 
-                LabelText(
-                    label = Label(primary = labelEvent.label.name),
-                    primaryColor = MaterialTheme.colors.secondary,
-                    secondaryColor = MaterialTheme.colors.secondaryVariant,
-                    key = labelEvent,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                )
+                if (labelEvent != null) {
+
+                    LabelText(
+                        label = Label(primary = labelEvent.label.name),
+                        primaryColor = MaterialTheme.colors.secondary,
+                        secondaryColor = MaterialTheme.colors.secondaryVariant,
+                        key = labelEvent,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    )
+
+                }
 
             } else {
 

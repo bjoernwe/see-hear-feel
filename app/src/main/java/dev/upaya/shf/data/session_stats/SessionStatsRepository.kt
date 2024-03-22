@@ -16,7 +16,7 @@ class SessionStatsRepository @Inject constructor(
 ) {
 
     val numEvents: StateFlow<Int> = sessionStatsDataSource.numEvents
-    val sessionLength: StateFlow<Int> = sessionStatsDataSource.sessionLength
+    val sessionDurationSeconds: StateFlow<Int> = sessionStatsDataSource.sessionDurationSeconds
 
     suspend fun calcStats(): SessionStats {
         return sessionStatsDataSource.calcStats()

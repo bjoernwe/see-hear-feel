@@ -24,7 +24,7 @@ class SessionStatsViewModel @Inject constructor(
     val sessionStats: StateFlow<SessionStats?> = _sessionStats
 
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
-    val sessionLength: StateFlow<Int> = sessionStatsRepository.sessionLength
+    val sessionDurationSeconds: StateFlow<Int> = sessionStatsRepository.sessionDurationSeconds
 
     init {
         viewModelScope.launch {

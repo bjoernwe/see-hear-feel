@@ -16,7 +16,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun StatsScreen(
     numEvents: Int,
-    sessionLength: Int,
+    sessionDurationSeconds: Int,
     sessionStats: SessionStats?,
     onBackButtonClick: () -> Unit,
 ) {
@@ -44,7 +44,7 @@ fun StatsScreen(
         ) {
 
             NotingSummaryCard(
-                sessionTimeSeconds = sessionLength,
+                sessionDurationSeconds = sessionDurationSeconds,
                 numNotings = numEvents,
             )
 
@@ -64,7 +64,7 @@ fun StatsScreen(
 fun StatsScreenPreview() {
     SHFTheme(darkTheme = true) {
         StatsScreen(
-            sessionLength = 123,
+            sessionDurationSeconds = 123,
             numEvents = 42,
             sessionStats = SessionStats(
                 labelFreqs = mapOf(),

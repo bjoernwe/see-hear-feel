@@ -10,7 +10,7 @@ import java.util.*
 
 @Composable
 fun NotingSummaryCard(
-    sessionTimeSeconds: Int?,
+    sessionDurationSeconds: Int?,
     numNotings: Int?,
 ) {
 
@@ -22,8 +22,8 @@ fun NotingSummaryCard(
 
             StatsEntryText(
                 textLabel = "Duration",
-                textValue = if (sessionTimeSeconds != null)
-                    DateUtils.formatElapsedTime(sessionTimeSeconds.toLong())
+                textValue = if (sessionDurationSeconds != null)
+                    DateUtils.formatElapsedTime(sessionDurationSeconds.toLong())
                 else
                     "N/A",
             )
@@ -33,8 +33,8 @@ fun NotingSummaryCard(
                 textValue = numNotings.toString(),
             )
 
-            val notingsPerSecond: Float = if (numNotings != null && sessionTimeSeconds != null)
-                numNotings.toFloat().div(sessionTimeSeconds.toFloat())
+            val notingsPerSecond: Float = if (numNotings != null && sessionDurationSeconds != null)
+                numNotings.toFloat().div(sessionDurationSeconds.toFloat())
             else
                 Float.NaN
 
@@ -55,7 +55,7 @@ fun NotingSummaryCard(
 fun NotingSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
         NotingSummaryCard(
-            sessionTimeSeconds = 60,
+            sessionDurationSeconds = 60,
             numNotings = 512,
         )
     }
