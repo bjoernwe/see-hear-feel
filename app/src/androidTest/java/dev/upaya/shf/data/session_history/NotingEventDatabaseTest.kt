@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import dev.upaya.shf.data.labels.SHFLabel
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
@@ -19,8 +22,7 @@ class NotingEventDatabaseTest {
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(
-            context, NotingEventDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, NotingEventDatabase::class.java).build()
         notingEventDao = db.getNotingEventDao()
     }
 
@@ -46,4 +48,20 @@ class NotingEventDatabaseTest {
         assert(loadedEvents.size == 1)
         assert(loadedEvent == storedEvent)
     }
+
+    @Test
+    fun sessionDatabase_countEvents_countsEvents() = runTest {
+
+        // GIVEN an empty DB with noting events
+        val numEventsBefore = notingEventDao.countEvents().take(1).toList()[0]
+
+        // WHEN an event is inserted
+        notingEventDao.insert(NotingEvent(id = 1, label = SHFLabel.GONE))
+
+        // THEN countEvents() is updated
+        val after = notingEventDao.countEvents().take(1).toList()[0]
+        assertEquals(0, numEventsBefore)
+        assertEquals(1, after)
+    }
+
 }
