@@ -40,7 +40,7 @@ class NotingEventDatabaseTest {
         val storedEvent = NotingEvent(id = 1, label = SHFLabel.GONE)
 
         // WHEN the event is stored in DB and loaded again
-        notingEventDao.insert(storedEvent)
+        notingEventDao.insertOrReplace(storedEvent)
         val loadedEvents = notingEventDao.loadAllNotingEvents()
         val loadedEvent = loadedEvents[0]
 
@@ -56,12 +56,27 @@ class NotingEventDatabaseTest {
         val numEventsBefore = notingEventDao.countEvents().take(1).toList()[0]
 
         // WHEN an event is inserted
-        notingEventDao.insert(NotingEvent(id = 1, label = SHFLabel.GONE))
+        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE))
 
         // THEN countEvents() is updated
         val after = notingEventDao.countEvents().take(1).toList()[0]
         assertEquals(0, numEventsBefore)
         assertEquals(1, after)
+    }
+
+    @Test
+    fun sessionDatabase_insertOrReplace_isIdempotent() = runTest {
+
+        // GIVEN an empty DB with noting events
+        // WHEN the same event is inserted multiple times
+        val event = NotingEvent(id = 1, label = SHFLabel.GONE)
+        notingEventDao.insertOrReplace(event)
+        notingEventDao.insertOrReplace(event)
+        notingEventDao.insertOrReplace(event)
+
+        // THEN it is only stored unce
+        val numOfStoredEvents = notingEventDao.countEvents().take(1).toList()[0]
+        assertEquals(1, numOfStoredEvents)
     }
 
 }

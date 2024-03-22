@@ -32,7 +32,7 @@ class NotingEventHistoryRepository @Inject constructor(
         scope.launch {
             shfLabelDataSource.labelFlow.collect { labelEvent ->
                 val notingEvent = NotingEvent(label = labelEvent.label, date = labelEvent.timestamp)
-                notingEventDao.insert(notingEvent)
+                notingEventDao.insertOrReplace(notingEvent)
             }
         }
     }
