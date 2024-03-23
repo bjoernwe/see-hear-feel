@@ -3,6 +3,7 @@ package dev.upaya.shf.data.delay
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.DefaultDispatcher
 import dev.upaya.shf.data.preferences.PreferencesDataStore
+import dev.upaya.shf.data.session_history.dataclasses.InputDelayEvent
 import dev.upaya.shf.data.session_stats.SessionStatsDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -28,12 +29,12 @@ class InputDelayEventDataSource @Inject constructor(
 ) {
 
     companion object {
-        const val DELAY_SECONDS = 7;
+        const val DELAY_SECONDS = 7
     }
 
     fun getInputDelayEvents(scope: CoroutineScope): Flow<InputDelayEvent> {
 
-        val inputDelayEvents = MutableStateFlow(InputDelayEvent(0))
+        val inputDelayEvents = MutableStateFlow(InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS))
 
         scope.launch(defaultDispatcher) {
 
@@ -48,7 +49,7 @@ class InputDelayEventDataSource @Inject constructor(
                 if (sessionStatsDataSource.numEvents.value == 0) {
                     // session started but without initial input
                     if (inputDelayEvents.value.delaysInARow > 0)
-                        inputDelayEvents.value = InputDelayEvent(0)  // reset counter
+                        inputDelayEvents.value = InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS)  // reset counter
                     continue
                 }
 
@@ -59,7 +60,7 @@ class InputDelayEventDataSource @Inject constructor(
 
                 if (timeSinceLastInteraction >= DELAY_SECONDS) {
                     val lastCount = inputDelayEvents.value.delaysInARow
-                    inputDelayEvents.value = InputDelayEvent(delaysInARow = lastCount + 1)
+                    inputDelayEvents.value = InputDelayEvent(delaysInARow = lastCount + 1, delayInterval = DELAY_SECONDS)
                 }
             }
         }

@@ -28,7 +28,7 @@ fun StatsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Statistics", color = MaterialTheme.colors.onSecondary) },
+                title = { Text(text = "Summary", color = MaterialTheme.colors.onSecondary) },
                 backgroundColor = MaterialTheme.colors.secondaryVariant,
                 navigationIcon = {
                     IconButton(onClick = onBackButtonClick) {

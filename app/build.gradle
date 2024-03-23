@@ -16,12 +16,14 @@ android {
         targetSdk 34
         versionCode 15
         versionName '0.3.1'
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
         ndk.debugSymbolLevel = 'FULL'
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
     }
 
     buildTypes {

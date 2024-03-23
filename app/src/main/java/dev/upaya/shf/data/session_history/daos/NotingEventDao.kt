@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_history.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -20,7 +20,7 @@ interface NotingEventDao {
     suspend fun loadAllNotingEvents(): Array<NotingEvent>
 
     @Query("SELECT COUNT(*) FROM $NOTING_EVENT_TABLE_NAME")
-    fun countEvents(): Flow<Int>;
+    fun countEvents(): Flow<Int>
 
     @Query("SELECT COUNT(date) as count, date(date) as day FROM $NOTING_EVENT_TABLE_NAME GROUP BY day ORDER BY day")
     fun countEventsPerDay(): Flow<List<NotingsPerDay>>
