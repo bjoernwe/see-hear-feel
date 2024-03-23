@@ -1,10 +1,6 @@
 package dev.upaya.shf.ui.session.stats.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -13,25 +9,16 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun LabelStatsCard(
     labelFreqs: Map<SHFLabel, Int>?,
-    modifier: Modifier = Modifier,
 ) {
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .fillMaxSize()
+    StatsCard(
+        title = "Label Stats",
     ) {
 
-        StatsCard(
-            title = "Labels",
-        ) {
-
-            if (labelFreqs != null) {
-                LabelFreqTable(
-                    labelFreqs = labelFreqs,
-                )
-            }
-
+        if (labelFreqs != null) {
+            LabelFreqTable(
+                labelFreqs = labelFreqs,
+            )
         }
 
     }

@@ -23,6 +23,7 @@ class SessionStatsViewModel @Inject constructor(
     private val _sessionStats = MutableStateFlow<SessionStats?>(null)
     val sessionStats: StateFlow<SessionStats?> = _sessionStats
 
+    val allTimeStats = sessionStatsRepository.allTimeStats
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
     val sessionDurationSeconds: StateFlow<Int> = sessionStatsRepository.sessionDurationSeconds
 

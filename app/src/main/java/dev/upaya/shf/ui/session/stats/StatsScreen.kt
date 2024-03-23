@@ -1,15 +1,18 @@
 package dev.upaya.shf.ui.session.stats
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
+import dev.upaya.shf.data.session_stats.AllTimeStats
 import dev.upaya.shf.data.session_stats.SessionStats
+import dev.upaya.shf.ui.session.stats.composables.AllTimeSummaryCard
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
-import dev.upaya.shf.ui.session.stats.composables.NotingSummaryCard
+import dev.upaya.shf.ui.session.stats.composables.SessionSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -18,6 +21,7 @@ fun StatsScreen(
     numEvents: Int,
     sessionDurationSeconds: Int,
     sessionStats: SessionStats?,
+    allTimeStats: AllTimeStats?,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -38,19 +42,29 @@ fun StatsScreen(
         }
     ) { scaffoldPadding ->
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(scaffoldPadding)
         ) {
 
-            NotingSummaryCard(
-                sessionDurationSeconds = sessionDurationSeconds,
-                numNotings = numEvents,
-            )
+            item {
+                LabelStatsCard(
+                    labelFreqs = sessionStats?.labelFreqs,
+                )
+            }
 
-            LabelStatsCard(
-                labelFreqs = sessionStats?.labelFreqs,
-            )
+            item {
+                SessionSummaryCard(
+                    sessionDurationSeconds = sessionDurationSeconds,
+                    numNotings = numEvents,
+                )
+            }
+
+            item {
+                AllTimeSummaryCard(
+                    allTimeStats = allTimeStats,
+                )
+            }
 
         }
 
@@ -69,6 +83,7 @@ fun StatsScreenPreview() {
             sessionStats = SessionStats(
                 labelFreqs = mapOf(),
             ),
+            allTimeStats = null,
             onBackButtonClick = {},
         )
     }
