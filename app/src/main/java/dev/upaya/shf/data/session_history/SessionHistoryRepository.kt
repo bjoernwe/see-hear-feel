@@ -1,6 +1,7 @@
 package dev.upaya.shf.data.session_history
 
 import dev.upaya.shf.data.labels.SHFLabelDataSource
+import dev.upaya.shf.data.session_history.dataclasses.NotingEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject

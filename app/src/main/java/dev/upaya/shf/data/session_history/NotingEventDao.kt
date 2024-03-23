@@ -4,6 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import dev.upaya.shf.data.session_history.dataclasses.NOTING_EVENT_TABLE_NAME
+import dev.upaya.shf.data.session_history.dataclasses.NotingEvent
+import dev.upaya.shf.data.session_history.dataclasses.NotingsPerDay
 import kotlinx.coroutines.flow.Flow
 
 

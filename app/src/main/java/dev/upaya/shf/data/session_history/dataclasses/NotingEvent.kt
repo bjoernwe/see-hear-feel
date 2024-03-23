@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_history.dataclasses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
