@@ -3,7 +3,6 @@ package dev.upaya.shf.ui.session.stats
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.data.session_history.NotingEventHistoryRepository
 import dev.upaya.shf.data.session_stats.SessionStats
 import dev.upaya.shf.data.session_stats.SessionStatsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,13 +18,12 @@ import javax.inject.Inject
 @HiltViewModel
 class SessionStatsViewModel @Inject constructor(
     sessionStatsRepository: SessionStatsRepository,
-    notingEventHistoryRepository: NotingEventHistoryRepository,
 ) : ViewModel() {
 
     private val _sessionStats = MutableStateFlow<SessionStats?>(null)
     val sessionStats: StateFlow<SessionStats?> = _sessionStats
 
-    val allTimeStats = notingEventHistoryRepository.allTimeStats
+    val allTimeStats = sessionStatsRepository.allTimeStats
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
     val sessionDurationSeconds: StateFlow<Int> = sessionStatsRepository.sessionDurationSeconds
 

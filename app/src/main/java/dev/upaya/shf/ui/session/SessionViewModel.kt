@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import dev.upaya.shf.data.labels.SHFLabelEvent
-import dev.upaya.shf.data.session_history.NotingEventHistoryRepository
+import dev.upaya.shf.data.session_history.SessionHistoryRepository
 import dev.upaya.shf.data.session_state.SessionStateRepository
 import dev.upaya.shf.data.session_stats.SessionStatsRepository
 import kotlinx.coroutines.flow.*
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SessionViewModel @Inject constructor(
     private val sessionStateRepository: SessionStateRepository,
     private val sessionStatsRepository: SessionStatsRepository,
-    private val notingEventHistoryRepository: NotingEventHistoryRepository,
+    private val sessionHistoryRepository: SessionHistoryRepository,
     shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
@@ -30,7 +30,7 @@ class SessionViewModel @Inject constructor(
     private fun onSessionStart() {
         sessionStateRepository.startSession()
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
-        notingEventHistoryRepository.startRecordingEvents(scope = viewModelScope)
+        sessionHistoryRepository.startRecordingEvents(scope = viewModelScope)
     }
 
     private fun onSessionStop() {
