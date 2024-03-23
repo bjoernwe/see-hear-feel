@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.upaya.shf.data.UserInteractionRepository
+import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,31 +18,13 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var userInteractionRepository: UserInteractionRepository
 
-    private lateinit var eventVibrator: EventVibrator
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-
-        eventVibrator = EventVibrator(
-            context = this,
-            scope = lifecycleScope,
-            eventFactory = userInteractionRepository::getDelayedInputEvent,
-        )
-
         setContent {
-            SHFApp()
-        }
-
-        lifecycleScope.launch {
-            userInteractionRepository.vibrationFromForeground.collect { enabled ->
-                if (enabled)
-                    eventVibrator.startVibrator()
-                else
-                    eventVibrator.stopVibrator()
+            SHFTheme(darkTheme = true) {
+                SHFNavHost()
             }
         }
-
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -71,12 +50,4 @@ class SHFActivity : ComponentActivity() {
         return super.onKeyUp(keyCode, event)
     }
 
-}
-
-
-@Composable
-fun SHFApp() {
-    SHFTheme(darkTheme = true) {
-        SHFNavHost()
-    }
 }
