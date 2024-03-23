@@ -19,4 +19,6 @@ interface NotingEventDao {
     @Query("SELECT COUNT(*) FROM $NOTING_EVENT_TABLE_NAME")
     fun countEvents(): Flow<Int>;
 
+    @Query("SELECT COUNT(date) as count, date(date) as day FROM $NOTING_EVENT_TABLE_NAME GROUP BY day ORDER BY day")
+    fun countEventsPerDay(): Flow<List<NotingsPerDay>>
 }

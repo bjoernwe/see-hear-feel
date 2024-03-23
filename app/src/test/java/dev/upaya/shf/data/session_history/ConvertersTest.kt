@@ -4,12 +4,16 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 import java.time.Instant
+import java.time.LocalDate
 
 
 class ConvertersTest {
 
-    private val dateString = "2000-12-31T23:59:59Z"
-    private val dateInstant = Instant.parse("2000-12-31T23:59:59Z")
+    private val instantString = "2000-12-31T23:59:59Z"
+    private val instant = Instant.parse("2000-12-31T23:59:59Z")
+
+    private val dateString = "2000-12-31"
+    private val date = LocalDate.of(2000, 12, 31)
 
     private var testUnit = Converters()
 
@@ -22,7 +26,6 @@ class ConvertersTest {
 
         // THEN the result is null
         assertNull(parsedDate)
-
     }
 
     @Test
@@ -34,7 +37,6 @@ class ConvertersTest {
 
         // THEN the result is null
         assertNull(parsedDate)
-
     }
 
     @Test
@@ -42,11 +44,10 @@ class ConvertersTest {
 
         // GIVEN a date converter
         // WHEN a date string is parsed
-        val parsedDate = testUnit.stringToInstant(dateString)
+        val parsedDate = testUnit.stringToInstant(instantString)
 
         // THEN the result is correct
-        assertEquals(dateInstant, parsedDate)
-
+        assertEquals(instant, parsedDate)
     }
 
     @Test
@@ -58,7 +59,6 @@ class ConvertersTest {
 
         // THEN it is null
         assertNull(formattedDate)
-
     }
 
     @Test
@@ -66,11 +66,20 @@ class ConvertersTest {
 
         // GIVEN a date converter
         // WHEN an Instant is formatted
-        val formattedDate = testUnit.instantToString(dateInstant)
+        val formattedDate = testUnit.instantToString(instant)
 
         // THEN the result is correct
-        assertEquals(dateString, formattedDate)
-
+        assertEquals(instantString, formattedDate)
     }
 
+    @Test
+    fun stringToDate_localDate_returnsDate() {
+
+        // GIVEN a date converter
+        // WHEN a date string is parsed
+        val parsedDate = testUnit.stringToDate(dateString)
+
+        // THEN the result is correct
+        assertEquals(date, parsedDate)
+    }
 }

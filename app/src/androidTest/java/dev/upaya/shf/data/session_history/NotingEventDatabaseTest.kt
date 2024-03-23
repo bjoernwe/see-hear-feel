@@ -12,6 +12,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
+import java.time.Instant
 
 
 class NotingEventDatabaseTest {
@@ -79,4 +80,19 @@ class NotingEventDatabaseTest {
         assertEquals(1, numOfStoredEvents)
     }
 
+    @Test
+    fun sessionDatabase_notingsPerDay_areCorrectlySummarized() = runTest {
+
+        // GIVEN a database with three noting events on two days
+        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE, date = Instant.ofEpochSecond(0)))
+        notingEventDao.insertOrReplace(NotingEvent(id = 2, label = SHFLabel.GONE, date = Instant.ofEpochSecond(0)))
+        notingEventDao.insertOrReplace(NotingEvent(id = 3, label = SHFLabel.GONE, date = Instant.ofEpochSecond(7*24*60*60)))
+
+        // WHEN the notings per day are queried
+        val notingsPerDay = notingEventDao.countEventsPerDay().take(1).toList()[0]
+
+        // THEN they are correctly summarized
+        assertEquals(2, notingsPerDay[0].count)
+        assertEquals(1, notingsPerDay[1].count)
+    }
 }
