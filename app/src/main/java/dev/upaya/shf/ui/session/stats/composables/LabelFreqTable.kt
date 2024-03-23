@@ -1,7 +1,6 @@
 package dev.upaya.shf.ui.session.stats.composables
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.data.labels.SHFLabel
@@ -13,18 +12,39 @@ fun LabelFreqTable(labelFreqs: Map<SHFLabel, Int>) {
 
     val maxLabelCount = labelFreqs.values.maxOrNull()?.toFloat() ?: 1f
 
-    LazyColumn {
+    Column {
 
-        items(labelFreqs.entries.toList()) { (label, count) ->
-
+        if (labelFreqs.getOrDefault(SHFLabel.SEE, 0) > 0) {
             StatsEntryBar(
-                text = label.name.uppercase(),
-                barSize = count.toFloat() / maxLabelCount,
+                text = SHFLabel.SEE.name.uppercase(),
+                barSize = labelFreqs[SHFLabel.SEE]?.toFloat()?.div(maxLabelCount) ?: 0f,
                 columnWeight = .5f,
             )
-
         }
 
+        if (labelFreqs.getOrDefault(SHFLabel.HEAR, 0) > 0) {
+            StatsEntryBar(
+                text = SHFLabel.HEAR.name.uppercase(),
+                barSize = labelFreqs[SHFLabel.HEAR]?.toFloat()?.div(maxLabelCount) ?: 0f,
+                columnWeight = .5f,
+            )
+        }
+
+        if (labelFreqs.getOrDefault(SHFLabel.FEEL, 0) > 0) {
+            StatsEntryBar(
+                text = SHFLabel.FEEL.name.uppercase(),
+                barSize = labelFreqs[SHFLabel.FEEL]?.toFloat()?.div(maxLabelCount) ?: 0f,
+                columnWeight = .5f,
+            )
+        }
+
+        if (labelFreqs.getOrDefault(SHFLabel.GONE, 0) > 0) {
+            StatsEntryBar(
+                text = SHFLabel.GONE.name.uppercase(),
+                barSize = labelFreqs[SHFLabel.GONE]?.toFloat()?.div(maxLabelCount) ?: 0f,
+                columnWeight = .5f,
+            )
+        }
     }
 
 }

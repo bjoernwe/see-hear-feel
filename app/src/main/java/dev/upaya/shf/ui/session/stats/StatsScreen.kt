@@ -1,6 +1,7 @@
 package dev.upaya.shf.ui.session.stats
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,24 +42,30 @@ fun StatsScreen(
         }
     ) { scaffoldPadding ->
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(scaffoldPadding)
         ) {
 
-            LabelStatsCard(
-                labelFreqs = sessionStats?.labelFreqs,
-            )
+            item {
+                LabelStatsCard(
+                    labelFreqs = sessionStats?.labelFreqs,
+                )
+            }
 
-            SessionSummaryCard(
-                sessionDurationSeconds = sessionDurationSeconds,
-                numNotings = numEvents,
-            )
+            item {
+                SessionSummaryCard(
+                    sessionDurationSeconds = sessionDurationSeconds,
+                    numNotings = numEvents,
+                )
+            }
 
-            AllTimeSummaryCard(
-                allTimeStats = allTimeStats,
-            )
-            
+            item {
+                AllTimeSummaryCard(
+                    allTimeStats = allTimeStats,
+                )
+            }
+
         }
 
     }
