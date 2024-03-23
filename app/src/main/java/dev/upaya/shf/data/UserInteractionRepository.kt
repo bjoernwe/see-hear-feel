@@ -3,7 +3,7 @@ package dev.upaya.shf.data
 import dev.upaya.shf.data.delay.DelayedInputEventDataSource
 import dev.upaya.shf.data.delay.DelayedInputEvent
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
-import dev.upaya.shf.data.preferences.PreferencesDataSource
+import dev.upaya.shf.data.preferences.PreferencesDataStore
 import dev.upaya.shf.data.session_state.SessionState
 import dev.upaya.shf.data.session_state.SessionStateDataSource
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class UserInteractionRepository @Inject constructor(
     private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
     private val delayedInputEventDataSource: DelayedInputEventDataSource,
-    private val preferencesDataSource: PreferencesDataSource,
+    private val preferencesDataStore: PreferencesDataStore,
     sessionStateDataSource: SessionStateDataSource,
 ) {
 
@@ -40,7 +40,7 @@ class UserInteractionRepository @Inject constructor(
      */
     fun getDelayedInputEvent(scope: CoroutineScope): Flow<DelayedInputEvent> {
         val delayedInputs = delayedInputEventDataSource.getDelayedInputEvent(externalScope = scope)
-        val pacingEnabled = preferencesDataSource.isPacingEnabled
+        val pacingEnabled = preferencesDataStore.isPacingEnabled
         return delayedInputs.combineTransform(pacingEnabled) { delayEvent, pacing ->
             if (pacing) emit(delayEvent)
         }
