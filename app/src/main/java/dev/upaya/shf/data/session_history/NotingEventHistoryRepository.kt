@@ -6,6 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -29,6 +30,7 @@ class NotingEventHistoryRepository @Inject constructor(
     private val notingEventDao = db.getNotingEventDao()
 
     val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
+    val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
 
     fun startRecordingEvents(scope: CoroutineScope) {
 

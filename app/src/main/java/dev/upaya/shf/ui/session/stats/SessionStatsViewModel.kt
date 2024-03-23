@@ -28,6 +28,7 @@ class SessionStatsViewModel @Inject constructor(
 
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
     val numEventsInDB: Flow<Int> = sessionHistoryRepository.numEventsInDB
+    val numOfDays: Flow<Int> = sessionHistoryRepository.numOfDays
     val sessionDurationSeconds: StateFlow<Int> = sessionStatsRepository.sessionDurationSeconds
 
     init {

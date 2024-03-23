@@ -18,6 +18,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun StatsScreen(
     numEvents: Int,
     numEventsInDB: Int,
+    numOfDays: Int,
     sessionDurationSeconds: Int,
     sessionStats: SessionStats?,
     onBackButtonClick: () -> Unit,
@@ -56,6 +57,7 @@ fun StatsScreen(
 
             AllTimeSummaryCard(
                 numEventsInDB = numEventsInDB,
+                numOfDays = numOfDays,
             )
             
         }
@@ -73,6 +75,7 @@ fun StatsScreenPreview() {
             sessionDurationSeconds = 123,
             numEvents = 42,
             numEventsInDB = 999,
+            numOfDays = 3,
             sessionStats = SessionStats(
                 labelFreqs = mapOf(),
             ),

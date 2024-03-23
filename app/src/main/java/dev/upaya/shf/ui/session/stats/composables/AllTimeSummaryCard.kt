@@ -9,6 +9,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun AllTimeSummaryCard(
     numEventsInDB: Int,
+    numOfDays: Int,
 ) {
 
     StatsCard(
@@ -20,6 +21,11 @@ fun AllTimeSummaryCard(
             StatsEntryText(
                 textLabel = "Notings",
                 textValue = numEventsInDB.toString(),
+            )
+
+            StatsEntryText(
+                textLabel = "Days",
+                textValue = numOfDays.toString(),
             )
 
         }
@@ -35,6 +41,7 @@ fun AllTimeSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
         AllTimeSummaryCard(
             numEventsInDB = 123,
+            numOfDays = 7,
         )
     }
 }
