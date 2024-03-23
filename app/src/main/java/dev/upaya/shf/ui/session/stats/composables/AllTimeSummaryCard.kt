@@ -3,13 +3,13 @@ package dev.upaya.shf.ui.session.stats.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import dev.upaya.shf.data.session_stats.AllTimeStats
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun AllTimeSummaryCard(
-    numEventsInDB: Int,
-    numOfDays: Int,
+    allTimeStats: AllTimeStats?,
 ) {
 
     StatsCard(
@@ -20,12 +20,12 @@ fun AllTimeSummaryCard(
 
             StatsEntryText(
                 textLabel = "Notings",
-                textValue = numEventsInDB.toString(),
+                textValue = allTimeStats?.numNotings?.toString() ?: "N/A",
             )
 
             StatsEntryText(
                 textLabel = "Days",
-                textValue = numOfDays.toString(),
+                textValue = allTimeStats?.numDays?.toString() ?: "N/A",
             )
 
         }
@@ -40,8 +40,7 @@ fun AllTimeSummaryCard(
 fun AllTimeSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
         AllTimeSummaryCard(
-            numEventsInDB = 123,
-            numOfDays = 7,
+            allTimeStats = null,
         )
     }
 }

@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.upaya.shf.data.labels.SHFLabelDataSource
+import dev.upaya.shf.data.session_stats.AllTimeStats
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,15 +31,19 @@ class NotingEventHistoryRepository @Inject constructor(
 
     private val notingEventDao = db.getNotingEventDao()
 
-    val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
-    val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
+    private val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
+    private val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
+
+    val allTimeStats: Flow<AllTimeStats> = combine(numEventsInDB, numOfDays) { numEvents, numDays ->
+        AllTimeStats(numNotings = numEvents, numDays = numDays,)
+    }
 
     fun startRecordingEvents(scope: CoroutineScope) {
-
         scope.launch {
             shfLabelDataSource.labelFlow.collect { labelEvent ->
-                val notingEvent = NotingEvent(label = labelEvent.label, date = labelEvent.timestamp)
-                notingEventDao.insertOrReplace(notingEvent)
+                notingEventDao.insertOrReplace(
+                    NotingEvent(label = labelEvent.label, date = labelEvent.timestamp)
+                )
             }
         }
     }

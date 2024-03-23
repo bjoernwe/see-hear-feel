@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
+import dev.upaya.shf.data.session_stats.AllTimeStats
 import dev.upaya.shf.data.session_stats.SessionStats
 import dev.upaya.shf.ui.session.stats.composables.AllTimeSummaryCard
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
@@ -17,10 +18,9 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 fun StatsScreen(
     numEvents: Int,
-    numEventsInDB: Int,
-    numOfDays: Int,
     sessionDurationSeconds: Int,
     sessionStats: SessionStats?,
+    allTimeStats: AllTimeStats?,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -56,8 +56,7 @@ fun StatsScreen(
             )
 
             AllTimeSummaryCard(
-                numEventsInDB = numEventsInDB,
-                numOfDays = numOfDays,
+                allTimeStats = allTimeStats,
             )
             
         }
@@ -74,11 +73,10 @@ fun StatsScreenPreview() {
         StatsScreen(
             sessionDurationSeconds = 123,
             numEvents = 42,
-            numEventsInDB = 999,
-            numOfDays = 3,
             sessionStats = SessionStats(
                 labelFreqs = mapOf(),
             ),
+            allTimeStats = null,
             onBackButtonClick = {},
         )
     }
