@@ -1,8 +1,6 @@
-package dev.upaya.shf.data.sources
+package dev.upaya.shf.data.gamepad
 
 import android.view.KeyEvent
-import dev.upaya.shf.data.gamepad.GamepadKeyEvent
-import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.toList
@@ -103,7 +101,7 @@ class GamepadKeyEventDataSourceTest {
         // THEN it contains the pressed key plus a current time stamp
         // (there's one more event because the flow starts with UNMAPPED)
         assertEquals(2, emittedValues.size)
-        val eventTimeInSeconds = emittedValues[1].timestamp.epochSecond
+        val eventTimeInSeconds = emittedValues[1].timestamp.toEpochSecond()
         val nowInSeconds = Instant.now().epochSecond
         assertEquals(nowInSeconds, eventTimeInSeconds)
     }

@@ -13,6 +13,7 @@ class GamepadKeyEventDataSource @Inject constructor() {
     // consume the events and another will not be notified.
     private val _gamepadKeyDown = MutableStateFlow(GamepadKeyEvent.ZERO)
     private val _gamepadKeyUp = MutableStateFlow(GamepadKeyEvent.ZERO)
+    // TODO: Drop first event
     val inputKeyDown: StateFlow<GamepadKeyEvent> = _gamepadKeyDown
     val inputKeyUp: StateFlow<GamepadKeyEvent> = _gamepadKeyUp
 
@@ -21,12 +22,12 @@ class GamepadKeyEventDataSource @Inject constructor() {
         if (!isSubscribedTo())
             return false
 
-        val inputKey = GamepadKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
-
-        val keyNotReleasedYet = inputKeyUp.value.timestamp.epochSecond < inputKeyDown.value.timestamp.epochSecond
+        val keyNotReleasedYet = inputKeyUp.value.timestamp.isBefore(inputKeyDown.value.timestamp)
 
         if (keyNotReleasedYet)
             return true
+
+        val inputKey = GamepadKeyMapping.getInputKey(keyCode, allowUnmapped = false) ?: return false
 
         _gamepadKeyDown.tryEmit(GamepadKeyEvent(inputKey))
 

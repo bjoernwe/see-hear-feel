@@ -1,8 +1,8 @@
 package dev.upaya.shf.data.session_history
 
 import androidx.room.TypeConverter
-import java.time.Instant
 import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
@@ -14,20 +14,20 @@ class Converters {
     }
 
     @TypeConverter
-    fun stringToInstant(value: String?): Instant? {
+    fun stringToOffsetDateTime(value: String?): OffsetDateTime? {
         return try {
-            value?.let { Instant.parse(it) }
+            value?.let { OffsetDateTime.parse(value) }
         } catch (e: DateTimeParseException) {
             null
         }
     }
 
     @TypeConverter
-    fun instantToString(date: Instant?): String? {
+    fun offsetDateTimeToString(date: OffsetDateTime?): String? {
         if (date == null) {
             return null
         }
-        return DateTimeFormatter.ISO_INSTANT.format(date)
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(date)
     }
 
     @TypeConverter

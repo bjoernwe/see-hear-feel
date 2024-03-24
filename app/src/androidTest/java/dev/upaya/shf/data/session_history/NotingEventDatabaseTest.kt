@@ -14,7 +14,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.io.IOException
-import java.time.Instant
+import java.time.OffsetDateTime
 
 
 class NotingEventDatabaseTest {
@@ -86,9 +86,9 @@ class NotingEventDatabaseTest {
     fun sessionDatabase_notingsPerDay_areCorrectlySummarized() = runTest {
 
         // GIVEN a database with three noting events on two days
-        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE, date = Instant.ofEpochSecond(0)))
-        notingEventDao.insertOrReplace(NotingEvent(id = 2, label = SHFLabel.GONE, date = Instant.ofEpochSecond(0)))
-        notingEventDao.insertOrReplace(NotingEvent(id = 3, label = SHFLabel.GONE, date = Instant.ofEpochSecond(7*24*60*60)))
+        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
+        notingEventDao.insertOrReplace(NotingEvent(id = 2, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
+        notingEventDao.insertOrReplace(NotingEvent(id = 3, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-02T00:00:00+00:00")))
 
         // WHEN the notings per day are queried
         val notingsPerDay = notingEventDao.countEventsPerDay().take(1).toList()[0]

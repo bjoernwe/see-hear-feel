@@ -12,7 +12,7 @@ internal fun List<SHFLabelEvent>.calcDuration(): Int {
     val firstDate = this.first()
     val lastDate = this.last()
 
-    return (lastDate.timestamp.epochSecond - firstDate.timestamp.epochSecond).toInt()
+    return (lastDate.timestamp.toEpochSecond() - firstDate.timestamp.toEpochSecond()).toInt()
 }
 
 

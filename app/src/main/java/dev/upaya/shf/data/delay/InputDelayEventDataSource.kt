@@ -54,8 +54,8 @@ class InputDelayEventDataSource @Inject constructor(
                 }
 
                 val now = Instant.now()
-                val timeSinceLastInput = now.epochSecond - gamepadKeyEventDataSource.inputKeyDown.value.timestamp.epochSecond
-                val timeSinceLastDelayNotification = now.epochSecond - inputDelayEvents.value.timestamp.epochSecond
+                val timeSinceLastInput = now.epochSecond - gamepadKeyEventDataSource.inputKeyDown.value.timestamp.toEpochSecond()
+                val timeSinceLastDelayNotification = now.epochSecond - inputDelayEvents.value.timestamp.toEpochSecond()
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= DELAY_SECONDS) {

@@ -1,8 +1,9 @@
 package dev.upaya.shf.data.labels
 
-import java.time.Instant
+import java.time.OffsetDateTime
+
 
 data class SHFLabelEvent(
     val label: SHFLabel,
-    val timestamp: Instant = Instant.now(),
+    val timestamp: OffsetDateTime = OffsetDateTime.now(),
 )
