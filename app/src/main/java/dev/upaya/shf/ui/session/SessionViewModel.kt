@@ -3,10 +3,10 @@ package dev.upaya.shf.ui.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import dev.upaya.shf.data.labels.SHFLabelEvent
 import dev.upaya.shf.data.session_history.SessionHistoryRepository
-import dev.upaya.shf.data.session_state.SessionStateRepository
 import dev.upaya.shf.data.session_stats.SessionStatsRepository
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -14,9 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    private val sessionStateRepository: SessionStateRepository,
     private val sessionStatsRepository: SessionStatsRepository,
     private val sessionHistoryRepository: SessionHistoryRepository,
+    private val userInteractionRepository: UserInteractionRepository,
     shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
@@ -27,21 +27,13 @@ class SessionViewModel @Inject constructor(
         onSessionStart()
     }
 
+    /*
+    This is meant as the authoritative place where a session starts. It's also ended here through
+    the viewModelScope, which closes when the user navigates away from the session screen.
+     */
     private fun onSessionStart() {
-        sessionStateRepository.startSession()
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
         sessionHistoryRepository.startRecordingEvents(scope = viewModelScope)
+        userInteractionRepository.startVibratorForDelayedInputs(scope = viewModelScope)
     }
-
-    private fun onSessionStop() {
-        sessionStateRepository.stopSession()
-    }
-
-    // Is this reliably called as soon as the session screen is closed? If not,
-    // NavController.OnDestinationChangedListener may be an alternative way to trigger the event.
-    override fun onCleared() {
-        super.onCleared()
-        onSessionStop()
-    }
-
 }

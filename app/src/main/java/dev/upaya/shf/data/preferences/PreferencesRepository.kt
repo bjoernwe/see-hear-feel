@@ -4,11 +4,11 @@ import javax.inject.Inject
 
 
 class PreferencesRepository @Inject constructor(
-    private val preferencesDataSource: PreferencesDataSource,
+    private val preferencesDataStore: PreferencesDataStore,
 ) {
-    val isPacingEnabled = preferencesDataSource.isPacingEnabled
+    val isPacingEnabled = preferencesDataStore.isPacingEnabled
 
     fun setPacingPreference(enabled: Boolean) {
-        preferencesDataSource.setPacingPreference(enabled = enabled)
+        preferencesDataStore.setPacingPreference(enabled = enabled)
     }
 }

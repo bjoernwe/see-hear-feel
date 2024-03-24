@@ -21,7 +21,7 @@ private val prefKeyPacingEnabled = booleanPreferencesKey("pacing_enabled")
 
 
 @Singleton
-class PreferencesDataSource @Inject constructor(
+class PreferencesDataStore @Inject constructor(
     @ApplicationContext private val appContext: Context,
     @ApplicationCoroutineScope private val externalScope: CoroutineScope,
 ) {

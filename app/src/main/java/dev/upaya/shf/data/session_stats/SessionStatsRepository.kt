@@ -23,7 +23,7 @@ class SessionStatsRepository @Inject constructor(
     val numEvents: StateFlow<Int> = sessionStatsDataSource.numEvents
     val sessionDurationSeconds: StateFlow<Int> = sessionStatsDataSource.sessionDurationSeconds
 
-    private val notingEventDao = sessionHistoryDataStore.getNotinEventDao()
+    private val notingEventDao = sessionHistoryDataStore.getNotingEventDao()
     private val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
     private val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
 

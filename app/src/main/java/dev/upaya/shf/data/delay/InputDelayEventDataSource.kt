@@ -1,15 +1,17 @@
 package dev.upaya.shf.data.delay
 
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
-import dev.upaya.shf.data.session_state.SessionState
-import dev.upaya.shf.data.session_state.SessionStateDataSource
 import dev.upaya.shf.data.DefaultDispatcher
+import dev.upaya.shf.data.preferences.PreferencesDataStore
+import dev.upaya.shf.data.session_history.dataclasses.InputDelayEvent
 import dev.upaya.shf.data.session_stats.SessionStatsDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -19,49 +21,50 @@ import kotlin.math.min
 
 
 @Singleton
-class DelayedInputEventDataSource @Inject constructor(
+class InputDelayEventDataSource @Inject constructor(
     private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
-    private val sessionStateDataSource: SessionStateDataSource,
     private val sessionStatsDataSource: SessionStatsDataSource,
+    private val preferencesDataStore: PreferencesDataStore,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
 
     companion object {
-        const val DELAY_SECONDS = 7;
+        const val DELAY_SECONDS = 7
     }
 
-    fun getDelayedInputEvent(externalScope: CoroutineScope): Flow<DelayedInputEvent> {
+    fun getInputDelayEvents(scope: CoroutineScope): Flow<InputDelayEvent> {
 
-        val delayedInputEvent = MutableStateFlow(DelayedInputEvent(0))
+        val inputDelayEvents = MutableStateFlow(InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS))
 
-        externalScope.launch(defaultDispatcher) {
+        scope.launch(defaultDispatcher) {
 
-            while (isActive) {
+            if (preferencesDataStore.isPacingEnabled.firstOrNull() != true) {
+                return@launch
+            }
+
+            while (scope.isActive) {
 
                 delay(10)
 
-                if (sessionStateDataSource.sessionState.value == SessionState.NOT_RUNNING)
-                    continue  // no session -> no vibration
-
                 if (sessionStatsDataSource.numEvents.value == 0) {
                     // session started but without initial input
-                    if (delayedInputEvent.value.delaysInARow > 0)
-                        delayedInputEvent.value = DelayedInputEvent(0)  // reset counter
+                    if (inputDelayEvents.value.delaysInARow > 0)
+                        inputDelayEvents.value = InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS)  // reset counter
                     continue
                 }
 
                 val now = Instant.now()
                 val timeSinceLastInput = now.epochSecond - gamepadKeyEventDataSource.inputKeyDown.value.timestamp.epochSecond
-                val timeSinceLastDelayNotification = now.epochSecond - delayedInputEvent.value.timestamp.epochSecond
+                val timeSinceLastDelayNotification = now.epochSecond - inputDelayEvents.value.timestamp.epochSecond
                 val timeSinceLastInteraction = min(timeSinceLastInput, timeSinceLastDelayNotification)
 
                 if (timeSinceLastInteraction >= DELAY_SECONDS) {
-                    val lastCount = delayedInputEvent.value.delaysInARow
-                    delayedInputEvent.value = DelayedInputEvent(delaysInARow = lastCount + 1)
+                    val lastCount = inputDelayEvents.value.delaysInARow
+                    inputDelayEvents.value = InputDelayEvent(delaysInARow = lastCount + 1, delayInterval = DELAY_SECONDS)
                 }
             }
         }
 
-        return delayedInputEvent
+        return inputDelayEvents.drop(1)
     }
 }

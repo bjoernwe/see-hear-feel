@@ -4,7 +4,7 @@ import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
-import dev.upaya.shf.data.delay.DelayedInputEventDataSource
+import dev.upaya.shf.data.delay.InputDelayEventDataSource
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
@@ -19,7 +19,7 @@ internal fun PacingSettingsEntry(
             SettingsEntryIcon(id = R.drawable.avg_pace_48px)
         },
         primaryText = "Pacing",
-        secondaryText = "Vibrate every ${DelayedInputEventDataSource.DELAY_SECONDS}s without input",
+        secondaryText = "Vibrate every ${InputDelayEventDataSource.DELAY_SECONDS}s without input",
     ) {
         Switch(
             checked = isPacingEnabled,

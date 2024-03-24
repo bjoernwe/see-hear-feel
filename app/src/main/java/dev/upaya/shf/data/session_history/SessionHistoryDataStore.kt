@@ -3,6 +3,8 @@ package dev.upaya.shf.data.session_history
 import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dev.upaya.shf.data.session_history.daos.InputDelayEventDao
+import dev.upaya.shf.data.session_history.daos.NotingEventDao
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -21,8 +23,11 @@ class SessionHistoryDataStore @Inject constructor(
         DB_NAME
     ).build()
 
-    fun getNotinEventDao(): NotingEventDao {
+    fun getNotingEventDao(): NotingEventDao {
         return db.getNotingEventDao()
     }
 
+    fun getInputDelayEventDao(): InputDelayEventDao {
+        return db.getInputDelayDao()
+    }
 }
