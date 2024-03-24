@@ -3,7 +3,7 @@ package dev.upaya.shf.data.session_history.dataclasses
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.Instant
+import java.time.OffsetDateTime
 
 
 const val INPUT_DELAY_EVENT_TABLE_NAME = "input_delay_events"
@@ -21,5 +21,5 @@ data class InputDelayEvent(
     @ColumnInfo(name = "interval")
     val delayInterval: Int,
 
-    val timestamp: Instant = Instant.now(),
+    val timestamp: OffsetDateTime = OffsetDateTime.now(),
 )
