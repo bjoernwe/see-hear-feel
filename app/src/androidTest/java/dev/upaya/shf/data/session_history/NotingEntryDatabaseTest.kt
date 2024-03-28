@@ -20,12 +20,12 @@ import java.time.OffsetDateTime
 class NotingEntryDatabaseTest {
 
     private lateinit var notingEventDao: NotingEventDao
-    private lateinit var db: NotingEventDatabase
+    private lateinit var db: SessionDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, NotingEventDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, SessionDatabase::class.java).build()
         notingEventDao = db.getNotingEventDao()
     }
 

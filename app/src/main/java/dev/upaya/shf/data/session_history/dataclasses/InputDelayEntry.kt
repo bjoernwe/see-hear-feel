@@ -23,13 +23,16 @@ data class InputDelayEntry(
     val delayInterval: Int,
 
     val timestamp: OffsetDateTime = OffsetDateTime.now(),
+
+    val sessionId: Long? = null,
 ) {
     companion object {
-        fun from(inputDelayEvent: InputDelayEvent): InputDelayEntry {
+        fun from(inputDelayEvent: InputDelayEvent, sessionId: Long): InputDelayEntry {
             return InputDelayEntry(
                 delaysInARow = inputDelayEvent.delaysInARow,
                 delayInterval = inputDelayEvent.delayInterval,
                 timestamp = inputDelayEvent.timestamp,
+                sessionId = sessionId,
             )
         }
     }

@@ -16,12 +16,14 @@ data class NotingEntry(
     val id: Int = 0,
     val date: OffsetDateTime? = OffsetDateTime.now(),
     val label: SHFLabel,
+    val sessionId: Long? = null,
 ) {
     companion object {
-        fun from(labelEvent: SHFLabelEvent): NotingEntry {
+        fun from(labelEvent: SHFLabelEvent, sessionId: Long): NotingEntry {
             return NotingEntry(
                 label = labelEvent.label,
                 date = labelEvent.timestamp,
+                sessionId = sessionId,
             )
         }
     }

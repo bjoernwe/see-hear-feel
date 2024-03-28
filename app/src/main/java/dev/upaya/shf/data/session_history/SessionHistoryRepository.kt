@@ -3,6 +3,9 @@ package dev.upaya.shf.data.session_history
 import dev.upaya.shf.data.delay.InputDelayEventDataSource
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,23 +18,29 @@ class SessionHistoryRepository @Inject constructor(
     private val inputDelayEventDataSource: InputDelayEventDataSource,
 ) {
 
-    fun startRecordingEvents(scope: CoroutineScope) {
-        startRecordingNotingEvents(scope)
-        startRecordingInputDelayEvents(scope)
-    }
-
-    private fun startRecordingNotingEvents(scope: CoroutineScope) {
+    fun startRecordingSessionEvents(scope: CoroutineScope) {
         scope.launch {
-            shfLabelDataSource.labelFlow.collect { labelEvent ->
-                sessionHistoryDataStore.storeOrReplaceNotingEvent(labelEvent)
+            sessionHistoryDataStore.createSessionResource().use { resource ->
+                listOf(
+                    recordNotingEvents(scope = scope, sessionId = resource.sessionId),
+                    recordInputDelayEvents(scope = scope, sessionId = resource.sessionId),
+                ).awaitAll()
             }
         }
     }
 
-    private fun startRecordingInputDelayEvents(scope: CoroutineScope) {
-        scope.launch {
-            inputDelayEventDataSource.getInputDelayEvents(scope = scope).collect {
-                sessionHistoryDataStore.storeOrReplaceInputDelayEvent(it)
+    private fun recordNotingEvents(scope: CoroutineScope, sessionId: Long): Deferred<Unit> {
+        return scope.async {
+            shfLabelDataSource.labelFlow.collect { labelEvent ->
+                sessionHistoryDataStore.storeOrReplaceNotingEvent(labelEvent = labelEvent, sessionId = sessionId)
+            }
+        }
+    }
+
+    private fun recordInputDelayEvents(scope: CoroutineScope, sessionId: Long): Deferred<Unit> {
+        return scope.async {
+            inputDelayEventDataSource.getInputDelayEvents(scope = scope).collect { inputDelayEvent ->
+                sessionHistoryDataStore.storeOrReplaceInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionId)
             }
         }
     }
