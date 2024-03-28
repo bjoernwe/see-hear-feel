@@ -3,8 +3,12 @@ package dev.upaya.shf.data.session_history
 import android.content.Context
 import androidx.room.Room
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.session_history.daos.InputDelayEventDao
-import dev.upaya.shf.data.session_history.daos.NotingEventDao
+import dev.upaya.shf.data.delay.InputDelayEvent
+import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,11 +27,17 @@ class SessionHistoryDataStore @Inject constructor(
         DB_NAME
     ).build()
 
-    fun getNotingEventDao(): NotingEventDao {
-        return db.getNotingEventDao()
+    private val notingEventDao = db.getNotingEventDao()
+    private val inputDelayDao = db.getInputDelayDao()
+
+    val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
+    val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
+
+    suspend fun storeOrReplaceNotingEvent(labelEvent: SHFLabelEvent) {
+        notingEventDao.insertOrReplace(NotingEntry.from(labelEvent))
     }
 
-    fun getInputDelayEventDao(): InputDelayEventDao {
-        return db.getInputDelayDao()
+    suspend fun storeOrReplaceInputDelayEvent(inputDelayEvent: InputDelayEvent) {
+        inputDelayDao.insertOrReplace(InputDelayEntry.from(inputDelayEvent))
     }
 }

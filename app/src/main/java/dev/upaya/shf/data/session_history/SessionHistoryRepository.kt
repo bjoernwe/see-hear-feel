@@ -2,7 +2,6 @@ package dev.upaya.shf.data.session_history
 
 import dev.upaya.shf.data.delay.InputDelayEventDataSource
 import dev.upaya.shf.data.labels.SHFLabelDataSource
-import dev.upaya.shf.data.session_history.dataclasses.NotingEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,22 +16,23 @@ class SessionHistoryRepository @Inject constructor(
 ) {
 
     fun startRecordingEvents(scope: CoroutineScope) {
-        val notingEventDao = sessionHistoryDataStore.getNotingEventDao()
+        startRecordingNotingEvents(scope)
+        startRecordingInputDelayEvents(scope)
+    }
+
+    private fun startRecordingNotingEvents(scope: CoroutineScope) {
         scope.launch {
             shfLabelDataSource.labelFlow.collect { labelEvent ->
-                notingEventDao.insertOrReplace(
-                    NotingEvent(label = labelEvent.label, date = labelEvent.timestamp)
-                )
-            }
-        }
-        scope.launch {
-            val inputDelayEventDao = sessionHistoryDataStore.getInputDelayEventDao()
-            scope.launch {
-                inputDelayEventDataSource.getInputDelayEvents(scope = scope).collect {
-                    inputDelayEventDao.insertOrReplace(it)
-                }
+                sessionHistoryDataStore.storeOrReplaceNotingEvent(labelEvent)
             }
         }
     }
 
+    private fun startRecordingInputDelayEvents(scope: CoroutineScope) {
+        scope.launch {
+            inputDelayEventDataSource.getInputDelayEvents(scope = scope).collect {
+                sessionHistoryDataStore.storeOrReplaceInputDelayEvent(it)
+            }
+        }
+    }
 }

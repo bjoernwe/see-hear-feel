@@ -6,13 +6,13 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.upaya.shf.data.session_history.daos.InputDelayEventDao
 import dev.upaya.shf.data.session_history.daos.NotingEventDao
-import dev.upaya.shf.data.session_history.dataclasses.InputDelayEvent
-import dev.upaya.shf.data.session_history.dataclasses.NotingEvent
+import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
 
 
 @Database(
     version = 2,
-    entities = [NotingEvent::class, InputDelayEvent::class],
+    entities = [NotingEntry::class, InputDelayEntry::class],
     exportSchema = true,
     autoMigrations = [
         AutoMigration (from = 1, to = 2)

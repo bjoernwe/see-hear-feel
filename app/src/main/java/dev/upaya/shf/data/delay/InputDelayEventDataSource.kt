@@ -3,7 +3,6 @@ package dev.upaya.shf.data.delay
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.DefaultDispatcher
 import dev.upaya.shf.data.preferences.PreferencesDataStore
-import dev.upaya.shf.data.session_history.dataclasses.InputDelayEvent
 import dev.upaya.shf.data.session_stats.SessionStatsDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
