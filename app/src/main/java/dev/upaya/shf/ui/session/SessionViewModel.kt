@@ -3,12 +3,15 @@ package dev.upaya.shf.ui.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import dev.upaya.shf.data.labels.SHFLabelEvent
 import dev.upaya.shf.data.session_history.SessionHistoryRepository
+import dev.upaya.shf.data.session_history.datastore.SessionResource
 import dev.upaya.shf.data.session_stats.SessionStatsRepository
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -23,8 +26,14 @@ class SessionViewModel @Inject constructor(
     internal val labelFlow: Flow<SHFLabelEvent> = shfLabelDataSource.labelFlow
     val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
 
+    private lateinit var sessionResource: SessionResource
+
     init {
-        onSessionStart()
+        viewModelScope.launch {
+            sessionResource = sessionHistoryRepository.createSessionResource()
+            addCloseable(sessionResource)  // close resource when session/view model is closed
+            onSessionStart()
+        }
     }
 
     /*
@@ -33,7 +42,20 @@ class SessionViewModel @Inject constructor(
      */
     private fun onSessionStart() {
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
-        sessionHistoryRepository.startRecordingSessionEvents(scope = viewModelScope)
-        userInteractionRepository.startVibratorForDelayedInputs(scope = viewModelScope)
+        sessionHistoryRepository.addLabelEventListener(scope = viewModelScope, onLabelEvent = ::storeNotingEvent)
+        sessionHistoryRepository.addInputDelayListener(scope = viewModelScope, onInputDelay = ::storeInputDelayEvent)
+        sessionHistoryRepository.addInputDelayListener(scope = viewModelScope) { userInteractionRepository.vibrate() }
+    }
+
+    private fun storeNotingEvent(labelEvent: SHFLabelEvent) {
+        viewModelScope.launch {
+            sessionHistoryRepository.storeNotingEvent(labelEvent = labelEvent, sessionId = sessionResource.sessionId)
+        }
+    }
+
+    private fun storeInputDelayEvent(inputDelayEvent: InputDelayEvent) {
+        viewModelScope.launch {
+            sessionHistoryRepository.storeInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionResource.sessionId)
+        }
     }
 }
