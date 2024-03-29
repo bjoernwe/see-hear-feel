@@ -1,10 +1,10 @@
-package dev.upaya.shf.data.session_history.daos
+package dev.upaya.shf.data.session_history.datastore.daos
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dev.upaya.shf.data.session_history.SessionDatabase
-import dev.upaya.shf.data.session_history.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_history.datastore.SessionDatabase
+import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -14,7 +14,7 @@ import java.io.IOException
 import java.time.OffsetDateTime
 
 
-class SessionDaoTests {
+class SessionDaoTest {
 
     private lateinit var db: SessionDatabase
     private lateinit var unitUnderTest: SessionDao

@@ -1,9 +1,9 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_history.datastore
 
 import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.labels.SHFLabelEvent
-import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
-import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
+import dev.upaya.shf.data.session_history.datastore.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.datastore.dataclasses.NotingEntry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

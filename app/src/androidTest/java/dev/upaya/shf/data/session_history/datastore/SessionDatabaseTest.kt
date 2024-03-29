@@ -1,11 +1,11 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_history.datastore
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import dev.upaya.shf.data.labels.SHFLabel
-import dev.upaya.shf.data.session_history.daos.NotingEventDao
-import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
+import dev.upaya.shf.data.session_history.datastore.daos.NotingEventDao
+import dev.upaya.shf.data.session_history.datastore.dataclasses.NotingEntry
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -17,7 +17,7 @@ import java.io.IOException
 import java.time.OffsetDateTime
 
 
-class NotingEntryDatabaseTest {
+class SessionDatabaseTest {
 
     private lateinit var notingEventDao: NotingEventDao
     private lateinit var db: SessionDatabase

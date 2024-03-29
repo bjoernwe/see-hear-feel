@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history.dataclasses
+package dev.upaya.shf.data.session_history.datastore.dataclasses
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

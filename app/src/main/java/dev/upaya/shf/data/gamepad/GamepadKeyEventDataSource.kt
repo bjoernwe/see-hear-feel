@@ -13,7 +13,6 @@ class GamepadKeyEventDataSource @Inject constructor() {
     // consume the events and another will not be notified.
     private val _gamepadKeyDown = MutableStateFlow(GamepadKeyEvent.ZERO)
     private val _gamepadKeyUp = MutableStateFlow(GamepadKeyEvent.ZERO)
-    // TODO: Drop first event
     val inputKeyDown: StateFlow<GamepadKeyEvent> = _gamepadKeyDown
     val inputKeyUp: StateFlow<GamepadKeyEvent> = _gamepadKeyUp
 

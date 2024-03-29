@@ -10,11 +10,6 @@ import dev.upaya.shf.ui.settings.navigateToSettings
 internal const val routeStartScreen = "start_screen"
 
 
-/*fun NavController.navigateToStartScreen() {
-    navigate(routeStartScreen)
-}*/
-
-
 fun NavGraphBuilder.startScreen(
     navController: NavController,
 ) {
