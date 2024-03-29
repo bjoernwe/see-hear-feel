@@ -24,6 +24,11 @@ fun AllTimeSummaryCard(
             )
 
             StatsEntryText(
+                textLabel = "Sessions",
+                textValue = allTimeStats?.numSessions?.toString() ?: "N/A",
+            )
+
+            StatsEntryText(
                 textLabel = "Days",
                 textValue = allTimeStats?.numDays?.toString() ?: "N/A",
             )

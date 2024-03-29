@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.session_history.daos.NotingEventDao
-import dev.upaya.shf.data.session_history.dataclasses.NotingEvent
+import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -17,15 +17,15 @@ import java.io.IOException
 import java.time.OffsetDateTime
 
 
-class NotingEventDatabaseTest {
+class NotingEntryDatabaseTest {
 
     private lateinit var notingEventDao: NotingEventDao
-    private lateinit var db: NotingEventDatabase
+    private lateinit var db: SessionDatabase
 
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = Room.inMemoryDatabaseBuilder(context, NotingEventDatabase::class.java).build()
+        db = Room.inMemoryDatabaseBuilder(context, SessionDatabase::class.java).build()
         notingEventDao = db.getNotingEventDao()
     }
 
@@ -40,7 +40,7 @@ class NotingEventDatabaseTest {
     fun sessionDatabase_eventIsStored_andLoadedAgain() = runTest {
 
         // GIVEN a noting event
-        val storedEvent = NotingEvent(id = 1, label = SHFLabel.GONE)
+        val storedEvent = NotingEntry(id = 1, label = SHFLabel.GONE)
 
         // WHEN the event is stored in DB and loaded again
         notingEventDao.insertOrReplace(storedEvent)
@@ -59,7 +59,7 @@ class NotingEventDatabaseTest {
         val numEventsBefore = notingEventDao.countEvents().take(1).toList()[0]
 
         // WHEN an event is inserted
-        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE))
+        notingEventDao.insertOrReplace(NotingEntry(id = 1, label = SHFLabel.GONE))
 
         // THEN countEvents() is updated
         val after = notingEventDao.countEvents().take(1).toList()[0]
@@ -72,7 +72,7 @@ class NotingEventDatabaseTest {
 
         // GIVEN an empty DB with noting events
         // WHEN the same event is inserted multiple times
-        val event = NotingEvent(id = 1, label = SHFLabel.GONE)
+        val event = NotingEntry(id = 1, label = SHFLabel.GONE)
         notingEventDao.insertOrReplace(event)
         notingEventDao.insertOrReplace(event)
         notingEventDao.insertOrReplace(event)
@@ -86,9 +86,9 @@ class NotingEventDatabaseTest {
     fun sessionDatabase_notingsPerDay_areCorrectlySummarized() = runTest {
 
         // GIVEN a database with three noting events on two days
-        notingEventDao.insertOrReplace(NotingEvent(id = 1, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
-        notingEventDao.insertOrReplace(NotingEvent(id = 2, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
-        notingEventDao.insertOrReplace(NotingEvent(id = 3, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-02T00:00:00+00:00")))
+        notingEventDao.insertOrReplace(NotingEntry(id = 1, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
+        notingEventDao.insertOrReplace(NotingEntry(id = 2, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-01T00:00:00+00:00")))
+        notingEventDao.insertOrReplace(NotingEntry(id = 3, label = SHFLabel.GONE, date = OffsetDateTime.parse("2000-01-02T00:00:00+00:00")))
 
         // WHEN the notings per day are queried
         val notingsPerDay = notingEventDao.countEventsPerDay().take(1).toList()[0]

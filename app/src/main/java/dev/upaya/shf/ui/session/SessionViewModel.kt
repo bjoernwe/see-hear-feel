@@ -33,7 +33,7 @@ class SessionViewModel @Inject constructor(
      */
     private fun onSessionStart() {
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
-        sessionHistoryRepository.startRecordingEvents(scope = viewModelScope)
+        sessionHistoryRepository.startRecordingSessionEvents(scope = viewModelScope)
         userInteractionRepository.startVibratorForDelayedInputs(scope = viewModelScope)
     }
 }

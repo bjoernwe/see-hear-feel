@@ -1,33 +1,36 @@
 package dev.upaya.shf.data.session_history
 
-import android.content.Context
-import androidx.room.Room
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.session_history.daos.InputDelayEventDao
-import dev.upaya.shf.data.session_history.daos.NotingEventDao
+import dev.upaya.shf.data.delay.InputDelayEvent
+import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
-private const val DB_NAME = "dev.upaya.shf.session_db"
-
-
 @Singleton
 class SessionHistoryDataStore @Inject constructor(
-    @ApplicationContext private val appContext: Context,
+    @SessionDB private val db: SessionDatabase,
 ) {
+    private val inputDelayDao = db.getInputDelayDao()
+    private val notingEventDao = db.getNotingEventDao()
+    private val sessionDao = db.getSessionDao()
 
-    private val db = Room.databaseBuilder(
-        appContext,
-        NotingEventDatabase::class.java,
-        DB_NAME
-    ).build()
+    val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
+    val numOfSesions: Flow<Int> = sessionDao.countSessions()
+    val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
 
-    fun getNotingEventDao(): NotingEventDao {
-        return db.getNotingEventDao()
+    suspend fun createSessionResource(): SessionResource {
+        return SessionResource.create(sessionDao = sessionDao)
     }
 
-    fun getInputDelayEventDao(): InputDelayEventDao {
-        return db.getInputDelayDao()
+    suspend fun storeOrReplaceNotingEvent(labelEvent: SHFLabelEvent, sessionId: Long) {
+        notingEventDao.insertOrReplace(NotingEntry.from(labelEvent = labelEvent, sessionId = sessionId))
+    }
+
+    suspend fun storeOrReplaceInputDelayEvent(inputDelayEvent: InputDelayEvent, sessionId: Long) {
+        inputDelayDao.insertOrReplace(InputDelayEntry.from(inputDelayEvent = inputDelayEvent, sessionId = sessionId))
     }
 }
