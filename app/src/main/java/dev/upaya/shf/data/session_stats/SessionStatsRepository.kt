@@ -2,7 +2,7 @@ package dev.upaya.shf.data.session_stats
 
 import dev.upaya.shf.data.DefaultDispatcher
 import dev.upaya.shf.data.labels.SHFLabelDataSource
-import dev.upaya.shf.data.session_history.SessionHistoryDataStore
+import dev.upaya.shf.data.session_history.datastore.SessionHistoryDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

@@ -1,15 +1,15 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_history.datastore
 
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import dev.upaya.shf.data.session_history.daos.InputDelayEventDao
-import dev.upaya.shf.data.session_history.daos.NotingEventDao
-import dev.upaya.shf.data.session_history.daos.SessionDao
-import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
-import dev.upaya.shf.data.session_history.dataclasses.NotingEntry
-import dev.upaya.shf.data.session_history.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_history.datastore.daos.InputDelayEventDao
+import dev.upaya.shf.data.session_history.datastore.daos.NotingEventDao
+import dev.upaya.shf.data.session_history.datastore.daos.SessionDao
+import dev.upaya.shf.data.session_history.datastore.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.datastore.dataclasses.NotingEntry
+import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
 
 
 @Database(

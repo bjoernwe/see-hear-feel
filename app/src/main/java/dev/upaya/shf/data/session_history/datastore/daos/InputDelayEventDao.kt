@@ -1,9 +1,9 @@
-package dev.upaya.shf.data.session_history.daos
+package dev.upaya.shf.data.session_history.datastore.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import dev.upaya.shf.data.session_history.dataclasses.InputDelayEntry
+import dev.upaya.shf.data.session_history.datastore.dataclasses.InputDelayEntry
 
 
 @Dao

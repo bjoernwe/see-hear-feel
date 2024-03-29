@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history.dataclasses
+package dev.upaya.shf.data.session_history.datastore.dataclasses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,14 +14,4 @@ data class SessionEntry(
     val id: Int = 0,
     val start: OffsetDateTime,
     var end: OffsetDateTime? = null,
-) {
-    companion object {
-        fun from(session: Session): SessionEntry {
-            return SessionEntry(
-                id = session.id,
-                start = session.start,
-                end = session.end,
-            )
-        }
-    }
-}
+)
