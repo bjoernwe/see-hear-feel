@@ -19,6 +19,7 @@ class SessionHistoryDataStore @Inject constructor(
     private val sessionDao = db.getSessionDao()
 
     val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
+    val numOfSesions: Flow<Int> = sessionDao.countSessions()
     val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
 
     suspend fun createSessionResource(): SessionResource {

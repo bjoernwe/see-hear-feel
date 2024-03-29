@@ -23,10 +23,19 @@ class SessionStatsRepository @Inject constructor(
     val sessionDurationSeconds: StateFlow<Int> = sessionStatsDataSource.sessionDurationSeconds
 
     private val numEventsInDB: Flow<Int> = sessionHistoryDataStore.numEventsInDB
+    private val numOfSessions: Flow<Int> = sessionHistoryDataStore.numOfSesions
     private val numOfDays: Flow<Int> = sessionHistoryDataStore.numOfDays
 
-    val allTimeStats: Flow<AllTimeStats> = combine(numEventsInDB, numOfDays) { numEvents, numDays ->
-        AllTimeStats(numNotings = numEvents, numDays = numDays)
+    val allTimeStats: Flow<AllTimeStats> = combine(
+        numEventsInDB,
+        numOfSessions,
+        numOfDays
+    ) { numEvents, numSessions, numDays ->
+        AllTimeStats(
+            numNotings = numEvents,
+            numSessions = numSessions,
+            numDays = numDays
+        )
     }
 
     suspend fun calcStats(): SessionStats {
