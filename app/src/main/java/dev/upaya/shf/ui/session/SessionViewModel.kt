@@ -3,6 +3,7 @@ package dev.upaya.shf.ui.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.upaya.shf.app.AnalyticsLogger
 import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.data.labels.SHFLabelDataSource
@@ -20,6 +21,7 @@ class SessionViewModel @Inject constructor(
     private val sessionStatsRepository: SessionStatsRepository,
     private val sessionHistoryRepository: SessionHistoryRepository,
     private val userInteractionRepository: UserInteractionRepository,
+    private val analyticsLogger: AnalyticsLogger,
     shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
@@ -43,8 +45,10 @@ class SessionViewModel @Inject constructor(
     private fun onSessionStart() {
         sessionStatsRepository.startStatsCollection(scope = viewModelScope)
         sessionHistoryRepository.addLabelEventListener(scope = viewModelScope, onLabelEvent = ::storeNotingEvent)
+        sessionHistoryRepository.addLabelEventListener(scope = viewModelScope) { analyticsLogger.logNotingEvent(it.label) }
         sessionHistoryRepository.addInputDelayListener(scope = viewModelScope, onInputDelay = ::storeInputDelayEvent)
         sessionHistoryRepository.addInputDelayListener(scope = viewModelScope) { userInteractionRepository.vibrate() }
+        analyticsLogger.logSessionStart()
     }
 
     private fun storeNotingEvent(labelEvent: SHFLabelEvent) {
