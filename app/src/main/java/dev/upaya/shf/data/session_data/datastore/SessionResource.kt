@@ -1,9 +1,11 @@
 package dev.upaya.shf.data.session_data.datastore
 
+import dev.upaya.shf.data.session_data.datastore.daos.NotingEventDao
 import dev.upaya.shf.data.session_data.datastore.daos.SessionDao
 import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.io.Closeable
 import java.time.OffsetDateTime
@@ -16,22 +18,32 @@ import java.time.OffsetDateTime
 class SessionResource(
     val sessionId: Long,
     private val sessionDao: SessionDao,
+    private val notingEventDao: NotingEventDao,
 ) : AutoCloseable, Closeable {
 
     companion object {
-        suspend fun create(sessionDao: SessionDao): SessionResource {
+        suspend fun create(
+            sessionDao: SessionDao,
+            notingEventDao: NotingEventDao,
+        ): SessionResource {
             val session = SessionEntry(start = OffsetDateTime.now())
             val sessionId = sessionDao.insertOrReplace(session = session)
             return SessionResource(
                 sessionId = sessionId,
                 sessionDao = sessionDao,
+                notingEventDao = notingEventDao,
             )
         }
     }
 
     override fun close() {
         CoroutineScope(Dispatchers.IO).launch {
-            sessionDao.setEndTimestamp(id = sessionId)
+            val numEvents = notingEventDao.countEventsOfCurrentSession().firstOrNull()
+            if (numEvents == null || numEvents == 0) {
+                sessionDao.deleteSession(id = sessionId)
+            } else {
+                sessionDao.setEndTimestamp(id = sessionId)
+            }
         }
     }
 }

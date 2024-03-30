@@ -30,7 +30,7 @@ class SessionDataStore @Inject constructor(
     }
 
     suspend fun createSessionResource(): SessionResource {
-        return SessionResource.create(sessionDao = sessionDao)
+        return SessionResource.create(sessionDao = sessionDao, notingEventDao = notingEventDao)
     }
 
     suspend fun storeOrReplaceNotingEvent(labelEvent: SHFLabelEvent, sessionId: Long) {

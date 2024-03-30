@@ -16,6 +16,9 @@ interface SessionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrReplace(session: SessionEntry): Long
 
+    @Query("DELETE FROM $SESSION_TABLE_NAME WHERE id = :id")
+    suspend fun deleteSession(id: Long)
+
     @Query("SELECT COUNT(*) FROM $SESSION_TABLE_NAME")
     fun countSessions(): Flow<Int>
 
