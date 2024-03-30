@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dev.upaya.shf.data.delay.InputDelayEventDataSource
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +14,6 @@ import javax.inject.Singleton
 class UserInteractionRepository @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
-    private val inputDelayEventDataSource: InputDelayEventDataSource,
 ) {
 
     companion object {
@@ -28,7 +24,7 @@ class UserInteractionRepository @Inject constructor(
         )
     }
 
-    private var vibrator: Vibrator? = null
+    private var vibrator: Vibrator? = VibratorFactory.getVibrator(context = appContext)
 
     fun registerKeyDownFromForeground(keyCode: Int): Boolean {
         return gamepadKeyEventDataSource.registerKeyDown(keyCode = keyCode)
@@ -38,14 +34,8 @@ class UserInteractionRepository @Inject constructor(
         return gamepadKeyEventDataSource.registerKeyUp(keyCode = keyCode)
     }
 
-    fun startVibratorForDelayedInputs(scope: CoroutineScope) {
-        vibrator = VibratorFactory.getVibrator(context = appContext)
-        scope.launch {
-            inputDelayEventDataSource.getInputDelayEvents(this)
-                .collect {
-                    Timber.i("~~~ vibrate ${it.delaysInARow} ~~~")
-                    vibrator?.vibrate(vibrationEffect)
-                }
-        }
+    fun vibrate() {
+        Timber.i("~~~ vibrate ~~~")
+        vibrator?.vibrate(vibrationEffect)
     }
 }

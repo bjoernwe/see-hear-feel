@@ -5,6 +5,7 @@ import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.Closeable
 import java.time.OffsetDateTime
 
 
@@ -15,7 +16,7 @@ import java.time.OffsetDateTime
 class SessionResource(
     val sessionId: Long,
     private val sessionDao: SessionDao,
-) : AutoCloseable {
+) : AutoCloseable, Closeable {
 
     companion object {
         suspend fun create(sessionDao: SessionDao): SessionResource {
