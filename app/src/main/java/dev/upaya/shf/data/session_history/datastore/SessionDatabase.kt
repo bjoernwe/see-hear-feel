@@ -13,7 +13,7 @@ import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
 
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [
         InputDelayEntry::class,
         NotingEntry::class,
@@ -23,6 +23,7 @@ import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
     autoMigrations = [
         AutoMigration (from = 1, to = 2),
         AutoMigration (from = 2, to = 3),
+        AutoMigration (from = 3, to = 4),
     ]
 )
 @TypeConverters(Converters::class)

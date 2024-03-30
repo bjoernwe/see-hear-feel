@@ -2,6 +2,7 @@ package dev.upaya.shf.data.session_history.datastore.dataclasses
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.upaya.shf.data.delay.InputDelayEvent
 import java.time.OffsetDateTime
@@ -10,7 +11,10 @@ import java.time.OffsetDateTime
 const val INPUT_DELAY_EVENT_TABLE_NAME = "input_delay_events"
 
 
-@Entity(tableName = INPUT_DELAY_EVENT_TABLE_NAME)
+@Entity(
+    tableName = INPUT_DELAY_EVENT_TABLE_NAME,
+    indices = [Index(value = ["sessionId"])],
+)
 data class InputDelayEntry(
 
     @PrimaryKey(autoGenerate = true)

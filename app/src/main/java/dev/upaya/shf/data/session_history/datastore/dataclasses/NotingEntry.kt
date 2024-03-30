@@ -1,6 +1,7 @@
 package dev.upaya.shf.data.session_history.datastore.dataclasses
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.labels.SHFLabelEvent
@@ -10,7 +11,10 @@ import java.time.OffsetDateTime
 const val NOTING_EVENT_TABLE_NAME = "noting_events"
 
 
-@Entity(tableName = NOTING_EVENT_TABLE_NAME)
+@Entity(
+    tableName = NOTING_EVENT_TABLE_NAME,
+    indices = [Index(value = ["sessionId"])],
+)
 data class NotingEntry(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
