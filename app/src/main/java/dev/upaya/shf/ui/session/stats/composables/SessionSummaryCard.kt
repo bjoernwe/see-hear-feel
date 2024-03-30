@@ -10,7 +10,7 @@ import java.util.*
 
 @Composable
 fun SessionSummaryCard(
-    sessionDurationSeconds: Int?,
+    sessionDurationSeconds: Long?,
     numNotings: Int?,
 ) {
 
@@ -23,7 +23,7 @@ fun SessionSummaryCard(
             StatsEntryText(
                 textLabel = "Duration",
                 textValue = if (sessionDurationSeconds != null)
-                    DateUtils.formatElapsedTime(sessionDurationSeconds.toLong())
+                    DateUtils.formatElapsedTime(sessionDurationSeconds)
                 else
                     "N/A",
             )

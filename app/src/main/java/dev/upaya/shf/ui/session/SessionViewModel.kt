@@ -18,15 +18,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    private val sessionStatsRepository: SessionStatsRepository,
     private val sessionHistoryRepository: SessionHistoryRepository,
     private val userInteractionRepository: UserInteractionRepository,
     private val analyticsLogger: AnalyticsLogger,
+    sessionStatsRepository: SessionStatsRepository,
     shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
     internal val labelFlow: Flow<SHFLabelEvent> = shfLabelDataSource.labelFlow
-    val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
+    val numEvents: Flow<Int> = sessionStatsRepository.numEvents
 
     private lateinit var sessionResource: SessionResource
 
@@ -43,7 +43,6 @@ class SessionViewModel @Inject constructor(
     the viewModelScope, which closes when the user navigates away from the session screen.
      */
     private fun onSessionStart() {
-        sessionStatsRepository.startStatsCollection(scope = viewModelScope)
         sessionHistoryRepository.addLabelEventListener(scope = viewModelScope, onLabelEvent = ::storeNotingEvent)
         sessionHistoryRepository.addLabelEventListener(scope = viewModelScope) { analyticsLogger.logNotingEvent(it.label) }
         sessionHistoryRepository.addInputDelayListener(scope = viewModelScope, onInputDelay = ::storeInputDelayEvent)

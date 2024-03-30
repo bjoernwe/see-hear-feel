@@ -19,6 +19,9 @@ interface SessionDao {
     @Query("SELECT COUNT(*) FROM $SESSION_TABLE_NAME")
     fun countSessions(): Flow<Int>
 
+    @Query("SELECT * FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1")
+    fun getNewestSession(): Flow<SessionEntry>
+
     @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = :id")
     suspend fun getSession(id: Long): SessionEntry
 
