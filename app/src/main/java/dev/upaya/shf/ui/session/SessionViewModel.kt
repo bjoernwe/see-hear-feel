@@ -8,9 +8,9 @@ import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import dev.upaya.shf.data.labels.SHFLabelEvent
-import dev.upaya.shf.data.session_history.SessionHistoryRepository
-import dev.upaya.shf.data.session_history.datastore.SessionResource
-import dev.upaya.shf.data.session_stats.SessionStatsRepository
+import dev.upaya.shf.data.session_data.SessionDataRepository
+import dev.upaya.shf.data.session_data.datastore.SessionResource
+import dev.upaya.shf.data.session_data.SessionStatsRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,21 +18,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SessionViewModel @Inject constructor(
-    private val sessionStatsRepository: SessionStatsRepository,
-    private val sessionHistoryRepository: SessionHistoryRepository,
+    private val sessionDataRepository: SessionDataRepository,
     private val userInteractionRepository: UserInteractionRepository,
     private val analyticsLogger: AnalyticsLogger,
+    sessionStatsRepository: SessionStatsRepository,
     shfLabelDataSource: SHFLabelDataSource,
 ) : ViewModel() {
 
     internal val labelFlow: Flow<SHFLabelEvent> = shfLabelDataSource.labelFlow
-    val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
+    val numEvents: Flow<Int> = sessionStatsRepository.numEvents
 
     private lateinit var sessionResource: SessionResource
 
     init {
         viewModelScope.launch {
-            sessionResource = sessionHistoryRepository.createSessionResource()
+            sessionResource = sessionDataRepository.createSessionResource()
             addCloseable(sessionResource)  // close resource when session/view model is closed
             onSessionStart()
         }
@@ -43,23 +43,22 @@ class SessionViewModel @Inject constructor(
     the viewModelScope, which closes when the user navigates away from the session screen.
      */
     private fun onSessionStart() {
-        sessionStatsRepository.startStatsCollection(scope = viewModelScope)
-        sessionHistoryRepository.addLabelEventListener(scope = viewModelScope, onLabelEvent = ::storeNotingEvent)
-        sessionHistoryRepository.addLabelEventListener(scope = viewModelScope) { analyticsLogger.logNotingEvent(it.label) }
-        sessionHistoryRepository.addInputDelayListener(scope = viewModelScope, onInputDelay = ::storeInputDelayEvent)
-        sessionHistoryRepository.addInputDelayListener(scope = viewModelScope) { userInteractionRepository.vibrate() }
+        sessionDataRepository.addLabelEventListener(scope = viewModelScope, onLabelEvent = ::storeNotingEvent)
+        sessionDataRepository.addLabelEventListener(scope = viewModelScope) { analyticsLogger.logNotingEvent(it.label) }
+        sessionDataRepository.addInputDelayListener(scope = viewModelScope, onInputDelay = ::storeInputDelayEvent)
+        sessionDataRepository.addInputDelayListener(scope = viewModelScope) { userInteractionRepository.vibrate() }
         analyticsLogger.logSessionStart()
     }
 
     private fun storeNotingEvent(labelEvent: SHFLabelEvent) {
         viewModelScope.launch {
-            sessionHistoryRepository.storeNotingEvent(labelEvent = labelEvent, sessionId = sessionResource.sessionId)
+            sessionDataRepository.storeNotingEvent(labelEvent = labelEvent, sessionId = sessionResource.sessionId)
         }
     }
 
     private fun storeInputDelayEvent(inputDelayEvent: InputDelayEvent) {
         viewModelScope.launch {
-            sessionHistoryRepository.storeInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionResource.sessionId)
+            sessionDataRepository.storeInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionResource.sessionId)
         }
     }
 }

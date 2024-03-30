@@ -3,13 +3,14 @@ package dev.upaya.shf.data.delay
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.DefaultDispatcher
 import dev.upaya.shf.data.preferences.PreferencesDataStore
-import dev.upaya.shf.data.session_stats.SessionStatsDataSource
+import dev.upaya.shf.data.session_data.datastore.SessionDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ import kotlin.math.min
 @Singleton
 class InputDelayEventDataSource @Inject constructor(
     private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
-    private val sessionStatsDataSource: SessionStatsDataSource,
+    private val sessionDataStore: SessionDataStore,
     private val preferencesDataStore: PreferencesDataStore,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
@@ -43,9 +44,7 @@ class InputDelayEventDataSource @Inject constructor(
 
             while (scope.isActive) {
 
-                delay(10)
-
-                if (sessionStatsDataSource.numEvents.value == 0) {
+                if (sessionDataStore.numEventsOfCurrentSession.first() == 0) {
                     // session started but without initial input
                     if (inputDelayEvents.value.delaysInARow > 0)
                         inputDelayEvents.value = InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS)  // reset counter
@@ -61,6 +60,8 @@ class InputDelayEventDataSource @Inject constructor(
                     val lastCount = inputDelayEvents.value.delaysInARow
                     inputDelayEvents.value = InputDelayEvent(delaysInARow = lastCount + 1, delayInterval = DELAY_SECONDS)
                 }
+
+                delay(10)
             }
         }
 

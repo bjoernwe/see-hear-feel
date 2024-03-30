@@ -1,13 +1,10 @@
 package dev.upaya.shf.ui.session.stats
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.upaya.shf.data.session_stats.SessionStats
-import dev.upaya.shf.data.session_stats.SessionStatsRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import dev.upaya.shf.data.labels.SHFLabel
+import dev.upaya.shf.data.session_data.SessionStatsRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
@@ -19,18 +16,8 @@ import javax.inject.Inject
 class SessionStatsViewModel @Inject constructor(
     sessionStatsRepository: SessionStatsRepository,
 ) : ViewModel() {
-
-    private val _sessionStats = MutableStateFlow<SessionStats?>(null)
-    val sessionStats: StateFlow<SessionStats?> = _sessionStats
-
+    val sessionStats: Flow<Map<SHFLabel, Int>> = sessionStatsRepository.labelFreqs
     val allTimeStats = sessionStatsRepository.allTimeStats
-    val numEvents: StateFlow<Int> = sessionStatsRepository.numEvents
-    val sessionDurationSeconds: StateFlow<Int> = sessionStatsRepository.sessionDurationSeconds
-
-    init {
-        viewModelScope.launch {
-            _sessionStats.value = sessionStatsRepository.calcStats()
-        }
-    }
-
+    val numEvents: Flow<Int> = sessionStatsRepository.numEvents
+    val sessionDurationSeconds: Flow<Long?> = sessionStatsRepository.sessionDurationSeconds
 }

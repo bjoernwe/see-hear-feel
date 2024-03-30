@@ -22,7 +22,7 @@ internal fun NavGraphBuilder.notingSessionScreen(
         val sessionViewModel: SessionViewModel = hiltViewModel()
 
         val label: SHFLabelEvent? by sessionViewModel.labelFlow.collectAsState(initial = null)
-        val numInputEvents by sessionViewModel.numEvents.collectAsState()
+        val numInputEvents by sessionViewModel.numEvents.collectAsState(initial = 0)
 
         val onStopButtonClick: () -> Unit = {
             if (numInputEvents > 0)
