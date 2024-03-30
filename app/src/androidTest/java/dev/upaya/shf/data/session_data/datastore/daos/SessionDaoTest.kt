@@ -1,10 +1,10 @@
-package dev.upaya.shf.data.session_history.datastore.daos
+package dev.upaya.shf.data.session_data.datastore.daos
 
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import dev.upaya.shf.data.session_history.datastore.SessionDatabase
-import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_data.datastore.SessionDatabase
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert

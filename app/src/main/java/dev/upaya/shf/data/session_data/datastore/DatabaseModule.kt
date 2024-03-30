@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history.datastore
+package dev.upaya.shf.data.session_data.datastore
 
 import android.content.Context
 import androidx.room.Room

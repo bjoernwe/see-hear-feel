@@ -3,7 +3,7 @@ package dev.upaya.shf.data.delay
 import dev.upaya.shf.data.gamepad.GamepadKeyEventDataSource
 import dev.upaya.shf.data.DefaultDispatcher
 import dev.upaya.shf.data.preferences.PreferencesDataStore
-import dev.upaya.shf.data.session_history.datastore.SessionHistoryDataStore
+import dev.upaya.shf.data.session_data.datastore.SessionDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -23,7 +23,7 @@ import kotlin.math.min
 @Singleton
 class InputDelayEventDataSource @Inject constructor(
     private val gamepadKeyEventDataSource: GamepadKeyEventDataSource,
-    private val sessionHistoryDataStore: SessionHistoryDataStore,
+    private val sessionDataStore: SessionDataStore,
     private val preferencesDataStore: PreferencesDataStore,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) {
@@ -44,7 +44,7 @@ class InputDelayEventDataSource @Inject constructor(
 
             while (scope.isActive) {
 
-                if (sessionHistoryDataStore.numEventsOfCurrentSession.first() == 0) {
+                if (sessionDataStore.numEventsOfCurrentSession.first() == 0) {
                     // session started but without initial input
                     if (inputDelayEvents.value.delaysInARow > 0)
                         inputDelayEvents.value = InputDelayEvent(delaysInARow = 0, delayInterval = DELAY_SECONDS)  // reset counter

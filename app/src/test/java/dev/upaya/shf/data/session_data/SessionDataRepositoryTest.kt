@@ -1,14 +1,13 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_data
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.*
 
 import org.junit.Test
 
 
-class SessionHistoryRepositoryTest {
+class SessionDataRepositoryTest {
 
     @Test
     fun startRecordingEvents() = runTest {

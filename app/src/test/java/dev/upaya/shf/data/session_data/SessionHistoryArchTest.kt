@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_data
 
 import androidx.room.Dao
 import androidx.room.Entity
@@ -20,7 +20,7 @@ class SessionHistoryArchTest {
             .should()
                 .onlyBeAccessed()
                 .byClassesThat()
-                .resideInAPackage("dev.upaya.shf.data.session_history.datastore..")
+                .resideInAPackage("dev.upaya.shf.data.session_data.datastore..")
 
         myRule.check(importedClasses);
     }
@@ -35,7 +35,7 @@ class SessionHistoryArchTest {
             .should()
                 .onlyBeAccessed()
                 .byClassesThat()
-                .resideInAPackage("dev.upaya.shf.data.session_history.datastore..")
+                .resideInAPackage("dev.upaya.shf.data.session_data.datastore..")
 
         myRule.check(importedClasses);
     }

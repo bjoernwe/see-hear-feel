@@ -1,13 +1,13 @@
-package dev.upaya.shf.data.session_history.datastore.daos
+package dev.upaya.shf.data.session_data.datastore.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.MapColumn
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.upaya.shf.data.session_history.datastore.dataclasses.NOTING_EVENT_TABLE_NAME
-import dev.upaya.shf.data.session_history.datastore.dataclasses.NotingEntry
-import dev.upaya.shf.data.session_history.datastore.dataclasses.NotingsPerDay
+import dev.upaya.shf.data.session_data.datastore.dataclasses.NOTING_EVENT_TABLE_NAME
+import dev.upaya.shf.data.session_data.datastore.dataclasses.NotingEntry
+import dev.upaya.shf.data.session_data.datastore.dataclasses.NotingsPerDay
 import kotlinx.coroutines.flow.Flow
 
 

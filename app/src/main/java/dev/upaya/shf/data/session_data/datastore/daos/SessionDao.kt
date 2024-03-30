@@ -1,11 +1,11 @@
-package dev.upaya.shf.data.session_history.datastore.daos
+package dev.upaya.shf.data.session_data.datastore.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import dev.upaya.shf.data.session_history.datastore.dataclasses.SESSION_TABLE_NAME
-import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SESSION_TABLE_NAME
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.flow.Flow
 import java.time.OffsetDateTime
 

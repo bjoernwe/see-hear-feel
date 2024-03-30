@@ -1,7 +1,7 @@
-package dev.upaya.shf.data.session_history.datastore
+package dev.upaya.shf.data.session_data.datastore
 
-import dev.upaya.shf.data.session_history.datastore.daos.SessionDao
-import dev.upaya.shf.data.session_history.datastore.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_data.datastore.daos.SessionDao
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

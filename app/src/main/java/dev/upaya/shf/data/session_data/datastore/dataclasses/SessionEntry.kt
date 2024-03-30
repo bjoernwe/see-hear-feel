@@ -1,8 +1,8 @@
-package dev.upaya.shf.data.session_history.datastore.dataclasses
+package dev.upaya.shf.data.session_data.datastore.dataclasses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.upaya.shf.data.session_history.Session
+import dev.upaya.shf.data.session_data.Session
 import java.time.OffsetDateTime
 
 

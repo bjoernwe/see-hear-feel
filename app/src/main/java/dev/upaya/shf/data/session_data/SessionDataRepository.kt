@@ -1,11 +1,11 @@
-package dev.upaya.shf.data.session_history
+package dev.upaya.shf.data.session_data
 
 import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.delay.InputDelayEventDataSource
 import dev.upaya.shf.data.labels.SHFLabelDataSource
 import dev.upaya.shf.data.labels.SHFLabelEvent
-import dev.upaya.shf.data.session_history.datastore.SessionHistoryDataStore
-import dev.upaya.shf.data.session_history.datastore.SessionResource
+import dev.upaya.shf.data.session_data.datastore.SessionDataStore
+import dev.upaya.shf.data.session_data.datastore.SessionResource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,14 +13,14 @@ import javax.inject.Singleton
 
 
 @Singleton
-class SessionHistoryRepository @Inject constructor(
+class SessionDataRepository @Inject constructor(
     private val shfLabelDataSource: SHFLabelDataSource,
-    private val sessionHistoryDataStore: SessionHistoryDataStore,
+    private val sessionDataStore: SessionDataStore,
     private val inputDelayEventDataSource: InputDelayEventDataSource,
 ) {
 
     suspend fun createSessionResource(): SessionResource {
-        return sessionHistoryDataStore.createSessionResource()
+        return sessionDataStore.createSessionResource()
     }
 
     fun addLabelEventListener(scope: CoroutineScope, onLabelEvent: (SHFLabelEvent) -> Unit) {
@@ -40,10 +40,10 @@ class SessionHistoryRepository @Inject constructor(
     }
 
     suspend fun storeNotingEvent(labelEvent: SHFLabelEvent, sessionId: Long) {
-        sessionHistoryDataStore.storeOrReplaceNotingEvent(labelEvent = labelEvent, sessionId = sessionId)
+        sessionDataStore.storeOrReplaceNotingEvent(labelEvent = labelEvent, sessionId = sessionId)
     }
 
     suspend fun storeInputDelayEvent(inputDelayEvent: InputDelayEvent, sessionId: Long) {
-        sessionHistoryDataStore.storeOrReplaceInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionId)
+        sessionDataStore.storeOrReplaceInputDelayEvent(inputDelayEvent = inputDelayEvent, sessionId = sessionId)
     }
 }

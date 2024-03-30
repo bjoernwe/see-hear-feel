@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_stats
+package dev.upaya.shf.data.session_data
 
 
 data class AllTimeStats (
