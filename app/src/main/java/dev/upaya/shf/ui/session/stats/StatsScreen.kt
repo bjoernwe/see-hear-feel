@@ -10,10 +10,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.session_data.AllTimeStats
+import dev.upaya.shf.ui.session.stats.composables.AccumulatedNotingsPerDayGraphCard
 import dev.upaya.shf.ui.session.stats.composables.AllTimeSummaryCard
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
 import dev.upaya.shf.ui.session.stats.composables.SessionSummaryCard
 import dev.upaya.shf.ui.theme.SHFTheme
+import java.time.LocalDate
 
 
 @Composable
@@ -22,6 +24,7 @@ fun StatsScreen(
     sessionDurationSeconds: Long?,
     sessionStats: Map<SHFLabel, Int>?,
     allTimeStats: AllTimeStats?,
+    accumulatedNotingsPerDay: List<Pair<LocalDate, Int>>,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -66,6 +69,11 @@ fun StatsScreen(
                 )
             }
 
+            item {
+                AccumulatedNotingsPerDayGraphCard(
+                    accumulatedNotingsPerDay = accumulatedNotingsPerDay,
+                )
+            }
         }
 
     }
@@ -82,6 +90,11 @@ fun StatsScreenPreview() {
             numEvents = 42,
             sessionStats = mapOf(),
             allTimeStats = null,
+            accumulatedNotingsPerDay = listOf(
+                Pair(LocalDate.of(2000, 1, 1), 1),
+                Pair(LocalDate.of(2000, 1, 3), 2),
+                Pair(LocalDate.of(2000, 1, 4), 3),
+            ),
             onBackButtonClick = {},
         )
     }

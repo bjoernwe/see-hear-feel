@@ -5,6 +5,7 @@ import dev.upaya.shf.data.session_data.datastore.SessionDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import javax.inject.Inject
 
 
@@ -24,12 +25,22 @@ class SessionStatsRepository @Inject constructor(
     val allTimeStats: Flow<AllTimeStats> = combine(
         numEventsInDB,
         numOfSessions,
-        numOfDays
+        numOfDays,
     ) { numEvents, numSessions, numDays ->
         AllTimeStats(
             numNotings = numEvents,
             numSessions = numSessions,
-            numDays = numDays
+            numDays = numDays,
         )
+    }
+
+    val accumulatedNotingsPerDay: Flow<List<Pair<LocalDate, Int>>> = sessionDataStore.numOfNotingsPerDay.map {
+        val result = mutableListOf<Pair<LocalDate, Int>>()
+        it.forEach { notingsPerDay ->
+            val lastAccumulation: Int = result.lastOrNull()?.second ?: 0
+            val newAccumulation: Int = lastAccumulation + notingsPerDay.count
+            result.add(Pair(notingsPerDay.day, newAccumulation))
+        }
+        return@map result
     }
 }
