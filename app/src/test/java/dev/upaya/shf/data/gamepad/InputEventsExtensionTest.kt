@@ -2,6 +2,7 @@ package dev.upaya.shf.data.gamepad
 
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.labels.calcDuration
 import org.junit.Assert.*
 
 import org.junit.Test

@@ -19,7 +19,7 @@ data class SessionWithEventsEntry (
     fun toSessionWithEvents(): SessionWithEvents {
         return SessionWithEvents(
             session = session.toSession(),
-            notings = notings.map { it.toNotingEvent() },
+            notings = notings.map { it.toSHFLabelEvent() },
             delays = delays.map { it.toInputDelayEvent() },
         )
     }

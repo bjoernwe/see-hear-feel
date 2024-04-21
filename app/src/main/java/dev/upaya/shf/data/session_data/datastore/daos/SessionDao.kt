@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import java.time.OffsetDateTime
 
 
+const val LATEST_SESSION_ID = "(SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1)"
+
+
 @Dao
 interface SessionDao {
 
@@ -31,7 +34,7 @@ interface SessionDao {
     suspend fun getSession(id: Long): SessionEntry
 
     @Transaction
-    @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = (SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1)")
+    @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = $LATEST_SESSION_ID")
     fun getLatestSessionWithEvents(): Flow<SessionWithEventsEntry>
 
     @Query("UPDATE $SESSION_TABLE_NAME SET 'end' = :end WHERE id = :id")

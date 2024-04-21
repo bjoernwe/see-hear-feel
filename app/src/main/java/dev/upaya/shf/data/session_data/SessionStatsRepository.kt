@@ -39,10 +39,9 @@ class SessionStatsRepository @Inject constructor(
 }
 
 
-internal fun calcSessionDuration(session: SessionWithEvents): Long? {
-    val notingsStart = session.notings.first().date?.toEpochSecond()
-    val notingsEnd = session.notings.last().date?.toEpochSecond()
-    if (notingsStart == null || notingsEnd == null) return null
+internal fun calcSessionDuration(session: SessionWithEvents): Long {
+    val notingsStart = session.notings.first().timestamp.toEpochSecond()
+    val notingsEnd = session.notings.last().timestamp.toEpochSecond()
     return notingsEnd - notingsStart
 }
 

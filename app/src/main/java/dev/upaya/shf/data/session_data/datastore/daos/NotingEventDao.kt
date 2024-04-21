@@ -8,7 +8,6 @@ import androidx.room.Query
 import dev.upaya.shf.data.session_data.datastore.dataclasses.NOTING_EVENT_TABLE_NAME
 import dev.upaya.shf.data.session_data.datastore.dataclasses.NotingEntry
 import dev.upaya.shf.data.session_data.datastore.dataclasses.NotingsPerDay
-import dev.upaya.shf.data.session_data.datastore.dataclasses.SESSION_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 
@@ -33,9 +32,9 @@ interface NotingEventDao {
      * that are linking to it.
      */
 
-    @Query("SELECT COUNT(*) FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = (SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1)")
+    @Query("SELECT COUNT(*) FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = $LATEST_SESSION_ID")
     fun countEventsOfCurrentSession(): Flow<Int>
 
-    @Query("SELECT label, COUNT(label) AS count FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = (SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1) GROUP BY label")
+    @Query("SELECT label, COUNT(label) AS count FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = $LATEST_SESSION_ID GROUP BY label")
     fun getEventsPerLabelForCurrentSession(): Flow<Map<@MapColumn("label") String, @MapColumn("count") Int>>
 }
