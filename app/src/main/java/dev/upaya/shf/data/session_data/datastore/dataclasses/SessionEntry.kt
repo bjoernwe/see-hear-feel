@@ -2,7 +2,7 @@ package dev.upaya.shf.data.session_data.datastore.dataclasses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.upaya.shf.data.session_data.Session
+import dev.upaya.shf.data.session_data.dataclasses.Session
 import java.time.OffsetDateTime
 
 
@@ -17,6 +17,9 @@ data class SessionEntry(
     var end: OffsetDateTime? = null,
 ) {
     fun toSession(): Session {
-        return Session(id = id.toLong(), start = start, end = end)
+        return Session(
+            start = start,
+            end = end,
+        )
     }
 }

@@ -3,7 +3,7 @@ package dev.upaya.shf.ui.session.stats.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import dev.upaya.shf.data.session_data.AllTimeStats
+import dev.upaya.shf.data.session_data.dataclasses.AllTimeStats
 import dev.upaya.shf.ui.theme.SHFTheme
 
 

@@ -5,6 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.labels.SHFLabelEvent
+import dev.upaya.shf.data.session_data.dataclasses.NotingEvent
 import java.time.OffsetDateTime
 
 
@@ -22,6 +23,7 @@ data class NotingEntry(
     val label: SHFLabel,
     val sessionId: Long? = null,
 ) {
+
     companion object {
         fun from(labelEvent: SHFLabelEvent, sessionId: Long): NotingEntry {
             return NotingEntry(
@@ -30,5 +32,12 @@ data class NotingEntry(
                 sessionId = sessionId,
             )
         }
+    }
+
+    fun toNotingEvent(): NotingEvent {
+        return NotingEvent(
+            date = date,
+            label = label,
+        )
     }
 }

@@ -30,6 +30,7 @@ data class InputDelayEntry(
 
     val sessionId: Long? = null,
 ) {
+
     companion object {
         fun from(inputDelayEvent: InputDelayEvent, sessionId: Long): InputDelayEntry {
             return InputDelayEntry(
@@ -39,5 +40,13 @@ data class InputDelayEntry(
                 sessionId = sessionId,
             )
         }
+    }
+
+    fun toInputDelayEvent(): InputDelayEvent {
+        return InputDelayEvent(
+            timestamp = timestamp,
+            delaysInARow = delaysInARow,
+            delayInterval = delayInterval,
+        )
     }
 }

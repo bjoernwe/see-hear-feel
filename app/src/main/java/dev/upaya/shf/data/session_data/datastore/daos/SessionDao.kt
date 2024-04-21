@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import dev.upaya.shf.data.session_data.datastore.dataclasses.SESSION_TABLE_NAME
 import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
-import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionWithEvents
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionWithEventsEntry
 import kotlinx.coroutines.flow.Flow
 import java.time.OffsetDateTime
 
@@ -32,7 +32,7 @@ interface SessionDao {
 
     @Transaction
     @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = (SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1)")
-    fun getLatestSessionWithEvents(): Flow<SessionWithEvents>
+    fun getLatestSessionWithEvents(): Flow<SessionWithEventsEntry>
 
     @Query("UPDATE $SESSION_TABLE_NAME SET 'end' = :end WHERE id = :id")
     suspend fun setEndTimestamp(id: Long, end: OffsetDateTime = OffsetDateTime.now())

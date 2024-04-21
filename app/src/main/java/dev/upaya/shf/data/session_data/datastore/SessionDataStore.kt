@@ -3,7 +3,8 @@ package dev.upaya.shf.data.session_data.datastore
 import dev.upaya.shf.data.delay.InputDelayEvent
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.labels.SHFLabelEvent
-import dev.upaya.shf.data.session_data.Session
+import dev.upaya.shf.data.session_data.dataclasses.Session
+import dev.upaya.shf.data.session_data.dataclasses.SessionWithEvents
 import dev.upaya.shf.data.session_data.datastore.dataclasses.InputDelayEntry
 import dev.upaya.shf.data.session_data.datastore.dataclasses.NotingEntry
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +30,8 @@ class SessionDataStore @Inject constructor(
     val numOfSesions: Flow<Int> = sessionDao.countSessions()
     val numOfNotingsPerDay = notingEventDao.countEventsPerDay()
     val numOfDays: Flow<Int> = notingEventDao.countEventsPerDay().map { it.size }
-    val newestSession: Flow<Session> = sessionDao.getNewestSession().map { it.toSession() }
+    val latestSession: Flow<Session> = sessionDao.getNewestSession().map { it.toSession() }
+    val latestSessionWithEvents: Flow<SessionWithEvents> = sessionDao.getLatestSessionWithEvents().map { it.toSessionWithEvents() }
     val labelFreqs: Flow<Map<SHFLabel, Int>> = notingEventDao.getEventsPerLabelForCurrentSession().map {
         it.mapKeys { entry -> SHFLabel.valueOf(entry.key) }
     }
