@@ -12,10 +12,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-/*
- * Design decision: Only do trivial calculations here. Put more sophisticated calculations in the
- * repositories, like SessionStatsRepository.
- */
 @Singleton
 class SessionDataStore @Inject constructor(
     @SessionDB private val db: SessionDatabase,
@@ -24,6 +20,10 @@ class SessionDataStore @Inject constructor(
     private val notingEventDao = db.getNotingEventDao()
     private val sessionDao = db.getSessionDao()
 
+    /*
+     * Design decision: Only do trivial calculations here. Put more sophisticated calculations in
+     * the repositories, like SessionStatsRepository.
+     */
     val numEventsInDB: Flow<Int> = notingEventDao.countEvents()
     val numEventsOfCurrentSession: Flow<Int> = notingEventDao.countEventsOfCurrentSession()
     val numOfSesions: Flow<Int> = sessionDao.countSessions()

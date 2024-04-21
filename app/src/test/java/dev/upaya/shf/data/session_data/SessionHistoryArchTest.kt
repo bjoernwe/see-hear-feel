@@ -11,7 +11,7 @@ import org.junit.Test
 class SessionHistoryArchTest {
 
     @Test
-    fun `Daos should not be accessed from outside the datastore package`() {
+    fun `DAOs should not be accessed from outside the datastore package`() {
         val importedClasses = ClassFileImporter().importPackages("dev.upaya.shf");
 
         val myRule: ArchRule = classes()

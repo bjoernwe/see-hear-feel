@@ -37,6 +37,10 @@ class SessionResource(
     }
 
     override fun close() {
+        closeSessionOrDeleteIfEmpty()
+    }
+
+    private fun closeSessionOrDeleteIfEmpty() {
         CoroutineScope(Dispatchers.IO).launch {
             val numEvents = notingEventDao.countEventsOfCurrentSession().firstOrNull()
             if (numEvents == null || numEvents == 0) {

@@ -33,7 +33,7 @@ class SessionDaoTest {
     }
 
     @Test
-    fun getSessionDao_setEndTimestamp_updatesEndTimestamp() = runTest {
+    fun sessionDao_setEndTimestamp_updatesEndTimestamp() = runTest {
 
         // GIVEN a SessionDao with a newly created session
         val sessionId = unitUnderTest.insertOrReplace(SessionEntry(start = OffsetDateTime.now()))
