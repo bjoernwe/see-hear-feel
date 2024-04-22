@@ -18,8 +18,8 @@ data class SessionEntry(
 ) {
     fun toSession(): Session {
         return Session(
-            start = start,
-            end = end,
+            start = start.toInstant(),
+            end = end?.toInstant(),
         )
     }
 }

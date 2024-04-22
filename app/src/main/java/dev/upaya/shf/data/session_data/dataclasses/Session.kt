@@ -1,9 +1,9 @@
 package dev.upaya.shf.data.session_data.dataclasses
 
-import java.time.OffsetDateTime
+import java.time.Instant
 
 
 data class Session(
-    val start: OffsetDateTime,
-    val end: OffsetDateTime?,
+    val start: Instant,
+    val end: Instant?,
 )

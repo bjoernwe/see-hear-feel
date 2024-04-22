@@ -36,7 +36,7 @@ data class InputDelayEntry(
             return InputDelayEntry(
                 delaysInARow = inputDelayEvent.delaysInARow,
                 delayInterval = inputDelayEvent.delayInterval,
-                timestamp = inputDelayEvent.timestamp,
+                timestamp = OffsetDateTime.ofInstant(inputDelayEvent.timestamp, OffsetDateTime.now().offset),
                 sessionId = sessionId,
             )
         }
@@ -44,7 +44,7 @@ data class InputDelayEntry(
 
     fun toInputDelayEvent(): InputDelayEvent {
         return InputDelayEvent(
-            timestamp = timestamp,
+            timestamp = timestamp.toInstant(),
             delaysInARow = delaysInARow,
             delayInterval = delayInterval,
         )

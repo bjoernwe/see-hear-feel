@@ -7,8 +7,8 @@ import dev.upaya.shf.data.session_data.dataclasses.Session
 import dev.upaya.shf.data.session_data.dataclasses.SessionWithEvents
 import org.junit.Assert
 import org.junit.Test
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
+import java.time.Instant
+import java.time.LocalDateTime
 
 
 class SessionStatsRepositoryTest {
@@ -19,7 +19,7 @@ class SessionStatsRepositoryTest {
         // GIVEN a session with events
         val session = SessionWithEvents(
             session = Session(
-                start = offsetDate(second = 0),
+                start = timestamp(second = 0),
                 end = null,
                 ),
             notings = listOf(
@@ -53,7 +53,7 @@ private fun labelEvent(
 ): SHFLabelEvent {
     return SHFLabelEvent(
         label = label,
-        timestamp = offsetDate(
+        timestamp = timestamp(
             year = year,
             month = month,
             day = day,
@@ -78,7 +78,7 @@ private fun delayEvent(
     return InputDelayEvent(
         delaysInARow = delaysInARow,
         delayInterval = delayInterval,
-        timestamp = offsetDate(
+        timestamp = timestamp(
             year = year,
             month = month,
             day = day,
@@ -90,13 +90,13 @@ private fun delayEvent(
 }
 
 
-private fun offsetDate(
+private fun timestamp(
     year: Int = 2000,
     month: Int = 1,
     day: Int = 1,
     hour: Int = 0,
     minute: Int = 0,
     second: Int = 0,
-): OffsetDateTime {
-    return OffsetDateTime.of(year, month, day, hour, minute, second, 0, ZoneOffset.UTC)
+): Instant {
+    return Instant.from(LocalDateTime.of(year, month, day, hour, minute, second))
 }

@@ -40,8 +40,8 @@ class SessionStatsRepository @Inject constructor(
 
 
 internal fun calcSessionDuration(session: SessionWithEvents): Long {
-    val notingsStart = session.notings.first().timestamp.toEpochSecond()
-    val notingsEnd = session.notings.last().timestamp.toEpochSecond()
+    val notingsStart = session.notings.first().timestamp.epochSecond
+    val notingsEnd = session.notings.last().timestamp.epochSecond
     return notingsEnd - notingsStart
 }
 

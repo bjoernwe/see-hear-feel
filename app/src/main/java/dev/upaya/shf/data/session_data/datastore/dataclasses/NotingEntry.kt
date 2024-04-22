@@ -27,7 +27,7 @@ data class NotingEntry(
         fun from(labelEvent: SHFLabelEvent, sessionId: Long): NotingEntry {
             return NotingEntry(
                 label = labelEvent.label,
-                date = labelEvent.timestamp,
+                date = OffsetDateTime.ofInstant(labelEvent.timestamp, OffsetDateTime.now().offset),
                 sessionId = sessionId,
             )
         }
@@ -35,7 +35,7 @@ data class NotingEntry(
 
     fun toSHFLabelEvent(): SHFLabelEvent {
         return SHFLabelEvent(
-            timestamp = date,
+            timestamp = date.toInstant(),
             label = label,
         )
     }
