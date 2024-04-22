@@ -9,6 +9,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 
 class SessionStatsRepositoryTest {
@@ -17,20 +18,13 @@ class SessionStatsRepositoryTest {
     fun sessionStatsRepository_calcSessionDuration_calcDurationFromSessionTimestamps() {
 
         // GIVEN a session with events
-        val session = SessionWithEvents(
-            session = Session(
-                start = timestamp(second = 0),
-                end = null,
-                ),
-            notings = listOf(
-                labelEvent(second = 2),  // start counting here
-                labelEvent(second = 3),  // stop counting here
-            ),
-            delays = listOf(
-                delayEvent(second = 1),  // ignore before first noting
-                delayEvent(second = 4),  // ignore after last noting
-            ),
-        )
+        val session = createSession(sessionStart = timestamp(second = 0)) {
+            delay(timestamp(second = 1))  // time before first noting should be ignored
+            note(timestamp(second = 2), SHFLabel.SEE)  // start counting here
+            note(timestamp(second = 3), SHFLabel.SEE)  // stop counting here
+            delay(timestamp(second = 4))  // time after last noting should be ignored
+            endSession(timestamp(second = 10))
+        }
 
         // WHEN the duration is calculated
         val duration = calcSessionDuration(session = session)
@@ -42,51 +36,38 @@ class SessionStatsRepositoryTest {
 }
 
 
-private fun labelEvent(
-    label: SHFLabel = SHFLabel.SEE,
-    year: Int = 2000,
-    month: Int = 1,
-    day: Int = 1,
-    hour: Int = 0,
-    minute: Int = 0,
-    second: Int = 0,
-): SHFLabelEvent {
-    return SHFLabelEvent(
-        label = label,
-        timestamp = timestamp(
-            year = year,
-            month = month,
-            day = day,
-            hour = hour,
-            minute = minute,
-            second = second,
-        )
+fun createSession(sessionStart: Instant, init: SessionFactoryScope.() -> Unit): SessionWithEvents {
+    val sessionFactoryScope = SessionFactoryScope()
+    sessionFactoryScope.init()
+    return SessionWithEvents(
+        session = Session(start = sessionStart, end = sessionFactoryScope.sessionEnd),
+        notings = sessionFactoryScope.notings,
+        delays = sessionFactoryScope.delays,
     )
 }
 
 
-private fun delayEvent(
-    delaysInARow: Int = 0,
-    delayInterval: Int = 0,
-    year: Int = 2000,
-    month: Int = 1,
-    day: Int = 1,
-    hour: Int = 0,
-    minute: Int = 0,
-    second: Int = 0,
-): InputDelayEvent {
-    return InputDelayEvent(
-        delaysInARow = delaysInARow,
-        delayInterval = delayInterval,
-        timestamp = timestamp(
-            year = year,
-            month = month,
-            day = day,
-            hour = hour,
-            minute = minute,
-            second = second,
+class SessionFactoryScope {
+    var sessionEnd: Instant? = null
+    val notings: MutableList<SHFLabelEvent> = mutableListOf()
+    val delays: MutableList<InputDelayEvent> = mutableListOf()
+
+    fun note(timestamp: Instant, label: SHFLabel) {
+        notings.add(SHFLabelEvent(timestamp = timestamp, label = label))
+    }
+
+    fun delay(timestamp: Instant) {
+        delays.add(InputDelayEvent(
+            timestamp = timestamp,
+            delayInterval = 0,  // could further be simplified by calculating this automatically
+            delaysInARow = 1,   // could further be simplified by calculating this automatically
+            )
         )
-    )
+    }
+
+    fun endSession(timestamp: Instant) {
+        sessionEnd = timestamp
+    }
 }
 
 
@@ -98,5 +79,5 @@ private fun timestamp(
     minute: Int = 0,
     second: Int = 0,
 ): Instant {
-    return Instant.from(LocalDateTime.of(year, month, day, hour, minute, second))
+    return LocalDateTime.of(year, month, day, hour, minute, second).toInstant(ZoneOffset.UTC)
 }
