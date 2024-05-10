@@ -4,10 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import dev.upaya.shf.data.session_data.datastore.dataclasses.SESSION_TABLE_NAME
 import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionEntry
+import dev.upaya.shf.data.session_data.datastore.dataclasses.SessionWithEventsEntry
 import kotlinx.coroutines.flow.Flow
 import java.time.OffsetDateTime
+
+
+const val LATEST_SESSION_ID = "(SELECT id FROM $SESSION_TABLE_NAME ORDER BY id DESC LIMIT 1)"
 
 
 @Dao
@@ -27,6 +32,10 @@ interface SessionDao {
 
     @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = :id")
     suspend fun getSession(id: Long): SessionEntry
+
+    @Transaction
+    @Query("SELECT * FROM $SESSION_TABLE_NAME WHERE id = $LATEST_SESSION_ID")
+    fun getLatestSessionWithEvents(): Flow<SessionWithEventsEntry>
 
     @Query("UPDATE $SESSION_TABLE_NAME SET 'end' = :end WHERE id = :id")
     suspend fun setEndTimestamp(id: Long, end: OffsetDateTime = OffsetDateTime.now())

@@ -18,17 +18,25 @@ const val NOTING_EVENT_TABLE_NAME = "noting_events"
 data class NotingEntry(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val date: OffsetDateTime? = OffsetDateTime.now(),
+    val date: OffsetDateTime = OffsetDateTime.now(),
     val label: SHFLabel,
     val sessionId: Long? = null,
 ) {
+
     companion object {
         fun from(labelEvent: SHFLabelEvent, sessionId: Long): NotingEntry {
             return NotingEntry(
                 label = labelEvent.label,
-                date = labelEvent.timestamp,
+                date = OffsetDateTime.ofInstant(labelEvent.timestamp, OffsetDateTime.now().offset),
                 sessionId = sessionId,
             )
         }
+    }
+
+    fun toSHFLabelEvent(): SHFLabelEvent {
+        return SHFLabelEvent(
+            timestamp = date.toInstant(),
+            label = label,
+        )
     }
 }

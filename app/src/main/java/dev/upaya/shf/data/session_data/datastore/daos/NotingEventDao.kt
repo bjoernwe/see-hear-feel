@@ -26,9 +26,15 @@ interface NotingEventDao {
     @Query("SELECT COUNT(date) as count, date(date) as day FROM $NOTING_EVENT_TABLE_NAME GROUP BY day ORDER BY day")
     fun countEventsPerDay(): Flow<List<NotingsPerDay>>
 
-    @Query("SELECT COUNT(*) FROM noting_events WHERE sessionId = (SELECT id FROM sessions ORDER BY id DESC LIMIT 1)")
+    /*
+     * Design decision: Here is a good place for cross-table queries that include session as well as
+     * events. Because events know about session, but a session doesn't need to know all the things
+     * that are linking to it.
+     */
+
+    @Query("SELECT COUNT(*) FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = $LATEST_SESSION_ID")
     fun countEventsOfCurrentSession(): Flow<Int>
 
-    @Query("SELECT label, COUNT(label) AS count FROM noting_events WHERE sessionId = (SELECT id FROM sessions ORDER BY id DESC LIMIT 1) GROUP BY label")
+    @Query("SELECT label, COUNT(label) AS count FROM $NOTING_EVENT_TABLE_NAME WHERE sessionId = $LATEST_SESSION_ID GROUP BY label")
     fun getEventsPerLabelForCurrentSession(): Flow<Map<@MapColumn("label") String, @MapColumn("count") Int>>
 }

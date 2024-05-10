@@ -1,4 +1,4 @@
-package dev.upaya.shf.data.session_data
+package dev.upaya.shf.data.session_data.datastore
 
 import androidx.room.Dao
 import androidx.room.Entity
@@ -8,10 +8,10 @@ import com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes
 import org.junit.Test
 
 
-class SessionHistoryArchTest {
+class SessionDataStoreArchTest {
 
     @Test
-    fun `Daos should not be accessed from outside the datastore package`() {
+    fun `DAOs should not be accessed from outside the datastore package`() {
         val importedClasses = ClassFileImporter().importPackages("dev.upaya.shf");
 
         val myRule: ArchRule = classes()
