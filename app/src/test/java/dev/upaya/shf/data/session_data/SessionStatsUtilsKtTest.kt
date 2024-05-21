@@ -6,13 +6,15 @@ import dev.upaya.shf.data.labels.SHFLabelEvent
 import dev.upaya.shf.data.session_data.dataclasses.Session
 import dev.upaya.shf.data.session_data.dataclasses.SessionWithEvents
 import org.junit.Assert
+import org.junit.Assert.*
+
 import org.junit.Test
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 
-class SessionStatsRepositoryTest {
+class SessionStatsUtilsKtTest {
 
     @Test
     fun sessionStatsRepository_calcSessionDuration_calcDurationFromSessionTimestamps() {
@@ -57,11 +59,12 @@ class SessionFactoryScope {
     }
 
     fun delay(timestamp: Instant) {
-        delays.add(InputDelayEvent(
+        delays.add(
+            InputDelayEvent(
             timestamp = timestamp,
             delayInterval = 0,  // could further be simplified by calculating this automatically
             delaysInARow = 1,   // could further be simplified by calculating this automatically
-            )
+        )
         )
     }
 
