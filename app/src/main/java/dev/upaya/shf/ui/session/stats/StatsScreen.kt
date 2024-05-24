@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
 import dev.upaya.shf.data.labels.SHFLabel
 import dev.upaya.shf.data.session_data.dataclasses.AllTimeStats
+import dev.upaya.shf.data.session_data.dataclasses.SessionStats
 import dev.upaya.shf.ui.session.stats.composables.AccumulatedNotingsPerDayGraphCard
 import dev.upaya.shf.ui.session.stats.composables.AllTimeSummaryCard
 import dev.upaya.shf.ui.session.stats.composables.LabelStatsCard
@@ -20,12 +21,10 @@ import java.time.LocalDate
 
 @Composable
 fun StatsScreen(
-    numEvents: Int,
-    sessionDurationSeconds: Long?,
-    sessionStats: Map<SHFLabel, Int>?,
+    labelFrequencies: Map<SHFLabel, Int>?,
+    sessionStats: SessionStats?,
     allTimeStats: AllTimeStats?,
     accumulatedNotingsPerDay: List<Pair<LocalDate, Int>>,
-    amountMindWandering: Float,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -53,15 +52,13 @@ fun StatsScreen(
 
             item {
                 LabelStatsCard(
-                    labelFreqs = sessionStats,
+                    labelFreqs = labelFrequencies,
                 )
             }
 
             item {
                 SessionSummaryCard(
-                    sessionDurationSeconds = sessionDurationSeconds,
-                    numNotings = numEvents,
-                    amountMindWandering = amountMindWandering,
+                    sessionStats = sessionStats,
                 )
             }
 
@@ -88,16 +85,18 @@ fun StatsScreen(
 fun StatsScreenPreview() {
     SHFTheme(darkTheme = true) {
         StatsScreen(
-            sessionDurationSeconds = 123,
-            numEvents = 42,
-            sessionStats = mapOf(),
+            labelFrequencies = mapOf(),
+            sessionStats = SessionStats(
+                numberOfNotings = 42,
+                sessionDurationSeconds = 123,
+                amountMindWandering = .1f,
+            ),
             allTimeStats = null,
             accumulatedNotingsPerDay = listOf(
                 Pair(LocalDate.of(2000, 1, 1), 1),
                 Pair(LocalDate.of(2000, 1, 3), 2),
                 Pair(LocalDate.of(2000, 1, 4), 3),
             ),
-            amountMindWandering = .1f,
             onBackButtonClick = {},
         )
     }

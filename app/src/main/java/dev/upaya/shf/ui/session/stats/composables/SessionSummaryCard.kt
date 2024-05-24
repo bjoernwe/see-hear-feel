@@ -4,15 +4,12 @@ import android.text.format.DateUtils
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import dev.upaya.shf.data.session_data.dataclasses.SessionStats
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionSummaryCard(
-    sessionDurationSeconds: Long?,
-    numNotings: Int?,
-    amountMindWandering: Float,
-) {
+fun SessionSummaryCard(sessionStats: SessionStats?) {
 
     StatsCard(
         title = "Session Summary",
@@ -22,20 +19,20 @@ fun SessionSummaryCard(
 
             StatsEntryText(
                 textLabel = "Notings",
-                textValue = numNotings.toString(),
+                textValue = sessionStats?.numberOfNotings.toString(),
             )
 
             StatsEntryText(
                 textLabel = "Duration",
-                textValue = if (sessionDurationSeconds != null)
-                    DateUtils.formatElapsedTime(sessionDurationSeconds)
+                textValue = if (sessionStats?.sessionDurationSeconds != null)
+                    DateUtils.formatElapsedTime(sessionStats.sessionDurationSeconds)
                 else
                     "N/A",
             )
 
             StatsEntryText(
                 textLabel = "Mind Wandering",
-                textValue = "${amountMindWandering.times(100).toInt()}%",
+                textValue = "${sessionStats?.amountMindWandering?.times(100)?.toInt() ?: 0}%",
             )
 
         }
@@ -50,9 +47,11 @@ fun SessionSummaryCard(
 fun SessionSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
         SessionSummaryCard(
-            sessionDurationSeconds = 60,
-            numNotings = 512,
-            amountMindWandering = .1f,
+            sessionStats = SessionStats(
+                numberOfNotings = 512,
+                sessionDurationSeconds = 60,
+                amountMindWandering = .1f,
+            )
         )
     }
 }

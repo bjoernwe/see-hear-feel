@@ -20,21 +20,16 @@ internal fun NavGraphBuilder.notingStatsScreen(
     composable(route = ROUTE_NOTING_STATS) {
 
         val sessionStatsViewModel: SessionStatsViewModel = hiltViewModel()
+        val labelFrequencies by sessionStatsViewModel.labelFrequencies.collectAsState(null)
         val sessionStats by sessionStatsViewModel.sessionStats.collectAsState(null)
         val allTimeStats by sessionStatsViewModel.allTimeStats.collectAsState(null)
         val accumulatedNotingsPerDay by sessionStatsViewModel.accumulatedNotingsPerDay.collectAsState(listOf())
-        val amountMindWandering by sessionStatsViewModel.amountMindWandering.collectAsState(0f)
-
-        val numEvents by sessionStatsViewModel.numEvents.collectAsState(0)
-        val sessionDurationSeconds by sessionStatsViewModel.sessionDurationSeconds.collectAsState(null)
 
         StatsScreen(
-            numEvents = numEvents,
-            sessionDurationSeconds = sessionDurationSeconds,
+            labelFrequencies = labelFrequencies,
             sessionStats = sessionStats,
             allTimeStats = allTimeStats,
             accumulatedNotingsPerDay = accumulatedNotingsPerDay,
-            amountMindWandering = amountMindWandering,
             onBackButtonClick = { navController.popBackStack(route = routeStartScreen, inclusive = false) },
         )
 
