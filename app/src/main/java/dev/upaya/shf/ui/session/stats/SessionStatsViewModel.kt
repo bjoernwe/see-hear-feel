@@ -3,6 +3,7 @@ package dev.upaya.shf.ui.session.stats
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.upaya.shf.data.labels.SHFLabel
+import dev.upaya.shf.data.preferences.PreferencesRepository
 import dev.upaya.shf.data.session_data.SessionStatsRepository
 import dev.upaya.shf.data.session_data.dataclasses.AllTimeStats
 import dev.upaya.shf.data.session_data.dataclasses.SessionStats
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SessionStatsViewModel @Inject constructor(
     sessionStatsRepository: SessionStatsRepository,
+    preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
     val labelFrequencies: Flow<Map<SHFLabel, Int>> = sessionStatsRepository.labelFreqs
     val accumulatedNotingsPerDay = sessionStatsRepository.accumulatedNotingsPerDay
@@ -26,11 +28,13 @@ class SessionStatsViewModel @Inject constructor(
         sessionStatsRepository.numEvents,
         sessionStatsRepository.sessionDurationSeconds,
         sessionStatsRepository.amountMindWandering,
-    ) { numberOfNotings, sessionDurationSeconds, amountMindWandering ->
+        preferencesRepository.isPacingEnabled,
+    ) { numberOfNotings, sessionDurationSeconds, amountMindWandering, isPacingEnabled ->
         SessionStats(
             numberOfNotings = numberOfNotings,
             sessionDurationSeconds = sessionDurationSeconds,
             amountMindWandering = amountMindWandering,
+            showMindWandering = isPacingEnabled,
         )
     }
 

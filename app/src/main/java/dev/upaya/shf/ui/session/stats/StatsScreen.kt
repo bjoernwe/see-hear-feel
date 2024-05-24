@@ -90,6 +90,7 @@ fun StatsScreenPreview() {
                 numberOfNotings = 42,
                 sessionDurationSeconds = 123,
                 amountMindWandering = .1f,
+                showMindWandering = true,
             ),
             allTimeStats = null,
             accumulatedNotingsPerDay = listOf(

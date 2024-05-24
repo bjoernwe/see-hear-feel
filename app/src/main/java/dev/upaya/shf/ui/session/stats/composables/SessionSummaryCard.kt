@@ -30,10 +30,12 @@ fun SessionSummaryCard(sessionStats: SessionStats?) {
                     "N/A",
             )
 
-            StatsEntryText(
-                textLabel = "Mind Wandering",
-                textValue = "${sessionStats?.amountMindWandering?.times(100)?.toInt() ?: 0}%",
-            )
+            if (sessionStats?.showMindWandering == true) {
+                StatsEntryText(
+                    textLabel = "Mind Wandering",
+                    textValue = "${sessionStats.amountMindWandering.times(100).toInt()}%",
+                )
+            }
 
         }
 
@@ -51,6 +53,7 @@ fun SessionSummaryCardPreview() {
                 numberOfNotings = 512,
                 sessionDurationSeconds = 60,
                 amountMindWandering = .1f,
+                showMindWandering = true,
             )
         )
     }
