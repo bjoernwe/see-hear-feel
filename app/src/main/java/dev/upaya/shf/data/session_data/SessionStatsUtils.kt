@@ -21,3 +21,12 @@ internal fun calcAccumulatedNotingsPerDay(notingsPerDays: List<NotingsPerDay>): 
     }
     return result
 }
+
+
+internal fun calcMindWandering(session: SessionWithEvents): Float {
+    val delaysDuringActiveNoting = session.delays.filter { it.timestamp.isBefore(session.notings.last().timestamp) }
+    val secondsMindWandering = delaysDuringActiveNoting.fold(0L) { acc, delay -> acc + delay.delayInterval }
+    val secondsActivelyNoting = session.notings.last().timestamp.epochSecond - session.notings.first().timestamp.epochSecond
+    val activeWithoutMindWandering = (secondsActivelyNoting - secondsMindWandering).toFloat().div(secondsActivelyNoting)
+    return 1f - activeWithoutMindWandering
+}

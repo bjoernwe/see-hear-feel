@@ -11,6 +11,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun SessionSummaryCard(
     sessionDurationSeconds: Long?,
     numNotings: Int?,
+    amountMindWandering: Float,
 ) {
 
     StatsCard(
@@ -18,6 +19,11 @@ fun SessionSummaryCard(
     ) {
 
         Column {
+
+            StatsEntryText(
+                textLabel = "Notings",
+                textValue = numNotings.toString(),
+            )
 
             StatsEntryText(
                 textLabel = "Duration",
@@ -28,8 +34,8 @@ fun SessionSummaryCard(
             )
 
             StatsEntryText(
-                textLabel = "Notings",
-                textValue = numNotings.toString(),
+                textLabel = "Mind Wandering",
+                textValue = "${amountMindWandering.times(100).toInt()}%",
             )
 
         }
@@ -46,6 +52,7 @@ fun SessionSummaryCardPreview() {
         SessionSummaryCard(
             sessionDurationSeconds = 60,
             numNotings = 512,
+            amountMindWandering = .1f,
         )
     }
 }

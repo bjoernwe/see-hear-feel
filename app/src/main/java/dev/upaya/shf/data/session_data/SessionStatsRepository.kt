@@ -17,6 +17,7 @@ class SessionStatsRepository @Inject constructor(
     val labelFreqs: Flow<Map<SHFLabel, Int>> = sessionDataStore.labelFreqs
     val sessionDurationSeconds: Flow<Long?> = sessionDataStore.latestSessionWithEvents.map(::calcSessionDuration)
     val accumulatedNotingsPerDay: Flow<List<Pair<LocalDate, Int>>> = sessionDataStore.numOfNotingsPerDay.map(::calcAccumulatedNotingsPerDay)
+    val amountMindWandering: Flow<Float> = sessionDataStore.latestSessionWithEvents.map(::calcMindWandering)
 
     private val numEventsInDB: Flow<Int> = sessionDataStore.numEventsInDB
     private val numOfSessions: Flow<Int> = sessionDataStore.numOfSesions

@@ -21,4 +21,5 @@ class SessionStatsViewModel @Inject constructor(
     val numEvents: Flow<Int> = sessionStatsRepository.numEvents
     val sessionDurationSeconds: Flow<Long?> = sessionStatsRepository.sessionDurationSeconds
     val accumulatedNotingsPerDay = sessionStatsRepository.accumulatedNotingsPerDay
+    val amountMindWandering = sessionStatsRepository.amountMindWandering
 }

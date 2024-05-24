@@ -25,6 +25,7 @@ fun StatsScreen(
     sessionStats: Map<SHFLabel, Int>?,
     allTimeStats: AllTimeStats?,
     accumulatedNotingsPerDay: List<Pair<LocalDate, Int>>,
+    amountMindWandering: Float,
     onBackButtonClick: () -> Unit,
 ) {
 
@@ -60,6 +61,7 @@ fun StatsScreen(
                 SessionSummaryCard(
                     sessionDurationSeconds = sessionDurationSeconds,
                     numNotings = numEvents,
+                    amountMindWandering = amountMindWandering,
                 )
             }
 
@@ -95,6 +97,7 @@ fun StatsScreenPreview() {
                 Pair(LocalDate.of(2000, 1, 3), 2),
                 Pair(LocalDate.of(2000, 1, 4), 3),
             ),
+            amountMindWandering = .1f,
             onBackButtonClick = {},
         )
     }

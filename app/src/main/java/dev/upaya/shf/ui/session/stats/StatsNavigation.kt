@@ -23,6 +23,7 @@ internal fun NavGraphBuilder.notingStatsScreen(
         val sessionStats by sessionStatsViewModel.sessionStats.collectAsState(null)
         val allTimeStats by sessionStatsViewModel.allTimeStats.collectAsState(null)
         val accumulatedNotingsPerDay by sessionStatsViewModel.accumulatedNotingsPerDay.collectAsState(listOf())
+        val amountMindWandering by sessionStatsViewModel.amountMindWandering.collectAsState(0f)
 
         val numEvents by sessionStatsViewModel.numEvents.collectAsState(0)
         val sessionDurationSeconds by sessionStatsViewModel.sessionDurationSeconds.collectAsState(null)
@@ -33,6 +34,7 @@ internal fun NavGraphBuilder.notingStatsScreen(
             sessionStats = sessionStats,
             allTimeStats = allTimeStats,
             accumulatedNotingsPerDay = accumulatedNotingsPerDay,
+            amountMindWandering = amountMindWandering,
             onBackButtonClick = { navController.popBackStack(route = routeStartScreen, inclusive = false) },
         )
 
