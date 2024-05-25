@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
+import dev.upaya.shf.data.preferences.RemoteConfigDataStore
 import dev.upaya.shf.data.user_interaction.UserInteractionRepository
 import dev.upaya.shf.ui.SHFNavHost
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -18,6 +19,9 @@ class SHFActivity : ComponentActivity() {
     @Inject
     lateinit var userInteractionRepository: UserInteractionRepository
 
+    @Inject
+    lateinit var remoteConfigDataStore: RemoteConfigDataStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -25,6 +29,7 @@ class SHFActivity : ComponentActivity() {
                 SHFNavHost()
             }
         }
+        remoteConfigDataStore.loadRemoteConfig()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

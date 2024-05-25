@@ -29,12 +29,13 @@ class SessionStatsViewModel @Inject constructor(
         sessionStatsRepository.sessionDurationSeconds,
         sessionStatsRepository.amountMindWandering,
         preferencesRepository.isPacingEnabled,
-    ) { numberOfNotings, sessionDurationSeconds, amountMindWandering, isPacingEnabled ->
+        preferencesRepository.isMindWanderingEnabled,
+    ) { numberOfNotings, sessionDurationSeconds, amountMindWandering, isPacingEnabled, isMindWanderingEnabled ->
         SessionStats(
             numberOfNotings = numberOfNotings,
             sessionDurationSeconds = sessionDurationSeconds,
             amountMindWandering = amountMindWandering,
-            showMindWandering = isPacingEnabled,
+            showMindWandering = isPacingEnabled && isMindWanderingEnabled,
         )
     }
 
