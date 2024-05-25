@@ -4,14 +4,12 @@ import android.text.format.DateUtils
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import dev.upaya.shf.data.session_data.dataclasses.SessionStats
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
-fun SessionSummaryCard(
-    sessionDurationSeconds: Long?,
-    numNotings: Int?,
-) {
+fun SessionSummaryCard(sessionStats: SessionStats?) {
 
     StatsCard(
         title = "Session Summary",
@@ -20,17 +18,24 @@ fun SessionSummaryCard(
         Column {
 
             StatsEntryText(
+                textLabel = "Notings",
+                textValue = sessionStats?.numberOfNotings.toString(),
+            )
+
+            StatsEntryText(
                 textLabel = "Duration",
-                textValue = if (sessionDurationSeconds != null)
-                    DateUtils.formatElapsedTime(sessionDurationSeconds)
+                textValue = if (sessionStats?.sessionDurationSeconds != null)
+                    DateUtils.formatElapsedTime(sessionStats.sessionDurationSeconds)
                 else
                     "N/A",
             )
 
-            StatsEntryText(
-                textLabel = "Notings",
-                textValue = numNotings.toString(),
-            )
+            if (sessionStats?.showMindWandering == true) {
+                StatsEntryText(
+                    textLabel = "Mind Wandering",
+                    textValue = "${sessionStats.amountMindWandering.times(100).toInt()}%",
+                )
+            }
 
         }
 
@@ -44,8 +49,12 @@ fun SessionSummaryCard(
 fun SessionSummaryCardPreview() {
     SHFTheme(darkTheme = true) {
         SessionSummaryCard(
-            sessionDurationSeconds = 60,
-            numNotings = 512,
+            sessionStats = SessionStats(
+                numberOfNotings = 512,
+                sessionDurationSeconds = 60,
+                amountMindWandering = .1f,
+                showMindWandering = true,
+            )
         )
     }
 }
