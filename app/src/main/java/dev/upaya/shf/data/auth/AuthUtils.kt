@@ -6,9 +6,13 @@ import androidx.credentials.CredentialOption
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.NoCredentialException
+import com.google.android.gms.tasks.Task
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import timber.log.Timber
 import java.security.SecureRandom
 
@@ -16,6 +20,13 @@ import java.security.SecureRandom
 // This client ID can be found in the Cloud Console under API -> Credentials and there it is the
 // client ID of a web application
 const val WEB_CLIENT_ID = "993544001537-l5l3ehg0j5h7jus693fhqvmq5smiu88g.apps.googleusercontent.com"
+
+
+internal fun FirebaseAuth.signInWithGoogleCredential(credential: GoogleIdTokenCredential): Task<AuthResult> {
+    return this.signInWithCredential(
+        GoogleAuthProvider.getCredential(credential.idToken, null)
+    )
+}
 
 
 internal suspend fun signInWithGoogle(activityContext: Context): GoogleIdTokenCredential? {
