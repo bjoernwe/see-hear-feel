@@ -7,7 +7,6 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.NoCredentialException
 import com.google.android.gms.tasks.Task
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.AuthResult
@@ -30,23 +29,6 @@ internal fun FirebaseAuth.signInWithGoogleCredential(credential: GoogleIdTokenCr
 
 
 internal suspend fun signInWithGoogle(activityContext: Context): GoogleIdTokenCredential? {
-    return signInWithGoogleAutomatically(activityContext)
-        ?: signInWithSelectedGoogleAccount(activityContext)
-}
-
-
-private suspend fun signInWithGoogleAutomatically(activityContext: Context) : GoogleIdTokenCredential? {
-    val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(true)
-        .setServerClientId(WEB_CLIENT_ID)
-        .setAutoSelectEnabled(true)
-        .setNonce(generateNonce())
-        .build()
-    return signInWithCredentialManager(googleIdOption, activityContext)
-}
-
-
-private suspend fun signInWithSelectedGoogleAccount(activityContext: Context): GoogleIdTokenCredential? {
     val signInWithGoogleOption: GetSignInWithGoogleOption = GetSignInWithGoogleOption
         .Builder(serverClientId = WEB_CLIENT_ID)
         .setNonce(generateNonce())
