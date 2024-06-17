@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import dev.upaya.shf.ui.settings.composables.UserSettingParams
 import dev.upaya.shf.ui.settings.controller.navigateToControllerSetup
 import dev.upaya.shf.ui.start.AuthViewModel
 
@@ -32,14 +33,17 @@ fun NavGraphBuilder.settingsScreen(
         val context = LocalContext.current
         val authViewModel: AuthViewModel = hiltViewModel()
         val userEmailAddress by authViewModel.userEmail.collectAsState()
+        val userSettingParams = UserSettingParams(
+            emailAddress = userEmailAddress,
+            onLogInClick = { authViewModel.signIn(context) },
+            onLogOutClick = { authViewModel.signOut(context) },
+            toggleLogInEnabled = isLogInEnabled,
+        )
 
         SettingsScreen(
             onBackButtonClick = navController::popBackStack,
-            onLogInClick = { authViewModel.signIn(context) },
-            onLogOutClick = { authViewModel.signOut(context) },
+            userSettingParams = userSettingParams,
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
-            userEmailAddress = userEmailAddress,
-            toggleLogInEnabled = isLogInEnabled,
             isPacingEnabled = isPacingEnabled,
             onSwitchPacing = preferenceViewModel::setPacingPreference,
         )
