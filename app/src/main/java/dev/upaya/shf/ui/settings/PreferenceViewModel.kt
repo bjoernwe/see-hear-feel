@@ -13,6 +13,7 @@ class PreferenceViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isPacingEnabled: Flow<Boolean> = preferencesRepository.isPacingEnabled
+    val isLogInEnabled: Flow<Boolean> = preferencesRepository.isLoginEnabled
 
     fun setPacingPreference(enabled: Boolean) {
         preferencesRepository.setPacingPreference(enabled = enabled)

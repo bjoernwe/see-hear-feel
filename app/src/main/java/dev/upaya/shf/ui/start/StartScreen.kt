@@ -20,9 +20,6 @@ import dev.upaya.shf.ui.theme.varelaFontFamily
 fun StartScreen(
     onStartButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
-    isLoginEnabled: Boolean,
-    onSignInButtonClick: () -> Unit,
-    signedInUserEmail: String? = null,
 ) {
     SetStatusBarColor()
 
@@ -58,12 +55,6 @@ fun StartScreen(
                 Text("click play to start session", color= Color.Gray, fontFamily = varelaFontFamily)
             }
 
-            if (isLoginEnabled) {
-                TextButton(onClick = onSignInButtonClick) {
-                    Text(signedInUserEmail ?: "Sign in")
-                }
-            }
-
             StartButton(
                 onClick = onStartButtonClick,
                 modifier = Modifier
@@ -84,8 +75,6 @@ fun MainContentPreview() {
         StartScreen(
             onStartButtonClick = {},
             onSettingsButtonClick = {},
-            onSignInButtonClick = {},
-            isLoginEnabled = true,
         )
     }
 }

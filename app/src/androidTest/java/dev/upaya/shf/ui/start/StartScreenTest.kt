@@ -21,9 +21,6 @@ class StartScreenTest {
                 StartScreen(
                     onStartButtonClick = {},
                     onSettingsButtonClick = {},
-                    onSignInButtonClick = {},
-                    signedInUserEmail = "user@email",
-                    isLoginEnabled = false,
                 )
             }
         }

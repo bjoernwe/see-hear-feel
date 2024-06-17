@@ -19,13 +19,17 @@ import dev.upaya.shf.R
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
 import dev.upaya.shf.ui.settings.composables.PacingSettingsEntry
+import dev.upaya.shf.ui.settings.composables.UserSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun SettingsScreen(
     onBackButtonClick: () -> Unit,
+    onLogInClick: () -> Unit,
     onControllerSetupEntryClick: () -> Unit,
+    userEmailAddress: String?,
+    toggleLogInEnabled: Boolean,
     isPacingEnabled: Boolean,
     onSwitchPacing: (Boolean) -> Unit,
 ) {
@@ -59,15 +63,26 @@ fun SettingsScreen(
                 .padding(12.dp)
         ) {
 
-            ControllerSettingsEntry(
-                onControllerSetupEntryClick = onControllerSetupEntryClick,
-            )
+            if (toggleLogInEnabled) {
 
-            Divider()
+                UserSettingsEntry(
+                    emailAddress = userEmailAddress,
+                    onLogInClick = onLogInClick,
+                )
+
+                Divider()
+
+            }
 
             PacingSettingsEntry(
                 isPacingEnabled = isPacingEnabled,
                 onSwitchPacing = onSwitchPacing,
+            )
+
+            Divider()
+
+            ControllerSettingsEntry(
+                onControllerSetupEntryClick = onControllerSetupEntryClick,
             )
 
             Divider()
@@ -85,7 +100,10 @@ fun SettingsScreenPreview() {
     SHFTheme(darkTheme = true) {
         SettingsScreen(
             onBackButtonClick = {},
+            onLogInClick = {},
             onControllerSetupEntryClick = {},
+            userEmailAddress = null,
+            toggleLogInEnabled = true,
             isPacingEnabled = true,
             onSwitchPacing = {},
         )
