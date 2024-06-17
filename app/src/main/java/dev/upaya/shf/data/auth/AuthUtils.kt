@@ -1,6 +1,7 @@
 package dev.upaya.shf.data.auth
 
 import android.content.Context
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CredentialOption
 import androidx.credentials.GetCredentialRequest
@@ -34,6 +35,16 @@ internal suspend fun signInWithGoogle(activityContext: Context): GoogleIdTokenCr
         .setNonce(generateNonce())
         .build()
     return signInWithCredentialManager(signInWithGoogleOption, activityContext)
+}
+
+
+internal suspend fun signOutFromGoogle(activityContext: Context) {
+    // This call is recommended here:
+    // https://developer.android.com/identity/sign-in/credential-manager-siwg#handle-sign-out
+    CredentialManager.create(activityContext)
+        .clearCredentialState(
+            ClearCredentialStateRequest()
+        )
 }
 
 

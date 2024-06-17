@@ -36,6 +36,7 @@ fun NavGraphBuilder.settingsScreen(
         SettingsScreen(
             onBackButtonClick = navController::popBackStack,
             onLogInClick = { authViewModel.signIn(context) },
+            onLogOutClick = { authViewModel.signOut(context) },
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
             userEmailAddress = userEmailAddress,
             toggleLogInEnabled = isLogInEnabled,

@@ -32,4 +32,10 @@ class AuthRepository @Inject constructor() {
                 _userEmail.value = it.user?.email
             }
     }
+
+    suspend fun signOut(activityContext: Context) {
+        firebaseAuth.signOut()
+        _userEmail.value = firebaseAuth.currentUser?.email
+        signOutFromGoogle(activityContext)
+    }
 }

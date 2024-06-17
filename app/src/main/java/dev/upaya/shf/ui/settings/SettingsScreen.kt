@@ -27,6 +27,7 @@ import dev.upaya.shf.ui.theme.SHFTheme
 fun SettingsScreen(
     onBackButtonClick: () -> Unit,
     onLogInClick: () -> Unit,
+    onLogOutClick: () -> Unit,
     onControllerSetupEntryClick: () -> Unit,
     userEmailAddress: String?,
     toggleLogInEnabled: Boolean,
@@ -68,6 +69,7 @@ fun SettingsScreen(
                 UserSettingsEntry(
                     emailAddress = userEmailAddress,
                     onLogInClick = onLogInClick,
+                    onLogOutClick = onLogOutClick,
                 )
 
                 Divider()
@@ -101,6 +103,7 @@ fun SettingsScreenPreview() {
         SettingsScreen(
             onBackButtonClick = {},
             onLogInClick = {},
+            onLogOutClick = {},
             onControllerSetupEntryClick = {},
             userEmailAddress = null,
             toggleLogInEnabled = true,
