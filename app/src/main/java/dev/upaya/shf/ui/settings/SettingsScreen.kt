@@ -19,12 +19,15 @@ import dev.upaya.shf.R
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
 import dev.upaya.shf.ui.settings.composables.PacingSettingsEntry
+import dev.upaya.shf.ui.settings.composables.UserSettingParams
+import dev.upaya.shf.ui.settings.composables.UserSettingsEntry
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 fun SettingsScreen(
     onBackButtonClick: () -> Unit,
+    userSettingParams: UserSettingParams,
     onControllerSetupEntryClick: () -> Unit,
     isPacingEnabled: Boolean,
     onSwitchPacing: (Boolean) -> Unit,
@@ -59,15 +62,27 @@ fun SettingsScreen(
                 .padding(12.dp)
         ) {
 
-            ControllerSettingsEntry(
-                onControllerSetupEntryClick = onControllerSetupEntryClick,
-            )
+            if (userSettingParams.toggleLogInEnabled) {
 
-            Divider()
+                UserSettingsEntry(
+                    emailAddress = userSettingParams.emailAddress,
+                    onLogInClick = userSettingParams.onLogInClick,
+                    onLogOutClick = userSettingParams.onLogOutClick,
+                )
+
+                Divider()
+
+            }
 
             PacingSettingsEntry(
                 isPacingEnabled = isPacingEnabled,
                 onSwitchPacing = onSwitchPacing,
+            )
+
+            Divider()
+
+            ControllerSettingsEntry(
+                onControllerSetupEntryClick = onControllerSetupEntryClick,
             )
 
             Divider()
@@ -82,9 +97,18 @@ fun SettingsScreen(
 @Preview
 @Composable
 fun SettingsScreenPreview() {
+
+    val userSettingParams = UserSettingParams(
+        emailAddress = null,
+        onLogInClick = {},
+        onLogOutClick = {},
+        toggleLogInEnabled = true,
+    )
+
     SHFTheme(darkTheme = true) {
         SettingsScreen(
             onBackButtonClick = {},
+            userSettingParams = userSettingParams,
             onControllerSetupEntryClick = {},
             isPacingEnabled = true,
             onSwitchPacing = {},

@@ -8,6 +8,7 @@ class PreferencesRepository @Inject constructor(
     remoteConfigDataStore: RemoteConfigDataStore,
 ) {
     val isPacingEnabled = preferencesDataStore.isPacingEnabled
+    val isLoginEnabled = remoteConfigDataStore.toggleLogin
     val isMindWanderingEnabled = remoteConfigDataStore.toggleMindWandering
 
     fun setPacingPreference(enabled: Boolean) {

@@ -30,6 +30,7 @@ class SHFActivity : ComponentActivity() {
             }
         }
         remoteConfigDataStore.loadRemoteConfig()
+        logFirebaseInstallationId()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -54,5 +55,4 @@ class SHFActivity : ComponentActivity() {
 
         return super.onKeyUp(keyCode, event)
     }
-
 }

@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "993544001537-n0v04rr735anh3jodpphi9pl8qta8u9f.apps.googleusercontent.com",
+          "client_id": "993544001537-1no22lgj1o0nl1g0g34uv9jm6mh36016.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.upaya.shf",
+            "certificate_hash": "2cabecfb760201f8c3565747d9c438110374a633"
+          }
+        },
+        {
+          "client_id": "993544001537-toommaln6tr6g6aluuj7tspp5ttft8lp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

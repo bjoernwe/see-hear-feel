@@ -21,7 +21,6 @@ fun StartScreen(
     onStartButtonClick: () -> Unit,
     onSettingsButtonClick: () -> Unit,
 ) {
-
     SetStatusBarColor()
 
     Column(
