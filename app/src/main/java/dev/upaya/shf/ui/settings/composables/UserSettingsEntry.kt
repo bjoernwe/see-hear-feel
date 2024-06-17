@@ -15,7 +15,10 @@ internal fun UserSettingsEntry(
 
     SettingsEntry(
         settingsEntryIcon = {
-            SettingsEntryIcon(id = R.drawable.baseline_person_24)
+            if (emailAddress == null)
+                SettingsEntryIcon(id = R.drawable.baseline_login_24)
+            else
+                SettingsEntryIcon(id = R.drawable.baseline_person_24)
         },
         primaryText = if (emailAddress != null) "Logged in" else "Log in with Google",
         secondaryText = emailAddress,
