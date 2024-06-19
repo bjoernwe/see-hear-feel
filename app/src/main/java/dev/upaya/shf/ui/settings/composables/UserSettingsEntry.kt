@@ -1,35 +1,47 @@
 package dev.upaya.shf.ui.settings.composables
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dev.upaya.shf.R
+import dev.upaya.shf.data.auth.LogInStatus
 import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
 internal fun UserSettingsEntry(
+    logInStatus: LogInStatus,
     emailAddress: String?,
     onLogInClick: () -> Unit,
     onLogOutClick: () -> Unit,
 ) {
 
-    val isLoggedIn = emailAddress != null
     val doNoting: () -> Unit = {}
 
     SettingsEntry(
         settingsEntryIcon = {
-            if (isLoggedIn)
-                SettingsEntryIcon(id = R.drawable.baseline_person_24)
-            else
-                SettingsEntryIcon(id = R.drawable.baseline_login_24)
+            when (logInStatus) {
+                LogInStatus.LOGGED_IN -> SettingsEntryIcon(id = R.drawable.baseline_person_24)
+                LogInStatus.LOGGED_OUT -> SettingsEntryIcon(id = R.drawable.baseline_login_24)
+                LogInStatus.LOGGING_IN -> CircularProgressIndicator()
+                LogInStatus.LOGGING_OUT -> CircularProgressIndicator()
+            }
         },
-        primaryText = if (isLoggedIn) "Logged in" else "Log in with Google",
+        primaryText = when (logInStatus) {
+            LogInStatus.LOGGED_IN -> "Logged in"
+            LogInStatus.LOGGED_OUT -> "Log in with Google"
+            LogInStatus.LOGGING_IN -> "Logging in ..."
+            LogInStatus.LOGGING_OUT -> "Logging out ..."
+        },
         secondaryText = emailAddress,
-        onTextClick = if (isLoggedIn) doNoting else onLogInClick,
+        onTextClick = when (logInStatus) {
+            LogInStatus.LOGGED_OUT -> onLogInClick
+            else -> doNoting
+        },
     ) {
-        if (isLoggedIn) {
+        if (logInStatus == LogInStatus.LOGGED_IN) {
             IconButton(onClick = onLogOutClick) {
                 SettingsEntryIcon(id = R.drawable.baseline_logout_24)
             }
@@ -44,11 +56,13 @@ fun UserSettingsEntryPreview() {
     SHFTheme(darkTheme = true) {
         Column {
             UserSettingsEntry(
+                logInStatus = LogInStatus.LOGGED_OUT,
                 emailAddress = null,
                 onLogInClick = {},
                 onLogOutClick = {},
             )
             UserSettingsEntry(
+                logInStatus = LogInStatus.LOGGED_IN,
                 emailAddress = "someone@gmail.com",
                 onLogInClick = {},
                 onLogOutClick = {},

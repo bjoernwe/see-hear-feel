@@ -16,7 +16,8 @@ class AuthViewModel @Inject constructor(
     preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
-    val isLoginEnabled = preferencesRepository.isLoginEnabled
+    val isLogInEnabled = preferencesRepository.isLogInEnabled
+    val logInStatus = authRepository.logInStatus
     val userEmail = authRepository.userEmail
 
     fun signIn(activityContext: Context) {

@@ -13,6 +13,9 @@ class AuthRepository @Inject constructor() {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
 
+    private val _logInStatus = MutableStateFlow(if (isFirebaseSignedIn()) LogInStatus.LOGGED_IN else LogInStatus.LOGGED_OUT)
+    val logInStatus: StateFlow<LogInStatus> = _logInStatus
+
     private val _userEmail = MutableStateFlow<String?>(null)
     val userEmail: StateFlow<String?> = _userEmail
 
@@ -22,20 +25,31 @@ class AuthRepository @Inject constructor() {
 
     suspend fun signIn(activityContext: Context) {
 
-        if (firebaseAuth.currentUser != null)
+        if (_logInStatus.value != LogInStatus.LOGGED_OUT)
             return
 
+        _logInStatus.value = LogInStatus.LOGGING_IN
         val googleCredential = signInWithGoogle(activityContext) ?: return
 
         firebaseAuth.signInWithGoogleCredential(googleCredential)
             .addOnSuccessListener {
                 _userEmail.value = it.user?.email
+                _logInStatus.value = LogInStatus.LOGGED_IN
+            }
+            .addOnFailureListener {
+                _logInStatus.value = LogInStatus.LOGGED_OUT
             }
     }
 
     suspend fun signOut(activityContext: Context) {
+        _logInStatus.value = LogInStatus.LOGGING_OUT
         firebaseAuth.signOut()
         _userEmail.value = firebaseAuth.currentUser?.email
         signOutFromGoogle(activityContext)
+        _logInStatus.value = LogInStatus.LOGGED_OUT
+    }
+
+    private fun isFirebaseSignedIn(): Boolean {
+        return firebaseAuth.currentUser != null
     }
 }

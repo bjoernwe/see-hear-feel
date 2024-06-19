@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
+import dev.upaya.shf.data.auth.LogInStatus
 import dev.upaya.shf.ui.SetStatusBarColor
 import dev.upaya.shf.ui.settings.composables.ControllerSettingsEntry
 import dev.upaya.shf.ui.settings.composables.PacingSettingsEntry
@@ -65,6 +66,7 @@ fun SettingsScreen(
             if (userSettingParams.toggleLogInEnabled) {
 
                 UserSettingsEntry(
+                    logInStatus = userSettingParams.logInStatus,
                     emailAddress = userSettingParams.emailAddress,
                     onLogInClick = userSettingParams.onLogInClick,
                     onLogOutClick = userSettingParams.onLogOutClick,
@@ -99,6 +101,7 @@ fun SettingsScreen(
 fun SettingsScreenPreview() {
 
     val userSettingParams = UserSettingParams(
+        logInStatus = LogInStatus.LOGGED_OUT,
         emailAddress = null,
         onLogInClick = {},
         onLogOutClick = {},
