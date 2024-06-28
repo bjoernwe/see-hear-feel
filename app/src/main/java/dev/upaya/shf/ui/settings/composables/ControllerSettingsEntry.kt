@@ -16,7 +16,7 @@ fun ControllerSettingsEntry(
             SettingsEntryIcon(id = R.drawable.ic_round_videogame_asset_24)
         },
         primaryText = "Controller setup",
-        onTextClick = onControllerSetupEntryClick,
+        onClick = onControllerSetupEntryClick,
     )
 
 }

@@ -11,7 +11,8 @@ import dev.upaya.shf.ui.theme.SHFTheme
 @Composable
 internal fun PacingSettingsEntry(
     isPacingEnabled: Boolean,
-    onSwitchPacing: (Boolean) -> Unit
+    onSwitchPacing: (Boolean) -> Unit,
+    onClick: () -> Unit,
 ) {
 
     SettingsEntry(
@@ -20,6 +21,7 @@ internal fun PacingSettingsEntry(
         },
         primaryText = "Pacing",
         secondaryText = "Vibrate every ${InputDelayEventDataSource.DELAY_SECONDS}s without input",
+        onClick = onClick,
     ) {
         Switch(
             checked = isPacingEnabled,
@@ -37,6 +39,7 @@ fun PacingSettingsEntryPreview() {
         PacingSettingsEntry(
             isPacingEnabled = true,
             onSwitchPacing = {},
+            onClick = {},
         )
     }
 }
