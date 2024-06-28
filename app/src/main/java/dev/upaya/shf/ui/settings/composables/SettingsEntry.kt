@@ -1,11 +1,14 @@
 package dev.upaya.shf.ui.settings.composables
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,54 +21,63 @@ import dev.upaya.shf.ui.theme.SHFTheme
 
 
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
 internal fun SettingsEntry(
-    settingsEntryIcon: @Composable () -> Unit = { SettingsEntryIcon()},
+    settingsEntryIcon: @Composable () -> Unit = { SettingsEntryIcon() },
     primaryText: String,
     secondaryText: String? = null,
-    onTextClick: () -> Unit = {},
+    onClick: () -> Unit = {},
     settingsEntryOption: @Composable (() -> Unit)? = null,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(8.dp)
-    ) {
 
-        settingsEntryIcon()
+    Surface(onClick = onClick) {
 
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Column(
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .weight(1F)
-                .clickable { onTextClick() }
-                .padding(start = 10.dp)
+                .padding(8.dp)
         ) {
 
-            Text(
-                text = primaryText,
-            )
+            Box(
+                modifier = Modifier.size(32.dp)
+            ) {
+                settingsEntryIcon()
+            }
 
-            if (secondaryText != null) {
+            Spacer(modifier = Modifier.width(8.dp))
+
+            Column(
+                modifier = Modifier
+                    .weight(1F)
+                    .padding(start = 10.dp)
+            ) {
 
                 Text(
-                    text = secondaryText,
-                    color = Color.Gray,
-                    fontSize = 14.sp,
-                    //modifier = Modifier
-                    //.padding(start = 4.dp)
+                    text = primaryText,
                 )
+
+                if (secondaryText != null) {
+
+                    Text(
+                        text = secondaryText,
+                        color = Color.Gray,
+                        fontSize = 14.sp,
+                        //modifier = Modifier
+                        //.padding(start = 4.dp)
+                    )
+
+                }
 
             }
 
-        }
+            if (settingsEntryOption != null) {
+                Spacer(modifier = Modifier.width(6.dp))
+                settingsEntryOption()
+            }
 
-        if (settingsEntryOption != null) {
-            Spacer(modifier = Modifier.width(6.dp))
-            settingsEntryOption()
         }
-
     }
+
 }
 
 

@@ -1,10 +1,14 @@
 package dev.upaya.shf.ui.settings.composables
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.upaya.shf.R
 import dev.upaya.shf.data.auth.LogInStatus
 import dev.upaya.shf.ui.theme.SHFTheme
@@ -18,15 +22,15 @@ internal fun UserSettingsEntry(
     onLogOutClick: () -> Unit,
 ) {
 
-    val doNoting: () -> Unit = {}
+    val doNothing: () -> Unit = {}
 
     SettingsEntry(
         settingsEntryIcon = {
             when (logInStatus) {
                 LogInStatus.LOGGED_IN -> SettingsEntryIcon(id = R.drawable.baseline_person_24)
                 LogInStatus.LOGGED_OUT -> SettingsEntryIcon(id = R.drawable.baseline_login_24)
-                LogInStatus.LOGGING_IN -> CircularProgressIndicator()
-                LogInStatus.LOGGING_OUT -> CircularProgressIndicator()
+                LogInStatus.LOGGING_IN -> CircularProgressIndicator(color = MaterialTheme.colors.secondaryVariant)
+                LogInStatus.LOGGING_OUT -> CircularProgressIndicator(color = MaterialTheme.colors.secondaryVariant)
             }
         },
         primaryText = when (logInStatus) {
@@ -36,14 +40,18 @@ internal fun UserSettingsEntry(
             LogInStatus.LOGGING_OUT -> "Logging out ..."
         },
         secondaryText = emailAddress,
-        onTextClick = when (logInStatus) {
+        onClick = when (logInStatus) {
             LogInStatus.LOGGED_OUT -> onLogInClick
-            else -> doNoting
+            else -> doNothing
         },
     ) {
         if (logInStatus == LogInStatus.LOGGED_IN) {
             IconButton(onClick = onLogOutClick) {
-                SettingsEntryIcon(id = R.drawable.baseline_logout_24)
+                SettingsEntryIcon(
+                    id = R.drawable.baseline_logout_24,
+                    modifier = Modifier
+                        .size(32.dp)
+                )
             }
         }
     }
