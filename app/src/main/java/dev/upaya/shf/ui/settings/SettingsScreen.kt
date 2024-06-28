@@ -32,6 +32,7 @@ fun SettingsScreen(
     onControllerSetupEntryClick: () -> Unit,
     isPacingEnabled: Boolean,
     onSwitchPacing: (Boolean) -> Unit,
+    onClickPacingSetting: () -> Unit,
 ) {
 
     SetStatusBarColor(
@@ -79,6 +80,7 @@ fun SettingsScreen(
             PacingSettingsEntry(
                 isPacingEnabled = isPacingEnabled,
                 onSwitchPacing = onSwitchPacing,
+                onClick = onClickPacingSetting,
             )
 
             Divider()
@@ -115,6 +117,7 @@ fun SettingsScreenPreview() {
             onControllerSetupEntryClick = {},
             isPacingEnabled = true,
             onSwitchPacing = {},
+            onClickPacingSetting = {},
         )
     }
 }

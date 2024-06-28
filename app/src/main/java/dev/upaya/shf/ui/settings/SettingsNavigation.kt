@@ -49,6 +49,7 @@ fun NavGraphBuilder.settingsScreen(
             onControllerSetupEntryClick = navController::navigateToControllerSetup,
             isPacingEnabled = isPacingEnabled,
             onSwitchPacing = preferenceViewModel::setPacingPreference,
+            onClickPacingSetting = { preferenceViewModel.setPacingPreference(!isPacingEnabled) },
         )
     }
 
